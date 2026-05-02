@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>COTA100 - Carreteras y Vías</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff; --text-color: #000000;
+            --primary-color: #FF6600; --border-color: rgba(0, 0, 0, 0.2); 
+            --table-header: #111; 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body { 
+            background-color: var(--bg-color); color: var(--text-color); padding-bottom: 50px;
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%23000000' stroke-opacity='0.05' fill='none'%3E%3Cpath d='M0,200 Q100,100 200,200 T400,200' stroke-width='4'/%3E%3Cline x1='0' y1='180' x2='400' y2='220' stroke-width='2' stroke-dasharray='10,10'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 400px 400px; background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* --- CABECERA --- */
+        .top-bar { 
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; border-bottom: 2px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.95); 
+            position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); height: 75px; 
+        }
+        .btn-volver-mini { background: rgba(0,0,0,0.03); border: 2px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; }
+        .btn-volver-mini:active { background: var(--text-color); color: var(--bg-color); transform: scale(0.95); }
+        .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
+        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.9rem;}
+
+        /* AQUI ESTABA EL ERROR: ELIMINADO EL MAX-WIDTH */
+        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- PANELES DE CONTROL --- */
+        .panel-control { border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); }
+        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 12px; border-bottom: 2px solid rgba(0,0,0,0.1); padding-bottom: 5px; }
+        .panel-titulo span { font-size: 0.8rem; color: #555; float: right; margin-top: 3px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .input-group { display: flex; flex-direction: column; }
+        
+        label { font-weight: 800; color: #111; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 3px; }
+        input { 
+            width: 100%; padding: 10px; font-size: 1.1rem; font-weight: 800; text-align: center;
+            background: rgba(255,255,255,0.9); border: 2px solid var(--border-color); border-radius: 8px; color: #000; 
+        }
+        input:focus { border-color: var(--primary-color); outline: none; }
+        input::placeholder { color: #bbb; font-weight: 600; }
+
+        .res-ai { text-align: center; font-size: 1.1rem; font-weight: 800; color: #111; background: rgba(0,0,0,0.05); padding: 8px; border-radius: 8px; border: 1px dashed #111; margin-top: 10px;}
+        .res-ai span { color: var(--primary-color); font-family: monospace; font-size: 1.4rem;}
+        
+        .indicador-pendiente { text-align: center; font-size: 0.9rem; font-weight: 700; color: #111; margin-top: 10px; padding: 5px; background: #e3f2fd; border-radius: 6px; border: 1px solid #90caf9;}
+
+        /* --- PANEL EN CONSTRUCCIÓN --- */
+        .panel-construccion {
+            background: #111;
+            color: #fff;
+            border: 2px dashed var(--primary-color);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .panel-construccion svg { color: var(--primary-color); margin-bottom: 10px; }
+        .panel-construccion h3 { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
+        .panel-construccion p { font-size: 0.9rem; color: #aaa; font-weight: 500; line-height: 1.4; }
+
+        /* MAGIA RESPONSIVA PARA PANTALLAS ANCHAS */
+        @media (min-width: 768px) {
+            .grid-desktop {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .panel-control { margin-bottom: 0; }
+            .panel-construccion { grid-column: 1 / -1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="nivelacion.html" class="btn-volver-mini"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
+        <h2 class="top-bar-title">CARRETERAS <span>Control Transversal</span></h2>
+        <div style="width: 45px;"></div> 
+    </div>
+
+    <div class="modulo-container grid-desktop">
+
+        <!-- 1. ESTACIÓN (AI) -->
+        <div class="panel-control" style="border-left: 5px solid var(--primary-color);">
+            <div class="panel-titulo" style="color: var(--primary-color);">1. Estación de Control</div>
+            <div class="form-grid">
+                <div class="input-group"><label>Cota BM</label><input type="number" id="cotaBM" step="0.001" placeholder="Ej: 2851.000" oninput="calcularAI()" onchange="formatearDecimales(this)"></div>
+                <div class="input-group"><label>Vista Atrás (+)</label><input type="number" id="vistaAtras" step="0.001" placeholder="Ej: 1.250" oninput="calcularAI()" onchange="formatearDecimales(this)"></div>
+            </div>
+            <div class="res-ai">AI Actual: <span id="txtAI">0.000</span></div>
+        </div>
+
+        <!-- 2. ALINEAMIENTO LONGITUDINAL (SUBRASANTE) -->
+        <div class="panel-control" style="border-left: 5px solid #111;">
+            <div class="panel-titulo" style="color: #111;">2. Eje Longitudinal <span>(Subrasante)</span></div>
+            <div class="form-grid">
+                <div class="input-group"><label>Prog. Inicio</label><input type="number" id="progIni" step="0.001" placeholder="0+000" oninput="calcularPendiente()" onchange="formatearDecimales(this)"></div>
+                <div class="input-group"><label>Cota Inicio</label><input type="number" id="cotaIni" step="0.001" placeholder="Ej: 1500.000" oninput="calcularPendiente()" onchange="formatearDecimales(this)"></div>
+                <div class="input-group"><label>Prog. Final</label><input type="number" id="progFin" step="0.001" placeholder="0+100" oninput="calcularPendiente()" onchange="formatearDecimales(this)"></div>
+                <div class="input-group"><label>Cota Final</label><input type="number" id="cotaFin" step="0.001" placeholder="Ej: 1498.000" oninput="calcularPendiente()" onchange="formatearDecimales(this)"></div>
+            </div>
+            <div class="indicador-pendiente" id="txtPendiente">Pendiente del tramo: Esperando datos...</div>
+        </div>
+
+        <!-- 3. SECCIÓN TÍPICA TRANSVERSAL -->
+        <div class="panel-control" style="border-left: 5px solid #1976d2; grid-column: 1 / -1;">
+            <div class="panel-titulo" style="color: #1976d2;">3. Sección Típica <span>(Estructura)</span></div>
+            <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="input-group"><label>Ancho de Vía (m)</label><input type="number" id="anchoVia" step="0.01" placeholder="Ej: 7.20" onchange="formatearDecimales(this)"></div>
+                <div class="input-group"><label>Bombeo (%)</label><input type="number" id="bombeo" step="0.01" placeholder="Ej: -2.00"></div>
+                <div class="input-group"><label>PQT. Estructural (m)</label><input type="number" id="espesorRasante" step="0.001" placeholder="Ej: 0.60" onchange="formatearDecimales(this)"></div>
+                <div class="input-group"><label>Esponjamiento (%)</label><input type="number" id="esponjamiento" step="0.1" placeholder="Ej: 20.0"></div>
+            </div>
+            <p style="font-size: 0.7rem; color: #666; font-weight: 600; margin-top: 8px; text-align: center;">
+                *El "PQT. Estructural" es la suma de Base + Subbase + Asfalto. El bombeo negativo (-) cae hacia las cunetas.
+            </p>
+        </div>
+
+        <!-- MENSAJE DE EN DESARROLLO -->
+        <div class="panel-construccion">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+            <h3>Ingeniería en Proceso</h3>
+            <p>Estamos calibrando los algoritmos de interpolación para las secciones transversales. El panel de disparo de campo y cálculo de volumen estará disponible pronto para completar el diseño.</p>
+        </div>
+
+    </div>
+
+    <script>
+        function formatearDecimales(input) { if(input.value !== "") input.value = parseFloat(input.value).toFixed(3); }
+
+        function calcularAI() {
+            let bm = parseFloat(document.getElementById('cotaBM').value);
+            let va = parseFloat(document.getElementById('vistaAtras').value);
+            document.getElementById('txtAI').innerText = (!isNaN(bm) && !isNaN(va)) ? (bm + va).toFixed(3) : "0.000";
+        }
+
+        function calcularPendiente() {
+            let pi = parseFloat(document.getElementById('progIni').value);
+            let ci = parseFloat(document.getElementById('cotaIni').value);
+            let pf = parseFloat(document.getElementById('progFin').value);
+            let cf = parseFloat(document.getElementById('cotaFin').value);
+            let txtPte = document.getElementById('txtPendiente');
+
+            if (!isNaN(pi) && !isNaN(ci) && !isNaN(pf) && !isNaN(cf)) {
+                let distancia = pf - pi;
+                if (distancia === 0) {
+                    txtPte.innerText = "Error: Distancia cero";
+                    txtPte.style.background = "#ffebee"; txtPte.style.borderColor = "#ef9a9a";
+                } else {
+                    let pte = ((cf - ci) / distancia) * 100;
+                    txtPte.innerText = "Pendiente Longitudinal: " + pte.toFixed(3) + "%";
+                    txtPte.style.background = "#e8f5e9"; txtPte.style.borderColor = "#a5d6a7";
+                }
+            } else {
+                txtPte.innerText = "Pendiente del tramo: Esperando datos...";
+                txtPte.style.background = "#e3f2fd"; txtPte.style.borderColor = "#90caf9";
+            }
+        }
+    </script>
+</body>
+</html>

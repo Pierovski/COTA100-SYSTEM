@@ -6,7 +6,7 @@
     <title>COTA100 SYSTEM - Raw Tech Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #ffffff;
@@ -14,7 +14,6 @@
             --primary-color: #FF6600; 
             --primary-metallic-light: #FF8833; 
             --border-color: rgba(0, 0, 0, 0.2); 
-            --nav-bg: rgba(255, 255, 255, 0.90);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -22,41 +21,59 @@
         body { 
             background-color: var(--bg-color); 
             color: var(--text-color); 
-            padding-bottom: 100px;
-            /* MAPA TOPOGRÁFICO REALISTA: Curvas maestras gruesas y ordinarias delgadas */
+            padding-bottom: 30px; 
+            /* MAPA TOPOGRÁFICO REALISTA */
             background-image: url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23000000' stroke-opacity='0.15'%3E%3Cpath stroke-width='2.5' d='M0 150c100-20 150 50 250 40s150-80 300-60 200 100 250 80v-210H0z'/%3E%3Cpath stroke-width='2.5' d='M0 450c150 50 250-50 400 0s200 150 400 100'/%3E%3Cpath stroke-width='2.5' d='M250 250c30-40 80-20 100 20s-20 80-60 60-60-50-40-80z'/%3E%3Cpath stroke-width='0.8' d='M0 200c110-15 160 55 260 45s160-85 310-65 210 105 230 85'/%3E%3Cpath stroke-width='0.8' d='M0 250c120-10 170 60 270 50s170-90 320-70 220 110 210 90'/%3E%3Cpath stroke-width='0.8' d='M0 300c130-5 180 65 280 55s180-95 330-75 230 115 190 95'/%3E%3Cpath stroke-width='0.8' d='M0 350c140 0 190 70 290 60s190-100 340-80 240 120 170 100'/%3E%3Cpath stroke-width='0.8' d='M0 400c145 25 220 10 345 30s195-50 370 10'/%3E%3Cpath stroke-width='0.8' d='M230 230c40-50 100-30 120 20s-20 100-80 80-70-60-40-100z'/%3E%3Cpath stroke-width='0.8' d='M210 210c50-60 120-40 140 20s-20 120-100 100-80-70-40-120z'/%3E%3Cpath stroke-width='0.8' d='M190 190c60-70 140-50 160 20s-20 140-120 120-90-80-40-140z'/%3E%3Cpath stroke-width='0.8' d='M600 300c40-20 80 0 90 40s-30 60-70 40-40-50-20-80z'/%3E%3Cpath stroke-width='0.8' d='M580 280c50-30 100-10 110 40s-40 80-90 60-50-60-20-100z'/%3E%3Cpath stroke-width='2.5' d='M560 260c60-40 120-20 130 40s-50 100-110 80-60-70-20-120z'/%3E%3C/g%3E%3C/svg%3E");
             background-size: 600px 600px;
             background-position: center;
-            overflow-x: hidden;
-            position: relative;
         }
 
+        /* --- SPLASH SCREEN (LOGO PURO) --- */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-color);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .splash-animar {
+            animation: fadeOutSplash 0.4s ease-in-out 1.5s forwards;
+        }
+
+        #splash-screen img {
+            width: 180px;
+            height: auto;
+        }
+
+        .logo-animar {
+            animation: pulseLogo 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes pulseLogo {
+            0% { transform: scale(0.8); opacity: 0; filter: drop-shadow(0 0 0px var(--primary-color)); }
+            50% { filter: drop-shadow(0 0 30px var(--primary-color)); }
+            100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 0px var(--primary-color)); }
+        }
+
+        @keyframes fadeOutSplash {
+            100% { opacity: 0; visibility: hidden; pointer-events: none; z-index: -1; }
+        }
+
+        /* --- CABECERA PRINCIPAL --- */
         .header {
             text-align: center;
             padding: 40px 20px 20px;
             background-color: transparent;
             border-bottom: 2px solid var(--border-color);
         }
-
-        .header h1 {
-            color: var(--text-color);
-            font-weight: 700;
-            font-size: 3.2rem;
-            letter-spacing: -1px;
-            margin-bottom: 0px;
-            text-transform: uppercase;
-        }
-
+        .header h1 { color: var(--text-color); font-weight: 800; font-size: 2.8rem; letter-spacing: -1px; margin-bottom: 0; text-transform: uppercase; }
         .header h1 span { color: var(--primary-color); }
+        .header p { color: #555; font-size: 0.95rem; font-weight: 800; letter-spacing: 5px; text-transform: uppercase; margin-top: -5px;}
 
-        .header p {
-            color: #111; 
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-
+        /* --- CUADRÍCULA DE HERRAMIENTAS --- */
         .grid-container {
             display: grid;
             grid-template-columns: 1fr 1fr; 
@@ -64,229 +81,200 @@
             padding: 20px 15px;
         }
         
-        .full-width-card { grid-column: 1 / -1; }
-
         @keyframes fluidEntrance {
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Diseño de Tarjetas: CAJETÍN TRANSPARENTE */
         .card {
-            background-color: transparent; 
+            background-color: rgba(255, 255, 255, 0.85); 
             border: 2px solid var(--border-color);
             border-radius: 16px;
-            padding: 15px 5px; 
+            padding: 20px 10px; 
             text-align: center;
             text-decoration: none;
-            color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 195px; /* Caja MASIVA para acomodar los nuevos íconos */
+            min-height: 150px; 
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            animation: fluidEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(5px);
+            opacity: 0; /* Oculto inicialmente para la animación */
         }
 
-        .card:nth-child(1) { animation-delay: 0.05s; }
-        .card:nth-child(2) { animation-delay: 0.10s; }
-        .card:nth-child(3) { animation-delay: 0.15s; }
-        .card:nth-child(4) { animation-delay: 0.20s; }
-        .card:nth-child(5) { animation-delay: 0.25s; }
+        /* Clases para animación controlada por JS */
+        .card-animar { animation: fluidEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .card-visible { opacity: 1; }
+
+        .card-animar:nth-child(1) { animation-delay: 1.5s; } 
+        .card-animar:nth-child(2) { animation-delay: 1.55s; }
+        .card-animar:nth-child(3) { animation-delay: 1.6s; }
+        .card-animar:nth-child(4) { animation-delay: 1.65s; }
+        .card-animar:nth-child(5) { animation-delay: 1.7s; }
+        .card-animar:nth-child(6) { animation-delay: 1.75s; }
 
         .card:active {
             transform: scale(0.96);
             border-color: var(--primary-color);
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: #fff;
         }
         
-        /* Luz Naranja Metálica Emanando */
         .card::after {
-            content: "";
-            position: absolute;
-            top: 50%; left: 50%; width: 10px; height: 10px;
+            content: ""; position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
             background: radial-gradient(circle, var(--primary-metallic-light) 0%, rgba(255,102,0,0) 70%);
-            border-radius: 50%;
-            opacity: 0;
-            transform: translate(-50%, -50%);
-            transition: none;
-            z-index: -1; 
+            border-radius: 50%; opacity: 0; transform: translate(-50%, -50%); transition: none; z-index: -1; 
         }
-        
-        .card:active::after {
-            animation: metallicPulse 0.4s ease-out;
-            opacity: 1;
-        }
+        .card:active::after { animation: metallicPulse 0.4s ease-out; opacity: 1; }
 
         @keyframes metallicPulse {
             0% { width: 10px; height: 10px; opacity: 0.9; }
             100% { width: 400px; height: 400px; opacity: 0; }
         }
 
-        .icon-container {
-            height: 125px; /* Contenedor gigantesco */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-            width: 100%;
+        /* ÍCONOS NARANJAS POR DEFECTO */
+        .icon-container { 
+            height: 70px; display: flex; align-items: center; justify-content: center; 
+            margin-bottom: 12px; width: 100%; 
+            color: var(--primary-color); 
+            transition: color 0.2s, transform 0.2s;
         }
-
-        /* ÍCONOS EMOJI TITÁNICOS */
-        .icon-emoji { 
-            font-size: 7rem; /* Tamaño brutal para igualar al SVG */
-            line-height: 1;
-            display: block;
-        }
-
-        .icon-svg {
-            position: relative;
-            z-index: 1;
-        }
+        
+        /* Al tocar, el ícono se vuelve negro para dar contraste visual de presión */
+        .card:active .icon-container { color: #111; transform: scale(1.1); }
 
         .card span {
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.1;
-            color: #000;
-            z-index: 1;
-            transition: color 0.2s;
-            /* Sombra blanca gruesa para proteger el texto */
-            text-shadow: -1px -1px 3px #fff, 1px -1px 3px #fff, -1px 1px 3px #fff, 1px 1px 3px #fff, 0 0 8px #fff;
+            font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2;
+            color: #000; z-index: 1; transition: color 0.2s;
         }
-        
-        .card:active span { color: var(--primary-color); text-shadow: none;}
+        .card:active span { color: var(--primary-color); }
 
-        /* Menú Navegación Inferior */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--nav-bg);
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
-            border-top: 1px solid var(--border-color);
-            z-index: 1000;
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-        }
-
-        .nav-item {
-            color: #666;
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .nav-item.active { color: var(--primary-color); }
-        .nav-icon { font-size: 1.7rem; margin-bottom: 2px; font-style: normal; transition: transform 0.2s; }
-        .nav-item:active .nav-icon { transform: scale(1.1) translateY(-2px); }
-        
-        .version-tag {
-            text-align: center;
-            color: #777;
-            font-size: 0.8rem;
-            font-weight: bold;
-            font-family: monospace;
-            display: block;
-            margin: 15px 0;
-        }
+        .version-tag { text-align: center; color: #555; font-size: 0.85rem; font-weight: 800; font-family: monospace; display: block; margin: 10px 0 20px; }
     </style>
     <link rel="manifest" href="manifest.json">
     <script>
+        // --- SERVICE WORKER ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('sw.js');
             });
         }
+
+        // --- LÓGICA DE SPLASH SCREEN INTELIGENTE ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const splash = document.getElementById('splash-screen');
+            const logo = splash.querySelector('img');
+            const cards = document.querySelectorAll('.card');
+
+            // Revisamos si es la primera vez que se carga en esta sesión
+            if (!sessionStorage.getItem('splashMostrado')) {
+                // Es la primera vez -> Mostrar animaciones
+                splash.classList.add('splash-animar');
+                logo.classList.add('logo-animar');
+                cards.forEach(card => card.classList.add('card-animar'));
+                
+                // Guardamos en memoria que ya se mostró
+                sessionStorage.setItem('splashMostrado', 'true');
+            } else {
+                // Ya se mostró antes -> Ocultar splash inmediatamente
+                splash.style.display = 'none';
+                // Mostrar tarjetas inmediatamente sin el delay de 1.5s
+                cards.forEach(card => card.classList.add('card-visible'));
+            }
+        });
     </script>
 </head>
 <body>
 
-    <div class="header">
-        <h1>COTA<span>100</span></h1>
-        <p>Field System</p>
+    <!-- PANTALLA DE INICIO (SPLASH SCREEN LOGO PURO) -->
+    <div id="splash-screen">
+        <img src="icono.jpg" alt="COTA100 Logo">
     </div>
 
+    <!-- CABECERA PRINCIPAL -->
+    <div class="header">
+        <h1>COTA<span>100</span></h1>
+        <p>System</p>
+    </div>
+
+    <!-- MENÚ CENTRAL (GRID DE 6 MÓDULOS CON ÍCONOS SVG NARANJAS) -->
     <div class="grid-container">
         
+        <!-- Nivelación -->
         <a href="nivelacion.html" class="card">
             <div class="icon-container">
-                <svg class="icon-svg" viewBox="0 0 24 24" width="110" height="110" fill="none" stroke="var(--text-color)" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 15v6m-4 0l2-6m6 6l-2-6" stroke-width="1.5"/>
-                    <path d="M8 15h8" stroke-width="2.5"/>
-                    <path d="M10 15V9a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v6" stroke-width="2" stroke="var(--primary-color)"/>
-                    <rect x="5" y="8" width="14" height="4" rx="1" stroke-width="2" fill="var(--bg-color)" />
-                    <path d="M19 8l2-1v6l-2-1" stroke-width="2"/>
-                    <path d="M5 9l-2-1v4l2-1" stroke-width="2"/>
-                    <circle cx="12" cy="10" r="1.5" stroke-width="1.5" fill="var(--bg-color)"/>
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="8"/>
+                    <path d="M12 2v20"/>
+                    <path d="M2 12h20"/>
                 </svg>
             </div>
             <span>Nivelación</span>
         </a>
 
+        <!-- Coordenadas -->
         <a href="coordenadas.html" class="card">
             <div class="icon-container">
-                <span class="icon-emoji">🌍</span>
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
             </div>
-            <span>Transf.<br>Coordenadas</span>
+            <span>Coordenadas</span>
         </a>
 
+        <!-- Poligonales -->
         <a href="poligonales.html" class="card">
             <div class="icon-container">
-                <span class="icon-emoji">⬡</span>
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"/>
+                    <circle cx="6" cy="12" r="3"/>
+                    <circle cx="18" cy="19" r="3"/>
+                    <line x1="8.5" y1="10.5" x2="15.5" y2="6.5"/>
+                    <line x1="8.5" y1="13.5" x2="15.5" y2="17.5"/>
+                    <line x1="18" y1="8" x2="18" y2="16"/>
+                </svg>
             </div>
             <span>Poligonales</span>
         </a>
 
+        <!-- Atmósfera -->
         <a href="atmosfera.html" class="card">
             <div class="icon-container">
-                <span class="icon-emoji">☁️</span>
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>
+                    <path d="M12 16a2 2 0 0 0 0-4"/>
+                </svg>
             </div>
             <span>Atmósfera<br>& PPM</span>
         </a>
 
-        <a href="areas.html" class="card full-width-card">
+        <!-- Áreas y Perímetros -->
+        <a href="areas.html" class="card">
             <div class="icon-container">
-                <span class="icon-emoji">📐</span>
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="3 3 21 7 17 21 7 17 3 3"/>
+                </svg>
             </div>
-            <span>Áreas y Perímetros</span>
+            <span>Áreas y<br>Perímetros</span>
+        </a>
+
+        <!-- Ajustes -->
+        <a href="configuraciones.html" class="card">
+            <div class="icon-container">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+            </div>
+            <span>Ajustes</span>
         </a>
 
     </div>
     
-    <div class="version-tag">V 1.2.0 - OFFLINE READY</div>
-
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-item active">
-            <i class="nav-icon">🏠</i>
-            Inicio
-        </a>
-        <a href="configuraciones.html" class="nav-item">
-            <i class="nav-icon">⚙️</i>
-            Ajustes
-        </a>
-        <a href="#" class="nav-item">
-            <i class="nav-icon">📁</i>
-            Archivos
-        </a>
-    </nav>
+    <div class="version-tag">V 2.2.0 - RAW TECH EDITION</div>
 
 </body>
 </html>

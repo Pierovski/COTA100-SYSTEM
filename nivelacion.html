@@ -3,86 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>COTA100 - Hub Nivelación</title>
+    <title>COTA100 SYSTEM - Hub Nivelación</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #ffffff; --text-color: #000000;
-            --primary-color: #FF6600; --border-color: rgba(0, 0, 0, 0.2); 
+            --bg-color: #ffffff; 
+            --text-color: #000000;
+            --primary-color: #FF6600; 
+            --primary-metallic-light: #FF8833;
+            --border-color: rgba(0, 0, 0, 0.2); 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px;
-            /* Fondo Topográfico Raw Tech Pro */
-            background-image: url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23000000' stroke-opacity='0.10'%3E%3Cpath stroke-width='2.5' d='M0 150c100-20 150 50 250 40s150-80 300-60 200 100 250 80v-210H0z'/%3E%3Cpath stroke-width='2.5' d='M0 450c150 50 250-50 400 0s200 150 400 100'/%3E%3Cpath stroke-width='2.5' d='M250 250c30-40 80-20 100 20s-20 80-60 60-60-50-40-80z'/%3E%3Cpath stroke-width='0.8' d='M0 200c110-15 160 55 260 45s160-85 310-65 210 105 230 85'/%3E%3Cpath stroke-width='0.8' d='M0 250c120-10 170 60 270 50s170-90 320-70 220 110 210 90'/%3E%3Cpath stroke-width='0.8' d='M0 300c130-5 180 65 280 55s180-95 330-75 230 115 190 95'/%3E%3Cpath stroke-width='0.8' d='M0 350c140 0 190 70 290 60s190-100 340-80 240 120 170 100'/%3E%3Cpath stroke-width='0.8' d='M0 400c145 25 220 10 345 30s195-50 370 10'/%3E%3Cpath stroke-width='0.8' d='M230 230c40-50 100-30 120 20s-20 100-80 80-70-60-40-100z'/%3E%3Cpath stroke-width='0.8' d='M210 210c50-60 120-40 140 20s-20 120-100 100-80-70-40-120z'/%3E%3Cpath stroke-width='0.8' d='M190 190c60-70 140-50 160 20s-20 140-120 120-90-80-40-140z'/%3E%3Cpath stroke-width='0.8' d='M600 300c40-20 80 0 90 40s-30 60-70 40-40-50-20-80z'/%3E%3Cpath stroke-width='0.8' d='M580 280c50-30 100-10 110 40s-40 80-90 60-50-60-20-100z'/%3E%3Cpath stroke-width='2.5' d='M560 260c60-40 120-20 130 40s-50 100-110 80-60-70-20-120z'/%3E%3C/g%3E%3C/svg%3E");
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            padding-bottom: 50px;
+            /* MAPA SVG: Retículo de Nivel Óptico y Líneas de Estadía */
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%23000000' stroke-opacity='0.08' fill='none'%3E%3Cline x1='0' y1='100' x2='400' y2='100' stroke-width='1.5'/%3E%3Cline x1='0' y1='200' x2='400' y2='200' stroke-width='3'/%3E%3Cline x1='0' y1='300' x2='400' y2='300' stroke-width='1.5'/%3E%3Cline x1='200' y1='0' x2='200' y2='400' stroke-width='1.5'/%3E%3Ccircle cx='200' cy='200' r='80' stroke-width='2'/%3E%3Cpath d='M190,150 L210,150 M190,250 L210,250' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 400px 400px; background-attachment: fixed;
         }
 
+        /* --- CABECERA SUPERIOR --- */
         .top-bar { 
             display: flex; align-items: center; justify-content: space-between;
             padding: 15px 20px; border-bottom: 2px solid var(--border-color);
-            background-color: rgba(255, 255, 255, 0.9); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.9); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px);
         }
-        .btn-volver-mini { background: transparent; border: none; color: var(--text-color); font-size: 2rem; font-weight: 800; cursor: pointer; line-height: 1; text-decoration: none;}
-        .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.5rem; text-transform: uppercase; margin: 0; }
+        
+        /* --- NUEVO BOTÓN VOLVER (RAW TECH) --- */
+        .btn-volver-mini { 
+            background: rgba(0,0,0,0.03); 
+            border: 2px solid var(--border-color); 
+            color: var(--text-color); 
+            width: 45px; height: 45px; 
+            border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-volver-mini:active { 
+            background: var(--text-color); 
+            color: var(--bg-color); 
+            transform: translateX(-5px) scale(0.95); 
+            border-color: var(--text-color);
+        }
+
+        .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.4rem; text-transform: uppercase; margin: 0; }
         .top-bar-title span { color: var(--primary-color); }
 
-        .hub-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 20px 15px; }
-        
-        .btn-hub {
-            background-color: rgba(255, 255, 255, 0.85); border: 2px solid var(--border-color);
-            border-radius: 12px; padding: 25px 15px; display: flex; align-items: center;
-            text-decoration: none; color: var(--text-color); cursor: pointer;
-            backdrop-filter: blur(5px); transition: 0.2s; position: relative; overflow: hidden;
+        /* --- CONTENEDOR DE TARJETAS HORIZONTALES --- */
+        .hub-grid { 
+            display: grid; grid-template-columns: 1fr; gap: 15px; padding: 20px 15px; 
         }
-        .btn-hub:active { border-color: var(--primary-color); background-color: #fff; transform: scale(0.97); }
-        .btn-hub .hub-icon { font-size: 3.5rem; margin-right: 20px; text-shadow: 0 0 5px #fff; }
-        .hub-info { text-align: left; }
-        .hub-info h3 { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; margin-bottom: 5px; text-shadow: 0 0 5px #fff;}
-        .hub-info p { font-size: 0.9rem; font-weight: 600; color: #444; line-height: 1.2; text-shadow: 0 0 5px #fff;}
+        
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .btn-hub {
+            background-color: rgba(255, 255, 255, 0.85); 
+            border: 2px solid var(--border-color);
+            border-radius: 16px; 
+            padding: 20px 15px; 
+            display: flex; align-items: center;
+            text-decoration: none; color: var(--text-color); cursor: pointer;
+            backdrop-filter: blur(5px); 
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); 
+            position: relative; overflow: hidden;
+            opacity: 0;
+            animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .btn-hub:nth-child(1) { animation-delay: 0.1s; }
+        .btn-hub:nth-child(2) { animation-delay: 0.2s; }
+        .btn-hub:nth-child(3) { animation-delay: 0.3s; }
+        .btn-hub:nth-child(4) { animation-delay: 0.4s; }
+
+        .btn-hub:active { 
+            border-color: var(--primary-color); 
+            background-color: #fff; 
+            transform: scale(0.97); 
+        }
+
+        /* Destello Naranja al presionar */
+        .btn-hub::after {
+            content: ""; position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
+            background: radial-gradient(circle, var(--primary-metallic-light) 0%, rgba(255,102,0,0) 70%);
+            border-radius: 50%; opacity: 0; transform: translate(-50%, -50%); transition: none; z-index: -1; 
+        }
+        .btn-hub:active::after { animation: metallicPulse 0.4s ease-out; opacity: 1; }
+
+        @keyframes metallicPulse {
+            0% { width: 10px; height: 10px; opacity: 0.9; }
+            100% { width: 500px; height: 500px; opacity: 0; }
+        }
+
+        /* --- ÍCONOS Y TEXTOS --- */
+        .hub-icon { 
+            flex-shrink: 0;
+            width: 70px; height: 70px; 
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px; 
+            color: var(--primary-color);
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .btn-hub:active .hub-icon { color: #111; transform: scale(1.1); }
+
+        .hub-info { text-align: left; flex-grow: 1;}
+        .hub-info h3 { 
+            font-size: 1.3rem; font-weight: 800; text-transform: uppercase; margin-bottom: 5px; 
+            color: #000; transition: color 0.2s;
+        }
+        .btn-hub:active .hub-info h3 { color: var(--primary-color); }
+
+        .hub-info p { font-size: 0.85rem; font-weight: 600; color: #555; line-height: 1.3; }
+
     </style>
 </head>
 <body>
 
     <div class="top-bar">
-        <a href="index.html" class="btn-volver-mini">←</a>
+        <!-- Nueva flecha vectorial -->
+        <a href="index.html" class="btn-volver-mini">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
         <h2 class="top-bar-title">MÓDULOS <span>NIVELACIÓN</span></h2>
-        <div style="width: 25px;"></div>
+        <!-- Caja vacía de 45px para mantener el título perfectamente centrado -->
+        <div style="width: 45px;"></div> 
     </div>
 
     <div class="hub-grid">
-        <a href="niv-avanzada.html" class="btn-hub">
-            <div class="hub-icon">🎯</div>
+        
+        <!-- 1. Nivelación Alcantarillado -->
+        <a href="niv-alcan.html" class="btn-hub">
+            <div class="hub-icon">
+                <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 12h-4l-3-9L9 21l-3-9H2"/>
+                </svg>
+            </div>
             <div class="hub-info">
-                <h3>Avanzada / Replanteo</h3>
-                <p>Banco de BMs, cotas automáticas y cálculo inverso para vaciados.</p>
+                <h3>Alcantarillado</h3>
+                <p>Control de cotas fondo, pendientes de tubería y traslado de BMs entre buzones.</p>
+            </div>
+        </a>
+
+       <!-- 2. Carreteras (Reemplaza a Avanzada) -->
+        <a href="niv-carreteras.html" class="btn-hub">
+            <div class="hub-icon">
+                <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 22h20"/>
+                    <path d="M2 14c3.33-3 6.67-3 10 0s6.67 3 10 0"/>
+                    <path d="M12 2v6"/>
+                    <path d="M9 5h6"/>
+                </svg>
+            </div>
+            <div class="hub-info">
+                <h3>Carreteras / Vías</h3>
+                <p>Libreta dinámica para control de nivelacion de vias.</p>
+            </div>
+        </a>
+        <!-- 3. Lineal (Carreteras) -->
+        <a href="niv-lineal.html" class="btn-hub">
+            <div class="hub-icon">
+                <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 3v18h18"/>
+                    <path d="M7 16l4-4 4 4 6-6"/>
+                    <circle cx="7" cy="16" r="1.5" fill="currentColor"/>
+                    <circle cx="11" cy="12" r="1.5" fill="currentColor"/>
+                    <circle cx="15" cy="16" r="1.5" fill="currentColor"/>
+                    <circle cx="21" cy="10" r="1.5" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="hub-info">
+                <h3>Lineal (Perfiles)</h3>
+                <p>Proyección de rasantes, secciones y cálculo automático de Corte y Relleno.</p>
+            </div>
+        </a>
+
+        <!-- 4. Poligonal (Circuitos) -->
+        <a href="niv-poligonal.html" class="btn-hub">
+            <div class="hub-icon">
+                <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 2v6h-6"/>
+                    <path d="M21 13a9 9 0 1 1-3-7.7L21 8"/>
+                </svg>
+            </div>
+            <div class="hub-info">
+                <h3>Poligonal (Circuitos)</h3>
+                <p>Cierre de circuitos Ida/Vuelta. Error de cierre, tolerancias y compensación.</p>
             </div>
         </a>
         
-        <a href="niv-simple.html" class="btn-hub">
-            <div class="hub-icon">📏</div>
-            <div class="hub-info">
-                <h3>Nivelación Simple</h3>
-                <p>Libreta clásica de campo (V.Atrás, V.Adelante, Cotas directas).</p>
-            </div>
-        </a>
-
-        <a href="niv-lineal.html" class="btn-hub">
-            <div class="hub-icon">🛣️</div>
-            <div class="hub-info">
-                <h3>Lineal (Carreteras)</h3>
-                <p>Proyección de rasantes, cálculo de pendientes y bombeo.</p>
-            </div>
-        </a>
-
-        <a href="niv-poligonal.html" class="btn-hub">
-            <div class="hub-icon">🔄</div>
-            <div class="hub-info">
-                <h3>Poligonal (Circuitos)</h3>
-                <p>Cierre de poligonales de nivelación, error de cierre y compensación.</p>
-            </div>
-        </a>
     </div>
 
 </body>

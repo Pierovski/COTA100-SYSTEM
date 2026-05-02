@@ -1,6 +1,6 @@
 {
   "name": "COTA100 SYSTEM",
-  "short_name": "COTA100",
+  "short_name": "Cota100 system",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
