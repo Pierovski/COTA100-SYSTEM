@@ -4,137 +4,210 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>COTA100 SYSTEM - Coordenadas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #ffffff; --text-color: #000000;
-            --primary-color: #FF6600; --input-bg: rgba(255,255,255,0.9);
-            --error-color: #d32f2f; --table-border: rgba(0,0,0,0.3);
-            --panel-bg: rgba(255,255,255,0.85); --success-color: #2e7d32;
+            --bg-color: #f8f9fa;
+            --text-color: #1a1e23;
+            --primary-color: #FF5500; 
+            --primary-glow: rgba(255, 85, 0, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 85, 0, 0.15);
+            --input-bg: rgba(255,255,255,0.9);
+            --error-color: #d32f2f; 
+            --danger-color: #d32f2f; 
+            --success-color: #2e7d32;
         }
 
         body.dark-mode {
-            --bg-color: #121212; --text-color: #e0e0e0;
-            --table-border: rgba(255, 255, 255, 0.15); 
-            --panel-bg: rgba(30,30,30,0.9); --input-bg: rgba(45,45,45,0.9);
+            --bg-color: #05070a;
+            --text-color: #ffffff;
+            --primary-glow: rgba(255, 85, 0, 0.4);
+            --card-bg: rgba(18, 22, 28, 0.85);
+            --card-border: rgba(255, 85, 0, 0.25);
+            --input-bg: rgba(45,45,45,0.9);
         }
 
-        /* --- CORRECCIONES PARA QUE EL MODO OSCURO SE VEA EN TODOS LOS PANELES --- */
-        body.dark-mode .info-box { background-color: #0d2136 !important; color: #e0e0e0 !important; border-left-color: #1976d2 !important;}
-        body.dark-mode .alerta-critica { background-color: #2c1a1a !important; color: #e0e0e0 !important; border-left-color: #d32f2f !important;}
+        /* Ajustes específicos para el modo oscuro en este módulo */
+        body.dark-mode .info-box { background-color: rgba(255, 85, 0, 0.05) !important; color: #e0e0e0 !important; border-left-color: var(--primary-color) !important;}
+        body.dark-mode .alerta-critica { background-color: rgba(211, 47, 47, 0.05) !important; color: #e0e0e0 !important; border-left-color: var(--danger-color) !important;}
         body.dark-mode .alerta-critica p { color: #e0e0e0; }
-        body.dark-mode .result-grid { background-color: var(--panel-bg); border-color: var(--table-border); }
-        body.dark-mode .result-box-inner, body.dark-mode .result-box-wide { background-color: rgba(255,255,255,0.05) !important; border-color: var(--table-border); }
-        body.dark-mode .seccion-modulo { background-color: rgba(30,30,30,0.9); }
+        body.dark-mode .result-grid, body.dark-mode .seccion-modulo { background-color: var(--card-bg); border-color: var(--card-border); }
+        body.dark-mode .result-box-inner, body.dark-mode .result-box-wide { background-color: rgba(255,255,255,0.03) !important; border-color: var(--card-border); }
         body.dark-mode .helper-text { color: #aaa; }
         body.dark-mode .btn-limpiar { color: #ef9a9a; border-color: #ef9a9a; }
-        body.dark-mode .btn-map { background-color: rgba(46,125,50,0.1); color: var(--success-color); border-color: var(--success-color); }
+        body.dark-mode .btn-map { background-color: rgba(46,125,50,0.1); color: #81c784; border-color: #81c784; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent;}
 
         body { 
             background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px; 
-            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%23000000' stroke-opacity='0.08' stroke-width='1.5' fill='none'%3E%3Cpath d='M0,100 L400,100 M0,200 L400,200 M0,300 L400,300 M100,0 L100,400 M200,0 L200,400 M300,0 L300,400'/%3E%3Cpath d='M192,200 L208,200 M200,192 L200,208' stroke-width='2.5'/%3E%3Cpath d='M92,100 L108,100 M100,92 L100,108' stroke-width='2.5'/%3E%3Cpath d='M292,300 L308,300 M300,292 L300,308' stroke-width='2.5'/%3E%3Ctext x='210' y='190' fill='%23000' fill-opacity='0.15' font-family='monospace' font-size='12' font-weight='bold'%3EN: 9105000%3C/text%3E%3Ctext x='210' y='215' fill='%23000' fill-opacity='0.15' font-family='monospace' font-size='12' font-weight='bold'%3EE: 715000%3C/text%3E%3C/g%3E%3C/svg%3E");
-            background-size: 400px 400px; background-attachment: fixed;
             transition: background-color 0.3s, color 0.3s;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
+        /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
+        .fire-base {
+            position: fixed;
+            bottom: 0; left: 0; width: 100vw; height: 35vh;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .fire-wave {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 200vw; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 10s linear infinite;
+        }
+        .fire-wave.delay {
+            bottom: -15px; opacity: 0.6;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 7s linear infinite reverse;
+        }
+        @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
+
+        /* --- CABECERA DUAL --- */
         .top-bar { 
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 15px 20px; border-bottom: 2px solid var(--table-border);
-            background-color: var(--panel-bg); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
+            background-color: transparent; position: sticky; top: 0; z-index: 100; 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
         }
+        .nav-buttons-left { display: flex; gap: 8px; }
         .btn-volver-mini { 
-            background: rgba(128,128,128,0.1); border: 2px solid var(--table-border); color: var(--text-color); 
-            width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; text-decoration: none; transition: 0.2s;
+            background: transparent; border: none; color: var(--primary-color);
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 0 5px var(--primary-glow));
         }
-        .btn-volver-mini:active { background: var(--text-color); color: var(--bg-color); transform: scale(0.95); }
-        .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.4rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
-        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
+        .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
+        
+        .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.5rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1; letter-spacing: -1px;}
+        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.8rem; letter-spacing: 2px;}
 
-        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; display: flex; flex-direction: column; gap: 15px;}
+        .spacer { width: 45px; height: 45px; } /* Ajustador para centrado */
+
+        .modulo-container { padding: 25px 15px; max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card-horizontal {
-            display: flex; align-items: center; background: var(--panel-bg); 
-            border: 2px solid var(--table-border); border-radius: 16px; padding: 20px 15px; 
-            text-decoration: none; color: var(--text-color); box-shadow: 0 4px 6px rgba(0,0,0,0.03);
-            transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1); backdrop-filter: blur(10px); cursor: pointer;
+        /* --- TARJETAS DEL MENÚ (GLASSMORPHISM) --- */
+        .tech-list-card {
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; 
+            padding: 22px 18px; display: flex; align-items: center; text-decoration: none; 
+            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; 
+            opacity: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
-        .card-horizontal:active { transform: scale(0.96); border-color: var(--primary-color); background: rgba(255,102,0,0.05);}
         
-        .icon-box {
-            width: 60px; height: 60px; display: flex; justify-content: center; align-items: center;
-            color: var(--primary-color); margin-right: 15px; flex-shrink: 0;
-            background: rgba(255,102,0,0.05); border-radius: 12px; border: 1px solid rgba(255,102,0,0.1);
-            transition: 0.2s;
+        @keyframes slideInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+        .card-animar:nth-child(1) { animation: slideInUp 0.4s 0.1s forwards; }
+        .card-animar:nth-child(2) { animation: slideInUp 0.4s 0.15s forwards; }
+        .card-animar:nth-child(3) { animation: slideInUp 0.4s 0.2s forwards; }
+        .card-animar:nth-child(4) { animation: slideInUp 0.4s 0.25s forwards; }
+
+        .tech-list-card:active { 
+            transform: scale(0.96); 
+            background: linear-gradient(135deg, #FF3300 0%, #FF8C00 60%, #FFD700 100%);
+            border-color: transparent;
+            box-shadow: 0 8px 25px rgba(255, 85, 0, 0.4); 
         }
-        .card-horizontal:active .icon-box { background: var(--primary-color); color: #fff;}
-        
-        .text-box { display: flex; flex-direction: column; }
-        .text-box h3 { font-size: 1.15rem; font-weight: 800; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.5px;}
-        .text-box p { font-size: 0.85rem; color: var(--text-color); opacity: 0.7; font-weight: 600; margin: 0; line-height: 1.3;}
+
+        .icon-box { 
+            width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; 
+            color: var(--primary-color); margin-right: 18px; flex-shrink: 0; transition: 0.3s;
+        }
+
+        .text-box { flex: 1; text-align: left; display: flex; flex-direction: column;}
+        .text-box h3 { font-size: 1.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-color); margin-bottom: 4px; line-height: 1; transition: 0.3s;}
+        .text-box p { font-size: 0.85rem; color: #888; font-weight: 600; line-height: 1.3; margin: 0; transition: 0.3s;}
+
+        .tech-list-card:active .icon-box, 
+        .tech-list-card:active .text-box h3, 
+        .tech-list-card:active .text-box p {
+            color: #ffffff;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
 
         .pantalla { display: none; animation: slideIn 0.3s ease-out forwards; }
         .pantalla.activa { display: block; }
 
-        .tabs { display: flex; margin-bottom: 15px; border-radius: 8px; overflow: hidden; border: 2px solid var(--table-border); }
-        .tab-btn { flex: 1; padding: 15px; background-color: var(--input-bg); color: var(--text-color); border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; transition: 0.2s;}
+        /* --- UI COMPONENTES GLASSMORPHISM --- */
+        .seccion-modulo { border: 1px solid var(--card-border); border-radius: 12px; padding: 18px; margin-bottom: 15px; background-color: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .seccion-titulo { color: var(--primary-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; text-transform: uppercase;}
+
+        .tabs { display: flex; margin-bottom: 15px; border-radius: 10px; overflow: hidden; border: 1px solid var(--card-border); background: var(--card-bg); backdrop-filter: blur(10px);}
+        .tab-btn { flex: 1; padding: 15px; background-color: transparent; color: var(--text-color); border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.95rem; transition: 0.3s;}
         .tab-btn.activa { background-color: var(--primary-color); color: #fff; }
         .tab-content { display: none; }
         .tab-content.activa { display: block; }
 
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
         .input-group { display: flex; flex-direction: column; }
         .full-width { grid-column: 1 / -1; }
         
         label { margin-bottom: 5px; font-weight: 800; color: var(--text-color); opacity: 0.8; font-size: 0.8rem; text-transform: uppercase; }
-        input, select { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 700; background-color: var(--input-bg); border: 2px solid var(--table-border); color: var(--text-color); border-radius: 8px; transition: 0.2s;}
-        input:focus, select:focus { border-color: var(--primary-color); outline: none; }
-        input.error { border-color: var(--error-color); background-color: rgba(211, 47, 47, 0.1); }
+        input, select { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-color); border-radius: 8px; transition: 0.2s; text-align: center;}
+        input:focus, select:focus { border-color: var(--primary-color); outline: none; background: transparent; }
+        input.error { border-color: var(--error-color); background-color: rgba(211, 47, 47, 0.05); }
+        select {
+            appearance: none; -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23FF6600%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat; background-position: right 12px center; background-size: 20px auto;
+            padding-right: 35px !important; text-align: left !important; padding-left: 12px !important; cursor: pointer;
+        }
         
         .helper-text { font-size: 0.8rem; color: var(--text-color); opacity: 0.7; margin-top: 4px; line-height: 1.4; text-align: center; font-weight: 600;}
-        .error-text { color: var(--error-color); font-size: 0.8rem; font-weight: 800; margin-top: 5px; display: none; }
+        .error-text { color: var(--error-color); font-size: 0.8rem; font-weight: 800; margin-top: 5px; display: none; text-align: center; }
 
-        .btn-calc { width: 100%; padding: 18px; font-size: 1.3rem; background-color: var(--primary-color); color: #fff; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; text-transform: uppercase; margin-top: 10px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(255,102,0,0.3); transition: 0.2s;}
+        .btn-calc { width: 100%; padding: 18px; font-size: 1.25rem; background-color: var(--primary-color); color: #fff; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-top: 5px; margin-bottom: 15px; box-shadow: 0 6px 15px rgba(255,85,0,0.25); transition: 0.2s;}
         .btn-calc:active { transform: scale(0.98);}
 
-        .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; border: 3px solid var(--table-border); border-radius: 12px; background-color: var(--panel-bg); display: none; }
-        .result-box-inner { text-align: center; margin-bottom: 10px; background: rgba(128,128,128,0.05); padding: 10px; border-radius: 8px; border: 1px solid var(--table-border);}
-        .result-label { color: var(--text-color); opacity: 0.8; font-size: 0.85rem; margin-bottom: 5px; text-transform: uppercase; font-weight: 800;}
-        .result-value { font-size: 1.6rem; color: var(--primary-color); font-weight: 900; font-family: monospace; letter-spacing: -1px;}
-        .result-box-wide { grid-column: 1 / -1; text-align: center; margin-bottom: 10px; padding: 15px; background-color: rgba(128,128,128,0.05); border-radius: 8px; border: 1px solid var(--table-border);}
+        .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 18px; border: 1px solid var(--card-border); border-radius: 12px; background-color: var(--card-bg); display: none; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .result-box-inner { text-align: center; margin-bottom: 10px; background: rgba(128,128,128,0.03); padding: 15px 10px; border-radius: 10px; border: 1px solid var(--card-border);}
+        .result-label { color: var(--text-color); opacity: 0.8; font-size: 0.8rem; margin-bottom: 5px; text-transform: uppercase; font-weight: 800;}
+        .result-value { font-size: 1.5rem; color: var(--primary-color); font-weight: 900; font-family: monospace; letter-spacing: -1px;}
+        .result-box-wide { grid-column: 1 / -1; text-align: center; margin-bottom: 10px; padding: 18px; background-color: rgba(128,128,128,0.03); border-radius: 10px; border: 1px solid var(--card-border);}
         .result-value-wide { font-size: 1.4rem; color: var(--primary-color); font-weight: 900; font-family: monospace; margin-top: 5px;}
         
         .btn-action { padding: 15px; font-weight: 800; border-radius: 8px; cursor: pointer; border: none; font-size: 1rem; text-transform: uppercase;}
         .btn-copiar { background-color: var(--table-header); color: #fff; }
         .btn-limpiar { background-color: transparent; color: var(--error-color); border: 2px solid var(--error-color); }
-        .btn-map { grid-column: 1 / -1; background-color: rgba(46,125,50,0.1); color: var(--success-color); border: 2px solid var(--success-color); }
+        .btn-map { grid-column: 1 / -1; background-color: rgba(46,125,50,0.05); color: var(--success-color); border: 1px solid var(--success-color); }
 
-        .info-box { background-color: #fff3e0; border-left: 5px solid var(--primary-color); padding: 15px; font-size: 0.9rem; color: #000; line-height: 1.4; border-radius: 0 8px 8px 0; font-weight: 600;}
+        .info-box { background-color: rgba(255, 85, 0, 0.05); border-left: 5px solid var(--primary-color); padding: 15px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; font-weight: 600; margin-bottom: 15px;}
         .info-box strong { color: var(--primary-color); font-weight: 800;}
-        .drop-zone { border: 2px dashed var(--table-border); border-radius: 8px; padding: 30px 20px; text-align: center; background-color: rgba(128,128,128,0.05); margin-bottom: 15px; color: var(--text-color); font-weight: 800; text-transform: uppercase;}
+        .drop-zone { border: 2px dashed var(--primary-color); border-radius: 12px; padding: 35px 20px; text-align: center; background-color: rgba(255,85,0,0.02); margin-bottom: 15px; color: var(--primary-color); font-weight: 800; text-transform: uppercase;}
         
-        .seccion-modulo { border: 2px solid var(--table-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; background-color: var(--panel-bg); backdrop-filter: blur(5px);}
-        .seccion-titulo { color: var(--primary-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 10px; border-bottom: 2px solid rgba(128,128,128,0.2); padding-bottom: 5px; text-transform: uppercase;}
-
-        .alerta-critica { background-color: #ffebee; border-left: 6px solid var(--error-color); padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
-        .alerta-critica h4 { color: var(--error-color); margin-bottom: 8px; font-size: 1rem; text-transform: uppercase; font-weight: 800;}
-        .alerta-critica p { color: #111; font-size: 0.9rem; line-height: 1.4; margin: 0; font-weight: 600;}
+        .alerta-critica { background-color: rgba(211, 47, 47, 0.05); border-left: 5px solid var(--error-color); padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
+        .alerta-critica h4 { color: var(--error-color); margin-bottom: 6px; font-size: 0.95rem; text-transform: uppercase; font-weight: 900;}
+        .alerta-critica p { color: var(--text-color); font-size: 0.85rem; line-height: 1.4; margin: 0; font-weight: 600; opacity: 0.9;}
 
         @media screen and (max-width: 480px) {
             html { font-size: 13px; }
-            .top-bar { padding: 10px 15px; height: 60px;}
-            .btn-volver-mini { width: 35px; height: 35px;}
-            .card-horizontal { padding: 15px 12px; }
-            .icon-box { width: 50px; height: 50px; margin-right: 12px; }
-            .icon-box svg { width: 28px; height: 28px; }
-            input, select { padding: 8px; font-size: 1rem; }
+            .top-bar { padding: 10px 15px; height: 65px;}
+            .btn-volver-mini { width: 40px; height: 40px;}
+            .spacer { width: 90px; } /* Ajustador para centrado con 2 botones */
+            .tech-list-card { padding: 18px 15px; border-radius: 12px;}
+            .icon-box { width: 42px; height: 42px; margin-right: 15px; }
+            .icon-box svg { width: 32px; height: 32px; }
+            input, select { padding: 10px; font-size: 1.05rem; }
         }
     </style>
 </head>
 <body>
+
+    <div class="fire-base">
+        <div class="fire-wave delay"></div>
+        <div class="fire-wave"></div>
+    </div>
 
     <script>
         try {
@@ -143,19 +216,24 @@
         } catch(e) {}
     </script>
 
+    <!-- MENÚ PRINCIPAL DE COORDENADAS -->
     <div id="menu-coordenadas" class="pantalla activa">
         <div class="top-bar">
+            <!-- Botón Casa (Home) solo uno porque es la raíz del módulo -->
             <a href="index.html" class="btn-volver-mini">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
             </a>
             <h2 class="top-bar-title">COORDENADAS <span>Módulos de Cálculo</span></h2>
-            <div style="width: 45px;"></div>
+            <div class="spacer"></div>
         </div>
 
         <div class="modulo-container">
-            <a href="#" onclick="cambiarPantalla('calc-datum'); return false;" class="card-horizontal">
+            <a href="#" onclick="cambiarPantalla('calc-datum'); return false;" class="tech-list-card card-animar">
                 <div class="icon-box">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 </div>
                 <div class="text-box">
                     <h3>Cambio de Datum</h3>
@@ -163,9 +241,9 @@
                 </div>
             </a>
 
-            <a href="#" onclick="cambiarPantalla('calc-utm-geo'); return false;" class="card-horizontal">
+            <a href="#" onclick="cambiarPantalla('calc-utm-geo'); return false;" class="tech-list-card card-animar">
                 <div class="icon-box">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 </div>
                 <div class="text-box">
                     <h3>UTM ⇄ Geográficas</h3>
@@ -173,9 +251,9 @@
                 </div>
             </a>
 
-            <a href="#" onclick="cambiarPantalla('calc-utm-topo'); return false;" class="card-horizontal">
+            <a href="#" onclick="cambiarPantalla('calc-utm-topo'); return false;" class="tech-list-card card-animar">
                 <div class="icon-box">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>
                 </div>
                 <div class="text-box">
                     <h3>UTM a Topográficas</h3>
@@ -183,9 +261,9 @@
                 </div>
             </a>
 
-            <a href="#" onclick="cambiarPantalla('calc-geoidal'); return false;" class="card-horizontal">
+            <a href="#" onclick="cambiarPantalla('calc-geoidal'); return false;" class="tech-list-card card-animar">
                 <div class="icon-box">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 </div>
                 <div class="text-box">
                     <h3>Transf. de Cotas</h3>
@@ -195,13 +273,25 @@
         </div>
     </div>
 
+    <!-- SUBMÓDULO: CAMBIO DE DATUM -->
     <div id="calc-datum" class="pantalla">
         <div class="top-bar">
-            <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            </a>
+            <div class="nav-buttons-left">
+                <a href="index.html" class="btn-volver-mini">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
             <h2 class="top-bar-title">Cambio de <span>Datum</span></h2>
-            <div style="width: 45px;"></div>
+            <div style="width: 90px;"></div>
         </div>
         
         <div class="modulo-container">
@@ -222,8 +312,8 @@
                     </div>
                 </div>
 
-                <div class="form-grid" id="cajaParametros" style="display: none; background: rgba(255,102,0,0.05); padding: 15px; border-radius: 8px; border: 1px dashed var(--primary-color); margin-top: 10px;">
-                    <div class="full-width helper-text" style="text-align: left; margin-bottom: 12px; font-size: 0.85rem; background: var(--input-bg); padding: 12px; border-radius: 6px; border: 1px solid var(--table-border);">
+                <div class="form-grid" id="cajaParametros" style="display: none; background: rgba(255,85,0,0.05); padding: 15px; border-radius: 8px; border: 1px dashed var(--primary-color); margin-top: 10px;">
+                    <div class="full-width helper-text" style="text-align: left; margin-bottom: 12px; font-size: 0.85rem; background: var(--input-bg); padding: 12px; border-radius: 6px; border: 1px solid var(--card-border);">
                         <strong style="color: var(--primary-color); font-size: 0.95rem;">💡 ¿Cómo y cuándo usarlos?</strong><br><br>
                         • <strong>Nacionales:</strong> Son fijos (ΔX:-288, ΔY:175, ΔZ:-376). Tienen un error de 3 a 5 metros dependiendo de tu región.<br><br>
                         • <strong>Locales:</strong> Ingresa aquí los Deltas (Δ) exactos de tu obra para reducir el error a centímetros. Se obtienen al estacionar tu GPS en un hito conocido y restar matemáticamente: <br><em>(Coordenada WGS84 satelital) - (Coordenada PSAD56 del plano antiguo)</em>.
@@ -276,13 +366,25 @@
         </div>
     </div>
 
+    <!-- SUBMÓDULO: UTM ⇄ GEO -->
     <div id="calc-utm-geo" class="pantalla">
         <div class="top-bar">
-            <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            </a>
+            <div class="nav-buttons-left">
+                <a href="index.html" class="btn-volver-mini">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
             <h2 class="top-bar-title">UTM ⇄ <span>Geo</span></h2>
-            <div style="width: 45px;"></div>
+            <div style="width: 90px;"></div>
         </div>
         
         <div class="modulo-container">
@@ -317,7 +419,7 @@
                 <div class="result-box-inner"><div class="result-label">ESTE UTM (X)</div><div class="result-value" id="resEsteGeoOut">0.000</div></div>
                 <div class="result-box-inner"><div class="result-label">NORTE UTM (Y)</div><div class="result-value" id="resNorteGeoOut">0.000</div></div>
                 
-                <div class="result-box-inner" style="background:rgba(255,102,0,0.05); border-color:var(--primary-color);"><div class="result-label">Factor Escala (K)</div><div class="result-value" id="resK" style="font-size: 1.2rem;">0.000000</div></div>
+                <div class="result-box-inner" style="background:rgba(255,85,0,0.05); border-color:var(--primary-color);"><div class="result-label">Factor Escala (K)</div><div class="result-value" id="resK" style="font-size: 1.2rem;">0.000000</div></div>
                 <div class="result-box-inner" style="background:rgba(46,125,50,0.05); border-color:var(--success-color);"><div class="result-label">Convergencia (γ)</div><div class="result-value" id="resConv" style="font-size: 1.2rem; color:var(--success-color);">0° 0' 0"</div></div>
 
                 <button class="btn-action btn-copiar" onclick="copiarTxt('resEsteGeoOut', 'resNorteGeoOut')">📋 Copiar</button>
@@ -327,13 +429,25 @@
         </div>
     </div>
 
+    <!-- SUBMÓDULO: UTM A TOPO -->
     <div id="calc-utm-topo" class="pantalla">
         <div class="top-bar">
-            <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            </a>
+            <div class="nav-buttons-left">
+                <a href="index.html" class="btn-volver-mini">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
             <h2 class="top-bar-title">UTM a <span>Topo</span></h2>
-            <div style="width: 45px;"></div>
+            <div style="width: 90px;"></div>
         </div>
         
         <div class="modulo-container">
@@ -365,7 +479,7 @@
 
             <div class="result-grid" id="cajaResultadoPtl">
                 
-                <div class="result-box-wide" style="background-color: rgba(255,102,0,0.05); border: 2px solid var(--primary-color);">
+                <div class="result-box-wide" style="background-color: rgba(255,85,0,0.05); border: 2px solid var(--primary-color);">
                     <div class="result-label" style="color: var(--primary-color);">FACTOR A INGRESAR EN LA ESTACIÓN TOTAL</div>
                     <div class="result-value-wide" style="color: var(--text-color); font-size: 2rem;">1.000000</div>
                 </div>
@@ -393,13 +507,25 @@
         </div>
     </div>
 
+    <!-- SUBMÓDULO: TRANSF DE COTAS -->
     <div id="calc-geoidal" class="pantalla">
         <div class="top-bar">
-            <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            </a>
+            <div class="nav-buttons-left">
+                <a href="index.html" class="btn-volver-mini">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+            </div>
             <h2 class="top-bar-title">Transf. de <span>Cotas</span></h2>
-            <div style="width: 45px;"></div>
+            <div style="width: 90px;"></div>
         </div>
         
         <div class="modulo-container">
@@ -452,7 +578,7 @@
             <button class="btn-calc" onclick="ejecutarGeoidalOffline()">Calcular Cota Real</button>
 
             <div class="result-grid" id="cajaResGeoidal">
-                <div class="result-box-wide" style="background-color: rgba(255,102,0,0.05); border: 2px solid var(--primary-color);">
+                <div class="result-box-wide" style="background-color: rgba(255,85,0,0.05); border: 2px solid var(--primary-color);">
                     <div class="result-label" style="color: var(--primary-color);">ONDULACIÓN (N) APROXIMADA EN PERÚ</div>
                     <div class="result-value-wide" id="resN" style="color: var(--text-color); font-size: 2rem;">0.000 m</div>
                 </div>
@@ -464,18 +590,63 @@
     </div>
 
     <script>
-        // Lógica de Navegación Nativa
+        // --- NAVEGACIÓN Y ESTADO DE APP ---
+        let nameMap = {
+            'calc-datum': 'CAMBIO DE DATUM',
+            'calc-utm-geo': 'UTM ⇄ GEO',
+            'calc-utm-topo': 'UTM A TOPO',
+            'calc-geoidal': 'TRANSF. DE COTAS'
+        };
+
+        window.onload = function() {
+            // REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX
+            // Si carga con un hash en la URL (ej. coordenadas.html#calc-datum), va directo y guarda ese estado
+            if(window.location.hash) {
+                let mod = window.location.hash.substring(1);
+                if(document.getElementById(mod)) {
+                    cambiarPantalla(mod);
+                }
+            } else {
+                localStorage.setItem('cota100_last_name', 'COORDENADAS');
+                localStorage.setItem('cota100_last_url', 'coordenadas.html');
+            }
+
+            // Aplicar Modo Oscuro
+            try {
+                let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
+                if (conf && conf.darkMode) document.body.classList.add('dark-mode');
+            } catch(e) {}
+
+            // Cargar Zona Guardada
+            let zG = localStorage.getItem("cota100_zona");
+            if(zG) { 
+                document.getElementById('zonaUtm').value = zG; 
+                document.getElementById('zonaUtmGeo').value = zG; 
+                document.getElementById('zonaGeoidal').value = zG; 
+                actualizarAyudaZona(); 
+            }
+        };
+
         function cambiarPantalla(idPantalla) {
             document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
             document.getElementById(idPantalla).classList.add('activa');
             
-            // Sincronizar zonas
+            // Sincronizar zonas entre calculadoras
             let baseZona = document.getElementById('zonaUtm').value;
             if(idPantalla === 'calc-utm-geo') document.getElementById('zonaUtmGeo').value = baseZona;
             if(idPantalla === 'calc-geoidal') document.getElementById('zonaGeoidal').value = baseZona;
 
             window.scrollTo(0,0);
-            if(idPantalla !== 'menu-coordenadas') history.pushState({ modulo: idPantalla }, "", `#${idPantalla}`);
+            
+            if(idPantalla !== 'menu-coordenadas') {
+                history.pushState({ modulo: idPantalla }, "", `#${idPantalla}`);
+                // Actualiza el widget de inicio para que retome exactamente este submódulo
+                localStorage.setItem('cota100_last_name', nameMap[idPantalla]);
+                localStorage.setItem('cota100_last_url', `coordenadas.html#${idPantalla}`);
+            } else {
+                localStorage.setItem('cota100_last_name', 'COORDENADAS');
+                localStorage.setItem('cota100_last_url', 'coordenadas.html');
+            }
         }
 
         function volverAlMenu() {
@@ -488,7 +659,7 @@
             else cambiarPantalla('menu-coordenadas');
         };
 
-        // Lógica de UI Datum
+        // --- UI DATUM ---
         function cambiarTab(modo) {
             document.getElementById('btnTabManual').classList.remove('activa'); document.getElementById('btnTabMasivo').classList.remove('activa');
             document.getElementById('tab-manual').classList.remove('activa'); document.getElementById('tab-masivo').classList.remove('activa');
@@ -544,11 +715,6 @@
             btn.style.opacity = err?'0.5':'1'; btn.style.pointerEvents = err?'none':'auto';
             return !err;
         }
-
-        window.onload = function() {
-            let zG = localStorage.getItem("cota100_zona");
-            if(zG) { document.getElementById('zonaUtm').value = zG; document.getElementById('zonaUtmGeo').value = zG; document.getElementById('zonaGeoidal').value = zG; actualizarAyudaZona(); }
-        };
 
         function copiarTxt(id1, id2) {
             let v1 = document.getElementById(id1).innerText.replace(/[a-zA-Z\s:]/g, ''); 
@@ -615,7 +781,7 @@
             return { este: x, norte: y, k: k, gamma: gammaDeg };
         }
 
-        // --- CÁLCULOS UI ---
+        // --- CÁLCULOS UI DATUM ---
         function ejecutarTransformacion() {
             if(!validarDigitos('esteIn', 'errEste', 'norteIn', 'errNorte', 'btnCalcular')) return; 
             let decs = parseInt(JSON.parse(localStorage.getItem('cota100_ajustes'))?.decimales) || 3;
@@ -685,6 +851,7 @@
             reader.readAsText(file);
         }
 
+        // --- CÁLCULOS UTM GEO ---
         function toggleInputsGeo() {
             let dir = document.getElementById('dirUtmGeo').value;
             if(dir === 'u2g') {
@@ -725,6 +892,7 @@
         function verEnGoogleMapsGeoU2G() { let lat = document.getElementById('resLatDec').innerText; let lon = document.getElementById('resLonDec').innerText; window.open(`https://www.google.com/maps/search/?api=1&query=$?q=${lat},${lon}`, '_blank'); }
         function verEnGoogleMapsGeoG2U() { let lat = document.getElementById('latIn').value; let lon = document.getElementById('lonIn').value; window.open(`https://www.google.com/maps/search/?api=1&query=$?q=${lat},${lon}`, '_blank'); }
 
+        // --- CÁLCULOS PTL ---
         function ejecutarPtl() {
             let decs = parseInt(JSON.parse(localStorage.getItem('cota100_ajustes'))?.decimales) || 3;
             let esteBase = parseFloat(document.getElementById('esteBase').value); let norteBase = parseFloat(document.getElementById('norteBase').value); let cotaBase = parseFloat(document.getElementById('cotaBase').value);

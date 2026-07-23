@@ -4,93 +4,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>COTA100 SYSTEM - Ajustes Globales</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* --- ESTILOS UNIFICADOS COTA100 --- */
         :root {
-            --bg-color: #ffffff; --text-color: #000000;
-            --primary-color: #FF6600; --border-color: rgba(0, 0, 0, 0.2); 
-            --table-header: #111; --success-color: #2e7d32; --error-color: #d32f2f; --danger-color: #d32f2f;
-            --panel-bg: rgba(255,255,255,0.85); --input-bg: rgba(255,255,255,0.9);
+            --bg-color: #f8f9fa;
+            --text-color: #1a1e23;
+            --primary-color: #FF5500; 
+            --primary-glow: rgba(255, 85, 0, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 85, 0, 0.15);
+            --border-color: rgba(0, 0, 0, 0.15); 
+            --table-header: #1a1e23; 
+            --danger-color: #d32f2f; 
+            --input-bg: rgba(255,255,255,0.9);
+            --success-color: #2e7d32;
         }
 
         body.dark-mode {
-            --bg-color: #121212; --text-color: #e0e0e0;
+            --bg-color: #05070a;
+            --text-color: #ffffff;
+            --primary-glow: rgba(255, 85, 0, 0.4);
+            --card-bg: rgba(18, 22, 28, 0.85);
+            --card-border: rgba(255, 85, 0, 0.25);
             --border-color: rgba(255, 255, 255, 0.15); 
-            --panel-bg: rgba(30,30,30,0.9); --input-bg: rgba(45,45,45,0.9);
-            --table-header: #000;
+            --input-bg: rgba(45,45,45,0.9);
+            --table-header: #000000;
+            --success-color: #00C851;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px;
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            padding-bottom: 80px;
             transition: background-color 0.3s, color 0.3s;
-            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23888888' stroke-opacity='0.05' stroke-width='1.5'%3E%3Cpolygon points='50,50 150,20 200,100 120,150' /%3E%3Cpolygon points='250,250 350,200 380,300 280,350' /%3E%3Cpolygon points='50,250 20,350 150,380 180,300' /%3E%3Cpolygon points='250,50 380,80 320,180 220,150' /%3E%3C/g%3E%3C/svg%3E");
-            background-size: 400px 400px; background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        @media screen and (max-width: 480px) {
-            html { font-size: 13px; } 
-            input, select { padding: 10px; font-size: 1.1rem;}
-            .panel-control { padding: 12px; margin-bottom: 12px;}
-            .top-bar { padding: 5px 15px; height: 60px; }
-            .btn-volver-mini { width: 38px; height: 38px; font-size: 1.3rem;}
+        /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
+        .fire-base {
+            position: fixed;
+            bottom: 0; left: 0; width: 100vw; height: 35vh;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
         }
+        .fire-wave {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 200vw; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 10s linear infinite;
+        }
+        .fire-wave.delay {
+            bottom: -15px; opacity: 0.6;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 7s linear infinite reverse;
+        }
+        @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
-        .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 2px solid var(--border-color); background-color: var(--panel-bg); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); height: 70px; }
-        .btn-volver-mini { background: rgba(128,128,128,0.1); border: 2px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s; font-weight: 800; font-size: 1.5rem;}
-        .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
-        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
+        /* --- CABECERA DUAL --- */
+        .top-bar { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
+            background-color: transparent; position: sticky; top: 0; z-index: 100; 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
+        }
+        .nav-buttons-left { display: flex; gap: 8px; }
+        .btn-volver-mini { 
+            background: transparent; border: none; color: var(--primary-color);
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 0 5px var(--primary-glow));
+        }
+        .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
+        
+        .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.5rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1; letter-spacing: -1px;}
+        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.8rem; letter-spacing: 2px;}
+        .spacer { width: 90px; }
 
-        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; }
+        .modulo-container { padding: 25px 15px; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-control { border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--panel-bg); backdrop-filter: blur(8px); }
-        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 2px solid rgba(128,128,128,0.2); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        /* --- PANELES (GLASSMORPHISM) --- */
+        .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 18px; margin-bottom: 5px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
         .btn-toggle-panel { background: none; border: none; font-size: 1.2rem; color: var(--text-color); pointer-events: none; transition: transform 0.3s;}
         
         .panel-contenido { display: none; margin-top: 10px; animation: fadeIn 0.3s ease-out forwards;}
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .input-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .input-row { display: flex; gap: 12px; margin-bottom: 12px; }
         .input-group { flex: 1; display: flex; flex-direction: column; }
         .full-width { grid-column: 1 / -1; }
         label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
         
-        input, select { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; }
-        input:focus, select:focus { border-color: var(--primary-color); outline: none; }
+        input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center;}
+        input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
         
-        select {
-            appearance: none; -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23FF6600%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat; background-position: right 12px center; background-size: 20px auto;
-            padding-right: 40px !important; text-align: left !important; padding-left: 12px !important; cursor: pointer;
-        }
+        /* --- CUSTOM SELECTOR (TIPO BOTÓN) --- */
+        .custom-select { width: 100%; padding: 15px 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
+        .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
+        .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
+        .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
-        /* --- SWITCH --- */
-        .switch-container { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(128,128,128,0.2); }
+        /* --- SWITCH DE ENERGÍA --- */
+        .switch-container { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(128,128,128,0.1); }
         .switch-container:last-child { border-bottom: none; }
         .switch { position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0;}
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(128,128,128,0.3); transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);}
         input:checked + .slider { background-color: var(--primary-color); }
         input:checked + .slider:before { transform: translateX(24px); }
 
-        .btn-accion { width: 100%; padding: 15px; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center; margin-bottom: 10px;}
-        .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
-        .btn-guardar { background: var(--primary-color); font-size: 1.2rem; margin-top: 15px; box-shadow: 0 4px 10px rgba(255,102,0,0.3);}
+        .btn-accion { width: 100%; padding: 16px; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
+        .btn-accion:active { transform: scale(0.98);}
+        .btn-guardar { background: var(--primary-color); font-size: 1.25rem; margin-top: 15px; box-shadow: 0 6px 15px rgba(255,85,0,0.3);}
 
         .notificacion {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: #111; color: #fff; padding: 12px 25px; border-radius: 30px; font-weight: 800;
-            opacity: 0; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1000; border: 2px solid var(--primary-color);
+            background: var(--text-color); color: var(--bg-color); padding: 15px 30px; border-radius: 30px; font-weight: 800; font-size: 1.1rem;
+            opacity: 0; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1000; border: 2px solid var(--primary-color); box-shadow: 0 5px 20px rgba(0,0,0,0.4);
         }
         .notificacion.mostrar { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* --- MODAL DE VENTANA (GLASSMORPHISM) --- */
+        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
+        .overlay-select.activo { opacity: 1; }
+        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
+        .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
+        .btn-opcion { width: 100%; padding: 16px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s;}
+        .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
+
+        @media screen and (max-width: 480px) {
+            html { font-size: 13px; } 
+            input, .custom-select { padding: 14px 10px; font-size: 1.1rem;}
+            .panel-control { padding: 12px; margin-bottom: 8px;}
+            .top-bar { padding: 10px 15px; height: 65px; }
+            .btn-volver-mini { width: 40px; height: 40px;}
+            .spacer { width: 90px; }
+        }
     </style>
 </head>
 <body onload="cargarAjustes()">
+
+    <!-- Fondo Animado Fuego / Metálico -->
+    <div class="fire-base">
+        <div class="fire-wave delay"></div>
+        <div class="fire-wave"></div>
+    </div>
 
     <script>
         try {
@@ -99,10 +170,33 @@
         } catch(e) {}
     </script>
 
+    <!-- MODAL DE SELECCIÓN GENÉRICO (LAS "VENTANAS") -->
+    <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
+    <div class="modal-select" id="modalSelect">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h3 id="modalSelectTitle" style="margin:0; color:var(--text-color); font-weight:800; font-size:1.2rem; text-transform:uppercase;">SELECCIONAR</h3>
+            <button onclick="cerrarModalSelect()" style="background:none; border:none; font-size:1.5rem; color:var(--danger-color); font-weight:800; cursor:pointer; padding:0 10px;">X</button>
+        </div>
+        <div id="modalSelectContent" style="max-height:350px; overflow-y:auto; margin-bottom:5px;"></div>
+    </div>
+
     <div class="top-bar">
-        <a href="index.html" class="btn-volver-mini" onclick="vibrarUI()">←</a>
+        <div class="nav-buttons-left">
+            <a href="index.html" class="btn-volver-mini" onclick="vibrarUI()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </a>
+            <a href="index.html" class="btn-volver-mini" onclick="vibrarUI()">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </a>
+        </div>
         <h2 class="top-bar-title">AJUSTES <span>Sistema Global</span></h2>
-        <div style="width: 45px;"></div>
+        <div class="spacer"></div>
     </div>
 
     <div class="modulo-container">
@@ -113,9 +207,9 @@
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panel1" class="panel-contenido" style="display: block;">
-                <div class="input-group full-width" style="margin-bottom: 10px;">
+                <div class="input-group full-width" style="margin-bottom: 12px;">
                     <label>Proyecto Activo por Defecto</label>
-                    <input type="text" id="ajusteProyecto" placeholder="EJ: REDES DE DRENAJE SECTOR 4" oninput="this.value = this.value.toUpperCase()">
+                    <input type="text" id="ajusteProyecto" placeholder="EJ: REDES DE DRENAJE" oninput="this.value = this.value.toUpperCase()">
                 </div>
                 <div class="input-row">
                     <div class="input-group">
@@ -123,8 +217,8 @@
                         <input type="text" id="ajusteOperador" placeholder="EJ: PIERO C." oninput="this.value = this.value.toUpperCase()">
                     </div>
                     <div class="input-group">
-                        <label>Estación / Equipo Base</label>
-                        <input type="text" id="ajusteEquipo" placeholder="EJ: TS06 LEICA" oninput="this.value = this.value.toUpperCase()">
+                        <label>Equipo Base</label>
+                        <input type="text" id="ajusteEquipo" placeholder="EJ: LEICA TS06" oninput="this.value = this.value.toUpperCase()">
                     </div>
                 </div>
             </div>
@@ -150,7 +244,7 @@
                 <div class="switch-container">
                     <div style="padding-right: 15px;">
                         <label style="display:block; margin:0; color: #1976d2;">Mantener Pantalla Activa</label>
-                        <span style="font-size:0.75rem; font-weight:600; opacity:0.7; color: var(--text-color);">Evita que el celular se bloquee.</span>
+                        <span style="font-size:0.75rem; font-weight:600; opacity:0.7; color: var(--text-color);">Evita que el celular se bloquee en campo.</span>
                     </div>
                     <label class="switch">
                         <input type="checkbox" id="checkWakeLock" onchange="toggleWakeLock(); vibrarUI();">
@@ -180,25 +274,28 @@
                 <div class="input-row">
                     <div class="input-group">
                         <label>Precisión de Decimales</label>
-                        <select id="ajusteDecimales">
-                            <option value="3">3 Decimales (Milímetro)</option>
-                            <option value="4">4 Decimales (Décima de mm)</option>
-                        </select>
+                        <div class="custom-select" onclick="abrirModalSelect('decimales')">
+                            <span id="txtDecimales">3 Decimales (Milímetro)</span>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <input type="hidden" id="ajusteDecimales" value="3">
                     </div>
                     <div class="input-group">
-                        <label>Alerta de Lectura de Mira</label>
-                        <select id="ajusteAlertaMira">
-                            <option value="5">Máximo 5.00 m</option>
-                            <option value="4">Máximo 4.00 m</option>
-                        </select>
+                        <label>Alerta Lectura de Mira</label>
+                        <div class="custom-select" onclick="abrirModalSelect('alertaMira')">
+                            <span id="txtAlertaMira">Máximo 5.00 m</span>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <input type="hidden" id="ajusteAlertaMira" value="5">
                     </div>
                 </div>
                 <div class="input-group full-width" style="margin-top: 5px;">
                     <label>Unidad de Presión por Defecto</label>
-                    <select id="ajusteUnidadPresion">
-                        <option value="hpa">hPa / mbar (Estándar)</option>
-                        <option value="mmhg">mmHg (Topcon/South/CHCNAV)</option>
-                    </select>
+                    <div class="custom-select" onclick="abrirModalSelect('presion')">
+                        <span id="txtUnidadPresion">hPa / mbar (Estándar)</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <input type="hidden" id="ajusteUnidadPresion" value="hpa">
                 </div>
             </div>
         </div>
@@ -211,24 +308,25 @@
             <div id="panel4" class="panel-contenido">
                 <div class="input-group full-width">
                     <label>Formato CSV/TXT Predeterminado</label>
-                    <select id="ajusteFormatoCSV">
-                        <option value="PEN">Punto, Este, Norte (P-E-N)</option>
-                        <option value="EN">Solo Este, Norte (E-N)</option>
-                    </select>
+                    <div class="custom-select" onclick="abrirModalSelect('formato')">
+                        <span id="txtFormatoCSV">Punto, Este, Norte (P-E-N)</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <input type="hidden" id="ajusteFormatoCSV" value="PEN">
                     <span style="font-size:0.75rem; font-weight:600; opacity:0.7; color: var(--text-color); margin-top: 5px;">* Formato base para cargar coordenadas en Áreas y Poligonales.</span>
                 </div>
             </div>
         </div>
 
-        <div class="panel-control" style="border-left: 5px solid #111; background: rgba(128,128,128,0.05);">
-            <div class="panel-titulo" style="color: var(--text-color);" onclick="togglePanel('panel5', this)">
+        <div class="panel-control" style="border-left: 5px solid var(--danger-color); background: rgba(211,47,47,0.02);">
+            <div class="panel-titulo" style="color: var(--danger-color);" onclick="togglePanel('panel5', this)">
                 <span>💾 5. Respaldo y Mantenimiento</span>
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panel5" class="panel-contenido">
-                <button class="btn-accion" style="background:#111;" onclick="exportarBackupTotal(); vibrarUI();">📤 Exportar Backup Global (.json)</button>
+                <button class="btn-accion" style="background:var(--table-header);" onclick="exportarBackupTotal(); vibrarUI();">📤 Exportar Backup Global (.json)</button>
                 
-                <label class="btn-accion" style="background:transparent; color:var(--text-color); border:2px solid var(--text-color); cursor: pointer; display: block;" onclick="vibrarUI()">
+                <label class="btn-accion" style="background:transparent; color:var(--text-color); border:2px solid var(--card-border); cursor: pointer; display: block;" onclick="vibrarUI()">
                     📥 Restaurar Sistema Completo
                     <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importarBackupTotal()">
                 </label>
@@ -240,7 +338,7 @@
             </div>
         </div>
 
-        <button class="btn-accion btn-guardar" onclick="guardarAjustes(true); vibrarUI();">💾 GUARDAR PREFERENCIAS GLOBALES</button>
+        <button class="btn-accion btn-guardar" onclick="guardarAjustes(true); vibrarUI();">💾 GUARDAR PREFERENCIAS</button>
 
     </div>
 
@@ -249,8 +347,71 @@
     <script>
         let wakeLock = null;
         let usarVibracion = true;
+        let tipoModalActual = "";
 
-        // Función de vibración inteligente
+        // --- SISTEMA DE VENTANAS MODALES ---
+        function abrirModalSelect(tipo) {
+            vibrarUI();
+            tipoModalActual = tipo;
+            const titulo = document.getElementById('modalSelectTitle');
+            const contenido = document.getElementById('modalSelectContent');
+            contenido.innerHTML = "";
+            
+            let opciones = [];
+            let actual = "";
+
+            if(tipo === 'decimales') {
+                titulo.innerText = "📐 PRECISIÓN DE DECIMALES";
+                opciones = [{val: '3', txt: '3 Decimales (Milímetro)'}, {val: '4', txt: '4 Decimales (Décima de mm)'}];
+                actual = document.getElementById('ajusteDecimales').value;
+            } else if (tipo === 'alertaMira') {
+                titulo.innerText = "⚠️ ALERTA DE MIRA";
+                opciones = [{val: '5', txt: 'Máximo 5.00 m'}, {val: '4', txt: 'Máximo 4.00 m'}];
+                actual = document.getElementById('ajusteAlertaMira').value;
+            } else if (tipo === 'presion') {
+                titulo.innerText = "☁️ UNIDAD DE PRESIÓN";
+                opciones = [{val: 'hpa', txt: 'hPa / mbar (Estándar)'}, {val: 'mmhg', txt: 'mmHg (Topcon/South)'}];
+                actual = document.getElementById('ajusteUnidadPresion').value;
+            } else if (tipo === 'formato') {
+                titulo.innerText = "📥 FORMATO CSV";
+                opciones = [{val: 'PEN', txt: 'Punto, Este, Norte (P-E-N)'}, {val: 'EN', txt: 'Solo Este, Norte (E-N)'}];
+                actual = document.getElementById('ajusteFormatoCSV').value;
+            }
+
+            opciones.forEach(opt => {
+                let isActivo = opt.val === actual;
+                contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${opt.val}', '${opt.txt}')"><span>${opt.txt}</span></button>`;
+            });
+
+            document.getElementById('overlaySelect').style.display = 'block';
+            setTimeout(() => { document.getElementById('overlaySelect').classList.add('activo'); document.getElementById('modalSelect').classList.add('abierto'); }, 10);
+        }
+
+        function cerrarModalSelect() {
+            vibrarUI();
+            document.getElementById('overlaySelect').classList.remove('activo');
+            document.getElementById('modalSelect').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300);
+        }
+
+        function seleccionarOpcionModal(valor, texto) {
+            cerrarModalSelect();
+            if(tipoModalActual === 'decimales') {
+                document.getElementById('ajusteDecimales').value = valor;
+                document.getElementById('txtDecimales').innerText = texto;
+            } else if(tipoModalActual === 'alertaMira') {
+                document.getElementById('ajusteAlertaMira').value = valor;
+                document.getElementById('txtAlertaMira').innerText = texto;
+            } else if(tipoModalActual === 'presion') {
+                document.getElementById('ajusteUnidadPresion').value = valor;
+                document.getElementById('txtUnidadPresion').innerText = texto;
+            } else if(tipoModalActual === 'formato') {
+                document.getElementById('ajusteFormatoCSV').value = valor;
+                document.getElementById('txtFormatoCSV').innerText = texto;
+            }
+        }
+
+        // --- SISTEMA GENERAL ---
         function vibrarUI() {
             if (usarVibracion && navigator.vibrate) navigator.vibrate(30);
         }
@@ -269,6 +430,8 @@
         }
 
         function cargarAjustes() {
+            // Nota: Este módulo no altera cota100_last_url, preservando tu avance.
+
             let conf = JSON.parse(localStorage.getItem('cota100_ajustes')) || {
                 darkMode: false, wakeLockEnabled: false, vibracion: true,
                 decimales: "3", alertaMira: "5", unidadPresion: "hpa", formatoCSV: "PEN"
@@ -280,12 +443,20 @@
             
             document.getElementById('checkDarkMode').checked = !!conf.darkMode;
             document.getElementById('checkWakeLock').checked = !!conf.wakeLockEnabled;
-            document.getElementById('checkVibracion').checked = conf.vibracion !== false; // true por defecto
+            document.getElementById('checkVibracion').checked = conf.vibracion !== false; 
             
+            // Cargar selectores personalizados
             document.getElementById('ajusteDecimales').value = conf.decimales || "3";
+            document.getElementById('txtDecimales').innerText = (conf.decimales === "4") ? "4 Decimales (Décima de mm)" : "3 Decimales (Milímetro)";
+
             document.getElementById('ajusteAlertaMira').value = conf.alertaMira || "5";
+            document.getElementById('txtAlertaMira').innerText = (conf.alertaMira === "4") ? "Máximo 4.00 m" : "Máximo 5.00 m";
+
             document.getElementById('ajusteUnidadPresion').value = conf.unidadPresion || "hpa";
+            document.getElementById('txtUnidadPresion').innerText = (conf.unidadPresion === "mmhg") ? "mmHg (Topcon/South)" : "hPa / mbar (Estándar)";
+
             document.getElementById('ajusteFormatoCSV').value = conf.formatoCSV || "PEN";
+            document.getElementById('txtFormatoCSV').innerText = (conf.formatoCSV === "EN") ? "Solo Este, Norte (E-N)" : "Punto, Este, Norte (P-E-N)";
 
             usarVibracion = document.getElementById('checkVibracion').checked;
 
@@ -311,7 +482,7 @@
             
             if(mostrarNotificacion) {
                 mostrarToast("Preferencias actualizadas");
-                setTimeout(() => { window.location.href = "index.html"; }, 1000); // Regresa al menú tras guardar
+                setTimeout(() => { window.location.href = "index.html"; }, 1000); 
             }
         }
 
@@ -350,11 +521,11 @@
         // --- SISTEMA DE BACKUP TOTAL ---
         function exportarBackupTotal() {
             const backup = {
-                version_export: "2.0",
+                version_export: "3.0",
                 fecha: new Date().toISOString(),
                 ajustes: JSON.parse(localStorage.getItem('cota100_ajustes')),
-                db_simple: JSON.parse(localStorage.getItem('cota100_db_simple_v3')),
-                db_alcan: JSON.parse(localStorage.getItem('cota100_db_alcan_v1')),
+                db_simple: JSON.parse(localStorage.getItem('cota100_db_simple_v4')),
+                db_alcan: JSON.parse(localStorage.getItem('cota100_db_alcan_v3')),
                 db_polabierta: JSON.parse(localStorage.getItem('cota100_db_polabierta_v1')),
                 db_polcerrada: JSON.parse(localStorage.getItem('cota100_db_polcerrada_v1')),
                 db_areas: JSON.parse(localStorage.getItem('cota100_db_areas_v1'))
@@ -377,8 +548,8 @@
                 try {
                     const b = JSON.parse(e.target.result);
                     if(b.ajustes) localStorage.setItem('cota100_ajustes', JSON.stringify(b.ajustes));
-                    if(b.db_simple) localStorage.setItem('cota100_db_simple_v3', JSON.stringify(b.db_simple));
-                    if(b.db_alcan) localStorage.setItem('cota100_db_alcan_v1', JSON.stringify(b.db_alcan));
+                    if(b.db_simple) localStorage.setItem('cota100_db_simple_v4', JSON.stringify(b.db_simple));
+                    if(b.db_alcan) localStorage.setItem('cota100_db_alcan_v3', JSON.stringify(b.db_alcan));
                     if(b.db_polabierta) localStorage.setItem('cota100_db_polabierta_v1', JSON.stringify(b.db_polabierta));
                     if(b.db_polcerrada) localStorage.setItem('cota100_db_polcerrada_v1', JSON.stringify(b.db_polcerrada));
                     if(b.db_areas) localStorage.setItem('cota100_db_areas_v1', JSON.stringify(b.db_areas));
@@ -403,7 +574,7 @@
             if(confirm("🚨 ADVERTENCIA: Estás a punto de borrar TODAS las libretas, poligonales y áreas de la memoria de tu teléfono.\n\n¿Estás seguro?")) {
                 let check = prompt("Escribe BORRAR en mayúsculas para confirmar:");
                 if(check === "BORRAR") {
-                    localStorage.clear(); // Limpia absolutamente todo el dominio local
+                    localStorage.clear();
                     alert("La aplicación ha sido restablecida de fábrica.");
                     window.location.href = "index.html";
                 } else { alert("Acción cancelada."); }

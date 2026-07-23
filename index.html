@@ -3,30 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>COTA100 SYSTEM - Raw Tech Pro</title>
+    <title>COTA100 SYSTEM - Professional Tech</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #000000;
-            --primary-color: #FF6600; 
-            --primary-metallic-light: #FF8833; 
-            --border-color: rgba(0, 0, 0, 0.2); 
-            --card-bg: rgba(255, 255, 255, 0.85);
+            --bg-color: #f8f9fa;
+            --text-color: #1a1e23;
+            --primary-color: #FF5500; 
+            --primary-glow: rgba(255, 85, 0, 0.15);
             --danger-color: #d32f2f;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 85, 0, 0.15);
+            --lock-bg: rgba(255, 255, 255, 0.8);
+            --lock-box-bg: rgba(255, 255, 255, 0.98);
         }
 
         body.dark-mode {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --border-color: rgba(255, 255, 255, 0.15);
-            --card-bg: rgba(30, 30, 30, 0.85);
+            --bg-color: #05070a;
+            --text-color: #ffffff;
+            --primary-glow: rgba(255, 85, 0, 0.25);
+            --card-bg: rgba(18, 22, 28, 0.85);
+            --card-border: rgba(255, 85, 0, 0.2);
+            --lock-bg: rgba(5, 7, 10, 0.85);
+            --lock-box-bg: rgba(15, 18, 22, 0.98);
         }
-        body.dark-mode .header h1 { color: #ffffff; }
-        body.dark-mode .card span { color: #e0e0e0; }
-        body.dark-mode .card:active .icon-container { color: #ffffff; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
 
@@ -35,121 +37,141 @@
             color: var(--text-color); 
             padding-bottom: 30px; 
             transition: background-color 0.3s, color 0.3s;
-            background-image: url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23888888' stroke-opacity='0.15'%3E%3Cpath stroke-width='2.5' d='M0 150c100-20 150 50 250 40s150-80 300-60 200 100 250 80v-210H0z'/%3E%3Cpath stroke-width='2.5' d='M0 450c150 50 250-50 400 0s200 150 400 100'/%3E%3Cpath stroke-width='2.5' d='M250 250c30-40 80-20 100 20s-20 80-60 60-60-50-40-80z'/%3E%3Cpath stroke-width='0.8' d='M0 200c110-15 160 55 260 45s160-85 310-65 210 105 230 85'/%3E%3Cpath stroke-width='0.8' d='M0 250c120-10 170 60 270 50s170-90 320-70 220 110 210 90'/%3E%3Cpath stroke-width='0.8' d='M0 300c130-5 180 65 280 55s180-95 330-75 230 115 190 95'/%3E%3Cpath stroke-width='0.8' d='M0 350c140 0 190 70 290 60s190-100 340-80 240 120 170 100'/%3E%3Cpath stroke-width='0.8' d='M0 400c145 25 220 10 345 30s195-50 370 10'/%3E%3Cpath stroke-width='0.8' d='M230 230c40-50 100-30 120 20s-20 100-80 80-70-60-40-100z'/%3E%3Cpath stroke-width='0.8' d='M210 210c50-60 120-40 140 20s-20 120-100 100-80-70-40-120z'/%3E%3Cpath stroke-width='0.8' d='M190 190c60-70 140-50 160 20s-20 140-120 120-90-80-40-140z'/%3E%3Cpath stroke-width='0.8' d='M600 300c40-20 80 0 90 40s-30 60-70 40-40-50-20-80z'/%3E%3Cpath stroke-width='0.8' d='M580 280c50-30 100-10 110 40s-40 80-90 60-50-60-20-100z'/%3E%3Cpath stroke-width='2.5' d='M560 260c60-40 120-20 130 40s-50 100-110 80-60-70-20-120z'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 600px 600px;
-            background-position: center;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-color); z-index: 9999;
-            display: flex; align-items: center; justify-content: center; transition: background-color 0.3s;
+        /* --- FONDO ANIMADO: FUEGO LÍQUIDO --- */
+        .liquid-fire {
+            position: fixed;
+            bottom: 0; left: 0; width: 100vw; height: 40vh;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .liquid-wave {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 200vw; height: 100%;
+            /* Onda con gradiente de fuego metálico */
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fire' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.3' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.6' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.8' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fire)' d='M0,128L48,144C96,160,192,192,288,181.3C384,171,480,117,576,117.3C672,117,768,171,864,197.3C960,224,1056,224,1152,197.3C1248,171,1344,117,1392,85.3L1440,53.3L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: flowWater 12s linear infinite;
+        }
+        .liquid-wave.delay {
+            bottom: -15px;
+            opacity: 0.6;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fire2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.2' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.5' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fire2)' d='M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,197.3C672,192,768,160,864,160C960,160,1056,192,1152,208C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: flowWater 8s linear infinite reverse;
+        }
+        @keyframes flowWater {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50vw); }
         }
 
-        .splash-animar { animation: fadeOutSplash 0.4s ease-in-out 1.5s forwards; }
-        #splash-screen img { width: 180px; height: auto; }
-        .logo-animar { animation: pulseLogo 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        /* --- SPLASH SCREEN --- */
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .splash-animar { animation: fadeOutSplash 0.4s ease-in-out 1.2s forwards; }
+        #splash-screen img { width: 160px; height: auto; filter: drop-shadow(0 10px 20px rgba(255,85,0,0.25)); }
+        .logo-animar { animation: pulseLogo 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        @keyframes pulseLogo { 0% { transform: scale(0.9); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes fadeOutSplash { 100% { opacity: 0; visibility: hidden; z-index: -1; } }
 
-        @keyframes pulseLogo {
-            0% { transform: scale(0.8); opacity: 0; filter: drop-shadow(0 0 0px var(--primary-color)); }
-            50% { filter: drop-shadow(0 0 30px var(--primary-color)); }
-            100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 0px var(--primary-color)); }
+        /* --- PANTALLA DE BLOQUEO LIMPIA --- */
+        #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--lock-bg); z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: 0.4s; }
+        .lock-box { background: var(--lock-box-bg); padding: 40px 25px; text-align: center; width: 90%; max-width: 340px; border-radius: 20px; border: 1px solid var(--card-border); box-shadow: 0 15px 35px rgba(0,0,0,0.06); }
+        
+        .security-icon { color: var(--primary-color); margin-bottom: 15px; background: rgba(128,128,128,0.05); padding: 15px; border-radius: 50%; display: inline-block;}
+        .lock-box h2 { color: var(--text-color); font-weight: 900; font-size: 1.5rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;}
+        .lock-box p { color: #888; font-weight: 700; font-size: 0.85rem; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;}
+        
+        .input-wrapper { position: relative; width: 100%; margin: 0 auto; }
+        .lock-box input { 
+            width: 100%; padding: 12px 10px; font-size: 2.5rem; letter-spacing: 18px; font-family: monospace; 
+            font-weight: 900; text-align: center; background: rgba(128,128,128,0.03); 
+            border: 1px solid var(--card-border); border-radius: 12px; color: var(--text-color); 
+            outline: none; transition: 0.3s;
         }
+        .lock-box input:focus { border-color: var(--primary-color); background: transparent;}
+        
+        #errorMsg { color: var(--danger-color); font-weight: 800; font-size: 0.85rem; margin-top: 20px; display: none; text-transform: uppercase; letter-spacing: 2px; animation: shake 0.4s;}
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
 
-        @keyframes fadeOutSplash {
-            100% { opacity: 0; visibility: hidden; pointer-events: none; z-index: -1; }
-        }
-
-        /* --- PANTALLA DE BLOQUEO --- */
-        #lock-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-color); z-index: 10000;
-            display: none; align-items: center; justify-content: center; 
-            backdrop-filter: blur(10px); transition: opacity 0.4s;
-        }
-        .lock-box {
-            background: var(--card-bg); border: 2px solid var(--border-color);
-            border-radius: 16px; padding: 30px 20px; text-align: center;
-            width: 90%; max-width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        .lock-box input {
-            width: 100%; padding: 15px; font-size: 2rem; letter-spacing: 15px;
-            font-weight: 900; text-align: center; background: var(--input-bg);
-            border: 2px solid var(--border-color); border-radius: 8px;
-            color: var(--text-color); margin-bottom: 20px; outline: none; transition: 0.2s;
-        }
-        .lock-box input:focus { border-color: var(--primary-color); }
-        .btn-ingresar {
-            width: 100%; padding: 15px; font-size: 1.2rem; font-weight: 800;
-            background: var(--primary-color); color: #fff; border: none;
-            border-radius: 8px; cursor: pointer; transition: 0.2s; text-transform: uppercase;
-        }
-        .btn-ingresar:active { transform: scale(0.95); }
-
-        .header { text-align: center; padding: 40px 20px 20px; background-color: transparent; border-bottom: 2px solid var(--border-color); }
-        .header h1 { color: var(--text-color); font-weight: 800; font-size: 2.8rem; letter-spacing: -1px; margin-bottom: 0; text-transform: uppercase; transition: color 0.3s;}
+        /* --- HEADER --- */
+        .header { text-align: center; padding: 35px 20px 15px; position: relative; z-index: 10;}
+        .header h1 { color: var(--text-color); font-weight: 900; font-size: 2.8rem; letter-spacing: -2px; margin-bottom: 0; line-height: 1;}
         .header h1 span { color: var(--primary-color); }
-        .header p { color: #888; font-size: 0.95rem; font-weight: 800; letter-spacing: 5px; text-transform: uppercase; margin-top: -5px;}
+        .header p { color: #888; font-size: 0.8rem; font-weight: 800; letter-spacing: 8px; text-transform: uppercase; margin-top: 5px; font-family: monospace;}
 
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px 15px; }
-        
-        @keyframes fluidEntrance {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+        /* --- WIDGET ÚLTIMO ACCESO --- */
+        .dashboard-container { padding: 5px 20px 15px; animation: fluidEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; position: relative; z-index: 10;}
+        .dashboard-widget { background: transparent; border: 1px solid var(--primary-color); border-radius: 12px; padding: 12px 18px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-decoration: none; position: relative; transition: 0.3s; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);}
+        /* Efecto Fuego al tocar el widget */
+        .dashboard-widget:active { 
+            transform: scale(0.98); 
+            background: linear-gradient(135deg, #FF3300 0%, #FF8C00 60%, #FFD700 100%);
+            border-color: transparent;
         }
+        .dashboard-widget:active .widget-label, .dashboard-widget:active .widget-title { color: #ffffff; }
+        .widget-label { font-size: 0.65rem; font-weight: 800; color: #888; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 2px; font-family: monospace; transition: 0.3s;}
+        .widget-title { font-size: 1.05rem; font-weight: 800; color: var(--primary-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; text-transform: uppercase; transition: 0.3s;}
 
-        .card {
-            background-color: var(--card-bg); border: 2px solid var(--border-color); border-radius: 16px;
-            padding: 20px 10px; text-align: center; text-decoration: none; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; min-height: 150px; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative; overflow: hidden; backdrop-filter: blur(5px); opacity: 0; 
+        /* --- GRID DE ICONOS --- */
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; position: relative; z-index: 10;}
+        @keyframes fluidEntrance { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        .tech-card { 
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; 
+            padding: 25px 10px; text-align: center; text-decoration: none; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; min-height: 135px; 
+            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; opacity: 0; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
-
-        .card-animar { animation: fluidEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .card-animar { animation: fluidEntrance 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .card-visible { opacity: 1; }
+        .card-animar:nth-child(1) { animation-delay: 1.1s; } .card-animar:nth-child(2) { animation-delay: 1.15s; } .card-animar:nth-child(3) { animation-delay: 1.2s; } .card-animar:nth-child(4) { animation-delay: 1.25s; } .card-animar:nth-child(5) { animation-delay: 1.3s; } .card-animar:nth-child(6) { animation-delay: 1.35s; }
 
-        .card-animar:nth-child(1) { animation-delay: 1.5s; } 
-        .card-animar:nth-child(2) { animation-delay: 1.55s; }
-        .card-animar:nth-child(3) { animation-delay: 1.6s; }
-        .card-animar:nth-child(4) { animation-delay: 1.65s; }
-        .card-animar:nth-child(5) { animation-delay: 1.7s; }
-        .card-animar:nth-child(6) { animation-delay: 1.75s; }
-
-        .card:active { transform: scale(0.96); border-color: var(--primary-color); background-color: var(--bg-color); }
+        /* EFECTO FUEGO / METÁLICO AL TOCAR EL MÓDULO */
+        .tech-card:active { 
+            transform: scale(0.94); 
+            background: linear-gradient(135deg, #FF3300 0%, #FF8C00 60%, #FFD700 100%);
+            border-color: transparent;
+            box-shadow: 0 8px 25px rgba(255, 85, 0, 0.5); 
+        }
+        .icon-container { height: 46px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; color: var(--primary-color); transition: 0.3s; }
+        .tech-card span { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-color); z-index: 1; transition: 0.3s; }
         
-        .card::after {
-            content: ""; position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
-            background: radial-gradient(circle, var(--primary-metallic-light) 0%, rgba(255,102,0,0) 70%);
-            border-radius: 50%; opacity: 0; transform: translate(-50%, -50%); transition: none; z-index: -1; 
-        }
-        .card:active::after { animation: metallicPulse 0.4s ease-out; opacity: 1; }
-
-        @keyframes metallicPulse {
-            0% { width: 10px; height: 10px; opacity: 0.9; }
-            100% { width: 400px; height: 400px; opacity: 0; }
+        .tech-card:active .icon-container, .tech-card:active span { 
+            color: #ffffff; 
+            transform: scale(1.05); 
         }
 
-        .icon-container { height: 70px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; width: 100%; color: var(--primary-color); transition: color 0.2s, transform 0.2s; }
-        .card:active .icon-container { color: #111; transform: scale(1.1); }
-        .card span { font-size: clamp(1.0rem, 3.5vw, 1.2rem); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; color: var(--text-color); z-index: 1; transition: color 0.2s; }
-        .card:active span { color: var(--primary-color) !important; }
-
-        .footer-firma { text-align: center; margin: 20px 0 30px; font-family: 'Rajdhani', sans-serif; line-height: 1.1; }
-        .created-by { font-size: 0.8rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 2px; }
-        .author-name { font-size: 0.95rem; font-weight: 800; color: var(--primary-color); text-transform: uppercase; letter-spacing: 1px; display: block; margin-top: 2px; }
+        .footer-firma { text-align: center; margin: 30px 0; opacity: 0; animation: fluidEntrance 0.5s 1.5s forwards; position: relative; z-index: 10;}
+        .created-by { font-size: 0.75rem; font-weight: 800; color: #888; text-transform: uppercase; letter-spacing: 3px; font-family: monospace;}
+        .author-name { font-size: 0.9rem; font-weight: 900; color: var(--primary-color); text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 3px; }
 
         @media screen and (max-width: 480px) {
             html { font-size: 13px; } 
-            .header h1 { font-size: 2.5rem; }
-            .grid-container { gap: 10px; padding: 10px; }
-            .card { min-height: 130px; padding: 10px; }
-            .icon-container { height: 50px; margin-bottom: 8px; }
-            .icon-container svg { width: 40px; height: 40px; }
+            .header h1 { font-size: 2.4rem; }
+            .grid-container { gap: 12px; padding: 0 15px; }
+            .dashboard-container { padding: 5px 15px 15px;}
+            .tech-card { min-height: 120px; padding: 18px 10px; border-radius: 12px;}
+            .icon-container { height: 38px; margin-bottom: 8px; }
+            .icon-container svg { width: 32px; height: 32px; }
+            .lock-box input { font-size: 2.2rem; letter-spacing: 15px; }
         }       
     </style>
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
+    <!-- Fondo de Agua / Fuego Animado -->
+    <div class="liquid-fire">
+        <div class="liquid-wave delay"></div>
+        <div class="liquid-wave"></div>
+    </div>
 
     <script>
         try {
@@ -158,133 +180,179 @@
         } catch(e) {}
     </script>
 
+    <!-- PANTALLA DE BLOQUEO LIMPIA Y SOBRIA -->
     <div id="lock-screen">
         <div class="lock-box">
-            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color); margin-bottom: 10px;">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-            <h2 style="color: var(--text-color); font-weight: 900; font-size: 1.5rem; margin-bottom: 5px;">ACCESO RESTRINGIDO</h2>
-            <p style="color: #888; font-weight: 600; font-size: 0.9rem; margin-bottom: 20px;">Ingrese el PIN de seguridad</p>
-            <input type="password" id="pinInput" inputmode="numeric" maxlength="4" placeholder="••••">
-            <button class="btn-ingresar" onclick="verificarClave()">DESBLOQUEAR</button>
-            <p id="errorMsg" style="color: var(--danger-color); font-weight: 800; font-size: 0.9rem; margin-top: 15px; display: none;">❌ PIN INCORRECTO</p>
+            <div class="security-icon">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            <h2>Seguridad Activa</h2>
+            <p>Ingrese su PIN asignado</p>
+            
+            <div class="input-wrapper">
+                <input type="password" id="pinInput" inputmode="numeric" maxlength="4" placeholder="" oninput="verificarClave()">
+            </div>
+            
+            <p id="errorMsg">ACCESO DENEGADO</p>
         </div>
     </div>
 
+    <!-- SPLASH SCREEN -->
     <div id="splash-screen">
         <img src="icono.png" alt="COTA100 Logo">
     </div>
 
+    <!-- HEADER -->
     <div class="header" id="main-header" style="opacity: 0;">
         <h1>COTA<span>100</span></h1>
         <p>System</p>
     </div>
 
+    <!-- WIDGET ÚLTIMO ACCESO SUTIL Y CENTRADO -->
+    <div class="dashboard-container" id="main-dashboard">
+        <a href="#" id="linkUltimoModulo" class="dashboard-widget">
+            <span class="widget-label">RETOMAR ÚLTIMO PROCESO</span>
+            <h3 class="widget-title" id="lblUltimoModulo">MENÚ PRINCIPAL</h3>
+        </a>
+    </div>
+
+    <!-- GRID DE MÓDULOS -->
     <div class="grid-container" id="main-grid" style="opacity: 0;">
-        <a href="nivelacion.html" class="card" onclick="navigator.vibrate && navigator.vibrate(30)">
+        
+        <!-- Cero vibraciones en el index -->
+        <a href="nivelacion.html" class="tech-card">
             <div class="icon-container">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="8"/>
-                    <path d="M12 2v20"/>
-                    <path d="M2 12h20"/>
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12h4"/><path d="M18 12h4"/><path d="M12 2v4"/><path d="M12 18v4"/>
+                    <circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1" fill="currentColor"/>
                 </svg>
             </div>
             <span>Nivelación</span>
         </a>
 
-        <a href="coordenadas.html" class="card" onclick="navigator.vibrate && navigator.vibrate(30)">
+        <a href="coordenadas.html" class="tech-card">
             <div class="icon-container">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                    <line x1="12" y1="13" x2="12" y2="17" stroke-dasharray="2 2"/>
                 </svg>
             </div>
             <span>Coordenadas</span>
         </a>
 
-        <a href="poligonales.html" class="card" onclick="navigator.vibrate && navigator.vibrate(30)">
+        <a href="poligonales.html" class="tech-card">
             <div class="icon-container">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="18" cy="5" r="3"/>
-                    <circle cx="6" cy="12" r="3"/>
-                    <circle cx="18" cy="19" r="3"/>
-                    <line x1="8.5" y1="10.5" x2="15.5" y2="6.5"/>
-                    <line x1="8.5" y1="13.5" x2="15.5" y2="17.5"/>
-                    <line x1="18" y1="8" x2="18" y2="16"/>
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12,3 20,9 20,17 12,21 4,17 4,9"/>
+                    <circle cx="12" cy="3" r="2" fill="var(--card-bg)" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="20" cy="17" r="2" fill="var(--card-bg)" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="4" cy="17" r="2" fill="var(--card-bg)" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                    <line x1="12" y1="5" x2="12" y2="10.5"/><line x1="6" y1="16" x2="10.5" y2="13"/><line x1="18" y1="16" x2="13.5" y2="13"/>
                 </svg>
             </div>
             <span>Poligonales</span>
         </a>
 
-        <a href="atmosfera.html" class="card" onclick="navigator.vibrate && navigator.vibrate(30)">
+        <a href="atmosfera.html" class="tech-card" onclick="registrarAcceso('Atmósfera y PPM', 'atmosfera.html')">
             <div class="icon-container">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>
-                    <path d="M12 16a2 2 0 0 0 0-4"/>
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 16v-6"/><circle cx="12" cy="8" r="1" fill="currentColor"/>
+                    <line x1="4.93" y1="4.93" x2="7.05" y2="7.05"/>
+                    <line x1="19.07" y1="4.93" x2="16.95" y2="7.05"/>
+                    <line x1="2" y1="12" x2="4" y2="12"/>
+                    <line x1="20" y1="12" x2="22" y2="12"/>
                 </svg>
             </div>
-            <span>Atmósfera<br>& PPM</span>
+            <span>Atmósfera</span>
         </a>
 
-        <a href="areas.html" class="card" onclick="navigator.vibrate && navigator.vibrate(30)">
+        <a href="areas.html" class="tech-card" onclick="registrarAcceso('Áreas y Perímetros', 'areas.html')">
             <div class="icon-container">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="3 3 21 7 17 21 7 17 3 3"/>
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="4,8 9,3 21,7 17,21 4,18"/>
+                    <line x1="4" y1="8" x2="21" y2="7" stroke-dasharray="2 2"/>
+                    <line x1="4" y1="8" x2="17" y2="21" stroke-dasharray="2 2"/>
                 </svg>
             </div>
-            <span>Áreas y<br>Perímetros</span>
+            <span>Áreas</span>
         </a>
-                <a href="ajustes.html" class="card" onclick="navigator.vibrate && navigator.vibrate(30)">
+        
+               <a href="ajustes.html" class="tech-card">
             <div class="icon-container">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="3"/>
-                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
                 </svg>
             </div>
             <span>Ajustes</span>
         </a>
     </div>
     
-    <div class="footer-firma" id="main-footer" style="opacity: 0;">
-        <span class="created-by">Created by</span>
-        <span class="author-name">Piero Cruzado</span>
+    <div class="footer-firma" id="main-footer">
+        <span class="created-by">CREADO POR</span>
+        <span class="author-name">PIERO CRUZADO</span>
     </div>
 
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js');
-            });
+            window.addEventListener('load', function() { navigator.serviceWorker.register('sw.js'); });
         }
 
-        const claveCorrecta = "2508";
+        const hashClave = "NzM3MA==";
 
         function verificarClave() {
-            const input = document.getElementById('pinInput').value;
+            const input = document.getElementById('pinInput');
             const errorMsg = document.getElementById('errorMsg');
-            if (input === claveCorrecta) {
-                sessionStorage.setItem('cota100_auth', 'true');
-                document.getElementById('lock-screen').style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById('lock-screen').style.display = "none";
-                    iniciarAppVisual();
-                }, 400);
+            
+            if (input.value.length === 4) {
+                if (btoa(input.value) === hashClave) {
+                    sessionStorage.setItem('cota100_auth', 'true');
+                    document.getElementById('lock-screen').style.opacity = "0";
+                    setTimeout(() => {
+                        document.getElementById('lock-screen').style.display = "none";
+                        iniciarAppVisual();
+                    }, 400);
+                } else {
+                    errorMsg.style.display = 'block';
+                    input.value = ""; 
+                }
             } else {
-                errorMsg.style.display = 'block';
-                if(navigator.vibrate) navigator.vibrate([100, 50, 100]); // Vibración de error
-                document.getElementById('pinInput').value = "";
+                errorMsg.style.display = 'none';
+            }
+        }
+
+        function registrarAcceso(nombre, url) {
+            localStorage.setItem('cota100_last_name', nombre);
+            localStorage.setItem('cota100_last_url', url);
+        }
+
+        function cargarUltimoModulo() {
+            let lastName = localStorage.getItem('cota100_last_name');
+            let lastUrl = localStorage.getItem('cota100_last_url');
+            
+            if (lastName && lastUrl) {
+                document.getElementById('lblUltimoModulo').innerText = lastName;
+                document.getElementById('linkUltimoModulo').href = lastUrl;
+            } else {
+                document.getElementById('lblUltimoModulo').innerText = "MENÚ PRINCIPAL";
+                document.getElementById('linkUltimoModulo').href = "#";
             }
         }
 
         function iniciarAppVisual() {
+            cargarUltimoModulo();
             document.getElementById('main-header').style.opacity = "1";
+            document.getElementById('main-dashboard').style.opacity = "1";
             document.getElementById('main-grid').style.opacity = "1";
-            document.getElementById('main-footer').style.opacity = "1";
             
             const splash = document.getElementById('splash-screen');
             const logo = splash.querySelector('img');
-            const cards = document.querySelectorAll('.card');
+            const cards = document.querySelectorAll('.tech-card');
 
             if (!sessionStorage.getItem('splashMostrado')) {
                 splash.classList.add('splash-animar');
@@ -298,10 +366,10 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            // Revisar si ya ingresó el PIN en esta sesión
             if (sessionStorage.getItem('cota100_auth') !== 'true') {
                 document.getElementById('splash-screen').style.display = 'none';
                 document.getElementById('lock-screen').style.display = 'flex';
+                document.getElementById('pinInput').focus();
             } else {
                 iniciarAppVisual();
             }

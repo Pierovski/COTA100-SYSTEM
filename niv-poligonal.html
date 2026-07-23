@@ -4,82 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>COTA100 - Nivelación Simultánea</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 
     <style>
+        /* --- ESTILOS UNIFICADOS COTA100 --- */
         :root {
-            --bg-color: #ffffff; --text-color: #000000;
-            --primary-color: #FF6600; --border-color: rgba(0, 0, 0, 0.3); 
-            --table-header: #111; --corte-color: #d32f2f; --success-color: #2e7d32; --excel-color: #1b5e20;
-            --panel-bg: rgba(255,255,255,0.85); --input-bg: rgba(255,255,255,0.9);
+            --bg-color: #f8f9fa;
+            --text-color: #1a1e23;
+            --primary-color: #FF5500; 
+            --primary-glow: rgba(255, 85, 0, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 85, 0, 0.15);
+            --border-color: rgba(0, 0, 0, 0.15); 
+            --table-header: #1a1e23; 
+            --danger-color: #d32f2f; 
+            --corte-color: #d32f2f;
+            --excel-color: #1b5e20;
+            --input-bg: rgba(255,255,255,0.9);
+            --success-bg: rgba(46, 204, 113, 0.2); 
+            --success-text: #007E33;
         }
 
         body.dark-mode {
-            --bg-color: #121212; --text-color: #e0e0e0;
+            --bg-color: #05070a;
+            --text-color: #ffffff;
+            --primary-glow: rgba(255, 85, 0, 0.4);
+            --card-bg: rgba(18, 22, 28, 0.85);
+            --card-border: rgba(255, 85, 0, 0.25);
             --border-color: rgba(255, 255, 255, 0.15); 
-            --panel-bg: rgba(30,30,30,0.9); --input-bg: rgba(45,45,45,0.9);
-            --table-header: #000;
+            --input-bg: rgba(45,45,45,0.9);
+            --table-header: #000000;
+            --success-bg: rgba(0, 200, 81, 0.15); 
+            --success-text: #00C851;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px;
-            background-image: url("data:image/svg+xml,%3Csvg width='600' height='600' viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23888888' stroke-opacity='0.05'%3E%3Cpath stroke-width='2.5' d='M0 150c100-20 150 50 250 40s150-80 300-60 200 100 250 80v-210H0z'/%3E%3Cpath stroke-width='2.5' d='M0 450c150 50 250-50 400 0s200 150 400 100'/%3E%3Cpath stroke-width='2.5' d='M250 250c30-40 80-20 100 20s-20 80-60 60-60-50-40-80z'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 600px 600px; background-attachment: fixed;
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            padding-bottom: 80px;
             transition: background-color 0.3s, color 0.3s;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
+        /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
+        .fire-base {
+            position: fixed;
+            bottom: 0; left: 0; width: 100vw; height: 35vh;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .fire-wave {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 200vw; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 10s linear infinite;
+        }
+        .fire-wave.delay {
+            bottom: -15px; opacity: 0.6;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 7s linear infinite reverse;
+        }
+        @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
+
+        /* --- CABECERA --- */
         .top-bar { 
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 20px; border-bottom: 2px solid var(--border-color); height: 70px;
-            background-color: var(--panel-bg); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
+            background-color: transparent; position: sticky; top: 0; z-index: 100; 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
         }
-        .btn-volver-mini { background: rgba(128,128,128,0.1); border: 2px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s; font-weight: 800; font-size: 1.5rem;}
-        .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
-        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
+        .nav-buttons-left { display: flex; gap: 8px; }
+        .btn-volver-mini { 
+            background: transparent; border: none; 
+            color: var(--primary-color);
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 0 5px var(--primary-glow));
+        }
+        .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
+        
+        .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.25rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
+        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.8rem;}
 
-        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; }
+        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; overflow-x: hidden; position: relative; z-index: 10; max-width: 900px; margin: 0 auto;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-control { 
-            border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; 
-            margin-bottom: 15px; background: var(--panel-bg); backdrop-filter: blur(8px);
-        }
-        .panel-titulo { 
-            display: flex; justify-content: space-between; align-items: center; cursor: pointer;
-            color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; 
-            margin-bottom: 10px; border-bottom: 2px solid rgba(128,128,128,0.2); padding-bottom: 8px; 
-        }
+        .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
         
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .input-group { display: flex; flex-direction: column; }
         .full-width { grid-column: 1 / -1; }
+
         label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
         
-        input { 
-            width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; 
-            background: var(--input-bg); border: 2px solid var(--border-color); border-radius: 8px; 
-            color: var(--text-color); transition: 0.2s; text-align: center; font-family: 'Rajdhani', sans-serif;
-        }
+        input { width: 100%; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center; padding: 12px;}
+        input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
         input.in-pto { text-transform: uppercase; }
-        input.bm-selector { cursor: pointer; border: 2px solid var(--primary-color); background: #fff3e0;}
-        body.dark-mode input.bm-selector { background: rgba(255,102,0,0.1); }
-        input:focus { border-color: var(--primary-color); outline: none; }
+        input.bm-selector { cursor: pointer; border: 1px solid var(--primary-color); background: rgba(255, 85, 0, 0.05);}
         input:disabled, input[readonly] { background: rgba(128,128,128,0.1); cursor: not-allowed; border-style: dashed; color: #555; }
         
-        /* CUSTOM SELECT BUTTONS */
-        .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
-        .custom-select:active { border-color: var(--primary-color); background: rgba(255, 102, 0, 0.05); }
+        .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
+        .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
         .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
         .project-selector { display: flex; gap: 8px; margin-bottom: 10px; }
         
-        /* ESTILOS PREMIUM PARA LISTA BM */
-        .bm-list { margin-top: 8px; max-height: 180px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); }
-        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid rgba(128,128,128,0.2); cursor: pointer; }
+        .bm-list { margin-top: 8px; max-height: 180px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; }
+        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
         .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .bm-info { display: flex; flex-direction: column; text-align: left; }
         .bm-info strong { font-size: 0.95rem; color: var(--text-color); }
@@ -88,57 +132,40 @@
         .bm-actions { display: flex; gap: 2px; }
         .bm-actions button { background: none; border: none; border-radius: 4px; padding: 4px 6px; font-size: 0.9rem; cursor: pointer; opacity: 0.4; transition: 0.2s; filter: grayscale(100%); }
         .bm-actions button:hover, .bm-actions button:active { opacity: 1; filter: grayscale(0%); background: rgba(128,128,128,0.1); }
-        .bm-obs { display: none; font-size: 0.8rem; color: #666; margin-top: 6px; text-align: left; background: rgba(128,128,128,0.1); padding: 6px; border-radius: 4px; border-left: 3px solid var(--primary-color); }
-        body.dark-mode .bm-obs { color: #bbb; }
+        .bm-obs { display: none; font-size: 0.8rem; color: #888; margin-top: 6px; text-align: left; background: rgba(128,128,128,0.05); padding: 6px; border-radius: 4px; border-left: 3px solid var(--primary-color); }
 
-        .txt-ayuda { font-size: 0.85rem; font-weight: 700; color: #1976d2; margin-top: 5px; background: #e3f2fd; padding: 10px; border-radius: 8px; border: 1px solid #90caf9;}
-        body.dark-mode .txt-ayuda { background: #0d2136; border-color: #1976d2; color: #e0e0e0; }
+        .txt-ayuda { font-size: 0.85rem; font-weight: 700; color: #1976d2; margin-top: 5px; background: rgba(25, 118, 210, 0.1); padding: 10px; border-radius: 8px; border: 1px solid #1976d2;}
+        body.dark-mode .txt-ayuda { color: #64b5f6; }
 
-        .btn-accion { 
-            width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; 
-            background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; 
-            transition: 0.2s;
-        }
+        .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center;}
         .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
-        .btn-calc { background-color: var(--primary-color); margin-bottom: 10px; box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3); font-size: 1.2rem; padding: 15px;}
+        .btn-calc { background-color: var(--primary-color); margin-bottom: 10px; box-shadow: 0 4px 10px rgba(255, 85, 0, 0.3); font-size: 1.2rem; padding: 15px;}
         .btn-dual { display: flex; gap: 8px; margin-bottom: 15px;}
 
+        /* --- TABLAS GEMELAS --- */
         .dos-columnas { display: flex; gap: 10px; width: 100%; overflow-x: auto; padding-bottom: 5px; margin-bottom: 10px;}
-        .col-tabla { flex: 1; min-width: 350px; margin-bottom: 0; padding: 0 !important; overflow: visible;}
+        .col-tabla { flex: 1; min-width: 380px; margin-bottom: 0; padding: 0 !important; overflow: visible;}
 
-        /* ENCABEZADOS AÚN MÁS OPTIMIZADOS */
-        .cabecera-ida { background: #1976d2; color: #fff; font-weight: 900; font-size: 1.1rem; text-align: center; padding: 8px; border-radius: 6px 6px 0 0; letter-spacing: 1px;}
-        .cabecera-vuelta { background: #d32f2f; color: #fff; font-weight: 900; font-size: 1.1rem; text-align: center; padding: 8px; border-radius: 6px 6px 0 0; letter-spacing: 1px;}
+        .cabecera-ida { background: #1976d2; color: #fff; font-weight: 900; font-size: 1.1rem; text-align: center; padding: 10px; border-radius: 12px 12px 0 0; letter-spacing: 1px;}
+        .cabecera-vuelta { background: #d32f2f; color: #fff; font-weight: 900; font-size: 1.1rem; text-align: center; padding: 10px; border-radius: 12px 12px 0 0; letter-spacing: 1px;}
 
-        .table-container { width: 100%; background: var(--bg-color); margin-bottom: 0; border-radius: 0 0 6px 6px;}
-        
+        .table-container { width: 100%; background: var(--card-bg); margin-bottom: 0; border-radius: 0 0 12px 12px; border: 1px solid var(--card-border); border-top: none; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);}
         table { width: 100%; border-collapse: separate; border-spacing: 0; }
         
-        th { 
-            color: #fff; font-weight: 800; padding: 10px 2px; font-size: 0.85rem; border-bottom: 2px solid rgba(128,128,128,0.2); 
-            text-transform: uppercase; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
+        th { color: #fff; font-weight: 800; padding: 10px 2px; font-size: 0.8rem; border-bottom: 2px solid var(--border-color); text-transform: uppercase; position: sticky; top: 0; z-index: 10;}
         .tabla-ida th { background: #1565c0; }
         .tabla-vuelta th { background: #c62828; }
 
         td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0; position: relative; text-align: center; vertical-align: middle;}
         td:last-child { border-right: none; }
         
-        td input { 
-            border: none; width: 100%; padding: 10px 2px; font-size: 1rem; 
-            text-align: center; background: transparent; border-radius: 0; color: var(--text-color); font-weight: 800; text-transform: uppercase;
-        }
-        td input:focus:not(:disabled):not([readonly]) { background: #fff3e0; outline: 2px solid var(--primary-color); outline-offset: -2px; z-index: 2;}
-        body.dark-mode td input:focus:not(:disabled):not([readonly]) { background: #261c14; }
+        td input { border: none; width: 100%; padding: 10px 2px; font-size: 1.05rem; text-align: center; background: transparent; border-radius: 0; color: var(--text-color); font-weight: 800; text-transform: uppercase;}
+        td input:focus:not(:disabled):not([readonly]) { background: rgba(255, 85, 0, 0.05); outline: 2px solid var(--primary-color); outline-offset: -2px; z-index: 2;}
 
         .td-readonly { background: rgba(128,128,128,0.05); }
-        .out-cota { text-align: center; font-weight: 800; font-size: 1.05rem; color: var(--text-color); padding: 4px 2px; background: rgba(128,128,128,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 50px;}
+        .out-cota { text-align: center; font-weight: 800; font-size: 1.1rem; color: var(--text-color); padding: 4px 2px; background: rgba(128,128,128,0.02); display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 55px;}
         
-        .btn-del-fila { 
-            background: transparent; border: none; color: var(--corte-color); font-size: 1.4rem; font-weight: 900; 
-            cursor: pointer; padding: 5px; width: 100%; height: 100%; display: flex; align-items: center; 
-            justify-content: center; transition: 0.2s;
-        }
+        .btn-del-fila { background: transparent; border: none; color: var(--danger-color); font-size: 1.4rem; font-weight: 900; cursor: pointer; padding: 5px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transition: 0.2s;}
         .btn-del-fila:active { background: rgba(211,47,47,0.1); transform: scale(0.85); }
 
         .modo-bloqueado input { pointer-events: none !important; }
@@ -146,38 +173,66 @@
         .fila-inactiva { opacity: 0.35; pointer-events: none; transition: opacity 0.3s; background-color: rgba(128,128,128,0.1); }
 
         .badge-tramo { font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; margin-top: 2px; font-weight: 800; }
-        .badge-ok { background: rgba(46, 125, 50, 0.1); color: var(--success-color); border: 1px solid var(--success-color); }
-        .badge-error { background: rgba(211, 47, 47, 0.1); color: var(--corte-color); border: 1px solid var(--corte-color); animation: parpadeo 1s infinite;}
+        .badge-ok { background: rgba(46, 125, 50, 0.1); color: var(--success-text); border: 1px solid var(--success-text); }
+        .badge-error { background: rgba(211, 47, 47, 0.1); color: var(--danger-color); border: 1px solid var(--danger-color); animation: parpadeo 1s infinite;}
         .badge-oculto { visibility: hidden; }
 
         @keyframes parpadeo { 0% {opacity:1;} 50% {opacity:0.6;} 100% {opacity:1;} }
 
-        .panel-resultados { 
-            background: var(--panel-bg); border: 3px solid var(--table-header); border-radius: 12px; padding: 15px; 
-            text-align: center; display: none; margin-bottom: 15px; backdrop-filter: blur(8px);
-        }
-        .res-valor { font-size: 1.8rem; font-weight: 800; margin: 10px 0; color: var(--text-color); }
-        .estado-cumple { color: var(--success-color); background: rgba(46, 125, 50, 0.1); padding: 5px 15px; border-radius: 20px; font-size: 1.2rem; font-weight: 800; border: 2px solid var(--success-color);}
-        .estado-falla { color: var(--corte-color); background: rgba(211, 47, 47, 0.1); padding: 5px 15px; border-radius: 20px; font-size: 1.2rem; font-weight: 800; border: 2px solid var(--corte-color);}
+        .panel-resultados { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; text-align: center; display: none; margin-bottom: 15px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .res-valor { font-size: 1.8rem; font-weight: 800; margin: 10px 0; color: var(--primary-color); font-family: monospace;}
+        .estado-cumple { color: var(--success-text); background: var(--success-bg); padding: 5px 15px; border-radius: 20px; font-size: 1.2rem; font-weight: 800; border: 2px solid var(--success-text);}
+        .estado-falla { color: var(--danger-color); background: rgba(211, 47, 47, 0.1); padding: 5px 15px; border-radius: 20px; font-size: 1.2rem; font-weight: 800; border: 2px solid var(--danger-color);}
 
-        .tabla-compensada { width: 100%; border-collapse: collapse; margin-top: 15px; border-radius: 8px; overflow: hidden; border: 2px solid var(--table-header);}
+        .tabla-compensada { width: 100%; border-collapse: collapse; margin-top: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--card-border); background: transparent;}
         .tabla-compensada th { background: var(--table-header); color: #fff; font-size: 0.85rem; padding: 10px; text-transform: uppercase; position: static; box-shadow: none;}
         .tabla-compensada td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 10px; font-weight: 800; font-size: 1.1rem; text-align: center; color: var(--text-color);}
 
-        /* --- TOAST NOTIFICATIONS --- */
+        /* --- CALCULADORA DISEÑO OPTIMIZADO --- */
+        .btn-calculadora-flotante { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; background: var(--card-bg); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid var(--primary-color); cursor: pointer; z-index: 999; font-size: 1.4rem; backdrop-filter: blur(5px);}
+        .calculadora-modal { 
+            position: fixed; bottom: 80px; right: 15px; width: 240px; 
+            background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; 
+            padding: 15px; display: none; z-index: 1000; 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
+            box-shadow: 0 4px 20px var(--primary-glow); 
+        }
+        .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800; color: var(--text-color); font-size: 0.85rem;}
+        .calc-header button { background: none; border: none; font-size: 1.2rem; font-weight: 800; color: var(--danger-color); cursor: pointer;}
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        
+        .calc-grid button { 
+            padding: 12px 0; font-size: 1.2rem; font-weight: 800; 
+            border: 1px solid var(--border-color); border-radius: 8px; 
+            background: var(--input-bg); color: var(--text-color); cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .calc-grid button:active { transform: scale(0.9); }
+        .calc-grid button.calc-op { color: var(--primary-color); background: rgba(255, 85, 0, 0.1); border-color: var(--card-border); }
+        .calc-grid button.calc-clear { color: var(--danger-color); border-color: rgba(211, 47, 47, 0.3); background: rgba(211, 47, 47, 0.05); }
+        .calc-grid button.calc-del { grid-column: span 2; background: rgba(128,128,128,0.1); }
+        .calc-grid button.calc-eval { grid-column: span 2; background: var(--primary-color); color: #fff; border: none; box-shadow: 0 2px 8px var(--primary-glow); }
+        
+        #calcDisplay { 
+            width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; 
+            border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; 
+            padding: 4px 10px; background: var(--input-bg); color: var(--text-color); 
+        }
+        #calcDisplay:focus { border-color: var(--primary-color); outline: none; }
+
+        /* --- TOAST & MODALS --- */
         #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 350px;}
-        .toast { background: var(--panel-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
+        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
         .toast.error { border-left-color: var(--danger-color); }
-        .toast.success { border-left-color: #00C851; }
+        .toast.success { border-left-color: #2e7d32; }
         .toast.warning { border-left-color: #fbc02d; }
         .toast.fade-out { animation: fadeOutToast 0.3s ease-in forwards; }
         @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
 
-        /* --- CUSTOM CONFIRM MODAL --- */
         .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.2s; backdrop-filter: blur(2px);}
         .confirm-overlay.activo { opacity: 1; visibility: visible; }
-        .confirm-box { background: var(--panel-bg); border: 2px solid var(--border-color); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.4);}
+        .confirm-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(15px);}
         .confirm-overlay.activo .confirm-box { transform: scale(1); }
         .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
         .confirm-btns { display: flex; gap: 10px; }
@@ -186,51 +241,37 @@
         .confirm-btn-cancel { background: rgba(128,128,128,0.2); color: var(--text-color); }
         .confirm-btn-ok { background: var(--primary-color); color: #fff; }
 
-        /* --- MODAL SELECTOR GENÉRICO (CENTRADO) --- */
         .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(2px); }
         .overlay-select.activo { opacity: 1; }
-        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--panel-bg); border: 2px solid var(--border-color); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
         .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
-        .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 2px solid var(--primary-color); background: rgba(255,102,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
         .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
         .btn-opcion span.cota { color: var(--text-color); font-size: 0.95rem; font-weight: 700;}
         .btn-opcion:active span.cota { color: #fff !important; }
-
-        /* NAVEGACIÓN FLOTANTE */
-        .btn-nav-flotante { position: fixed; bottom: 15px; left: 15px; width: 55px; height: 55px; background: var(--table-header); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid var(--border-color); cursor: pointer; z-index: 999; font-size: 1.4rem; transition: 0.2s;}
-        .btn-nav-flotante:active { transform: scale(0.9); }
-        .nav-modal { position: fixed; bottom: 80px; left: 15px; width: 220px; background: var(--panel-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; display: none; z-index: 1000; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--input-bg); padding: 10px 5px; border-radius: 8px; text-decoration: none; color: var(--text-color); font-weight: 800; font-size: 0.75rem; border: 1px solid var(--border-color); text-transform: uppercase; transition: 0.2s; text-align: center;}
-        .nav-item:active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
-        .nav-item span { font-size: 1.2rem; margin-bottom: 2px; }
-
-        /* CALCULADORA FLOTANTE */
-        .btn-calculadora-flotante { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; background: var(--bg-color); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid var(--primary-color); cursor: pointer; z-index: 999; font-size: 1.4rem; }
-        .calculadora-modal { position: fixed; bottom: 80px; right: 15px; width: 240px; background: var(--panel-bg); border: 2px solid var(--table-header); border-radius: 12px; padding: 12px; display: none; z-index: 1000; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 800; color: var(--text-color); font-size: 0.85rem;}
-        .calc-header button { background: none; border: none; font-size: 1.2rem; font-weight: 800; color: var(--danger-color); cursor: pointer;}
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        .calc-grid button { padding: 10px 0; font-size: 1.2rem; font-weight: 800; border: 1px solid var(--border-color); border-radius: 6px; background: var(--input-bg); color: var(--text-color); cursor: pointer;}
-        #calcDisplay { width: 100%; height: 40px; text-align: right; font-size: 1.4rem; font-weight: 800; border: 2px solid var(--border-color); margin-bottom: 8px; padding: 4px; background: var(--input-bg); color: var(--text-color); }
 
         @media screen and (max-width: 480px) {
             html { font-size: 13px; } 
             .btn-accion { padding: 10px; font-size: 0.95rem; }
             input { padding: 10px; font-size: 1.05rem; }
             .panel-control { padding: 12px; margin-bottom: 12px;}
-            .top-bar { padding: 5px 15px; height: 60px; }
-            .btn-volver-mini { width: 38px; height: 38px; font-size: 1.3rem;}
+            .top-bar { padding: 10px 15px; height: 65px; }
+            .btn-volver-mini { width: 38px; height: 38px;}
+            .top-bar-spacer { width: 84px; }
             th { top: 0; font-size: 0.75rem; padding: 6px 1px; }
             td input { padding: 8px 2px; font-size: 1.15rem; } 
             .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px;}
-            .btn-nav-flotante { width: 45px; height: 45px; bottom: 10px; left: 10px;}
             .calculadora-modal { right: 10px; bottom: 65px; width: 230px;}
-            .nav-modal { left: 10px; bottom: 65px; width: 200px;}
         }
     </style>
 </head>
 <body onload="inicializarApp()">
+
+    <!-- Fondo de Agua / Fuego Animado -->
+    <div class="fire-base">
+        <div class="fire-wave delay"></div>
+        <div class="fire-wave"></div>
+    </div>
 
     <script>
         try {
@@ -252,7 +293,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE SELECCIÓN GENÉRICO -->
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -267,14 +307,29 @@
     <input type="hidden" id="ordenNiv" value="0.020">
 
     <div class="top-bar">
-        <a href="nivelacion.html" class="btn-volver-mini" onclick="vibrar()">←</a>
-        <h2 class="top-bar-title">POLIGONAL ABIERTA <span>Doble Nivelación Simultánea</span></h2>
-        <div style="width: 45px;"></div>
+        <div class="nav-buttons-left">
+            <!-- Botón Casa (Home) -->
+            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </a>
+            <!-- Botón Atrás -->
+            <a href="nivelacion.html" class="btn-volver-mini" onclick="vibrar()">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </a>
+        </div>
+        <h2 class="top-bar-title">POLIGONAL ABIERTA <span>Doble Niv. Simultánea</span></h2>
+        <div class="top-bar-spacer"></div>
     </div>
 
     <div class="modulo-container">
         
-        <div class="panel-control" style="border-left: 5px solid #111;">
+        <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
             <div class="panel-titulo" onclick="togglePanel('panelProyecto')">
                 <span>📁 Base de Datos y Parámetros</span>
                 <span>▼</span>
@@ -293,7 +348,7 @@
                     <input type="text" id="proyectName" placeholder="Ej: Eje Principal Mz A" onchange="renombrarProyecto()">
                 </div>
                 
-                <div style="border-top: 1px dashed rgba(128,128,128,0.3); padding-top: 12px; margin-top: 12px; margin-bottom: 12px;">
+                <div style="border-top: 1px dashed var(--border-color); padding-top: 12px; margin-top: 12px; margin-bottom: 12px;">
                     <label style="color: var(--text-color); font-size: 0.85rem; margin-bottom: 8px; display: block;">⚙️ Parámetros del Circuito</label>
                     <div class="form-grid">
                         <div class="input-group">
@@ -321,7 +376,7 @@
                     <div id="txtOrdenHelp" class="txt-ayuda">Orden IV: Trabajos estándar de obra, movimiento de tierras y perfiles generales.</div>
                 </div>
 
-                <div style="border-top: 1px solid rgba(128,128,128,0.2); padding-top: 12px;">
+                <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
                     <label style="color: var(--primary-color);">+ Registrar BM Oficial</label>
                     <div class="form-grid" style="margin-top: 4px;">
                         <input type="text" id="newBMName" placeholder="Nombre" oninput="this.value = this.value.toUpperCase()">
@@ -332,11 +387,10 @@
                 </div>
                 <div class="bm-list" id="listaBMs"></div>
                 
-                <div style="border-top: 1px dashed rgba(128,128,128,0.3); padding-top: 12px; margin-top: 12px;">
-                    <label style="color: var(--text-color); font-size: 0.8rem;">💾 Respaldo de Base de Datos</label>
-                    <div style="display: flex; gap: 8px; margin-top: 5px;">
-                        <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: #111; margin: 0;" onclick="exportarBackupPoligonal()">📤 Backup DB</button>
-                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 2px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;" onclick="vibrar()">
+                <div style="border-top: 1px dashed var(--border-color); padding-top: 12px; margin-top: 12px;">
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: var(--table-header); margin: 0;" onclick="exportarBackupPoligonal()">📤 Backup DB</button>
+                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;" onclick="vibrar()">
                             📥 Restaurar
                             <input type="file" id="importPoligFile" accept=".json" style="display: none;" onchange="importarBackupPoligonal()">
                         </label>
@@ -347,7 +401,7 @@
         </div>
 
         <div class="dos-columnas" id="contenedorTablas">
-            <div class="panel-control col-tabla" style="border: 2px solid #1976d2; border-radius: 8px;">
+            <div class="panel-control col-tabla" style="border: 1px solid #1976d2; border-radius: 12px; padding: 0;">
                 <div class="cabecera-ida">➡️ NIVELACIÓN (IDA)</div>
                 <div class="table-container tabla-ida">
                     <table id="tablaIda">
@@ -356,7 +410,7 @@
                     </table>
                 </div>
             </div>
-            <div class="panel-control col-tabla" style="border: 2px solid var(--corte-color); border-radius: 8px;">
+            <div class="panel-control col-tabla" style="border: 1px solid var(--corte-color); border-radius: 12px; padding: 0;">
                 <div class="cabecera-vuelta">⬅️ NIVELACIÓN (VUELTA)</div>
                 <div class="table-container tabla-vuelta">
                     <table id="tablaVuelta">
@@ -367,25 +421,24 @@
             </div>
         </div>
 
-        <!-- BOTONES ENGORDADOS NUEVAMENTE (PADDING 12px 4px) -->
         <div class="btn-dual">
-            <button class="btn-accion" style="background:transparent; border: 2px solid #1976d2; color:#1976d2; padding: 12px 4px; font-size: 0.95rem;" onclick="agregarFila()">+ Fila</button>
-            <button class="btn-accion" style="background:transparent; border: 2px solid var(--text-color); color:var(--text-color); padding: 12px 4px; font-size: 0.95rem;" onclick="quitarFila()">- Borrar</button>
-            <button class="btn-accion" style="background:transparent; border: 2px solid var(--corte-color); color:var(--corte-color); padding: 12px 4px; font-size: 0.95rem;" onclick="limpiarTabla()">🗑️ Reset</button>
-            <button class="btn-accion" id="btnBloquear" style="background:transparent; border: 2px solid #fbc02d; color:#f57f17; padding: 12px 4px; font-size: 0.95rem;" onclick="toggleBloqueoTabla()">🔒 Bloq.</button>
+            <button class="btn-accion" id="btnAddFila" style="background:transparent; border: 1px solid #1976d2; color:#1976d2; padding: 12px 4px; font-size: 0.95rem;" onclick="agregarFila()">+ Fila</button>
+            <button class="btn-accion" id="btnDelFila" style="background:transparent; border: 1px solid var(--text-color); color:var(--text-color); padding: 12px 4px; font-size: 0.95rem;" onclick="quitarFila()">- Borrar</button>
+            <button class="btn-accion" id="btnResetTabla" style="background:transparent; border: 1px solid var(--corte-color); color:var(--corte-color); padding: 12px 4px; font-size: 0.95rem;" onclick="limpiarTabla()">🗑️ Reset</button>
+            <button class="btn-accion" id="btnBloquear" style="background:transparent; border: 1px solid #fbc02d; color:#f57f17; padding: 12px 4px; font-size: 0.95rem;" onclick="toggleBloqueoTabla()">🔒 Bloq.</button>
         </div>
 
         <button class="btn-accion btn-calc" onclick="verificarCierreFinal()">VERIFICAR CIERRE FINAL</button>
 
         <div class="panel-resultados" id="panelResultados">
-            <h3 style="text-transform: uppercase; color: var(--text-color); border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Auditoría del Circuito</h3>
+            <h3 style="text-transform: uppercase; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Auditoría del Circuito</h3>
             <div id="contenedorSegmentos" style="margin-top: 15px;"></div>
-            <div style="border-top: 2px solid var(--border-color); margin-top: 15px; padding-top: 15px;">
+            <div style="border-top: 1px dashed var(--border-color); margin-top: 15px; padding-top: 15px;">
                 <h4 style="color: var(--text-color); opacity: 0.8; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase;">Resumen Global</h4>
                 <div style="display: flex; gap: 10px;">
                     <div class="input-group" style="flex: 1;">
                         <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-color); opacity: 0.8;">ERROR TOTAL (E)</span>
-                        <div class="res-valor" id="resError" style="color: var(--text-color);">0.000 m</div>
+                        <div class="res-valor" id="resError">0.000 m</div>
                     </div>
                     <div class="input-group" style="flex: 1;">
                         <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-color); opacity: 0.8;">TOLERANCIA (T)</span>
@@ -402,37 +455,36 @@
                     <thead><tr><th>PUNTO</th><th>COTA IDA</th><th>COTA VUELTA</th><th>PROMEDIO</th></tr></thead>
                     <tbody id="cuerpoCompensadas"></tbody>
                 </table>
-                <button class="btn-accion" style="background:transparent; color: var(--excel-color); border: 2px solid var(--excel-color); margin-top: 15px; font-size: 1rem;" onclick="exportarExcelConEstilos()" id="btnExcel">📥 Exportar a Excel (Con Colores)</button>
+                <button class="btn-accion" style="background:transparent; color: var(--excel-color); border: 1px solid var(--excel-color); margin-top: 15px; font-size: 1rem;" onclick="exportarExcelConEstilos()" id="btnExcel">📥 Exportar a Excel (Con Colores)</button>
             </div>
         </div>
 
     </div>
 
-    <div class="btn-nav-flotante" onclick="toggleNav()">🧭</div>
-    <div class="nav-modal" id="navModal">
-        <div style="font-weight: 800; font-size: 0.85rem; margin-bottom: 10px; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">
-            IR A MÓDULO <button onclick="toggleNav()" style="background:none; border:none; color:var(--danger-color); font-weight:800; cursor:pointer; font-size: 1.2rem;">X</button>
-        </div>
-        <div class="nav-grid">
-            <a href="index.html" class="nav-item"><span>🏠</span> Inicio</a>
-            <a href="nivelacion.html" class="nav-item"><span>📏</span> Niveles</a>
-            <a href="poligonales.html" class="nav-item"><span>📐</span> Polígonos</a>
-            <a href="coordenadas.html" class="nav-item"><span>🌐</span> Coord.</a>
-            <a href="areas.html" class="nav-item"><span>⬛</span> Áreas</a>
-            <a href="ajustes.html" class="nav-item"><span>⚙️</span> Ajustes</a>
-        </div>
-    </div>
-
+    <!-- BOTÓN CALCULADORA -->
     <div class="btn-calculadora-flotante" onclick="toggleCalculadora()">🧮</div>
     <div class="calculadora-modal" id="calculadoraModal">
         <div class="calc-header"><span>CÁLCULO RÁPIDO</span><button onclick="toggleCalculadora()">X</button></div>
         <input type="text" id="calcDisplay" disabled>
         <div class="calc-grid">
-            <button onclick="calcIn('7')">7</button><button onclick="calcIn('8')">8</button><button onclick="calcIn('9')">9</button><button onclick="calcIn('/')">÷</button>
-            <button onclick="calcIn('4')">4</button><button onclick="calcIn('5')">5</button><button onclick="calcIn('6')">6</button><button onclick="calcIn('*')">×</button>
-            <button onclick="calcIn('1')">1</button><button onclick="calcIn('2')">2</button><button onclick="calcIn('3')">3</button><button onclick="calcIn('-')">-</button>
-            <button onclick="calcClear()" style="color:var(--danger-color); border-color:var(--danger-color);">C</button><button onclick="calcIn('0')">0</button><button onclick="calcIn('.')">.</button><button onclick="calcIn('+')">+</button>
-            <button onclick="calcDel()" style="grid-column: span 2; background:rgba(128,128,128,0.1);">⌫</button><button onclick="calcEval()" style="grid-column: span 2; background:var(--primary-color); color:#fff;">=</button>
+            <button onclick="calcIn('7')">7</button>
+            <button onclick="calcIn('8')">8</button>
+            <button onclick="calcIn('9')">9</button>
+            <button onclick="calcIn('/')" class="calc-op">÷</button>
+            <button onclick="calcIn('4')">4</button>
+            <button onclick="calcIn('5')">5</button>
+            <button onclick="calcIn('6')">6</button>
+            <button onclick="calcIn('*')" class="calc-op">×</button>
+            <button onclick="calcIn('1')">1</button>
+            <button onclick="calcIn('2')">2</button>
+            <button onclick="calcIn('3')">3</button>
+            <button onclick="calcIn('-')" class="calc-op">-</button>
+            <button onclick="calcClear()" class="calc-clear">C</button>
+            <button onclick="calcIn('0')">0</button>
+            <button onclick="calcIn('.')">.</button>
+            <button onclick="calcIn('+')" class="calc-op">+</button>
+            <button onclick="calcDel()" class="calc-del">⌫</button>
+            <button onclick="calcEval()" class="calc-eval">=</button>
         </div>
     </div>
 
@@ -575,28 +627,42 @@
             }
         }
 
-        function toggleNav() {
-            vibrar();
-            const m = document.getElementById('navModal');
-            m.style.display = m.style.display === 'block' ? 'none' : 'block';
-        }
-
         function toggleBloqueoTabla() {
             vibrar(); tablaBloqueada = !tablaBloqueada;
             const btn = document.getElementById('btnBloquear');
             const tabla = document.getElementById('contenedorTablas');
+            
+            const btnAdd = document.getElementById('btnAddFila');
+            const btnDel = document.getElementById('btnDelFila');
+            const btnReset = document.getElementById('btnResetTabla');
+
             if (tablaBloqueada) {
                 btn.innerHTML = "🔓 Desbloq."; btn.style.color = "var(--danger-color)"; btn.style.borderColor = "var(--danger-color)";
                 tabla.classList.add('modo-bloqueado');
+                
+                if(btnAdd) { btnAdd.style.opacity = "0.4"; btnAdd.style.pointerEvents = "none"; }
+                if(btnDel) { btnDel.style.opacity = "0.4"; btnDel.style.pointerEvents = "none"; }
+                if(btnReset) { btnReset.style.opacity = "0.4"; btnReset.style.pointerEvents = "none"; }
+
                 showToast("Tablas bloqueadas", "warning");
             } else {
                 btn.innerHTML = "🔒 Bloq."; btn.style.color = "#f57f17"; btn.style.borderColor = "#fbc02d";
                 tabla.classList.remove('modo-bloqueado');
+
+                if(btnAdd) { btnAdd.style.opacity = "1"; btnAdd.style.pointerEvents = "auto"; }
+                if(btnDel) { btnDel.style.opacity = "1"; btnDel.style.pointerEvents = "auto"; }
+                if(btnReset) { btnReset.style.opacity = "1"; btnReset.style.pointerEvents = "auto"; }
+
                 showToast("Tablas desbloqueadas", "success");
             }
         }
 
         function inicializarApp() {
+            // --- REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX ---
+            localStorage.setItem('cota100_last_name', 'NIVELACIÓN SIMULTÁNEA');
+            localStorage.setItem('cota100_last_url', 'niv-poligonal.html');
+            // ----------------------------------------------------------
+
             try {
                 let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
                 if(conf) {
@@ -1025,6 +1091,7 @@
         }
 
         function agregarFila(isAuto = false) {
+            if(tablaBloqueada) return; // <-- BLOQUEO
             if(!isAuto) vibrar();
             const tbodyIda = document.getElementById('cuerpoIda'); 
             const tbodyVuelta = document.getElementById('cuerpoVuelta');
@@ -1059,6 +1126,7 @@
         }
 
         function quitarFila() { 
+            if(tablaBloqueada) return; // <-- BLOQUEO
             vibrar(); 
             const bi = document.getElementById('cuerpoIda'); 
             const bv = document.getElementById('cuerpoVuelta'); 
@@ -1072,6 +1140,7 @@
         }
 
         function limpiarTabla() {
+            if(tablaBloqueada) return; // <-- BLOQUEO
             vibrar();
             showConfirm("🚨 ¿Borrar todas las lecturas de este circuito?", () => {
                 document.getElementById('cuerpoIda').innerHTML = ""; document.getElementById('cuerpoVuelta').innerHTML = "";
@@ -1262,7 +1331,7 @@
                             let bgCumple = document.body.classList.contains('dark-mode') ? 'rgba(46,125,50,0.1)' : '#f1f8e9';
                             let bgFalla = document.body.classList.contains('dark-mode') ? 'rgba(211,47,47,0.1)' : '#ffebee';
                             let borderCumple = document.body.classList.contains('dark-mode') ? 'var(--success-color)' : '#a5d6a7';
-                            let borderFalla = document.body.classList.contains('dark-mode') ? 'var(--corte-color)' : '#ef9a9a';
+                            let borderFalla = document.body.classList.contains('dark-mode') ? 'var(--danger-color)' : '#ef9a9a';
 
                             htmlSeg += `
                                 <div style="border: 2px solid ${cumple ? borderCumple : borderFalla}; border-radius: 6px; padding: 10px; margin-bottom: 10px; text-align: left; background: ${cumple ? bgCumple : bgFalla};">
@@ -1302,97 +1371,86 @@
         }
 
         function generarCompensadas() {
-    vibrar();
-    let decs = parseInt(globalConfig.decimales) || 3;
-    const cotaBM = parseFloat(document.getElementById('cotaBM').value);
-    const filasIda = document.querySelectorAll('#cuerpoIda tr');
-    const filasVuelta = document.querySelectorAll('#cuerpoVuelta tr');
-    const cuerpoCompensadas = document.getElementById('cuerpoCompensadas');
-    cuerpoCompensadas.innerHTML = "";
+            vibrar();
+            let decs = parseInt(globalConfig.decimales) || 3;
+            const cotaBM = parseFloat(document.getElementById('cotaBM').value);
+            const filasIda = document.querySelectorAll('#cuerpoIda tr');
+            const filasVuelta = document.querySelectorAll('#cuerpoVuelta tr');
+            const cuerpoCompensadas = document.getElementById('cuerpoCompensadas');
+            cuerpoCompensadas.innerHTML = "";
 
-    let datosEstaciones = [];
+            let datosEstaciones = [];
 
-    // 1. Extraer todas las cotas en orden de armado, incluyendo Puntos de Cambio (PC)
-    // Es vital contar las armadas totales para que la proporción matemática sea exacta.
-    for(let i = 0; i < filasIda.length; i++) {
-        if (filasIda[i].classList.contains('fila-inactiva')) continue;
+            for(let i = 0; i < filasIda.length; i++) {
+                if (filasIda[i].classList.contains('fila-inactiva')) continue;
 
-        let pto = filasIda[i].querySelector('.in-pto').value.toUpperCase().trim();
-        if (!pto) continue;
+                let pto = filasIda[i].querySelector('.in-pto').value.toUpperCase().trim();
+                if (!pto) continue;
 
-        let cotaIda = NaN, cotaVuelta = NaN;
-        
-        if (i === 0) {
-            cotaIda = isNaN(cotaBM) ? NaN : cotaBM;
-            cotaVuelta = isNaN(cotaBM) ? NaN : cotaBM;
-        } else {
-            let divCotaIda = filasIda[i].querySelector('.out-cota div[data-cota]');
-            if (divCotaIda) cotaIda = parseFloat(divCotaIda.getAttribute('data-cota'));
-            
-            let divCotaVuelta = filasVuelta[i].querySelector('.out-cota div[data-cota]');
-            if (divCotaVuelta) cotaVuelta = parseFloat(divCotaVuelta.getAttribute('data-cota'));
+                let cotaIda = NaN, cotaVuelta = NaN;
+                
+                if (i === 0) {
+                    cotaIda = isNaN(cotaBM) ? NaN : cotaBM;
+                    cotaVuelta = isNaN(cotaBM) ? NaN : cotaBM;
+                } else {
+                    let divCotaIda = filasIda[i].querySelector('.out-cota div[data-cota]');
+                    if (divCotaIda) cotaIda = parseFloat(divCotaIda.getAttribute('data-cota'));
+                    
+                    let divCotaVuelta = filasVuelta[i].querySelector('.out-cota div[data-cota]');
+                    if (divCotaVuelta) cotaVuelta = parseFloat(divCotaVuelta.getAttribute('data-cota'));
+                }
+
+                if (!isNaN(cotaIda) && !isNaN(cotaVuelta)) {
+                    datosEstaciones.push({ 
+                        pto: pto, 
+                        cotaIda: cotaIda, 
+                        cotaVuelta: cotaVuelta, 
+                        esPC: pto.startsWith("PC") 
+                    });
+                }
+            }
+
+            if (datosEstaciones.length < 2) return;
+
+            let N = datosEstaciones.length - 1;
+            let esCerrada = (datosEstaciones[0].pto === datosEstaciones[N].pto);
+            let errorCierreIda = esCerrada ? (datosEstaciones[N].cotaIda - datosEstaciones[0].cotaIda) : 0;
+            let errorCierreVuelta = esCerrada ? (datosEstaciones[N].cotaVuelta - datosEstaciones[0].cotaVuelta) : 0;
+            let divergenciaAbierta = !esCerrada ? (datosEstaciones[N].cotaIda - datosEstaciones[N].cotaVuelta) : 0;
+
+            for (let i = 0; i <= N; i++) {
+                let data = datosEstaciones[i];
+                let cotaIdaComp = data.cotaIda;
+                let cotaVueltaComp = data.cotaVuelta;
+                let factorProporcional = i / N; 
+
+                if (esCerrada) {
+                    cotaIdaComp += (-errorCierreIda * factorProporcional);
+                    cotaVueltaComp += (-errorCierreVuelta * factorProporcional);
+                } else {
+                    let ajusteMedia = divergenciaAbierta / 2;
+                    cotaIdaComp += (-ajusteMedia * factorProporcional);
+                    cotaVueltaComp += (ajusteMedia * factorProporcional);
+                }
+
+                let promedioCompensado = (cotaIdaComp + cotaVueltaComp) / 2;
+
+                if (!data.esPC) {
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="color:var(--primary-color); font-weight: 900;">${data.pto}</td>
+                        <td>${cotaIdaComp.toFixed(decs)}</td>
+                        <td>${cotaVueltaComp.toFixed(decs)}</td>
+                        <td style="color:var(--success-text); font-weight: 900; background: rgba(46,125,50,0.05);">${promedioCompensado.toFixed(decs)}</td>
+                    `;
+                    cuerpoCompensadas.appendChild(tr);
+                }
+            }
+
+            document.getElementById('contenedorCompensadas').style.display = 'block';
+            setTimeout(() => { document.getElementById('contenedorCompensadas').scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 100);
+            showToast("Cotas compensadas rigurosamente", "success");
         }
-
-        if (!isNaN(cotaIda) && !isNaN(cotaVuelta)) {
-            datosEstaciones.push({ 
-                pto: pto, 
-                cotaIda: cotaIda, 
-                cotaVuelta: cotaVuelta, 
-                esPC: pto.startsWith("PC") 
-            });
-        }
-    }
-
-    if (datosEstaciones.length < 2) return;
-
-    let N = datosEstaciones.length - 1; // Total de tramos / armadas de instrumento
-    
-    // Determinamos inteligentemente si el circuito cierra en el mismo BM inicial
-    let esCerrada = (datosEstaciones[0].pto === datosEstaciones[N].pto);
-
-    // 2. Cálculo del Error y Compensación Proporcional
-    let errorCierreIda = esCerrada ? (datosEstaciones[N].cotaIda - datosEstaciones[0].cotaIda) : 0;
-    let errorCierreVuelta = esCerrada ? (datosEstaciones[N].cotaVuelta - datosEstaciones[0].cotaVuelta) : 0;
-    let divergenciaAbierta = !esCerrada ? (datosEstaciones[N].cotaIda - datosEstaciones[N].cotaVuelta) : 0;
-
-    for (let i = 0; i <= N; i++) {
-        let data = datosEstaciones[i];
-        let cotaIdaComp = data.cotaIda;
-        let cotaVueltaComp = data.cotaVuelta;
-        let factorProporcional = i / N; 
-
-        if (esCerrada) {
-            // Ajuste para poligonal cerrada: el error se distribuye acumulativamente
-            cotaIdaComp += (-errorCierreIda * factorProporcional);
-            cotaVueltaComp += (-errorCierreVuelta * factorProporcional);
-        } else {
-            // Ajuste para poligonal abierta: se distribuye la divergencia total 
-            // para que Ida y Vuelta converjan al mismo valor probabilístico sin alterar el origen
-            let ajusteMedia = divergenciaAbierta / 2;
-            cotaIdaComp += (-ajusteMedia * factorProporcional);
-            cotaVueltaComp += (ajusteMedia * factorProporcional);
-        }
-
-        let promedioCompensado = (cotaIdaComp + cotaVueltaComp) / 2;
-
-        // 3. Renderizado de la tabla final
-        // Filtramos los Puntos de Cambio de la vista final, pero su peso matemático ya se aplicó.
-        if (!data.esPC) {
-            let tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td style="color:var(--primary-color); font-weight: 900;">${data.pto}</td>
-                <td>${cotaIdaComp.toFixed(decs)}</td>
-                <td>${cotaVueltaComp.toFixed(decs)}</td>
-                <td style="color:var(--success-color); font-weight: 900; background: rgba(46,125,50,0.05);">${promedioCompensado.toFixed(decs)}</td>
-            `;
-            cuerpoCompensadas.appendChild(tr);
-        }
-    }
-
-    document.getElementById('contenedorCompensadas').style.display = 'block';
-    setTimeout(() => { document.getElementById('contenedorCompensadas').scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 100);
-    showToast("Cotas compensadas rigurosamente", "success");
-}
 
 
         function exportarExcelConEstilos() {

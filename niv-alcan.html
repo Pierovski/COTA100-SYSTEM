@@ -8,41 +8,109 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <style>
+        /* --- ESTILOS UNIFICADOS COTA100 --- */
         :root {
-            --bg-color: #ffffff; --text-color: #000000;
-            --primary-color: #FF6600; --border-color: rgba(0, 0, 0, 0.2); 
-            --table-header: #111; --danger-color: #d32f2f; --excel-color: #1b5e20;
-            --panel-bg: rgba(255,255,255,0.85); --input-bg: rgba(255,255,255,0.9);
-            --success-bg: rgba(46, 204, 113, 0.3); --success-text: #007E33;
+            --bg-color: #f8f9fa;
+            --text-color: #1a1e23;
+            --primary-color: #FF5500; 
+            --primary-glow: rgba(255, 85, 0, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 85, 0, 0.15);
+            --border-color: rgba(0, 0, 0, 0.15); 
+            --table-header: #1a1e23; 
+            --danger-color: #d32f2f; 
+            --excel-color: #1b5e20;
+            --input-bg: rgba(255,255,255,0.9);
+            --success-bg: rgba(46, 204, 113, 0.2); 
+            --success-text: #007E33;
         }
 
         body.dark-mode {
-            --bg-color: #121212; --text-color: #e0e0e0;
+            --bg-color: #05070a;
+            --text-color: #ffffff;
+            --primary-glow: rgba(255, 85, 0, 0.4);
+            --card-bg: rgba(18, 22, 28, 0.85);
+            --card-border: rgba(255, 85, 0, 0.25);
             --border-color: rgba(255, 255, 255, 0.15); 
-            --panel-bg: rgba(30,30,30,0.9); --input-bg: rgba(45,45,45,0.9);
-            --table-header: #000;
-            --success-bg: rgba(0, 200, 81, 0.25); --success-text: #00C851;
+            --input-bg: rgba(45,45,45,0.9);
+            --table-header: #000000;
+            --success-bg: rgba(0, 200, 81, 0.15); 
+            --success-text: #00C851;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px;
-            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%23888888' stroke-opacity='0.05' fill='none'%3E%3Cline x1='0' y1='150' x2='400' y2='250' stroke-width='10'/%3E%3Cline x1='0' y1='190' x2='400' y2='290' stroke-width='2' stroke-dasharray='10,10'/%3E%3Ccircle cx='100' cy='175' r='30' stroke-width='3'/%3E%3Ccircle cx='300' cy='225' r='30' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 400px 400px; background-attachment: fixed;
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            padding-bottom: 80px;
             transition: background-color 0.3s, color 0.3s;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 2px solid var(--border-color); background-color: var(--panel-bg); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); height: 70px; }
-        .btn-volver-mini { background: rgba(128,128,128,0.1); border: 2px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s; font-weight: 800; font-size: 1.5rem;}
+        /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
+        .fire-base {
+            position: fixed;
+            bottom: 0; left: 0; width: 100vw; height: 35vh;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .fire-wave {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 200vw; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 10s linear infinite;
+        }
+        .fire-wave.delay {
+            bottom: -15px; opacity: 0.6;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 7s linear infinite reverse;
+        }
+        @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
+
+        @media screen and (max-width: 480px) {
+            html { font-size: 13px; } 
+            .btn-accion { padding: 10px; font-size: 0.95rem; }
+            input, select { padding: 8px; font-size: 1.05rem; border-width: 1px;}
+            .panel-control { padding: 12px; margin-bottom: 12px;}
+            .top-bar { padding: 10px 15px; height: 65px; }
+            .btn-volver-mini { width: 38px; height: 38px; }
+            .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px; }
+            .calculadora-modal { right: 10px; bottom: 65px; width: 230px;}
+            th { font-size: 0.75rem; padding: 6px 1px; }
+            td { font-size: 1rem; padding: 8px 2px; } 
+        }
+
+        .top-bar { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
+            background-color: transparent; position: sticky; top: 0; z-index: 100; 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
+        }
+        .nav-buttons-left { display: flex; gap: 8px; }
+        .btn-volver-mini { 
+            background: transparent; border: none; 
+            color: var(--primary-color);
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 0 5px var(--primary-glow));
+        }
+        .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
+        
         .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
         .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
 
-        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; overflow-x: hidden; }
+        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; overflow-x: hidden; position: relative; z-index: 10; max-width: 800px; margin: 0 auto;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-control { border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--panel-bg); backdrop-filter: blur(8px); }
-        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 2px solid rgba(128,128,128,0.2); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
         .btn-toggle-panel { background: none; border: none; font-size: 1.2rem; color: var(--text-color); pointer-events: none;}
         
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
@@ -50,19 +118,20 @@
         .full-width { grid-column: 1 / -1; }
 
         label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
-        input { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; text-align: center; background: var(--input-bg); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; }
-        input:focus { border-color: var(--primary-color); outline: none;}
+        
+        input { width: 100%; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center; padding: 12px;}
+        input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
         
         /* CUSTOM SELECT BUTTONS */
-        .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
-        .custom-select:active { border-color: var(--primary-color); background: rgba(255, 102, 0, 0.05); }
+        .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
+        .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
         .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
         .project-selector { display: flex; gap: 8px; margin-bottom: 10px; }
         
-        .bm-list { margin-top: 8px; max-height: 180px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-color); }
-        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid rgba(128,128,128,0.2); cursor: pointer; }
+        .bm-list { margin-top: 8px; max-height: 180px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; }
+        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
         .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .bm-info { display: flex; flex-direction: column; text-align: left; }
         .bm-info strong { font-size: 0.95rem; color: var(--text-color); }
@@ -71,8 +140,7 @@
         .bm-actions { display: flex; gap: 2px; }
         .bm-actions button { background: none; border: none; border-radius: 4px; padding: 4px 6px; font-size: 0.9rem; cursor: pointer; opacity: 0.4; transition: 0.2s; filter: grayscale(100%); }
         .bm-actions button:hover, .bm-actions button:active { opacity: 1; filter: grayscale(0%); background: rgba(128,128,128,0.1); }
-        .bm-obs { display: none; font-size: 0.8rem; color: #666; margin-top: 6px; text-align: left; background: rgba(128,128,128,0.1); padding: 6px; border-radius: 4px; border-left: 3px solid var(--primary-color); }
-        body.dark-mode .bm-obs { color: #bbb; }
+        .bm-obs { display: none; font-size: 0.8rem; color: #888; margin-top: 6px; text-align: left; background: rgba(128,128,128,0.05); padding: 6px; border-radius: 4px; border-left: 3px solid var(--primary-color); }
 
         .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center;}
         .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
@@ -81,49 +149,65 @@
         body.dark-mode .btn-excel { color: #81c784; border-color: #81c784; }
 
         .seccion-tabla { display: none; margin-top: 15px; }
-        /* AHORA SCROLL HORIZONTAL ACTIVADO */
-        .table-wrapper { width: 100%; max-height: 55vh; overflow-y: auto; overflow-x: auto; border: 2px solid var(--table-header); border-radius: 8px; background: var(--bg-color); }
+        .table-wrapper { width: 100%; max-height: 55vh; overflow-y: auto; overflow-x: auto; border: 1px solid var(--card-border); border-radius: 8px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         table { width: 100%; min-width: 650px; border-collapse: separate; border-spacing: 0; }
-        th { background: var(--table-header); color: #fff; font-weight: 800; padding: 10px 4px; font-size: 0.8rem; text-transform: uppercase; position: sticky; top: 0; z-index: 10; border-bottom: 2px solid rgba(128,128,128,0.2);}
+        th { background: var(--table-header); color: #fff; font-weight: 800; padding: 10px 4px; font-size: 0.8rem; text-transform: uppercase; position: sticky; top: 0; z-index: 10; border-bottom: 2px solid var(--border-color);}
         td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 10px 4px; text-align: center; font-weight: 800; font-size: 1.1rem; }
         td:last-child { border-right: none; }
         
-        .res-ai { text-align: center; font-size: 1.1rem; font-weight: 800; color: var(--text-color); margin: 15px 0; background: rgba(128,128,128,0.05); padding: 10px; border-radius: 8px; border: 1px dashed var(--text-color);}
+        .res-ai { text-align: center; font-size: 1.1rem; font-weight: 800; color: var(--text-color); margin: 15px 0; background: var(--card-bg); padding: 10px; border-radius: 8px; border: 1px dashed var(--text-color); backdrop-filter: blur(5px);}
         .res-ai span { color: var(--primary-color); font-family: monospace; font-size: 1.4rem;}
 
-        /* VERDE BRILLANTE PARA FILA MARCADA */
-        .fila-ok td { background-color: var(--success-bg) !important; color: var(--success-text) !important; transition: background-color 0.2s, color 0.2s; }
+        .fila-ok td { background-color: var(--success-bg) !important; color: var(--success-text) !important; transition: background-color 0.2s, color 0.2s; border-bottom-color: rgba(46, 204, 113, 0.4);}
         .fila-ok td:first-child::after { content: ' ✓'; font-weight: 900; }
         .celda-prog { cursor: pointer; } 
 
-        .btn-nav-flotante { position: fixed; bottom: 15px; left: 15px; width: 55px; height: 55px; background: var(--table-header); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid var(--border-color); cursor: pointer; z-index: 999; font-size: 1.4rem; transition: 0.2s;}
-        .btn-nav-flotante:active { transform: scale(0.9); }
-        .nav-modal { position: fixed; bottom: 80px; left: 15px; width: 220px; background: var(--panel-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; display: none; z-index: 1000; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--input-bg); padding: 10px 5px; border-radius: 8px; text-decoration: none; color: var(--text-color); font-weight: 800; font-size: 0.75rem; border: 1px solid var(--border-color); text-transform: uppercase; transition: 0.2s; text-align: center;}
-        .nav-item:active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
-        .nav-item span { font-size: 1.2rem; margin-bottom: 2px; }
-
-        .btn-calculadora-flotante { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; background: var(--bg-color); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid var(--primary-color); cursor: pointer; z-index: 999; font-size: 1.4rem; }
-        .calculadora-modal { position: fixed; bottom: 80px; right: 15px; width: 240px; background: var(--panel-bg); border: 2px solid var(--table-header); border-radius: 12px; padding: 12px; display: none; z-index: 1000; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 800; color: var(--text-color); font-size: 0.85rem;}
+        /* --- CALCULADORA DISEÑO OPTIMIZADO COTA100 --- */
+        .btn-calculadora-flotante { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; background: var(--card-bg); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid var(--primary-color); cursor: pointer; z-index: 999; font-size: 1.4rem; backdrop-filter: blur(5px);}
+        .calculadora-modal { 
+            position: fixed; bottom: 80px; right: 15px; width: 240px; 
+            background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; 
+            padding: 15px; display: none; z-index: 1000; 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
+            box-shadow: 0 4px 20px var(--primary-glow); 
+        }
+        .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800; color: var(--text-color); font-size: 0.85rem;}
         .calc-header button { background: none; border: none; font-size: 1.2rem; font-weight: 800; color: var(--danger-color); cursor: pointer;}
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        .calc-grid button { padding: 10px 0; font-size: 1.2rem; font-weight: 800; border: 1px solid var(--border-color); border-radius: 6px; background: var(--input-bg); color: var(--text-color); cursor: pointer;}
-        #calcDisplay { width: 100%; height: 40px; text-align: right; font-size: 1.4rem; font-weight: 800; border: 2px solid var(--border-color); margin-bottom: 8px; padding: 4px; background: var(--input-bg); color: var(--text-color); }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        
+        .calc-grid button { 
+            padding: 12px 0; font-size: 1.2rem; font-weight: 800; 
+            border: 1px solid var(--border-color); border-radius: 8px; 
+            background: var(--input-bg); color: var(--text-color); cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .calc-grid button:active { transform: scale(0.9); }
+        .calc-grid button.calc-op { color: var(--primary-color); background: rgba(255, 85, 0, 0.1); border-color: var(--card-border); }
+        .calc-grid button.calc-clear { color: var(--danger-color); border-color: rgba(211, 47, 47, 0.3); background: rgba(211, 47, 47, 0.05); }
+        .calc-grid button.calc-del { grid-column: span 2; background: rgba(128,128,128,0.1); }
+        .calc-grid button.calc-eval { grid-column: span 2; background: var(--primary-color); color: #fff; border: none; box-shadow: 0 2px 8px var(--primary-glow); }
+        
+        #calcDisplay { 
+            width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; 
+            border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; 
+            padding: 4px 10px; background: var(--input-bg); color: var(--text-color); 
+        }
+        #calcDisplay:focus { border-color: var(--primary-color); outline: none; }
 
+        /* --- TOAST NOTIFICATIONS --- */
         #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 350px;}
-        .toast { background: var(--panel-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
+        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
         .toast.error { border-left-color: var(--danger-color); }
-        .toast.success { border-left-color: #00C851; }
+        .toast.success { border-left-color: #2e7d32; }
         .toast.warning { border-left-color: #fbc02d; }
         .toast.fade-out { animation: fadeOutToast 0.3s ease-in forwards; }
         @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
 
+        /* --- CUSTOM CONFIRM MODAL --- */
         .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.2s; backdrop-filter: blur(2px);}
         .confirm-overlay.activo { opacity: 1; visibility: visible; }
-        .confirm-box { background: var(--panel-bg); border: 2px solid var(--border-color); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.4);}
+        .confirm-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(15px);}
         .confirm-overlay.activo .confirm-box { transform: scale(1); }
         .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
         .confirm-btns { display: flex; gap: 10px; }
@@ -132,31 +216,25 @@
         .confirm-btn-cancel { background: rgba(128,128,128,0.2); color: var(--text-color); }
         .confirm-btn-ok { background: var(--primary-color); color: #fff; }
 
-        /* MODAL SELECTOR GENÉRICO */
+        /* --- MODAL SELECTOR GENÉRICO --- */
         .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(2px); }
         .overlay-select.activo { opacity: 1; }
-        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--panel-bg); border: 2px solid var(--border-color); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
-.modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
-
-        .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 2px solid var(--primary-color); background: rgba(255,102,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
+        .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
+        .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
         .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
         .btn-opcion span.cota { color: var(--text-color); font-size: 0.95rem; font-weight: 700;}
         .btn-opcion:active span.cota { color: #fff !important; }
 
-        @media screen and (max-width: 480px) { 
-            html { font-size: 13px; } 
-            .btn-accion { padding: 10px; font-size: 0.95rem; } 
-            input { padding: 10px; font-size: 1.05rem; } 
-            .modulo-container { padding: 10px; } 
-            .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px;}
-            .btn-nav-flotante { width: 45px; height: 45px; bottom: 10px; left: 10px;}
-            .calculadora-modal { right: 10px; bottom: 65px; width: 230px;}
-            .nav-modal { left: 10px; bottom: 65px; width: 200px;}
-            td { font-size: 1rem; }
-        }
     </style>
 </head>
 <body onload="inicializarApp()">
+
+    <!-- Fondo de Agua / Fuego Animado -->
+    <div class="fire-base">
+        <div class="fire-wave delay"></div>
+        <div class="fire-wave"></div>
+    </div>
 
     <script>
         try {
@@ -193,13 +271,28 @@
     <input type="hidden" id="hdnSelectBM" value="">
 
     <div class="top-bar">
-        <a href="nivelacion.html" class="btn-volver-mini" onclick="vibrar()">←</a>
+        <div class="nav-buttons-left">
+            <!-- Botón Casa (Home) -->
+            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </a>
+            <!-- Botón Atrás actualizado con SVG -->
+            <a href="nivelacion.html" class="btn-volver-mini" onclick="vibrar()">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </a>
+        </div>
         <h2 class="top-bar-title">ALCANTARILLADO <span>Control de Redes</span></h2>
-        <div style="width: 45px;"></div> 
+        <div style="width: 90px;"></div> 
     </div>
 
     <div class="modulo-container">
-        <div class="panel-control" style="border-left: 5px solid #111;">
+        <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
             <div class="panel-titulo" onclick="togglePanel('panelProyecto')">
                 <span>📁 Base de Datos / Proyectos</span>
                 <span class="btn-toggle-panel">▼</span>
@@ -217,7 +310,7 @@
                     <label>Nombre de la Red / Obra</label>
                     <input type="text" id="proyectName" placeholder="Ej: Red de Agua Sector 4" oninput="renombrarProyecto(); guardarEstadoAlcan();">
                 </div>
-                <div style="border-top: 1px solid rgba(128,128,128,0.2); padding-top: 10px;">
+                <div style="border-top: 1px solid var(--border-color); padding-top: 10px;">
                     <label style="color: var(--primary-color);">+ Registrar BM</label>
                     <div class="form-grid" style="margin-top: 4px;">
                         <input type="text" id="newBMName" placeholder="Nombre (Ej: BM-1)" oninput="this.value = this.value.toUpperCase()">
@@ -228,11 +321,10 @@
                 </div>
                 <div class="bm-list" id="listaBMs"></div>
                 
-                <div style="border-top: 1px dashed rgba(128,128,128,0.3); padding-top: 12px; margin-top: 12px;">
-                    <label style="color: var(--text-color); font-size: 0.8rem;">💾 Respaldo de Base de Datos</label>
-                    <div style="display: flex; gap: 8px; margin-top: 5px;">
-                        <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: #111; margin: 0;" onclick="exportarBackupAlcan()">📤 Backup DB</button>
-                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 2px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;" onclick="vibrar()">
+                <div style="border-top: 1px dashed var(--border-color); padding-top: 12px; margin-top: 12px;">
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: var(--table-header); margin: 0;" onclick="exportarBackupAlcan()">📤 Backup DB</button>
+                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;" onclick="vibrar()">
                             📥 Restaurar
                             <input type="file" id="importAlcanFile" accept=".json" style="display: none;" onchange="importarBackupAlcan()">
                         </label>
@@ -241,7 +333,7 @@
             </div>
         </div>
 
-        <div class="panel-control" style="border-left: 5px solid #1976d2;">
+        <div class="panel-control" style="border-left: 4px solid #1976d2;">
             <div class="panel-titulo" onclick="togglePanel('panelParametros')">
                 <span>1. Parámetros de Diseño</span>
                 <span class="btn-toggle-panel">▼</span>
@@ -261,7 +353,7 @@
                     <div class="input-group"><label>Distancia Total (m)</label><input type="text" inputmode="decimal" id="distTotal" placeholder="0.000" oninput="formatDecimal(this); desmarcarPerfil(); guardarEstadoAlcan();"></div>
                     <div class="input-group"><label>Pendiente (% al 100)</label><input type="text" inputmode="decimal" id="pte" placeholder="0.000" oninput="formatDecimal(this); desmarcarPerfil(); guardarEstadoAlcan();"></div>
                 </div>
-                <div style="border-top: 1px dashed rgba(128,128,128,0.3); padding-top: 10px; margin-top: 10px;">
+                <div style="border-top: 1px dashed var(--border-color); padding-top: 10px; margin-top: 10px;">
                     <label style="color: var(--text-color);">💾 Guardar este Tramo/Perfil en el proyecto</label>
                     <div style="display: flex; gap: 8px; margin-top: 5px;">
                         <input type="text" id="nombrePerfilNuevo" placeholder="Ej: BZ1 - BZ2" style="flex: 1; text-align: left; padding: 10px;" oninput="this.value = this.value.toUpperCase()">
@@ -271,7 +363,7 @@
             </div>
         </div>
 
-        <div class="panel-control" style="border-left: 5px solid var(--primary-color);" id="panelEstacionWrapper">
+        <div class="panel-control" style="border-left: 4px solid var(--primary-color);" id="panelEstacionWrapper">
             <div class="panel-titulo" onclick="togglePanel('panelEstacion')">
                 <span>2. Estación y Tubería (Campo)</span>
                 <span class="btn-toggle-panel">▼</span>
@@ -291,7 +383,7 @@
                     <div class="input-group full-width">
                         <label>Vista Atrás (+)</label>
                         <input type="text" inputmode="decimal" id="vistaAtras" placeholder="Ej: 1.250" oninput="formatDecimal(this); evaluarLimiteVA(); guardarEstadoAlcan();">
-                        <div class="txt-ayuda" id="txtAlertaVA" style="color:var(--primary-color); margin-top:4px; font-weight:800;"></div>
+                        <div class="txt-ayuda" id="txtAlertaVA" style="color:var(--primary-color); margin-top:4px; font-weight:800; font-size:0.85rem;"></div>
                     </div>
                     <div class="input-group"><label>Cama de Apoyo (m)</label><input type="text" inputmode="decimal" id="camaApoyo" placeholder="Ej: 0.100" oninput="formatDecimal(this); guardarEstadoAlcan();"></div>
                     <div class="input-group"><label>Altura de Tubo (m)</label><input type="text" inputmode="decimal" id="alturaTubo" placeholder="Ej: 0.200" oninput="formatDecimal(this); guardarEstadoAlcan();"></div>
@@ -301,11 +393,11 @@
         </div>
 
         <div style="text-align: center; margin-bottom: 20px;">
-            <button class="btn-accion" style="background-color: var(--primary-color); font-size: 1.05rem; padding: 12px; width: 85%; margin: 0 auto; display: block;" onclick="generarLibreta()">⚙️ GENERAR LIBRETA DE CAMPO</button>
+            <button class="btn-accion" style="background-color: var(--primary-color); font-size: 1.05rem; padding: 12px; width: 100%; margin: 0 auto; display: block;" onclick="generarLibreta()">⚙️ GENERAR LIBRETA DE CAMPO</button>
         </div>
 
         <div class="seccion-tabla" id="seccionTabla">
-            <div class="res-ai" id="resAI">AI (Altura Instrumento): <span id="txtAI">0.000</span></div>
+            <div class="res-ai" id="resAI">AI (Altura Instrumento): <br><span id="txtAI">0.000</span></div>
             <div class="table-wrapper">
                 <table id="tablaAlcantarillado">
                     <thead>
@@ -324,32 +416,30 @@
         </div>
     </div>
 
-    <div class="btn-nav-flotante" onclick="toggleNav()">🧭</div>
-    <div class="nav-modal" id="navModal">
-        <div style="font-weight: 800; font-size: 0.85rem; margin-bottom: 10px; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">
-            IR A MÓDULO <button onclick="toggleNav()" style="background:none; border:none; color:var(--danger-color); font-weight:800; cursor:pointer; font-size: 1.2rem;">X</button>
-        </div>
-        <div class="nav-grid">
-            <a href="index.html" class="nav-item"><span>🏠</span> Inicio</a>
-            <a href="nivelacion.html" class="nav-item"><span>📏</span> Niveles</a>
-            <a href="poligonales.html" class="nav-item"><span>📐</span> Polígonos</a>
-            <a href="coordenadas.html" class="nav-item"><span>🌐</span> Coord.</a>
-            <a href="areas.html" class="nav-item"><span>⬛</span> Áreas</a>
-            <a href="ajustes.html" class="nav-item"><span>⚙️</span> Ajustes</a>
-        </div>
-    </div>
-
+    <!-- BOTÓN CALCULADORA -->
     <div class="btn-calculadora-flotante" onclick="toggleCalculadora()">🧮</div>
     <div class="calculadora-modal" id="calculadoraModal">
         <div class="calc-header"><span>CÁLCULO RÁPIDO</span><button onclick="toggleCalculadora()">X</button></div>
         <input type="text" id="calcDisplay" disabled>
         <div class="calc-grid">
-            <button onclick="calcInput('7')">7</button><button onclick="calcInput('8')">8</button><button onclick="calcInput('9')">9</button><button onclick="calcInput('/')">÷</button>
-            <button onclick="calcInput('4')">4</button><button onclick="calcInput('5')">5</button><button onclick="calcInput('6')">6</button><button onclick="calcInput('*')">×</button>
-            <button onclick="calcInput('1')">1</button><button onclick="calcInput('2')">2</button><button onclick="calcInput('3')">3</button><button onclick="calcInput('-')">-</button>
-            <button onclick="calcClear()" style="color:var(--danger-color); border-color:var(--danger-color);">C</button><button onclick="calcInput('0')">0</button><button onclick="calcInput('.')">.</button><button onclick="calcInput('+')">+</button>
-            <button onclick="calcBackspace()" style="grid-column: span 2; background:rgba(128,128,128,0.1);">⌫</button>
-            <button onclick="calcEval()" style="grid-column: span 2; background:var(--primary-color); color:#fff;">=</button>
+            <button onclick="calcInput('7')">7</button>
+            <button onclick="calcInput('8')">8</button>
+            <button onclick="calcInput('9')">9</button>
+            <button onclick="calcInput('/')" class="calc-op">÷</button>
+            <button onclick="calcInput('4')">4</button>
+            <button onclick="calcInput('5')">5</button>
+            <button onclick="calcInput('6')">6</button>
+            <button onclick="calcInput('*')" class="calc-op">×</button>
+            <button onclick="calcInput('1')">1</button>
+            <button onclick="calcInput('2')">2</button>
+            <button onclick="calcInput('3')">3</button>
+            <button onclick="calcInput('-')" class="calc-op">-</button>
+            <button onclick="calcClear()" class="calc-clear">C</button>
+            <button onclick="calcInput('0')">0</button>
+            <button onclick="calcInput('.')">.</button>
+            <button onclick="calcInput('+')" class="calc-op">+</button>
+            <button onclick="calcBackspace()" class="calc-del">⌫</button>
+            <button onclick="calcEval()" class="calc-eval">=</button>
         </div>
     </div>
 
@@ -476,13 +566,11 @@
             }
         }
 
-        function toggleNav() {
-            vibrar();
-            const m = document.getElementById('navModal');
-            m.style.display = m.style.display === 'block' ? 'none' : 'block';
-        }
-
         function inicializarApp() {
+            // --- REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX ---
+            localStorage.setItem('cota100_last_name', 'ALCANTARILLADO');
+            localStorage.setItem('cota100_last_url', 'niv-alcan.html');
+
             try {
                 let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
                 if(conf) {

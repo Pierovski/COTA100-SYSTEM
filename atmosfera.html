@@ -4,96 +4,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>COTA100 SYSTEM - Atmósfera y PPM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* --- ESTILOS UNIFICADOS COTA100 --- */
         :root {
-            --bg-color: #ffffff; --text-color: #000000;
-            --primary-color: #FF6600; --border-color: rgba(0, 0, 0, 0.2); 
-            --table-header: #111; --success-color: #2e7d32; --error-color: #d32f2f;
-            --panel-bg: rgba(255,255,255,0.85); --input-bg: rgba(255,255,255,0.9);
-            --card-bg: #ffffff;
+            --bg-color: #f8f9fa;
+            --text-color: #1a1e23;
+            --primary-color: #FF5500; 
+            --primary-glow: rgba(255, 85, 0, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 85, 0, 0.15);
+            --border-color: rgba(0, 0, 0, 0.15); 
+            --table-header: #1a1e23; 
+            --danger-color: #d32f2f; 
+            --input-bg: rgba(255,255,255,0.9);
+            --success-color: #2e7d32;
         }
 
         body.dark-mode {
-            --bg-color: #121212; --text-color: #e0e0e0;
+            --bg-color: #05070a;
+            --text-color: #ffffff;
+            --primary-glow: rgba(255, 85, 0, 0.4);
+            --card-bg: rgba(18, 22, 28, 0.85);
+            --card-border: rgba(255, 85, 0, 0.25);
             --border-color: rgba(255, 255, 255, 0.15); 
-            --panel-bg: rgba(30,30,30,0.9); --input-bg: rgba(45,45,45,0.9);
-            --table-header: #000; --card-bg: #1e1e1e;
+            --input-bg: rgba(45,45,45,0.9);
+            --table-header: #000000;
+            --success-color: #00C851;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px;
-            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%23000000' stroke-opacity='0.05' stroke-width='1.5' fill='none'%3E%3Cpath d='M0,100 Q100,50 200,100 T400,100'/%3E%3Cpath d='M0,150 Q100,100 200,150 T400,150'/%3E%3Cpath d='M0,200 Q100,150 200,200 T400,200'/%3E%3Cpath d='M0,250 Q100,200 200,250 T400,250'/%3E%3C/g%3E%3C/svg%3E");
-            background-size: 400px 400px; background-attachment: fixed;
-            transition: background-color 0.3s, color 0.3s;
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            padding-bottom: 50px;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        @media screen and (max-width: 480px) {
-            html { font-size: 12px; } 
-            .btn-accion { padding: 9px; font-size: 0.95rem; }
-            input, select { padding: 6px; font-size: 1.05rem; border-width: 1px;}
-            .panel-control { padding: 10px; margin-bottom: 10px;}
-            .top-bar { padding: 5px 10px; height: 50px; }
-            .btn-volver-mini { width: 32px; height: 32px; font-size: 1.2rem;}
-            .modulo-container { padding: 10px; }
-            .btn-nav-flotante { width: 45px; height: 45px; bottom: 10px; left: 10px;}
-            .nav-modal { left: 10px; bottom: 65px; width: 200px;}
+        /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
+        .fire-base {
+            position: fixed;
+            bottom: 0; left: 0; width: 100vw; height: 35vh;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
         }
+        .fire-wave {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 200vw; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 10s linear infinite;
+        }
+        .fire-wave.delay {
+            bottom: -15px; opacity: 0.6;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
+            background-size: 50% 100%;
+            animation: waveFire 7s linear infinite reverse;
+        }
+        @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
-        .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 2px solid var(--border-color); background-color: var(--card-bg); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); height: 70px; }
-        .btn-volver-mini { background: rgba(128,128,128,0.1); border: 2px solid var(--border-color); color: var(--text-color); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s; font-weight: 800; font-size: 1.5rem; line-height: 1;}
+        /* --- CABECERA DUAL --- */
+        .top-bar { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
+            background-color: transparent; position: sticky; top: 0; z-index: 100; 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
+        }
+        .nav-buttons-left { display: flex; gap: 8px; }
+        .btn-volver-mini { 
+            background: transparent; border: none; 
+            color: var(--primary-color);
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 0 5px var(--primary-glow));
+        }
+        .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
+        
         .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
         .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
 
-        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; max-width: 500px; margin: 0 auto; }
+        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; max-width: 600px; margin: 0 auto; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .panel-control { border: 2px solid var(--border-color); border-radius: 10px; padding: 12px; margin-bottom: 12px; background: var(--panel-bg); backdrop-filter: blur(8px); }
-        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.05rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 2px solid rgba(128,128,128,0.2); padding-bottom: 6px;}
+        /* --- PANELES (GLASSMORPHISM) --- */
+        .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;}
         
-        .input-group { flex: 1; display: flex; flex-direction: column; }
-        label { font-weight: 800; color: var(--text-color); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; opacity: 0.8; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 10px;}
+        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
         
-        input, select { width: 100%; padding: 10px; font-size: 1.1rem; font-weight: 800; text-align: center; background: var(--input-bg); border: 2px solid var(--border-color); border-radius: 6px; color: var(--text-color); transition: 0.2s; }
-        input:focus, select:focus { border-color: var(--primary-color); outline: none; background: var(--card-bg);}
+        input { width: 100%; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center; padding: 12px;}
+        input:focus { border-color: var(--primary-color); outline: none; background: transparent;}
         
-        select {
-            appearance: none; -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23FF6600%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat; background-position: right 10px center; background-size: 20px auto;
-            padding-right: 35px !important; text-align: left !important; padding-left: 12px !important; cursor: pointer;
-        }
+        /* --- CUSTOM SELECTOR (TIPO BOTÓN) --- */
+        .custom-select { width: 100%; padding: 15px 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
+        .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
+        .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
+        .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
-        .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 6px; cursor: pointer; transition: 0.2s; display: inline-block; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }
-        .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
-        .btn-limpiar { background: var(--card-bg); color: var(--error-color); border: 2px solid var(--error-color); margin-top: 10px; box-shadow: none; }
+        .btn-accion { width: 100%; padding: 16px; font-weight: 900; font-size: 1.2rem; text-transform: uppercase; background: var(--primary-color); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center; box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);}
+        .btn-accion:active { transform: scale(0.98);}
+        .btn-limpiar { background: transparent; color: var(--danger-color); border: 1px solid var(--danger-color); margin-top: 10px; box-shadow: none; font-size: 1rem; padding: 12px;}
 
-        /* Panel de Resultados */
-        .panel-resultados { background: var(--card-bg); border: 3px solid var(--table-header); border-radius: 10px; padding: 15px; text-align: center; display: none; margin-bottom: 15px; backdrop-filter: blur(8px); }
+        /* --- PANEL DE RESULTADOS --- */
+        .panel-resultados { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; text-align: center; display: none; margin-bottom: 15px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         
-        .res-destaque { background-color: rgba(128,128,128,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 2px solid var(--primary-color);}
+        .res-destaque { background-color: rgba(128,128,128,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--card-border);}
         .res-titulo { color: var(--text-color); opacity: 0.7; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; font-weight: 800;}
         .res-valor-gigante { font-size: 2.5rem; color: var(--text-color); font-weight: 900; font-family: monospace; letter-spacing: -1px;}
         .res-unidad { font-size: 1rem; color: var(--primary-color); font-weight: 700; letter-spacing: 0;}
         
-        .info-box { background-color: rgba(255, 102, 0, 0.1); border-left: 5px solid var(--primary-color); padding: 12px; margin-bottom: 12px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
+        .info-box { background-color: rgba(25, 118, 210, 0.1); border-left: 5px solid #1976d2; padding: 12px; margin-bottom: 12px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
         .info-box strong { color: var(--primary-color); font-weight: 800;}
         .helper-text { font-size: 0.75rem; color: var(--text-color); opacity: 0.6; font-weight: 600; margin-top: 4px; text-align: left;}
 
-        /* NAVEGACIÓN FLOTANTE */
-        .btn-nav-flotante { position: fixed; bottom: 15px; left: 15px; width: 55px; height: 55px; background: var(--table-header); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid var(--border-color); cursor: pointer; z-index: 999; font-size: 1.4rem; transition: 0.2s;}
-        .btn-nav-flotante:active { transform: scale(0.9); }
-        .nav-modal { position: fixed; bottom: 80px; left: 15px; width: 220px; background: var(--panel-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; display: none; z-index: 1000; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--input-bg); padding: 10px 5px; border-radius: 8px; text-decoration: none; color: var(--text-color); font-weight: 800; font-size: 0.75rem; border: 1px solid var(--border-color); text-transform: uppercase; transition: 0.2s; text-align: center;}
-        .nav-item:active { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
-        .nav-item span { font-size: 1.2rem; margin-bottom: 2px; }
+        /* --- MODAL DE VENTANA (GLASSMORPHISM) --- */
+        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
+        .overlay-select.activo { opacity: 1; }
+        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
+        .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
+        .btn-opcion { width: 100%; padding: 16px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s;}
+        .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
+
+        @media screen and (max-width: 480px) {
+            html { font-size: 13px; } 
+            input, .custom-select { padding: 14px 10px; font-size: 1.1rem;}
+            .panel-control { padding: 12px; margin-bottom: 12px;}
+            .top-bar { padding: 10px 15px; height: 65px; }
+            .btn-volver-mini { width: 38px; height: 38px;}
+        }
     </style>
 </head>
 <body onload="inicializarApp()">
+
+    <!-- Fondo Animado Fuego / Metálico -->
+    <div class="fire-base">
+        <div class="fire-wave delay"></div>
+        <div class="fire-wave"></div>
+    </div>
 
     <script>
         try {
@@ -102,10 +157,34 @@
         } catch(e) {}
     </script>
 
+    <!-- MODAL DE SELECCIÓN GENÉRICO (LAS "VENTANAS" SOLICITADAS) -->
+    <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
+    <div class="modal-select" id="modalSelect">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h3 id="modalSelectTitle" style="margin:0; color:var(--text-color); font-weight:800; font-size:1.2rem; text-transform:uppercase;">SELECCIONAR</h3>
+            <button onclick="cerrarModalSelect()" style="background:none; border:none; font-size:1.5rem; color:var(--danger-color); font-weight:800; cursor:pointer; padding:0 10px;">X</button>
+        </div>
+        <div id="modalSelectContent" style="max-height:350px; overflow-y:auto; margin-bottom:5px;"></div>
+    </div>
+
     <div class="top-bar">
-        <button class="btn-volver-mini" onclick="window.location.href='index.html'; vibrar();">←</button>
+        <div class="nav-buttons-left">
+            <!-- Botón Casa (Home) y Botón Atrás actúan igual aquí porque este módulo está en la raíz -->
+            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </a>
+            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </a>
+        </div>
         <h2 class="top-bar-title">ATMÓSFERA <span>Corrección PPM</span></h2>
-        <div style="width: 40px;"></div>
+        <div style="width: 90px;"></div>
     </div>
 
     <div class="modulo-container">
@@ -118,12 +197,15 @@
             <div class="panel-titulo" style="color: var(--text-color);">⚙️ 1. Configuración de Marca</div>
             <div class="input-group">
                 <label>Fabricante del Equipo</label>
-                <select id="marcaEquipo" onchange="vibrar()">
-                    <option value="leica">Leica Geosystems</option>
-                    <option value="topcon">Topcon / Sokkia / South</option>
-                    <option value="trimble">Trimble</option>
-                    <option value="chcnav">CHCNAV / Kolida</option>
-                </select>
+                
+                <!-- Reemplazo del <select> nativo por la Ventana Modal personalizada -->
+                <div class="custom-select" onclick="abrirModalSelect('marca')">
+                    <span id="txtMarcaEquipo">Leica Geosystems</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <!-- Input oculto para guardar la selección -->
+                <input type="hidden" id="marcaEquipo" value="leica">
+                
                 <div class="helper-text">Selecciona tu marca para aplicar la fórmula de refracción óptica exacta.</div>
             </div>
         </div>
@@ -131,14 +213,14 @@
         <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
             <div class="panel-titulo">📍 2. Datos del Terreno</div>
             
-            <div class="input-group" style="margin-bottom: 10px;">
+            <div class="input-group" style="margin-bottom: 12px;">
                 <label style="color: var(--primary-color);">ALTITUD (m.s.n.m)</label>
                 <input type="number" id="inAltitud" step="0.001" placeholder="Ej: 2875">
                 <div class="helper-text">Elevación donde armarás la Estación Total. Define la presión.</div>
             </div>
             
             <div class="input-group">
-                <label style="color: var(--error-color);">TEMPERATURA (°C)</label>
+                <label style="color: var(--danger-color);">TEMPERATURA (°C)</label>
                 <input type="number" id="inTemp" step="0.1" placeholder="Ej: 19.5">
                 <div class="helper-text">Temperatura real del aire. Define la densidad y el PPM final.</div>
             </div>
@@ -150,10 +232,10 @@
             
             <div class="res-destaque">
                 <div class="res-titulo" style="color: var(--text-color);">☁️ PRESIÓN LOCAL (QFE)</div>
-                <div class="res-valor-gigante" id="resHpa">000.0 <span class="res-unidad">hPa / mbar</span></div>
-                <div style="width: 50%; height: 2px; background-color: var(--border-color); margin: 15px auto;"></div>
+                <div class="res-valor-gigante" id="resHpa">000.0 <span class="res-unidad">hPa / mb</span></div>
+                <div style="width: 50%; height: 1px; background-color: var(--border-color); margin: 15px auto;"></div>
                 <div class="res-valor-gigante" id="resMmhg" style="font-size: 2rem; color: var(--text-color); opacity: 0.8;">000.0 <span class="res-unidad">mmHg</span></div>
-                <div class="helper-text" style="text-align: center;">* Este es el valor que debes ingresar manualmente en el menú de atmósfera de tu equipo.</div>
+                <div class="helper-text" style="text-align: center; margin-top: 8px;">* Este es el valor que debes ingresar manualmente en el menú de atmósfera de tu equipo.</div>
             </div>
 
             <div class="res-destaque" style="background-color: transparent; border-color: var(--text-color); border-style: dashed;">
@@ -165,44 +247,77 @@
             <button class="btn-accion btn-limpiar" onclick="limpiarAtmosfera();">🗑️ Limpiar Datos</button>
         </div>
 
-        <div class="info-box" style="border-left-color: var(--success-color); background: rgba(46, 125, 50, 0.1); margin-top: 15px;">
-            <strong>💡 Recomendaciones Pro:</strong><br>
-            • <strong>Aclimatación:</strong> Deja el equipo al aire libre 15 min antes de medir para que el sensor y los lentes se estabilicen.<br>
-            • <strong>Sensores:</strong> Si ingresas estos datos manuales, asegúrate de **apagar el sensor automático** en la configuración de la Estación.
+        <div class="info-box" style="border-left-color: var(--success-color); background: rgba(46, 204, 113, 0.1); margin-top: 15px;">
+            <strong style="color: var(--success-color);">💡 Recomendaciones Pro:</strong><br>
+            • <strong>Aclimatación:</strong> Deja el equipo al aire libre 15 min antes de medir para que el sensor se estabilice.<br>
+            • <strong>Sensores:</strong> Si ingresas estos datos manuales, asegúrate de apagar el sensor automático en tu Estación.
         </div>
 
-    </div>
-
-    <div class="btn-nav-flotante" onclick="toggleNav()">🧭</div>
-    <div class="nav-modal" id="navModal">
-        <div style="font-weight: 800; font-size: 0.85rem; margin-bottom: 10px; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">
-            IR A MÓDULO <button onclick="toggleNav()" style="background:none; border:none; color:var(--error-color); font-weight:800; cursor:pointer; font-size: 1.2rem;">X</button>
-        </div>
-        <div class="nav-grid">
-            <a href="index.html" class="nav-item"><span>🏠</span> Inicio</a>
-            <a href="nivelacion.html" class="nav-item"><span>📏</span> Niveles</a>
-            <a href="poligonales.html" class="nav-item"><span>📐</span> Polígonos</a>
-            <a href="coordenadas.html" class="nav-item"><span>🌐</span> Coord.</a>
-            <a href="areas.html" class="nav-item"><span>⬛</span> Áreas</a>
-            <a href="ajustes.html" class="nav-item"><span>⚙️</span> Ajustes</a>
-        </div>
     </div>
 
     <script>
         let usarVibracion = true;
-        function vibrar() { if (usarVibracion && navigator.vibrate) navigator.vibrate(30); }
-
-        function toggleNav() {
-            vibrar();
-            const m = document.getElementById('navModal');
-            m.style.display = m.style.display === 'block' ? 'none' : 'block';
+        
+        function vibrar() { 
+            if (usarVibracion && navigator.vibrate) navigator.vibrate(30); 
         }
 
         function inicializarApp() {
-            let conf = JSON.parse(localStorage.getItem('cota100_ajustes')) || {};
-            usarVibracion = conf.vibracion !== false;
+            // --- REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX ---
+            localStorage.setItem('cota100_last_name', 'ATMÓSFERA Y PPM');
+            localStorage.setItem('cota100_last_url', 'atmosfera.html');
+            // ----------------------------------------------------------
+
+            try {
+                let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
+                if(conf) {
+                    if (conf.darkMode) document.body.classList.add('dark-mode');
+                    usarVibracion = conf.vibracion !== false;
+                }
+            } catch(e) {}
         }
 
+        /* --- UI: LÓGICA DE VENTANA MODAL PARA DESPLEGABLES --- */
+        function abrirModalSelect(tipo) {
+            vibrar();
+            const titulo = document.getElementById('modalSelectTitle');
+            const contenido = document.getElementById('modalSelectContent');
+            contenido.innerHTML = "";
+            
+            if(tipo === 'marca') {
+                titulo.innerText = "⚙️ SELECCIONAR MARCA";
+                let opciones = [
+                    {val: 'leica', txt: 'Leica Geosystems'},
+                    {val: 'topcon', txt: 'Topcon / Sokkia / South'},
+                    {val: 'trimble', txt: 'Trimble'},
+                    {val: 'chcnav', txt: 'CHCNAV / Kolida'}
+                ];
+                let actual = document.getElementById('marcaEquipo').value;
+                opciones.forEach(opt => {
+                    let isActivo = opt.val === actual;
+                    // Al tocar la opción, guardamos el value en el input oculto y el texto en el span visual
+                    contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${opt.val}', '${opt.txt}')"><span>${opt.txt}</span></button>`;
+                });
+            }
+
+            document.getElementById('overlaySelect').style.display = 'block';
+            setTimeout(() => { document.getElementById('overlaySelect').classList.add('activo'); document.getElementById('modalSelect').classList.add('abierto'); }, 10);
+        }
+
+        function cerrarModalSelect() {
+            vibrar();
+            document.getElementById('overlaySelect').classList.remove('activo');
+            document.getElementById('modalSelect').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300);
+        }
+
+        function seleccionarOpcionModal(valor, texto) {
+            cerrarModalSelect();
+            document.getElementById('marcaEquipo').value = valor;
+            document.getElementById('txtMarcaEquipo').innerText = texto;
+        }
+
+        /* --- LÓGICA MATEMÁTICA DE LA ATMÓSFERA --- */
         function calcularAtmosfera() {
             vibrar();
             let h = parseFloat(document.getElementById('inAltitud').value);
