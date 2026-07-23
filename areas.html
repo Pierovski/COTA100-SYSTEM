@@ -71,6 +71,19 @@
         }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
+        @media screen and (max-width: 480px) {
+            html { font-size: 13px; } 
+            .btn-accion { padding: 10px; font-size: 0.95rem; }
+            input { padding: 10px; font-size: 1.05rem;}
+            .panel-control { padding: 12px; margin-bottom: 12px;}
+            .top-bar { padding: 10px 15px; height: 65px; }
+            .btn-volver-mini { width: 38px; height: 38px;}
+            th { font-size: 0.75rem; padding: 6px 1px; }
+            td input { padding: 8px 2px; font-size: 1.15rem; }
+            .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px; }
+            .calculadora-modal { right: 10px; bottom: 65px; width: 230px;}
+        }
+
         /* --- CABECERA DUAL --- */
         .top-bar { 
             display: flex; align-items: center; justify-content: space-between; 
@@ -87,49 +100,50 @@
         }
         .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
         
-        .top-bar-title { color: var(--text-color); font-weight: 800; font-size: 1.4rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
+        .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
         .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
-        .spacer { width: 90px; } /* Ajustador para centrado */
 
-        .modulo-container { padding: 25px 15px; max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 10;}
+        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; max-width: 800px; margin: 0 auto; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- PANELES (GLASSMORPHISM) --- */
-        .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 18px; margin-bottom: 15px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
-        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        .btn-toggle-panel { background: none; border: none; font-size: 1.2rem; color: var(--text-color); pointer-events: none;}
         
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-        .input-group { display: flex; flex-direction: column; }
-        .full-width { grid-column: 1 / -1; }
+        .panel-contenido { display: block; margin-top: 10px; }
+        .project-selector { display: flex; gap: 8px; margin-bottom: 10px; }
         
-        label { margin-bottom: 5px; font-weight: 800; color: var(--text-color); opacity: 0.8; font-size: 0.8rem; text-transform: uppercase; }
-        input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); border-radius: 8px; transition: 0.2s; text-align: center;}
-        input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
+        input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center;}
+        input:focus { border-color: var(--primary-color); outline: none; background: transparent;}
         
-        /* --- CUSTOM SELECTOR (TIPO BOTÓN) --- */
-        .custom-select { width: 100%; padding: 15px 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
+        /* CUSTOM SELECT BUTTONS */
+        .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
         .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
-        .btn-accion { width: 100%; padding: 16px; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; background: var(--primary-color); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center; box-shadow: 0 4px 15px rgba(255, 85, 0, 0.2);}
-        .btn-accion:active { transform: scale(0.98);}
-        .btn-limpiar { background: transparent; color: var(--danger-color); border: 1px solid var(--danger-color); margin-top: 10px; box-shadow: none;}
+        .input-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .input-group { flex: 1; display: flex; flex-direction: column; }
+        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
 
+        .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center;}
+        .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
+
+        /* --- TABLA UNIFICADA --- */
         .table-wrapper { width: 100%; overflow-x: auto; border: 1px solid var(--card-border); border-radius: 8px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 12px;}
         table { width: 100%; min-width: 400px; border-collapse: separate; border-spacing: 0; }
         th { background: var(--table-header); color: #fff; font-weight: 800; padding: 10px 2px; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 10; }
         td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0; text-align: center; vertical-align: middle;}
         td:last-child { border-right: none; }
+        
         td input { border: none; width: 100%; height: 100%; padding: 12px 2px; font-size: 1.15rem; font-weight: 800; background: transparent; color: var(--text-color); text-align: center;}
         td input:focus { background: rgba(255, 85, 0, 0.05); outline: 2px solid var(--primary-color); outline-offset: -2px;}
 
-        .info-box { background-color: rgba(25, 118, 210, 0.1); border-left: 5px solid #1976d2; padding: 15px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
-        .info-box strong { color: var(--primary-color); font-weight: 800;}
-        
-        .alerta-critica { background-color: rgba(211, 47, 47, 0.05); border-left: 5px solid var(--error-color); padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; text-align: left; font-weight: 600; color: var(--text-color);}
+        .info-box { background-color: rgba(25, 118, 210, 0.1); border-left: 5px solid #1976d2; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
+        .alerta-critica { background-color: rgba(211, 47, 47, 0.05); border-left: 5px solid var(--error-color); padding: 12px; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-color); border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
 
-        .drop-zone { border: 2px dashed var(--primary-color); border-radius: 12px; padding: 30px 20px; text-align: center; background-color: rgba(255,85,0,0.02); margin-bottom: 15px; color: var(--primary-color); font-weight: 800; text-transform: uppercase;}
+        .drop-zone { border: 2px dashed var(--primary-color); border-radius: 8px; padding: 25px 20px; text-align: center; background-color: rgba(255,85,0,0.02); margin-bottom: 12px; color: var(--primary-color); font-weight: 800; text-transform: uppercase;}
 
         /* --- CONTENEDOR DEL CANVAS (CROQUIS GLASSMORPHISM) --- */
         .canvas-container { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 15px; background: rgba(128,128,128,0.03); border: 1px dashed var(--card-border); border-radius: 12px; padding: 15px; backdrop-filter: blur(5px);}
@@ -174,31 +188,40 @@
         }
         #calcDisplay:focus { border-color: var(--primary-color); outline: none; }
 
-        /* --- MODAL DE VENTANA (GLASSMORPHISM) --- */
-        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
-        .overlay-select.activo { opacity: 1; }
-        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
-        .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
-        .btn-opcion { width: 100%; padding: 16px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s;}
-        .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
+        /* --- TOAST NOTIFICATIONS --- */
+        #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 350px;}
+        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
+        .toast.error { border-left-color: var(--danger-color); }
+        .toast.success { border-left-color: #2e7d32; }
+        .toast.warning { border-left-color: #fbc02d; }
+        .toast.fade-out { animation: fadeOutToast 0.3s ease-in forwards; }
+        @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
 
-        @media screen and (max-width: 480px) {
-            html { font-size: 13px; } 
-            input, .custom-select { padding: 14px 10px; font-size: 1.1rem;}
-            .panel-control { padding: 12px; margin-bottom: 12px;}
-            .top-bar { padding: 10px 15px; height: 65px; }
-            .btn-volver-mini { width: 38px; height: 38px;}
-            .spacer { width: 84px; }
-            th { font-size: 0.75rem; padding: 6px 1px; }
-            td input { padding: 8px 2px; font-size: 1.15rem; }
-            .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px;}
-            .calculadora-modal { right: 10px; bottom: 65px; width: 230px;}
-        }
+        /* --- CUSTOM CONFIRM MODAL --- */
+        .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.2s; backdrop-filter: blur(2px);}
+        .confirm-overlay.activo { opacity: 1; visibility: visible; }
+        .confirm-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(15px);}
+        .confirm-overlay.activo .confirm-box { transform: scale(1); }
+        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
+        .confirm-btns { display: flex; gap: 10px; }
+        .confirm-btn { flex: 1; padding: 12px; font-weight: 800; border-radius: 8px; border: none; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.2s;}
+        .confirm-btn:active { transform: scale(0.95); }
+        .confirm-btn-cancel { background: rgba(128,128,128,0.2); color: var(--text-color); }
+        .confirm-btn-ok { background: var(--primary-color); color: #fff; }
+
+        /* --- MODAL SELECTOR GENÉRICO --- */
+        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(2px); }
+        .overlay-select.activo { opacity: 1; }
+        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
+        .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
+        .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
     </style>
 </head>
 <body onload="inicializarApp()">
 
-    <!-- Fondo Animado Fuego / Metálico -->
+    <!-- Fondo de Agua / Fuego Animado -->
     <div class="fire-base">
         <div class="fire-wave delay"></div>
         <div class="fire-wave"></div>
@@ -211,19 +234,31 @@
         } catch(e) {}
     </script>
 
-    <!-- MODAL DE SELECCIÓN GENÉRICO (LAS "VENTANAS" SOLICITADAS) -->
+    <!-- TOAST & CONFIRM MODALS -->
+    <div id="toast-container"></div>
+
+    <div class="confirm-overlay" id="customConfirmOverlay">
+        <div class="confirm-box">
+            <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
+            <div class="confirm-btns">
+                <button class="confirm-btn confirm-btn-cancel" id="btnConfirmCancel">Cancelar</button>
+                <button class="confirm-btn confirm-btn-ok" id="btnConfirmOk">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE SELECCIÓN GENÉRICO (PROYECTO Y FORMATOS) -->
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h3 id="modalSelectTitle" style="margin:0; color:var(--text-color); font-weight:800; font-size:1.2rem; text-transform:uppercase;">SELECCIONAR</h3>
+            <h3 id="modalSelectTitle" style="margin:0; color:var(--text-color); font-weight:800; font-size:1.2rem;">SELECCIONAR</h3>
             <button onclick="cerrarModalSelect()" style="background:none; border:none; font-size:1.5rem; color:var(--danger-color); font-weight:800; cursor:pointer; padding:0 10px;">X</button>
         </div>
-        <div id="modalSelectContent" style="max-height:350px; overflow-y:auto; margin-bottom:5px;"></div>
+        <div id="modalSelectContent" style="max-height:300px; overflow-y:auto; margin-bottom:5px;"></div>
     </div>
 
     <div class="top-bar">
         <div class="nav-buttons-left">
-            <!-- Botón Casa (Home) y Botón Atrás actúan igual aquí porque este módulo está en la raíz -->
             <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -238,7 +273,7 @@
             </a>
         </div>
         <h2 class="top-bar-title">ÁREAS Y <span>PERÍMETROS</span></h2>
-        <div class="spacer"></div>
+        <div style="width: 90px;"></div>
     </div>
 
     <div class="modulo-container">
@@ -254,13 +289,12 @@
             </div>
             <div id="panelProyecto" class="panel-contenido">
                 <div class="project-selector">
-                    <!-- Reemplazo del <select> nativo por la Ventana Modal personalizada -->
                     <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')">
                         <span id="txtSelectProyecto">Cargando...</span>
                         <span class="arrow">▼</span>
                     </div>
-                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--primary-color);" onclick="crearNuevoProyecto()">+ NUEVO</button>
-                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--danger-color);" onclick="eliminarProyecto()">🗑️</button>
+                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--primary-color); margin-bottom:0;" onclick="crearNuevoProyecto()">+ NUEVO</button>
+                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--danger-color); margin-bottom:0;" onclick="eliminarProyecto()">🗑️</button>
                 </div>
                 <div class="input-group full-width" style="margin-bottom: 10px;">
                     <label>Nombre del Polígono</label>
@@ -287,7 +321,6 @@
             <div id="panelImportacion" class="panel-contenido" style="display: none;">
                 <div class="input-group" style="margin-bottom: 10px;">
                     <label>Formato de Columnas</label>
-                    <!-- Reemplazo del <select> nativo por la Ventana Modal personalizada -->
                     <div class="custom-select" onclick="abrirModalSelect('formato')">
                         <span id="txtFormato">Punto, Este, Norte (P-E-N)</span>
                         <span class="arrow">▼</span>
@@ -295,7 +328,7 @@
                     <input type="hidden" id="formatoColumnas" value="PEN">
                 </div>
                 <div class="drop-zone" id="dropZone">
-                    <p style="margin:0; font-size:0.9rem;">SELECCIONAR ARCHIVO DE COORDENADAS</p>
+                    <p style="margin:0; font-size:0.9rem;">SELECCIONAR ARCHIVO</p>
                     <input type="file" id="fileCsvInput" accept=".csv, .txt" style="margin-top: 10px; font-size: 0.8rem; width:100%; border:none; padding:5px; background:transparent;">
                 </div>
                 <button class="btn-accion" style="background:var(--table-header); margin-bottom:0;" onclick="procesarArchivoCSV()">Procesar Archivo</button>
@@ -303,7 +336,7 @@
         </div>
 
         <div class="alerta-critica">
-            <strong style="color: var(--error-color);">⚠️ ADVERTENCIA GEOMÉTRICA:</strong> Los vértices deben ingresarse en orden secuencial por todo el contorno (horario o antihorario). Si el perímetro se cruza consigo mismo, las áreas cruzadas se restarán numéricamente, generando un cálculo erróneo.
+            <strong style="color: var(--error-color);">⚠️ ADVERTENCIA GEOMÉTRICA:</strong> Los vértices deben ingresarse en orden secuencial por todo el contorno (horario o antihorario). Si el perímetro se cruza consigo mismo, las áreas cruzadas se restarán numéricamente.
         </div>
 
         <div class="panel-control" style="padding: 10px; border-left: 4px solid var(--primary-color);">
@@ -382,43 +415,45 @@
     </div>
 
     <script>
-        /* --- SISTEMA DE BASE DE DATOS, ESTADO Y CONFIGURACIÓN GLOBAL --- */
-        let appData = { activoId: 1, proyectos: [] };
-        let globalConfig = { darkMode: false, vibracion: true, decimales: "3", formatoCSV: "PEN" };
-
-        function vibrar() { 
-            if (globalConfig.vibracion !== false && navigator.vibrate) navigator.vibrate(30); 
-        }
-        
-        function togglePanel(id) { vibrar(); const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; }
-
-        function inicializarApp() {
-            // --- REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX ---
-            localStorage.setItem('cota100_last_name', 'ÁREAS Y PERÍMETROS');
-            localStorage.setItem('cota100_last_url', 'areas.html');
-            // ----------------------------------------------------------
-
-            // Cargar primero preferencias de Ajustes
-            try {
-                let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-                if(conf) {
-                    globalConfig = conf;
-                    if(globalConfig.darkMode) document.body.classList.add('dark-mode');
-                    if(globalConfig.formatoCSV) {
-                        document.getElementById('formatoColumnas').value = globalConfig.formatoCSV;
-                        document.getElementById('txtFormato').innerText = (globalConfig.formatoCSV === 'PEN') ? 'Punto, Este, Norte (P-E-N)' : 'Solo Este, Norte (E-N)';
-                    }
-                }
-            } catch(e) { console.error("Error cargando ajustes globales"); }
-
-            let stored = localStorage.getItem('cota100_db_areas_v1');
-            if (stored) { appData = JSON.parse(stored); } 
-            else { appData.proyectos.push(crearObjetoProyecto(1, "Lote Nuevo")); appData.activoId = 1; }
-            renderSelectProyectos(); 
-            cargarProyectoActivo();
+        /* --- UI: TOAST Y CONFIRM --- */
+        function showToast(message, type = "default") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerText = message;
+            container.appendChild(toast);
+            vibrar();
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                toast.addEventListener('animationend', () => toast.remove());
+            }, 3000);
         }
 
-        /* --- UI: LÓGICA DE VENTANA MODAL PARA DESPLEGABLES --- */
+        let confirmOkCallback = null;
+        let confirmCancelCallback = null;
+
+        function showConfirm(message, onOk, onCancel = null) {
+            vibrar();
+            const overlay = document.getElementById('customConfirmOverlay');
+            document.getElementById('customConfirmMsg').innerText = message;
+            confirmOkCallback = onOk;
+            confirmCancelCallback = onCancel;
+            overlay.classList.add('activo');
+        }
+
+        document.getElementById('btnConfirmCancel').addEventListener('click', () => {
+            vibrar();
+            document.getElementById('customConfirmOverlay').classList.remove('activo');
+            if (confirmCancelCallback) confirmCancelCallback();
+        });
+
+        document.getElementById('btnConfirmOk').addEventListener('click', () => {
+            vibrar();
+            document.getElementById('customConfirmOverlay').classList.remove('activo');
+            if (confirmOkCallback) confirmOkCallback();
+        });
+
+        /* --- UI: MODAL SELECTOR GENÉRICO --- */
         let tipoModalActual = "";
         function abrirModalSelect(tipo) {
             vibrar();
@@ -467,6 +502,47 @@
             }
         }
 
+        /* --- SISTEMA DE BASE DE DATOS Y ESTADO --- */
+        let appData = { activoId: 1, proyectos: [] };
+        let globalConfig = { darkMode: false, vibracion: true, decimales: "3", formatoCSV: "PEN" };
+
+        function vibrar() { 
+            if (globalConfig.vibracion !== false && navigator.vibrate) navigator.vibrate(30); 
+        }
+        
+        function togglePanel(id) { vibrar(); const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; }
+
+        function inicializarApp() {
+            // --- REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX ---
+            localStorage.setItem('cota100_last_name', 'ÁREAS Y PERÍMETROS');
+            localStorage.setItem('cota100_last_url', 'areas.html');
+            // ----------------------------------------------------------
+
+            try {
+                let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
+                if(conf) {
+                    globalConfig = conf;
+                    if(globalConfig.darkMode) document.body.classList.add('dark-mode');
+                    if(globalConfig.formatoCSV) {
+                        document.getElementById('formatoColumnas').value = globalConfig.formatoCSV;
+                        document.getElementById('txtFormato').innerText = (globalConfig.formatoCSV === 'PEN') ? 'Punto, Este, Norte (P-E-N)' : 'Solo Este, Norte (E-N)';
+                    }
+                }
+            } catch(e) {}
+
+            let stored = localStorage.getItem('cota100_db_areas_v1');
+            if (stored) { 
+                appData = JSON.parse(stored); 
+                if(!appData.contadorProyectos) appData.contadorProyectos = appData.proyectos.length;
+            } else { 
+                appData.contadorProyectos = 1;
+                appData.proyectos.push(crearObjetoProyecto(1, "Polígono 1")); 
+                appData.activoId = 1; 
+            }
+            renderSelectProyectos(); 
+            cargarProyectoActivo();
+        }
+
         function crearObjetoProyecto(id, nombre) {
             return { id: id, nombre: nombre, tabla: [ { e:"", n:"" }, { e:"", n:"" }, { e:"", n:"" } ] };
         }
@@ -481,22 +557,44 @@
 
         function crearNuevoProyecto() {
             vibrar(); let nuevoId = Date.now();
-            appData.proyectos.push(crearObjetoProyecto(nuevoId, "Nuevo Polígono"));
-            appData.activoId = nuevoId; guardarBD(); renderSelectProyectos(); cargarProyectoActivo();
+            appData.contadorProyectos = (appData.contadorProyectos || appData.proyectos.length) + 1;
+            let nombre = `Polígono ${appData.contadorProyectos}`;
+            appData.proyectos.push(crearObjetoProyecto(nuevoId, nombre));
+            appData.activoId = nuevoId; 
+            guardarBD(); 
+            renderSelectProyectos(); 
+            cargarProyectoActivo();
+            showToast("Proyecto creado", "success");
         }
 
         function eliminarProyecto() {
             vibrar();
-            if(appData.proyectos.length === 1) return alert("Crea otro proyecto antes de borrar el último.");
+            if(appData.proyectos.length === 1) return showToast("Crea otro proyecto antes de borrar el último.", "warning");
             let p = obtenerProyectoActivo();
-            if(confirm(`⚠️ ¿Borrar "${p.nombre}" permanentemente?`)) {
+            showConfirm(`⚠️ ¿Borrar "${p.nombre}" permanentemente?`, () => {
                 appData.proyectos = appData.proyectos.filter(proj => proj.id !== p.id);
-                appData.activoId = appData.proyectos[0].id; guardarBD(); renderSelectProyectos(); cargarProyectoActivo();
-            }
+                appData.activoId = appData.proyectos[0].id; 
+                guardarBD(); 
+                renderSelectProyectos(); 
+                cargarProyectoActivo();
+                showToast("Proyecto eliminado", "success");
+            });
         }
 
         function cambiarProyectoActivo(idStr) { appData.activoId = parseInt(idStr); guardarBD(); cargarProyectoActivo(); }
-        function renombrarProyecto() { obtenerProyectoActivo().nombre = document.getElementById('proyectName').value; guardarBD(); renderSelectProyectos(); }
+        
+        function renombrarProyecto() { 
+            let p = obtenerProyectoActivo();
+            let newName = document.getElementById('proyectName').value.trim();
+            if(newName !== p.nombre && appData.proyectos.some(proj => proj.nombre === newName)) {
+                showToast(`⚠️ El proyecto "${newName}" ya existe.`, "warning");
+                document.getElementById('proyectName').value = p.nombre;
+                return;
+            }
+            p.nombre = newName; 
+            guardarBD(); 
+            renderSelectProyectos(); 
+        }
 
         function cargarProyectoActivo() {
             let p = obtenerProyectoActivo();
@@ -514,7 +612,7 @@
                 `;
                 tbody.appendChild(tr);
             });
-            setTimeout(redibujarCroquis, 50); // Redibujar croquis con un leve desfase para asegurar render de la UI
+            setTimeout(redibujarCroquis, 50); 
         }
 
         function guardarEstadoApp() {
@@ -591,10 +689,11 @@
         // --- BACKUP Y RESTAURACIÓN ---
         function exportarBackup() {
             vibrar(); const backup = JSON.parse(localStorage.getItem('cota100_db_areas_v1'));
-            if(!backup) return;
+            if(!backup || backup.proyectos.length === 0) return showToast("No hay datos para exportar.", "warning");
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
             const dl = document.createElement('a'); dl.setAttribute("href", dataStr);
             dl.setAttribute("download", `DB_Areas_COTA100.json`); dl.click();
+            showToast("Backup exportado", "success");
         }
 
         function importarBackup() {
@@ -604,8 +703,12 @@
             reader.onload = (e) => {
                 try {
                     const b = JSON.parse(e.target.result);
-                    if(b.proyectos) { localStorage.setItem('cota100_db_areas_v1', JSON.stringify(b)); window.location.reload(); }
-                } catch(err) { alert("Archivo inválido."); }
+                    if(b.proyectos) { 
+                        localStorage.setItem('cota100_db_areas_v1', JSON.stringify(b)); 
+                        showToast("✅ Base de datos restaurada. Recargando...", "success");
+                        setTimeout(() => window.location.reload(), 1500); 
+                    } else showToast("❌ Archivo no válido.", "error");
+                } catch(err) { showToast("❌ Error al leer el archivo.", "error"); }
             };
             reader.readAsText(f.files[0]);
         }
@@ -614,7 +717,7 @@
         function procesarArchivoCSV() {
             vibrar(); let input = document.getElementById('fileCsvInput');
             let fmt = document.getElementById('formatoColumnas').value;
-            if (!input.files.length) { alert("Sube un archivo primero."); return; }
+            if (!input.files.length) { showToast("Sube un archivo primero.", "warning"); return; }
             let reader = new FileReader();
             reader.onload = (e) => {
                 let lines = e.target.result.split(/\r?\n/);
@@ -632,9 +735,9 @@
                 });
                 if (pts.length >= 3) {
                     active.tabla = pts; guardarBD(); cargarProyectoActivo(); calcularArea();
-                    alert(`✅ ${pts.length} puntos importados exitosamente.`);
+                    showToast(`✅ ${pts.length} puntos importados.`, "success");
                     document.getElementById('panelImportacion').style.display = 'none';
-                } else alert("Archivo insuficiente (mínimo 3 puntos).");
+                } else showToast("Archivo insuficiente (mínimo 3 puntos).", "error");
             };
             reader.readAsText(input.files[0]);
         }
@@ -652,9 +755,16 @@
         function quitarPunto() {
             const tbody = document.getElementById('cuerpoTablaAreas');
             if (tbody.children.length > 3) { tbody.removeChild(tbody.lastChild); guardarEstadoApp(); redibujarCroquis(); }
+            else showToast("Mínimo de vértices requerido (3).", "warning");
         }
 
-        function limpiarTablaAreas() { if(confirm("¿Vaciar toda la tabla?")) { let p = obtenerProyectoActivo(); p.tabla = [ {e:"",n:""}, {e:"",n:""}, {e:"",n:""} ]; guardarBD(); cargarProyectoActivo(); } }
+        function limpiarTablaAreas() { 
+            showConfirm("¿Vaciar toda la tabla de coordenadas?", () => {
+                let p = obtenerProyectoActivo(); p.tabla = [ {e:"",n:""}, {e:"",n:""}, {e:"",n:""} ]; 
+                guardarBD(); cargarProyectoActivo(); 
+                showToast("Tabla vaciada", "success");
+            }); 
+        }
 
         // --- CÁLCULO MATEMÁTICO (GAUSS) ---
         function calcularArea() {
@@ -667,7 +777,7 @@
                 let yv = parseFloat(tr.querySelector('.coor-y').value);
                 if (!isNaN(xv) && !isNaN(yv)) { X.push(xv); Y.push(yv); }
             });
-            if (X.length < 3) { alert("Se requieren al menos 3 vértices completados."); return; }
+            if (X.length < 3) { showToast("Se requieren al menos 3 vértices completados.", "warning"); return; }
             
             let a = 0; let p = 0; let j = X.length - 1;
             for (let i = 0; i < X.length; i++) {
@@ -683,6 +793,7 @@
             
             document.getElementById('cajaResultado').style.display = 'block';
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            showToast("Área calculada", "success");
         }
 
         /* --- CONTROL DE CALCULADORA FLOTANTE --- */
