@@ -23,6 +23,7 @@
             --danger-color: #d32f2f; 
             --excel-color: #1b5e20;
             --input-bg: rgba(255,255,255,0.9);
+            --success-color: #2e7d32;
         }
 
         body.dark-mode {
@@ -34,6 +35,7 @@
             --border-color: rgba(255, 255, 255, 0.15); 
             --input-bg: rgba(45,45,45,0.9);
             --table-header: #000000;
+            --success-color: #00C851;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -50,25 +52,18 @@
 
         /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
         .fire-base {
-            position: fixed;
-            bottom: 0; left: 0; width: 100vw; height: 35vh;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
+            position: fixed; bottom: 0; left: 0; width: 100vw; height: 35vh;
+            z-index: -2; pointer-events: none; overflow: hidden;
         }
         .fire-wave {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200vw; height: 100%;
+            position: absolute; bottom: 0; left: 0; width: 200vw; height: 100%;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 10s linear infinite;
+            background-size: 50% 100%; animation: waveFire 10s linear infinite;
         }
         .fire-wave.delay {
             bottom: -15px; opacity: 0.6;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 7s linear infinite reverse;
+            background-size: 50% 100%; animation: waveFire 7s linear infinite reverse;
         }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
@@ -85,6 +80,7 @@
             td input { padding: 8px 2px; font-size: 1.15rem; } 
         }
 
+        /* --- CABECERA DUAL --- */
         .top-bar { 
             display: flex; align-items: center; justify-content: space-between; 
             padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
@@ -112,7 +108,6 @@
         .btn-toggle-panel { background: none; border: none; font-size: 1.2rem; color: var(--text-color); pointer-events: none;}
         
         .panel-contenido { display: block; margin-top: 10px; }
-        .panel-contenido input { font-size: 0.95rem; padding: 10px; }
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .input-group { display: flex; flex-direction: column; }
@@ -120,94 +115,86 @@
 
         label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
         
-        input { width: 100%; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center;}
+        input { width: 100%; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center; padding: 12px;}
         input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
         
         /* CUSTOM SELECT BUTTONS */
         .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
-        .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
-        .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
-        .project-selector { display: flex; gap: 8px; margin-bottom: 10px; }
-        
-        .bm-list { margin-top: 8px; max-height: 180px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; }
-        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
-        .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        /* LISTA BM DRAG AND DROP OPTIMIZADO */
+        .bm-list { margin-top: 8px; max-height: 220px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; padding-bottom: 5px;}
+        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); background: var(--card-bg); transition: transform 0.1s; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: pan-y;}
+        .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; pointer-events: none; }
         .bm-info { display: flex; flex-direction: column; text-align: left; }
         .bm-info strong { font-size: 0.95rem; color: var(--text-color); }
         .bm-info span { font-size: 0.85rem; color: var(--primary-color); font-weight: 700; }
-        
-        /* BOTONES SUTILES BM */
-        .bm-actions { display: flex; gap: 2px; }
-        .bm-actions button { background: none; border: none; border-radius: 4px; padding: 4px 6px; font-size: 0.9rem; cursor: pointer; opacity: 0.4; transition: 0.2s; filter: grayscale(100%); }
-        .bm-actions button:hover, .bm-actions button:active { opacity: 1; filter: grayscale(0%); background: rgba(128,128,128,0.1); }
+        .bm-actions { display: flex; gap: 6px; pointer-events: auto; }
+        .bm-actions button { background: none; border: none; border-radius: 4px; padding: 4px; font-size: 1.1rem; cursor: pointer; opacity: 0.6; transition: 0.2s;}
+        .bm-actions button:active { opacity: 1; transform: scale(0.9); }
         .bm-obs { display: none; font-size: 0.8rem; color: #888; margin-top: 6px; text-align: left; background: rgba(128,128,128,0.05); padding: 6px; border-radius: 4px; border-left: 3px solid var(--primary-color); }
         
-        /* AJUSTE TABLA COMPLETA EN PANTALLA */
+        .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center;}
+        .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
+
+        /* TABLA PRINCIPAL */
         .table-wrapper { width: 100%; overflow-x: hidden; border: 1px solid var(--card-border); border-radius: 8px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 12px; transition: 0.3s;}
-        table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
-        th { background: var(--table-header); color: #fff; font-weight: 800; padding: 10px 2px; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 10; overflow: hidden; text-overflow: ellipsis;}
-        td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0; text-align: center; vertical-align: middle; position: relative; overflow: hidden;}
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        th { background: var(--table-header); color: #fff; font-weight: 800; padding: 10px 2px; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 10;}
+        td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0; text-align: center; vertical-align: middle; position: relative;}
         td:last-child { border-right: none; }
         
         td input { border: none; width: 100%; height: 100%; padding: 12px 2px; text-align: center; background: transparent; border-radius: 0; color: var(--text-color); font-weight: 800; text-transform: uppercase;}
         td input:focus { background: rgba(255, 85, 0, 0.05); outline: 2px solid var(--primary-color); outline-offset: -2px; z-index: 2;}
-        
-        /* AJUSTE PTO MÁS GRANDE */
-        td input.in-pto { cursor: pointer; font-size: 1.05rem; } 
+        td input.in-pto { font-size: 1.05rem; padding-right: 25px; } 
         td input.in-va, td input.in-vd { font-size: 1.15rem; }
 
-        .celda-combinada { display: flex; flex-direction: column; background: rgba(128,128,128,0.02); padding: 2px; }
+        .celda-combinada { display: flex; flex-direction: column; background: rgba(128,128,128,0.02); padding: 2px; height: 100%;}
         .btn-ai-label { 
             font-size: 0.75rem; font-weight: 800; color: #fff; background: var(--primary-color); 
             border-radius: 4px; padding: 2px 4px; width: fit-content; margin: 0 auto 2px auto;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-transform: uppercase;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-transform: uppercase; cursor: pointer;
         }
-        .ai-repetido { background: rgba(128,128,128,0.6) !important; opacity: 0.8; }
-        .celda-combinada input { background: transparent; border: 1px solid var(--border-color); border-radius: 4px; height: 35px; font-size: 1rem;}
+        .ai-repetido { opacity: 0.2; pointer-events: none; background: #888;}
+        
+        .cota-container { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; height: 100%; }
+        .in-cota { border: 1px solid var(--border-color); border-radius: 4px; height: 35px; font-size: 1rem; flex: 1; transition: box-shadow 0.2s; cursor: pointer;}
+        .in-cota.fijo { background: rgba(25, 118, 210, 0.05); border-color: #1976d2; color: #1976d2; }
+        
+        .trend-icon { width: 15px; text-align: center; display: inline-block; font-size: 1.2rem; font-weight: 900;}
+        .btn-pin { position: absolute; right: 2px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 1.2rem; opacity: 0.7; z-index: 3;}
+        .btn-pin:active { opacity: 1; transform: translateY(-50%) scale(1.1); }
 
-        .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-        .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
         .btn-dual { display: flex; gap: 8px; margin-bottom: 15px;}
         .btn-excel { background: transparent; color: var(--excel-color); border: 2px solid var(--excel-color); margin-top: 5px;}
         body.dark-mode .btn-excel { color: #81c784; border-color: #81c784; }
 
-        /* --- CALCULADORA DISEÑO OPTIMIZADO COTA100 --- */
+        /* CIERRE Y ESTADÍSTICAS */
+        .cierre-aviso { background: rgba(46, 125, 50, 0.1); border: 1px solid var(--success-color); color: var(--success-color); text-align: center; padding: 12px; border-radius: 8px; margin-bottom: 12px; display: none; font-size: 1rem; line-height: 1.4;}
+        .cierre-aviso.error-alto { background: rgba(211, 47, 47, 0.1); border-color: var(--danger-color); color: var(--danger-color); }
+        
+        .panel-estadisticas { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 8px; margin-bottom: 15px; display: none; background: var(--card-bg); padding: 12px; border-radius: 8px; border: 1px dashed var(--primary-color); }
+        .stat-box { text-align: center; }
+        .stat-lbl { font-size: 0.7rem; font-weight: 800; color: var(--text-color); opacity: 0.7; text-transform: uppercase; }
+        .stat-val { font-size: 1.2rem; font-weight: 900; color: var(--primary-color); }
+
+        /* CALCULADORA */
         .btn-calculadora-flotante { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; background: var(--card-bg); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid var(--primary-color); cursor: pointer; z-index: 999; font-size: 1.4rem; backdrop-filter: blur(5px);}
-        .calculadora-modal { 
-            position: fixed; bottom: 80px; right: 15px; width: 240px; 
-            background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; 
-            padding: 15px; display: none; z-index: 1000; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
-            box-shadow: 0 4px 20px var(--primary-glow); 
-        }
+        .calculadora-modal { position: fixed; bottom: 80px; right: 15px; width: 240px; background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; padding: 15px; display: none; z-index: 1000; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); box-shadow: 0 4px 20px var(--primary-glow); }
         .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800; color: var(--text-color); font-size: 0.85rem;}
         .calc-header button { background: none; border: none; font-size: 1.2rem; font-weight: 800; color: var(--danger-color); cursor: pointer;}
         .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        
-        .calc-grid button { 
-            padding: 12px 0; font-size: 1.2rem; font-weight: 800; 
-            border: 1px solid var(--border-color); border-radius: 8px; 
-            background: var(--input-bg); color: var(--text-color); cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .calc-grid button { padding: 12px 0; font-size: 1.2rem; font-weight: 800; border: 1px solid var(--border-color); border-radius: 8px; background: var(--input-bg); color: var(--text-color); cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);}
         .calc-grid button:active { transform: scale(0.9); }
         .calc-grid button.calc-op { color: var(--primary-color); background: rgba(255, 85, 0, 0.1); border-color: var(--card-border); }
         .calc-grid button.calc-clear { color: var(--danger-color); border-color: rgba(211, 47, 47, 0.3); background: rgba(211, 47, 47, 0.05); }
         .calc-grid button.calc-del { grid-column: span 2; background: rgba(128,128,128,0.1); }
         .calc-grid button.calc-eval { grid-column: span 2; background: var(--primary-color); color: #fff; border: none; box-shadow: 0 2px 8px var(--primary-glow); }
-        
-        #calcDisplay { 
-            width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; 
-            border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; 
-            padding: 4px 10px; background: var(--input-bg); color: var(--text-color); 
-        }
-        #calcDisplay:focus { border-color: var(--primary-color); outline: none; }
+        #calcDisplay { width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; padding: 4px 10px; background: var(--input-bg); color: var(--text-color); }
 
-        /* --- TOAST NOTIFICATIONS --- */
+        /* TOAST Y MODALS */
         #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 350px;}
-        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
+        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center;}
         .toast.error { border-left-color: var(--danger-color); }
         .toast.success { border-left-color: #2e7d32; }
         .toast.warning { border-left-color: #fbc02d; }
@@ -215,33 +202,25 @@
         @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
 
-        /* --- CUSTOM CONFIRM MODAL --- */
-        .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.2s; backdrop-filter: blur(2px);}
-        .confirm-overlay.activo { opacity: 1; visibility: visible; }
-        .confirm-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(15px);}
-        .confirm-overlay.activo .confirm-box { transform: scale(1); }
-        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
-        .confirm-btns { display: flex; gap: 10px; }
-        .confirm-btn { flex: 1; padding: 12px; font-weight: 800; border-radius: 8px; border: none; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.2s;}
-        .confirm-btn:active { transform: scale(0.95); }
-        .confirm-btn-cancel { background: rgba(128,128,128,0.2); color: var(--text-color); }
-        .confirm-btn-ok { background: var(--primary-color); color: #fff; }
-
-        /* --- MODAL SELECTOR GENÉRICO (CENTRADO) --- */
-        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(2px); }
+        /* MODALES DE CONFIRMACIÓN Y ALERTA (GLASSMORPHISM) */
+        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
         .overlay-select.activo { opacity: 1; }
         .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
         .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
+        
+        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
+        .confirm-btns { display: flex; gap: 10px; }
+        .confirm-btn { flex: 1; padding: 12px; font-weight: 800; border-radius: 8px; border: none; font-size: 0.95rem; cursor: pointer; text-transform: uppercase; transition: 0.2s;}
+        .confirm-btn:active { transform: scale(0.95); }
+
         .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
         .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
         .btn-opcion span.cota { color: var(--text-color); font-size: 0.95rem; font-weight: 700;}
-        .btn-opcion:active span.cota { color: #fff !important; }
-
     </style>
 </head>
 <body onload="inicializarApp()">
 
-    <!-- Fondo de Agua / Fuego Animado -->
+    <!-- Fondo de Fuego Animado -->
     <div class="fire-base">
         <div class="fire-wave delay"></div>
         <div class="fire-wave"></div>
@@ -256,16 +235,35 @@
 
     <div id="toast-container"></div>
 
-    <div class="confirm-overlay" id="customConfirmOverlay">
-        <div class="confirm-box">
-            <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
-            <div class="confirm-btns">
-                <button class="confirm-btn confirm-btn-cancel" id="btnConfirmCancel">Cancelar</button>
-                <button class="confirm-btn confirm-btn-ok" id="btnConfirmOk">Aceptar</button>
-            </div>
+    <!-- MODALES DE ALERTA Y CONFIRMACIÓN -->
+    <div class="overlay-select" id="customConfirmOverlay"></div>
+    <div class="modal-select" id="customConfirmModal">
+        <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
+        <div class="confirm-btns">
+            <button class="confirm-btn" style="background:rgba(128,128,128,0.2); color:var(--text-color);" id="btnConfirmCancel" onclick="btnConfirmCancelClick()">CANCELAR</button>
+            <button class="confirm-btn" style="background:var(--primary-color); color:#fff;" id="btnConfirmOk" onclick="btnConfirmOkClick()">ACEPTAR</button>
         </div>
     </div>
 
+    <div class="overlay-select" id="customAlertOverlay"></div>
+    <div class="modal-select" id="customAlertModal">
+        <div class="confirm-msg" id="customAlertMsg">Información</div>
+        <div class="confirm-btns">
+            <button class="confirm-btn" style="background:var(--primary-color); color:#fff; width:100%;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <div class="overlay-select" id="customPromptOverlay"></div>
+    <div class="modal-select" id="customPromptModal">
+        <h3 id="customPromptTitle" style="color:var(--text-color); margin-bottom:10px; font-weight:900; text-transform:uppercase; font-size: 1.1rem;">INGRESO</h3>
+        <input type="text" id="customPromptInput" style="margin-bottom:15px; background:var(--input-bg); border:1px solid var(--primary-color); width:100%; padding:10px; font-weight:bold; border-radius:8px; color:var(--text-color);" onfocus="this.select()">
+        <div class="confirm-btns">
+            <button class="confirm-btn" style="background:var(--danger-color); color:#fff;" onclick="document.getElementById('customPromptInput').value=''; document.getElementById('customPromptInput').focus();">BORRAR</button>
+            <button class="confirm-btn" style="background:var(--primary-color); color:#fff;" id="btnPromptOk" onclick="btnPromptOkClick()">GUARDAR</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE SELECCIÓN GENÉRICO (PROYECTO, BMs) -->
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -273,26 +271,24 @@
             <button onclick="cerrarModalSelect()" style="background:none; border:none; font-size:1.5rem; color:var(--danger-color); font-weight:800; cursor:pointer; padding:0 10px;">X</button>
         </div>
         <div id="modalSelectContent" style="max-height:250px; overflow-y:auto; margin-bottom:5px;"></div>
-        <div id="modalSelectExtra"></div> </div>
+    </div>
 
     <div class="top-bar">
         <div class="nav-buttons-left">
-            <!-- Botón Casa (Home) -->
-            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
+            <a href="index.html" class="btn-volver-mini">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
             </a>
-            <!-- Botón Atrás -->
-            <a href="nivelacion.html" class="btn-volver-mini" onclick="vibrar()">
+            <a href="nivelacion.html" class="btn-volver-mini">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="19" y1="12" x2="5" y2="12"></line>
                     <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
             </a>
         </div>
-        <h2 class="top-bar-title">NIV. SIMPLE <span>Radiación y Perfiles</span></h2>
+        <h2 class="top-bar-title">NIV. SIMPLE <span>Radiación Libre</span></h2>
         <div style="width: 90px;"></div> 
     </div>
 
@@ -304,18 +300,17 @@
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panelProyecto" class="panel-contenido">
-                <div class="project-selector">
+                
+                <div class="project-selector" style="display: flex; gap: 6px; margin-bottom: 12px; align-items: center;">
                     <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')">
                         <span id="txtSelectProyecto">Cargando...</span>
                         <span class="arrow">▼</span>
                     </div>
-                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--primary-color); margin-bottom:0;" onclick="crearNuevoProyecto()">+ NUEVO</button>
-                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--danger-color); margin-bottom:0;" onclick="eliminarProyecto()">🗑️</button>
+                    <button class="btn-accion" style="width: 42px; padding: 10px; background: var(--table-header); margin:0;" onclick="editarNombreProyecto()">✏️</button>
+                    <button class="btn-accion" style="width: 42px; padding: 10px; background: var(--primary-color); margin:0;" onclick="crearNuevoProyecto()">➕</button>
+                    <button class="btn-accion" style="width: 42px; padding: 10px; background: var(--danger-color); margin:0;" onclick="eliminarProyecto()">🗑️</button>
                 </div>
-                <div class="input-group full-width" style="margin-bottom: 12px;">
-                    <label>Nombre del Levantamiento</label>
-                    <input type="text" id="proyectName" placeholder="Ej: Plataforma Mz A" onchange="renombrarProyecto()">
-                </div>
+                
                 <div style="border-top: 1px solid var(--border-color); padding-top: 10px;">
                     <label style="color: var(--primary-color);">+ Registrar BM Oficial</label>
                     <div class="form-grid" style="margin-top: 4px;">
@@ -325,12 +320,14 @@
                     </div>
                     <button id="btnGuardarBM" class="btn-accion" style="padding: 10px; font-size: 0.9rem;" onclick="addBM()">Guardar BM</button>
                 </div>
+                
+                <label style="margin-top: 10px; display: block; font-size:0.75rem; opacity:0.7;">Mantén presionado para reordenar</label>
                 <div class="bm-list" id="listaBMs"></div>
                 
                 <div style="border-top: 1px dashed var(--border-color); padding-top: 12px; margin-top: 12px;">
                     <div style="display: flex; gap: 8px;">
                         <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: var(--table-header); margin: 0;" onclick="exportarBackupSimple()">📤 Backup DB</button>
-                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;" onclick="vibrar()">
+                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;">
                             📥 Restaurar
                             <input type="file" id="importSimpleFile" accept=".json" style="display: none;" onchange="importarBackupSimple()">
                         </label>
@@ -354,11 +351,20 @@
             </table>
         </div>
 
+        <div id="cierreAviso"></div>
+
         <div class="btn-dual">
             <button class="btn-accion" id="btnAddFila" style="background:transparent; border: 1px solid #1976d2; color:#1976d2; padding: 12px 4px; font-size: 0.95rem;" onclick="agregarFila()">+ Fila</button>
             <button class="btn-accion" id="btnDelFila" style="background:transparent; border: 1px solid var(--text-color); color:var(--text-color); padding: 12px 4px; font-size: 0.95rem;" onclick="quitarFila()">- Borrar</button>
             <button class="btn-accion" id="btnResetTabla" style="background:transparent; border: 1px solid var(--danger-color); color:var(--danger-color); padding: 12px 4px; font-size: 0.95rem;" onclick="limpiarTabla()">🗑️ Reset</button>
             <button class="btn-accion" id="btnBloquear" style="background:transparent; border: 1px solid #fbc02d; color:#f57f17; padding: 12px 4px; font-size: 0.95rem;" onclick="toggleBloqueoTabla()">🔒 Bloq.</button>
+        </div>
+
+        <button class="btn-accion" style="background: var(--table-header); margin-bottom: 5px;" onclick="toggleEstadisticas()">📊 Mostrar / Ocultar Estadísticas</button>
+        <div id="panelEstadisticas" class="panel-estadisticas">
+            <div class="stat-box"><div class="stat-lbl">MÁXIMA</div><div class="stat-val" id="statMax">0.000</div></div>
+            <div class="stat-box"><div class="stat-lbl">PROMEDIO</div><div class="stat-val" id="statAvg">0.000</div></div>
+            <div class="stat-box"><div class="stat-lbl">MÍNIMA</div><div class="stat-val" id="statMin">0.000</div></div>
         </div>
 
         <button class="btn-accion btn-excel" onclick="exportarXLSX()">📥 Descargar Libreta a Excel (.xlsx)</button>
@@ -393,14 +399,13 @@
     </div>
 
     <script>
-        /* --- SISTEMA DE UI: TOAST Y CONFIRM --- */
+        /* --- SISTEMA DE UI: TOAST Y MODALS PERSONALIZADOS --- */
         function showToast(message, type = "default") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             toast.innerText = message;
             container.appendChild(toast);
-            vibrar();
             setTimeout(() => {
                 toast.classList.add('fade-out');
                 toast.addEventListener('animationend', () => toast.remove());
@@ -409,39 +414,65 @@
 
         let confirmOkCallback = null;
         let confirmCancelCallback = null;
+        let promptOkCallback = null;
 
-        function showConfirm(message, onOk, onCancel = null) {
-            vibrar();
-            const overlay = document.getElementById('customConfirmOverlay');
-            document.getElementById('customConfirmMsg').innerText = message;
-            confirmOkCallback = onOk;
-            confirmCancelCallback = onCancel;
-            overlay.classList.add('activo');
+        function showCustomAlert(message) {
+            document.getElementById('customAlertMsg').innerHTML = message;
+            document.getElementById('customAlertOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customAlertOverlay').classList.add('activo'); document.getElementById('customAlertModal').classList.add('abierto'); }, 10);
+        }
+        function cerrarCustomAlert() {
+            document.getElementById('customAlertOverlay').classList.remove('activo'); document.getElementById('customAlertModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customAlertOverlay').style.display = 'none'; }, 300);
         }
 
-        document.getElementById('btnConfirmCancel').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
-            if (confirmCancelCallback) confirmCancelCallback();
-        });
-
-        document.getElementById('btnConfirmOk').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
+        function showCustomConfirm(message, onOk, onCancel = null, okText = "ACEPTAR", cancelText = "CANCELAR") {
+            document.getElementById('customConfirmMsg').innerHTML = message.replace(/\n/g, '<br>');
+            document.getElementById('btnConfirmOk').innerText = okText;
+            document.getElementById('btnConfirmCancel').innerText = cancelText;
+            confirmOkCallback = onOk;
+            confirmCancelCallback = onCancel;
+            document.getElementById('customConfirmOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customConfirmOverlay').classList.add('activo'); document.getElementById('customConfirmModal').classList.add('abierto'); }, 10);
+        }
+        function cerrarCustomConfirm() {
+            document.getElementById('customConfirmOverlay').classList.remove('activo'); document.getElementById('customConfirmModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customConfirmOverlay').style.display = 'none'; }, 300);
+        }
+        function btnConfirmOkClick() {
+            cerrarCustomConfirm();
             if (confirmOkCallback) confirmOkCallback();
-        });
+        }
+        function btnConfirmCancelClick() {
+            cerrarCustomConfirm();
+            if (confirmCancelCallback) confirmCancelCallback();
+        }
+
+        function showCustomPrompt(title, defaultVal, onOk) {
+            document.getElementById('customPromptTitle').innerText = title;
+            let inp = document.getElementById('customPromptInput');
+            inp.value = defaultVal;
+            promptOkCallback = onOk;
+            document.getElementById('customPromptOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customPromptOverlay').classList.add('activo'); document.getElementById('customPromptModal').classList.add('abierto'); inp.focus(); }, 10);
+        }
+        function cerrarCustomPrompt() {
+            document.getElementById('customPromptOverlay').classList.remove('activo'); document.getElementById('customPromptModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customPromptOverlay').style.display = 'none'; }, 300);
+        }
+        function btnPromptOkClick() {
+            let val = document.getElementById('customPromptInput').value;
+            cerrarCustomPrompt();
+            if (promptOkCallback) promptOkCallback(val);
+        }
 
         /* --- UI: MODAL SELECTOR GENÉRICO --- */
         let tipoModalActual = "";
-        
         function abrirModalSelect(tipo) {
-            vibrar();
             tipoModalActual = tipo;
             const titulo = document.getElementById('modalSelectTitle');
             const contenido = document.getElementById('modalSelectContent');
-            const extra = document.getElementById('modalSelectExtra');
-            contenido.innerHTML = ""; extra.innerHTML = "";
-            
+            contenido.innerHTML = "";
             let p = obtenerProyectoActivo();
 
             if(tipo === 'proyecto') {
@@ -455,11 +486,9 @@
                 let decs = parseInt(globalConfig.decimales) || 3;
                 p.bms.forEach(bm => {
                     contenido.innerHTML += `<button class="btn-opcion" onclick="seleccionarOpcionModal('${bm.nombre}', '')">
-                        <span>${bm.nombre}</span>
-                        <span class="cota">Cota: ${bm.cota.toFixed(decs)}</span>
+                        <span>${bm.nombre}</span><span class="cota">Cota: ${bm.cota.toFixed(decs)}</span>
                     </button>`;
                 });
-                extra.innerHTML = `<button class="btn-accion" style="background:var(--table-header); color:#fff; font-size:1.1rem; padding:15px; margin-top:10px;" onclick="activarTecladoManual()">⌨️ TECLADO MANUAL</button>`;
             }
 
             document.getElementById('overlaySelect').style.display = 'block';
@@ -467,9 +496,7 @@
         }
 
         function cerrarModalSelect() {
-            vibrar();
-            document.getElementById('overlaySelect').classList.remove('activo');
-            document.getElementById('modalSelect').classList.remove('abierto');
+            document.getElementById('overlaySelect').classList.remove('activo'); document.getElementById('modalSelect').classList.remove('abierto');
             setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300);
         }
 
@@ -481,81 +508,55 @@
                 if(inputPtoActivo) {
                     inputPtoActivo.value = valor;
                     verificarBM(inputPtoActivo);
-                    guardarEstadoTabla();
                 }
             }
         }
 
         /* --- SISTEMA DE BASE DE DATOS Y CONFIGURACIÓN GLOBAL --- */
-        let appData = { activoId: 1, proyectos: [] };
-        let globalConfig = { darkMode: false, vibracion: true, decimales: "3", alertaMira: "5", wakeLockEnabled: false };
+        let appData = { activoId: 1, proyectos: [], contadorProyectos: 1 };
+        let globalConfig = { darkMode: false, vibracion: false, decimales: "3", alertaMira: "5", wakeLockEnabled: false };
         let inputPtoActivo = null; 
         let tablaBloqueada = false;
         let wakeLock = null;
         let editandoBMIndex = -1;
 
-        // Función para forzar puntos decimales en lugar de comas
         function formatDecimal(input) {
             let val = input.value.replace(/,/g, '.');
             val = val.replace(/[^0-9.-]/g, ''); 
+            if (val.indexOf('-') > 0) val = val.replace('-', '');
             let parts = val.split('.');
             if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('');
             if(input.value !== val) input.value = val;
         }
 
-        function vibrar() {
-            if (globalConfig.vibracion !== false && navigator.vibrate) navigator.vibrate(30);
-        }
+        async function solicitarWakeLock() { if ('wakeLock' in navigator) { try { wakeLock = await navigator.wakeLock.request('screen'); } catch (err) {} } }
 
-        async function solicitarWakeLock() {
-            if ('wakeLock' in navigator) {
-                try { wakeLock = await navigator.wakeLock.request('screen'); } catch (err) {}
-            }
-        }
-
-        /* --- ACTUALIZADO: Bloqueo seguro de la tabla --- */
         function toggleBloqueoTabla() {
-            vibrar();
             tablaBloqueada = !tablaBloqueada;
             const btn = document.getElementById('btnBloquear');
             const tabla = document.getElementById('tablaSimple');
-            
-            // Referencias a los botones que se deben bloquear
             const btnAdd = document.getElementById('btnAddFila');
             const btnDel = document.getElementById('btnDelFila');
             const btnReset = document.getElementById('btnResetTabla');
             
             if (tablaBloqueada) {
-                btn.innerHTML = "🔓 Desbloq.";
-                btn.style.color = "var(--danger-color)";
-                btn.style.borderColor = "var(--danger-color)";
-                tabla.style.pointerEvents = "none";
-                tabla.style.opacity = "0.7";
-                
-                // Deshabilitar visualmente botones adicionales
+                btn.innerHTML = "🔓 Desbloq."; btn.style.color = "var(--danger-color)"; btn.style.borderColor = "var(--danger-color)";
+                tabla.style.pointerEvents = "none"; tabla.style.opacity = "0.7";
                 if(btnAdd) { btnAdd.style.opacity = "0.4"; btnAdd.style.pointerEvents = "none"; }
                 if(btnDel) { btnDel.style.opacity = "0.4"; btnDel.style.pointerEvents = "none"; }
                 if(btnReset) { btnReset.style.opacity = "0.4"; btnReset.style.pointerEvents = "none"; }
-
                 showToast("Tabla y controles bloqueados", "warning");
             } else {
-                btn.innerHTML = "🔒 Bloq.";
-                btn.style.color = "#f57f17";
-                btn.style.borderColor = "#fbc02d";
-                tabla.style.pointerEvents = "auto";
-                tabla.style.opacity = "1";
-
-                // Rehabilitar botones
+                btn.innerHTML = "🔒 Bloq."; btn.style.color = "#f57f17"; btn.style.borderColor = "#fbc02d";
+                tabla.style.pointerEvents = "auto"; tabla.style.opacity = "1";
                 if(btnAdd) { btnAdd.style.opacity = "1"; btnAdd.style.pointerEvents = "auto"; }
                 if(btnDel) { btnDel.style.opacity = "1"; btnDel.style.pointerEvents = "auto"; }
                 if(btnReset) { btnReset.style.opacity = "1"; btnReset.style.pointerEvents = "auto"; }
-
                 showToast("Tabla desbloqueada", "success");
             }
         }
 
         function inicializarApp() {
-            // REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX
             localStorage.setItem('cota100_last_name', 'NIV. SIMPLE');
             localStorage.setItem('cota100_last_url', 'niv-simple.html');
 
@@ -569,9 +570,17 @@
             } catch(e) {}
 
             let stored = localStorage.getItem('cota100_db_simple_v4'); 
-            if (stored) { appData = JSON.parse(stored); } 
-            else { appData.proyectos.push({ id: 1, nombre: "Nuevo Proyecto 1", bms: [], tabla: [] }); appData.activoId = 1; }
+            if (stored) { 
+                appData = JSON.parse(stored); 
+                if(!appData.contadorProyectos) appData.contadorProyectos = appData.proyectos.length;
+            } else { 
+                appData.contadorProyectos = 1;
+                let prefijo = JSON.parse(localStorage.getItem('cota100_ajustes'))?.proyecto || "PROYECTO";
+                appData.proyectos.push({ id: 1, nombre: `${prefijo} 1`, bms: [], tabla: [] }); 
+                appData.activoId = 1; 
+            }
             renderSelectProyectos(); cargarProyectoActivo();
+            initTouchDragBM(); 
         }
 
         function obtenerProyectoActivo() { return appData.proyectos.find(p => p.id === appData.activoId); }
@@ -583,53 +592,105 @@
         }
 
         function crearNuevoProyecto() {
-            vibrar();
-            let num = 1;
-            while(appData.proyectos.some(p => p.nombre === `Nuevo Proyecto ${num}`)) { num++; }
+            appData.contadorProyectos = (appData.contadorProyectos || appData.proyectos.length) + 1;
+            let prefijo = JSON.parse(localStorage.getItem('cota100_ajustes'))?.proyecto || "PROYECTO";
+            let nombre = `${prefijo} ${appData.contadorProyectos}`;
             let nuevoId = Date.now();
-            appData.proyectos.push({ id: nuevoId, nombre: `Nuevo Proyecto ${num}`, bms: [], tabla: [] });
+            appData.proyectos.push({ id: nuevoId, nombre: nombre, bms: [], tabla: [] });
             appData.activoId = nuevoId; guardarBD(); renderSelectProyectos(); cargarProyectoActivo();
             showToast("Proyecto creado", "success");
         }
 
         function eliminarProyecto() {
-            vibrar();
             if(appData.proyectos.length === 1) return showToast("Crea otro proyecto antes de borrar el último.", "warning");
             let p = obtenerProyectoActivo();
-            
-            showConfirm(`⚠️ ¿Borrar "${p.nombre}" permanentemente?`, () => {
+            showCustomConfirm(`⚠️ ¿Borrar "${p.nombre}" permanentemente?`, () => {
                 appData.proyectos = appData.proyectos.filter(proj => proj.id !== p.id);
                 appData.activoId = appData.proyectos[0].id; 
-                guardarBD(); 
-                renderSelectProyectos(); 
-                cargarProyectoActivo();
+                guardarBD(); renderSelectProyectos(); cargarProyectoActivo();
                 showToast("Proyecto eliminado", "success");
             });
         }
 
         function cambiarProyectoActivo(idStr) { appData.activoId = parseInt(idStr); guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); }
         
-        function renombrarProyecto() { 
-            let newName = document.getElementById('proyectName').value.trim();
+        function editarNombreProyecto() { 
             let p = obtenerProyectoActivo();
-            if(newName !== p.nombre && appData.proyectos.some(proj => proj.nombre === newName)) {
-                showToast(`⚠️ El proyecto "${newName}" ya existe.`, "warning");
-                document.getElementById('proyectName').value = p.nombre;
-                return;
-            }
-            p.nombre = newName; 
-            guardarBD(); 
-            renderSelectProyectos(); 
+            showCustomPrompt("EDITAR NOMBRE DEL PROYECTO", p.nombre, (newName) => {
+                if(newName && newName.trim() !== "") {
+                    p.nombre = newName.trim().toUpperCase();
+                    guardarBD(); renderSelectProyectos(); 
+                    showToast("Nombre actualizado", "success");
+                }
+            });
         }
 
         function cargarProyectoActivo() {
             let p = obtenerProyectoActivo();
-            document.getElementById('proyectName').value = p.nombre;
             renderBMs(); cargarTablaDesdeBD(p.tabla);
         }
 
+        /* --- MEJORA 2: DRAG AND DROP BMs SIN FLECHAS (OPTIMIZADO) --- */
+        let draggingItemBM = null;
+        let dragTimer = null;
+        
+        function initTouchDragBM() {
+            const list = document.getElementById('listaBMs');
+            list.addEventListener('touchstart', e => {
+                let item = e.target.closest('.bm-item');
+                if(item && !e.target.closest('button')) {
+                    dragTimer = setTimeout(() => {
+                        draggingItemBM = item;
+                        draggingItemBM.style.opacity = '0.5';
+                        draggingItemBM.style.transform = 'scale(0.95)';
+                        draggingItemBM.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+                    }, 400); 
+                }
+            }, {passive: true});
+
+            list.addEventListener('touchmove', e => {
+                if(!draggingItemBM) { clearTimeout(dragTimer); return; }
+                e.preventDefault(); 
+                const touch = e.touches[0];
+                const target = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.bm-item');
+                if(target && target !== draggingItemBM) {
+                    let rect = target.getBoundingClientRect();
+                    let next = (touch.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+                    list.insertBefore(draggingItemBM, next && target.nextSibling || target);
+                }
+            }, {passive: false});
+
+            list.addEventListener('touchend', e => {
+                clearTimeout(dragTimer);
+                if(!draggingItemBM) return;
+                draggingItemBM.style.opacity = '1';
+                draggingItemBM.style.transform = 'scale(1)';
+                draggingItemBM.style.boxShadow = 'none';
+                draggingItemBM = null;
+                guardarOrdenBMs();
+            });
+        }
+
+        function guardarOrdenBMs() {
+            let p = obtenerProyectoActivo();
+            let nuevosBMs = [];
+            document.querySelectorAll('#listaBMs .bm-item').forEach(item => {
+                let nombre = item.querySelector('.bm-info strong').innerText;
+                let bmData = p.bms.find(b => b.nombre === nombre);
+                if(bmData) nuevosBMs.push(bmData);
+            });
+            p.bms = nuevosBMs; guardarBD();
+        }
+
+        function clickEnBM(div, event) {
+            if(draggingItemBM) return;
+            if(!event.target.closest('button')) {
+                let obsDiv = div.closest('.bm-item').querySelector('.bm-obs');
+                if(obsDiv) obsDiv.style.display = obsDiv.style.display === "none" ? "block" : "none";
+            }
+        }
+
         function addBM() {
-            vibrar();
             const name = document.getElementById('newBMName').value.toUpperCase().trim();
             const cotaInput = document.getElementById('newBMCota').value.replace(',', '.');
             const cota = parseFloat(cotaInput);
@@ -639,281 +700,293 @@
             let p = obtenerProyectoActivo();
             
             const finalizarGuardado = () => {
-                document.getElementById('newBMName').value = ""; 
-                document.getElementById('newBMCota').value = "";
-                document.getElementById('newBMObs').value = "";
-                guardarBD(); renderBMs();
-                showToast("BM guardado", "success");
+                document.getElementById('newBMName').value = ""; document.getElementById('newBMCota').value = ""; document.getElementById('newBMObs').value = "";
+                guardarBD(); renderBMs(); showToast("BM guardado", "success");
             };
 
             if(editandoBMIndex > -1) {
-                showConfirm("⚠️ ¿Actualizar este BM? Se actualizarán las cotas en la tabla si está en uso.", () => {
+                showCustomConfirm("⚠️ ¿Actualizar este BM? Se actualizarán las cotas en la libreta.", () => {
                     let oldName = p.bms[editandoBMIndex].nombre;
-
-                    if(p.bms.some((bm, i) => bm.nombre === name && i !== editandoBMIndex)) {
-                        return showToast("⚠️ Ya existe otro BM con ese nombre.", "warning");
-                    }
-                    
+                    if(p.bms.some((bm, i) => bm.nombre === name && i !== editandoBMIndex)) return showToast("⚠️ Ya existe otro BM con ese nombre.", "warning");
                     p.bms[editandoBMIndex] = { nombre: name, cota: cota, obs: obs };
-
                     document.querySelectorAll('#cuerpoTabla tr').forEach(tr => {
                         let inPto = tr.querySelector('.in-pto');
-                        if (inPto.dataset.bmAsignado === oldName) {
-                            inPto.dataset.bmAsignado = name;
-                            inPto.value = name;
-                        }
+                        if (inPto.dataset.bmAsignado === oldName) { inPto.dataset.bmAsignado = name; inPto.value = name; }
                     });
-
                     editandoBMIndex = -1;
-                    let btn = document.getElementById('btnGuardarBM');
-                    btn.innerText = "Guardar BM";
-                    btn.style.background = "var(--table-header)";
-                    
-                    guardarEstadoTabla();
-                    procesarTabla(); 
-                    finalizarGuardado();
+                    let btn = document.getElementById('btnGuardarBM'); btn.innerText = "Guardar BM"; btn.style.background = "var(--table-header)";
+                    guardarEstadoTabla(); procesarTabla(); finalizarGuardado();
                 });
             } else {
                 if(p.bms.some(bm => bm.nombre === name)) return showToast("⚠️ Ya existe un BM con ese nombre.", "warning");
-                p.bms.push({ nombre: name, cota: cota, obs: obs });
-                finalizarGuardado();
+                p.bms.push({ nombre: name, cota: cota, obs: obs }); finalizarGuardado();
             }
         }
 
-        function cargarEditBM(i) {
-            vibrar();
-            let p = obtenerProyectoActivo();
-            let bm = p.bms[i];
-            document.getElementById('newBMName').value = bm.nombre;
-            document.getElementById('newBMCota').value = bm.cota;
-            document.getElementById('newBMObs').value = bm.obs || "";
-            editandoBMIndex = i;
-            let btn = document.getElementById('btnGuardarBM');
-            btn.innerText = "Actualizar BM";
-            btn.style.background = "var(--primary-color)";
+        function cargarEditBM(nombreBM) {
+            let p = obtenerProyectoActivo(); let idx = p.bms.findIndex(b => b.nombre === nombreBM);
+            if(idx === -1) return; let bm = p.bms[idx];
+            document.getElementById('newBMName').value = bm.nombre; document.getElementById('newBMCota').value = bm.cota; document.getElementById('newBMObs').value = bm.obs || "";
+            editandoBMIndex = idx; let btn = document.getElementById('btnGuardarBM'); btn.innerText = "Actualizar BM"; btn.style.background = "var(--primary-color)";
         }
 
-        function moverBM(index, dir) {
-            vibrar();
-            let p = obtenerProyectoActivo();
-            if(index + dir < 0 || index + dir >= p.bms.length) return;
-            let temp = p.bms[index];
-            p.bms[index] = p.bms[index + dir];
-            p.bms[index + dir] = temp;
-            guardarBD(); renderBMs();
-        }
-
-        function deleteBM(i) { 
-            vibrar();
-            let p = obtenerProyectoActivo();
-            showConfirm(`⚠️ ¿Estás seguro de eliminar el BM "${p.bms[i].nombre}"?`, () => {
-                p.bms.splice(i, 1); 
-                guardarBD(); 
-                renderBMs(); 
-                showToast("BM eliminado", "success");
+        function deleteBM(nombreBM) { 
+            let p = obtenerProyectoActivo(); let idx = p.bms.findIndex(b => b.nombre === nombreBM);
+            if(idx === -1) return;
+            showCustomConfirm(`⚠️ ¿Estás seguro de eliminar el BM "${nombreBM}"?`, () => {
+                p.bms.splice(idx, 1); guardarBD(); renderBMs(); showToast("BM eliminado", "success");
             });
-        }
-
-        function toggleObsBM(i) {
-            let obsDiv = document.getElementById(`obs-bm-${i}`);
-            if(obsDiv) {
-                obsDiv.style.display = obsDiv.style.display === "none" ? "block" : "none";
-            }
         }
 
         function renderBMs() {
             let decs = parseInt(globalConfig.decimales) || 3;
-            let p = obtenerProyectoActivo();
-            const list = document.getElementById('listaBMs');
-            list.innerHTML = ""; 
-            p.bms.forEach((bm, i) => {
+            let p = obtenerProyectoActivo(); const list = document.getElementById('listaBMs'); list.innerHTML = ""; 
+            p.bms.forEach((bm) => {
                 list.innerHTML += `
-                <div class="bm-item" onclick="toggleObsBM(${i})">
+                <div class="bm-item" onclick="clickEnBM(this, event)">
                     <div class="bm-item-header">
                         <div class="bm-info"><strong>${bm.nombre}</strong><span>Elev: ${bm.cota.toFixed(decs)} m</span></div>
                         <div class="bm-actions" onclick="event.stopPropagation()">
-                            <button onclick="moverBM(${i}, -1)">⬆️</button>
-                            <button onclick="moverBM(${i}, 1)">⬇️</button>
-                            <button onclick="cargarEditBM(${i})">✏️</button>
-                            <button style="color:var(--danger-color);" onclick="deleteBM(${i})">🗑️</button>
+                            <button onclick="cargarEditBM('${bm.nombre}')">✏️</button>
+                            <button style="color:var(--danger-color);" onclick="deleteBM('${bm.nombre}')">🗑️</button>
                         </div>
                     </div>
-                    <div id="obs-bm-${i}" class="bm-obs">${bm.obs || 'Sin observaciones'}</div>
+                    <div class="bm-obs" style="width:100%;">${bm.obs || 'Sin observaciones'}</div>
                 </div>`;
             });
         }
 
-        function togglePanel(id) { 
-            vibrar();
-            const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; 
-        }
+        function togglePanel(id) { const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; }
 
         function exportarBackupSimple() {
-            vibrar();
             const backup = JSON.parse(localStorage.getItem('cota100_db_simple_v4'));
             if(!backup || backup.proyectos.length === 0) return showToast("No hay datos para exportar.", "warning");
-            
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
-            const downloadAnchorNode = document.createElement('a');
-            const fecha = new Date().toISOString().split('T')[0];
-            downloadAnchorNode.setAttribute("href", dataStr);
-            downloadAnchorNode.setAttribute("download", `DB_NivSimple_${fecha}.json`);
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
+            const downloadAnchorNode = document.createElement('a'); const fecha = new Date().toISOString().split('T')[0];
+            downloadAnchorNode.setAttribute("href", dataStr); downloadAnchorNode.setAttribute("download", `DB_NivSimple_${fecha}.json`);
+            document.body.appendChild(downloadAnchorNode); downloadAnchorNode.click(); downloadAnchorNode.remove();
             showToast("Backup exportado con éxito", "success");
         }
 
         function importarBackupSimple() {
             const fileInput = document.getElementById('importSimpleFile');
             if (fileInput.files.length === 0) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const backup = JSON.parse(e.target.result);
                     if(backup && backup.proyectos) {
                         localStorage.setItem('cota100_db_simple_v4', JSON.stringify(backup));
-                        showToast("✅ Base de datos restaurada. Recargando...", "success");
-                        setTimeout(() => window.location.reload(), 1500);
-                    } else {
-                        showToast("❌ Archivo no válido para esta versión.", "error");
-                    }
+                        showToast("✅ Base de datos restaurada. Recargando...", "success"); setTimeout(() => window.location.reload(), 1500);
+                    } else showToast("❌ Archivo no válido para esta versión.", "error");
                 } catch(err) { showToast("❌ Error al leer el archivo.", "error"); }
             };
             reader.readAsText(fileInput.files[0]);
         }
 
-        function abrirSelectorBM(input) {
-            vibrar();
-            let p = obtenerProyectoActivo();
-            inputPtoActivo = input;
-
-            if (!input.hasAttribute('readonly')) return;
-
-            if (p.bms.length === 0) {
-                activarTecladoManual();
-                return;
-            }
-
+        function abrirSelectorBM(btn) {
+            let input = btn.previousElementSibling;
+            let p = obtenerProyectoActivo(); inputPtoActivo = input;
+            if (p.bms.length === 0) { showToast("No tienes BMs registrados.", "warning"); return; }
             abrirModalSelect('bm-tabla');
         }
 
-        function activarTecladoManual() {
-            cerrarModalSelect();
-            if(inputPtoActivo) {
-                inputPtoActivo.removeAttribute('readonly'); 
-                inputPtoActivo.focus();
-                
-                inputPtoActivo.addEventListener('blur', function() {
-                    this.setAttribute('readonly', 'true');
-                    verificarBM(this); 
-                    guardarEstadoTabla();
-                }, {once: true}); 
-            }
-        }
-
         function verificarBM(input) {
-            const val = input.value.toUpperCase();
-            const prevBm = input.dataset.bmAsignado || "";
+            const val = input.value.toUpperCase().trim(); 
+            const prevBm = input.dataset.bmAsignado || ""; 
             input.value = val; 
-            
-            let decs = parseInt(globalConfig.decimales) || 3;
-            let p = obtenerProyectoActivo();
+            let decs = parseInt(globalConfig.decimales) || 3; 
+            let p = obtenerProyectoActivo(); 
             const bmEncontrado = p.bms.find(b => b.nombre === val);
-            const tr = input.closest('tr');
-            const tbody = document.getElementById('cuerpoTabla');
-            const inCota = tr.querySelector('.in-cota');
+            const tr = input.closest('tr'); 
+            const inCota = tr.querySelector('.in-cota'); 
             const inVd = tr.querySelector('.in-vd');
-            let rowIndex = Array.from(tbody.children).indexOf(tr);
 
-            const aplicarBM = () => {
-                input.dataset.bmAsignado = val;
+            const aplicarBMFijo = () => {
+                input.dataset.bmAsignado = val; 
                 inCota.value = bmEncontrado.cota.toFixed(decs);
-                inCota.dataset.fijo = "true";
-                inCota.classList.add('fijo');
-
-                if (rowIndex > 0) {
-                    procesarTabla(); 
-                    let prevRow = tbody.children[rowIndex - 1];
-                    let prevAI = parseFloat(prevRow.querySelector('.val-ai-num')?.innerText || NaN);
-                    if (!isNaN(prevAI)) { inVd.value = (prevAI - bmEncontrado.cota).toFixed(decs); }
-                }
+                inCota.dataset.fijo = "true"; 
+                inCota.classList.add('fijo'); 
+                inCota.setAttribute('readonly', 'true');
                 procesarTabla(); 
-                guardarEstadoTabla();
+            };
+            
+            const aplicarBMCierre = () => {
+                input.dataset.bmAsignado = val; 
+                inCota.dataset.fijo = "false"; 
+                inCota.classList.remove('fijo');
+                inCota.setAttribute('readonly', 'true'); 
+                procesarTabla(); 
             };
 
             const desvincularBM = () => {
                 input.dataset.bmAsignado = ""; 
                 inCota.dataset.fijo = "false"; 
                 inCota.classList.remove('fijo'); 
+                inCota.setAttribute('readonly', 'true'); 
                 inVd.value = ""; 
                 procesarTabla();
-                guardarEstadoTabla();
             };
 
             const cancelar = () => { input.value = prevBm; };
 
             if (bmEncontrado) {
-                if (prevBm !== "" && prevBm !== val) {
-                    showConfirm(`⚠️ ¿Cambiar BM de [${prevBm}] a [${val}]?`, aplicarBM, cancelar);
+                if (prevBm !== val) {
+                    showCustomConfirm(`📍 <strong>BM [${val}] DETECTADO</strong><br><br>¿Quieres usar este punto como Control (Fijar Cota) o verificar tu Cierre?`, aplicarBMFijo, aplicarBMCierre, "FIJAR COTA", "VER CIERRE");
                 } else {
-                    aplicarBM();
+                    procesarTabla();
                 }
             } else if (prevBm !== "" && val !== prevBm) {
-                showConfirm(`⚠️ ¿Desvincular BM [${prevBm}]?`, desvincularBM, cancelar);
+                desvincularBM();
+            } else { 
+                procesarTabla(); 
+            }
+        }
+
+        function toggleLockAI(btn) {
+            if(tablaBloqueada) return; 
+            let tr = btn.closest('tr'); let isLocked = tr.dataset.locked === "true";
+            let inVa = tr.querySelector('.in-va'); let inCota = tr.querySelector('.in-cota'); 
+            if(isLocked) {
+                tr.dataset.locked = "false"; btn.innerHTML = `🔓 AI: <span class="val-ai-num">${tr.querySelector('.val-ai-num').innerText}</span>`;
+                inVa.removeAttribute('readonly'); 
             } else {
-                guardarEstadoTabla();
+                tr.dataset.locked = "true"; btn.innerHTML = `🔒 AI: <span class="val-ai-num">${tr.querySelector('.val-ai-num').innerText}</span>`;
+                inVa.setAttribute('readonly', 'true'); 
+            }
+            guardarEstadoTabla();
+        }
+
+        // --- MEJORA 6: DESNIVEL EN VIVO (Un Toque para Medir, Doble Toque para Editar) ---
+        let cotaSel1 = null;
+        let lastTap = 0;
+
+        function manejarCotaTap(input, event) {
+            if(tablaBloqueada) return;
+            let currentTime = new Date().getTime();
+            let tapLength = currentTime - lastTap;
+            
+            if (tapLength < 350 && tapLength > 0) {
+                // Doble Toque: Abrir Teclado (Editar)
+                input.removeAttribute('readonly');
+                input.focus();
+                if(cotaSel1 && cotaSel1.el === input) {
+                    input.style.boxShadow = "";
+                    cotaSel1 = null;
+                }
+                event.preventDefault();
+            } else {
+                // Un Toque: Seleccionar para Desnivel
+                input.blur();
+                let val = parseFloat(input.value);
+                if(!isNaN(val)) {
+                    if(!cotaSel1) {
+                        cotaSel1 = {el: input, val: val};
+                        input.style.boxShadow = "0 0 0 2px var(--primary-color) inset";
+                        showToast("Punto 1 seleccionado. Toca otra cota.", "default");
+                    } else if (cotaSel1.el === input) {
+                        input.style.boxShadow = ""; cotaSel1 = null;
+                    } else {
+                        let dh = Math.abs(cotaSel1.val - val);
+                        showCustomAlert(`RESULTADO DEL DESNIVEL:<br><br>ΔH = ${dh.toFixed(3)} m`);
+                        cotaSel1.el.style.boxShadow = ""; cotaSel1 = null; 
+                    }
+                }
+            }
+            lastTap = currentTime;
+        }
+
+        function asegurarReadonlyCota(input) {
+            if(input.dataset.fijo !== "true") {
+                input.setAttribute('readonly', 'true');
+            }
+        }
+
+        // --- MEJORA 8: ESTADÍSTICAS OCULTABLES ---
+        function toggleEstadisticas() {
+            let panel = document.getElementById('panelEstadisticas');
+            if(panel.style.display === "grid") panel.style.display = "none";
+            else mostrarEstadisticas();
+        }
+
+        function mostrarEstadisticas() {
+            let max = -Infinity, min = Infinity, sum = 0, count = 0;
+            document.querySelectorAll('#cuerpoTabla tr').forEach(tr => {
+                let isFixed = tr.querySelector('.in-cota').dataset.fijo === "true";
+                let v = parseFloat(tr.querySelector('.in-cota').value);
+                if(!isNaN(v) && !isFixed) {
+                    if(v > max) max = v;
+                    if(v < min) min = v;
+                    sum += v; count++;
+                }
+            });
+            if(count > 0) {
+                let avg = sum / count;
+                document.getElementById('statMax').innerText = max.toFixed(3);
+                document.getElementById('statMin').innerText = min.toFixed(3);
+                document.getElementById('statAvg').innerText = avg.toFixed(3);
+                document.getElementById('panelEstadisticas').style.display = "grid";
+                document.getElementById('panelEstadisticas').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                showToast("No hay radiaciones calculadas.", "warning");
             }
         }
 
         function agregarFila(isAuto = false) {
-            if(tablaBloqueada) return; // <-- BLOQUEO
-            if(!isAuto) vibrar();
+            if(tablaBloqueada) return; 
             const tbody = document.getElementById('cuerpoTabla');
             const esPrimera = tbody.children.length === 0;
             const tr = document.createElement('tr');
+            
             tr.innerHTML = `
-                <td><input type="text" class="in-pto" placeholder="..." readonly onclick="abrirSelectorBM(this)"></td>
+                <td style="position:relative;">
+                    <input type="text" class="in-pto" placeholder="..." oninput="this.value = this.value.toUpperCase();" onchange="verificarBM(this)">
+                    <span class="btn-pin" onclick="abrirSelectorBM(this)">📍</span>
+                </td>
                 <td><input type="text" inputmode="decimal" class="in-va" placeholder="(+)" oninput="formatDecimal(this); procesarTabla()"></td>
                 <td><input type="text" inputmode="decimal" class="in-vd" placeholder="[-]" ${esPrimera ? 'disabled style="background:rgba(128,128,128,0.1)"' : ''} oninput="formatDecimal(this); procesarTabla()"></td>
                 <td class="celda-combinada">
-                    <div class="btn-ai-label">AI: <span class="val-ai-num">---</span></div>
-                    <input type="text" inputmode="decimal" class="in-cota" placeholder="Cota..." oninput="formatDecimal(this); fijarCota(this)">
+                    <div class="btn-ai-label" onclick="toggleLockAI(this)">🔓 AI: <span class="val-ai-num">---</span></div>
+                    <div class="cota-container">
+                        <input type="text" inputmode="decimal" class="in-cota" placeholder="Cota..." readonly="true" oninput="formatDecimal(this); fijarCota(this)" onblur="asegurarReadonlyCota(this)" onclick="manejarCotaTap(this, event)">
+                        <span class="trend-icon"></span>
+                    </div>
                 </td>
             `;
-            tbody.appendChild(tr); 
-            if(!isAuto) guardarEstadoTabla();
+            tbody.appendChild(tr); if(!isAuto) guardarEstadoTabla();
         }
 
         function quitarFila() { 
-            if(tablaBloqueada) return; // <-- BLOQUEO
-            vibrar();
+            if(tablaBloqueada) return; 
             const b = document.getElementById('cuerpoTabla'); 
-            if (b.children.length > 0) { 
-                b.removeChild(b.lastChild); 
-                procesarTabla(); 
-            } 
+            if (b.children.length > 0) { b.removeChild(b.lastChild); procesarTabla(); } 
         }
 
         function limpiarTabla() { 
-            if(tablaBloqueada) return; // <-- BLOQUEO
-            vibrar();
-            showConfirm("🚨 ¿Borrar todas las lecturas de esta libreta?", () => {
+            if(tablaBloqueada) return; 
+            showCustomConfirm("🚨 ¿Borrar todas las lecturas de esta libreta?", () => {
                 document.getElementById('cuerpoTabla').innerHTML = ""; 
                 for(let i = 0; i < 8; i++) agregarFila(true);
-                guardarEstadoTabla();
-                showToast("Libreta reseteada", "success");
+                document.getElementById('cierreAviso').innerHTML = "";
+                document.getElementById('cierreAviso').style.display = 'none';
+                document.getElementById('panelEstadisticas').style.display = 'none';
+                guardarEstadoTabla(); showToast("Libreta reseteada", "success");
             });
         }
 
-        function fijarCota(input) { input.dataset.fijo = input.value !== "" ? "true" : "false"; if(input.dataset.fijo === "true") input.classList.add('fijo'); else input.classList.remove('fijo'); procesarTabla(); }
+        function fijarCota(input) { 
+            input.dataset.fijo = input.value !== "" ? "true" : "false"; 
+            if(input.dataset.fijo === "true") { input.classList.add('fijo'); input.setAttribute('readonly', 'true'); }
+            else { input.classList.remove('fijo'); } 
+            procesarTabla(); 
+        }
 
         function procesarTabla() {
             let decs = parseInt(globalConfig.decimales) || 3;
             let limiteMira = parseFloat(globalConfig.alertaMira) || 5.000;
             let trs = document.querySelectorAll('#cuerpoTabla tr');
             let ai_actual = NaN;
+            let prevCotaCalculada = NaN;
 
             for(let i = 0; i < trs.length; i++) {
                 let tr = trs[i];
@@ -923,41 +996,37 @@
                 let cotaInp = tr.querySelector('.in-cota');
                 let cellAI = tr.querySelector('.btn-ai-label');
                 let aiNum = tr.querySelector('.val-ai-num');
+                let iconTrend = tr.querySelector('.trend-icon');
 
                 let va = parseFloat(inVa.value);
-                let isBM = inPto.dataset.bmAsignado && inPto.dataset.bmAsignado !== "";
-
-                if (isBM) {
-                    let p = obtenerProyectoActivo();
-                    let bmData = p.bms.find(b => b.nombre === inPto.dataset.bmAsignado);
-                    if (bmData) {
-                        cotaInp.dataset.fijo = "true";
-                        cotaInp.classList.add('fijo');
-                        cotaInp.value = bmData.cota.toFixed(decs);
-                    }
-                }
-
                 let vd = parseFloat(inVd.value);
+
+                // AGRUPACIÓN VISUAL
+                if(!isNaN(va)) {
+                    tr.style.borderTop = "3px solid var(--primary-color)";
+                    cellAI.classList.remove('ai-repetido');
+                } else {
+                    tr.style.borderTop = "1px solid var(--border-color)";
+                    cellAI.classList.add('ai-repetido');
+                }
 
                 if (i === 0) {
                     let cotaVal = parseFloat(cotaInp.value);
-                    if (!isNaN(cotaVal) && !isNaN(va)) { ai_actual = cotaVal + va; aiNum.innerText = ai_actual.toFixed(decs); cellAI.className = "btn-ai-label"; } 
+                    if (!isNaN(cotaVal) && !isNaN(va)) { ai_actual = cotaVal + va; aiNum.innerText = ai_actual.toFixed(decs); } 
                     else { aiNum.innerText = "---"; ai_actual = NaN; }
                 } else {
                     if (!isNaN(ai_actual)) {
                         if (cotaInp.dataset.fijo === "true") {
                             let cotaFija = parseFloat(cotaInp.value);
-                            vd = ai_actual - cotaFija;
-                            inVd.value = vd.toFixed(decs);
-
-                            if (!isNaN(va)) { ai_actual = cotaFija + va; aiNum.innerText = ai_actual.toFixed(decs); cellAI.className = "btn-ai-label"; } 
-                            else { aiNum.innerText = ai_actual.toFixed(decs); cellAI.className = "btn-ai-label ai-repetido"; }
+                            vd = ai_actual - cotaFija; inVd.value = vd.toFixed(decs);
+                            if (!isNaN(va)) { ai_actual = cotaFija + va; aiNum.innerText = ai_actual.toFixed(decs); } 
+                            else { aiNum.innerText = ai_actual.toFixed(decs); }
                         } else {
                             if (!isNaN(vd)) {
                                 let cotaCalc = ai_actual - vd; cotaInp.value = cotaCalc.toFixed(decs);
-                                if (!isNaN(va)) { ai_actual = cotaCalc + va; aiNum.innerText = ai_actual.toFixed(decs); cellAI.className = "btn-ai-label"; } 
-                                else { aiNum.innerText = ai_actual.toFixed(decs); cellAI.className = "btn-ai-label ai-repetido"; }
-                            } else { cotaInp.value = ""; aiNum.innerText = ai_actual.toFixed(decs); cellAI.className = "btn-ai-label ai-repetido"; }
+                                if (!isNaN(va)) { ai_actual = cotaCalc + va; aiNum.innerText = ai_actual.toFixed(decs); } 
+                                else { aiNum.innerText = ai_actual.toFixed(decs); }
+                            } else { cotaInp.value = ""; aiNum.innerText = ai_actual.toFixed(decs); }
                         }
                     } else { 
                         aiNum.innerText = "---"; 
@@ -966,18 +1035,51 @@
                     }
                 }
 
+                // --- MEJORA 7: FLECHAS CON COLOR EXPRESO ---
+                let currentCota = parseFloat(cotaInp.value);
+                if(!isNaN(currentCota) && !isNaN(prevCotaCalculada)) {
+                    if(currentCota > prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--success-color); font-size:1.2rem; font-weight:900;">▲</span>';
+                    else if(currentCota < prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--danger-color); font-size:1.2rem; font-weight:900;">▼</span>';
+                    else iconTrend.innerHTML = '<span style="color:gray; font-size:1.2rem; font-weight:900;">▶</span>';
+                } else { iconTrend.innerHTML = ''; }
+                
+                if(!isNaN(currentCota) && cotaInp.dataset.fijo !== "true") prevCotaCalculada = currentCota;
+
+                // MIRA INVERTIDA
                 if (inVd.value !== "") {
                     let valVdCheck = parseFloat(inVd.value);
-                    if (valVdCheck >= limiteMira || valVdCheck <= 0) {
-                        inVd.style.color = "var(--danger-color)";
-                        inVd.style.fontWeight = "900";
-                    } else {
-                        inVd.style.color = "var(--text-color)"; 
-                        inVd.style.fontWeight = "800";
+                    if (valVdCheck < 0) { inVd.style.color = "#9c27b0"; inVd.style.fontWeight = "900"; } 
+                    else if (valVdCheck >= limiteMira) { inVd.style.color = "var(--danger-color)"; inVd.style.fontWeight = "900"; } 
+                    else { inVd.style.color = "var(--text-color)"; inVd.style.fontWeight = "800"; }
+                } else { inVd.style.color = "var(--text-color)"; }
+            }
+
+            // --- MEJORA 4: DETECCIÓN DE CIERRE ROBUSTA ---
+            let cierreCaja = document.getElementById('cierreAviso');
+            cierreCaja.style.display = 'none';
+            let htmlCierres = "";
+            
+            for(let i = 1; i < trs.length; i++) {
+                let tr = trs[i];
+                let pto = tr.querySelector('.in-pto').value.toUpperCase().trim();
+                let cotaCalc = parseFloat(tr.querySelector('.in-cota').value);
+                let tieneVd = tr.querySelector('.in-vd').value !== "";
+                let esFijo = tr.querySelector('.in-cota').dataset.fijo === "true";
+                
+                // Solo alerta de cierre si ingresaste una Vista Adelante y la cota es calculada (no fija)
+                if(pto !== "" && tieneVd && !isNaN(cotaCalc) && !esFijo) {
+                    let p = obtenerProyectoActivo();
+                    let bmRef = p.bms.find(b => b.nombre === pto);
+                    if(bmRef) {
+                        let errorCierre = cotaCalc - bmRef.cota;
+                        let claseColor = Math.abs(errorCierre) > 0.02 ? "error-alto" : "";
+                        htmlCierres += `<div class="cierre-aviso ${claseColor}" style="display:block;">🎯 <strong>CIERRE EN [${bmRef.nombre}]</strong><br>Error: ${errorCierre > 0 ? '+' : ''}${errorCierre.toFixed(decs)} m</div>`;
                     }
-                } else {
-                    inVd.style.color = "var(--text-color)";
                 }
+            }
+            if(htmlCierres !== "") {
+                cierreCaja.innerHTML = htmlCierres;
+                cierreCaja.style.display = 'block';
             }
             guardarEstadoTabla();
         }
@@ -992,7 +1094,8 @@
                     va: tr.querySelector('.in-va').value,
                     vd: tr.querySelector('.in-vd').value,
                     cota: tr.querySelector('.in-cota').value,
-                    fijo: tr.querySelector('.in-cota').dataset.fijo || (i===0 ? "true" : "false")
+                    fijo: tr.querySelector('.in-cota').dataset.fijo || (i===0 ? "true" : "false"),
+                    locked: tr.dataset.locked || "false"
                 });
             });
             p.tabla = filas; guardarBD();
@@ -1002,35 +1105,36 @@
             const tbody = document.getElementById('cuerpoTabla'); tbody.innerHTML = ""; 
             if (!filas || filas.length === 0) {
                 for(let i = 0; i < 8; i++) agregarFila(true);
-                guardarEstadoTabla();
-                return;
+                guardarEstadoTabla(); return;
             }
             filas.forEach((f, i) => {
                 const tr = document.createElement('tr');
+                tr.dataset.locked = f.locked || "false";
+                let lockIcon = (f.locked === "true") ? "🔒" : "🔓";
+                let disAttr = (f.locked === "true") ? "readonly" : "";
+                
                 tr.innerHTML = `
-                    <td><input type="text" class="in-pto" placeholder="..." value="${f.pto}" data-bm-asignado="${f.bmAsignado}" readonly onclick="abrirSelectorBM(this)"></td>
-                    <td><input type="text" inputmode="decimal" class="in-va" placeholder="(+)" value="${f.va}" oninput="formatDecimal(this); procesarTabla()"></td>
+                    <td style="position:relative;">
+                        <input type="text" class="in-pto" placeholder="..." value="${f.pto}" data-bm-asignado="${f.bmAsignado}" oninput="this.value = this.value.toUpperCase();" onchange="verificarBM(this)">
+                        <span class="btn-pin" onclick="abrirSelectorBM(this)">📍</span>
+                    </td>
+                    <td><input type="text" inputmode="decimal" class="in-va" placeholder="(+)" value="${f.va}" ${disAttr} oninput="formatDecimal(this); procesarTabla()"></td>
                     <td><input type="text" inputmode="decimal" class="in-vd" placeholder="[-]" value="${f.vd}" ${i===0 ? 'disabled style="background:rgba(128,128,128,0.1)"' : ''} oninput="formatDecimal(this); procesarTabla()"></td>
                     <td class="celda-combinada">
-                        <div class="btn-ai-label">AI: <span class="val-ai-num">---</span></div>
-                        <input type="text" inputmode="decimal" class="in-cota ${f.fijo === "true" ? 'fijo' : ''}" placeholder="Cota..." value="${f.cota}" data-fijo="${f.fijo}" oninput="formatDecimal(this); fijarCota(this)">
+                        <div class="btn-ai-label" onclick="toggleLockAI(this)">${lockIcon} AI: <span class="val-ai-num">---</span></div>
+                        <div class="cota-container">
+                            <input type="text" inputmode="decimal" class="in-cota ${f.fijo === "true" ? 'fijo' : ''}" placeholder="Cota..." value="${f.cota}" data-fijo="${f.fijo}" readonly="true" oninput="formatDecimal(this); fijarCota(this)" onblur="asegurarReadonlyCota(this)" onclick="manejarCotaTap(this, event)">
+                            <span class="trend-icon"></span>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
-                
-                // Reconectar el evento del input pto tras cargar
-                tr.querySelector('.in-pto').addEventListener('blur', function() {
-                    this.setAttribute('readonly', 'true');
-                    verificarBM(this); 
-                }, {once: true}); 
             });
             procesarTabla();
         }
 
         function exportarXLSX() {
-            vibrar();
-            let p = obtenerProyectoActivo();
-            let decs = parseInt(globalConfig.decimales) || 3;
+            let p = obtenerProyectoActivo(); let decs = parseInt(globalConfig.decimales) || 3;
             let datos = [["REPORTE DE NIVELACIÓN SIMPLE - COTA100"], ["Proyecto:", p.nombre], [], ["PUNTO", "V. ATRÁS (+)", "ALT. INSTRUMENTO", "V. ADEL. (-)", "COTA", "OBSERVACIÓN"]];
             document.querySelectorAll('#cuerpoTabla tr').forEach(tr => {
                 let ptoVal = tr.querySelector('.in-pto').value;
@@ -1038,41 +1142,21 @@
                 let cotaVal = parseFloat(tr.querySelector('.in-cota').value);
                 let vaVal = parseFloat(tr.querySelector('.in-va').value);
                 let vdVal = parseFloat(tr.querySelector('.in-vd').value);
-                
-                let obsPto = "";
-                let bmData = p.bms.find(b => b.nombre === ptoVal);
+                let obsPto = ""; let bmData = p.bms.find(b => b.nombre === ptoVal);
                 if(bmData && bmData.obs) obsPto = bmData.obs;
 
-                datos.push([
-                    ptoVal, 
-                    !isNaN(vaVal) ? Number(vaVal.toFixed(decs)) : "", 
-                    aiStr !== "---" ? Number(parseFloat(aiStr).toFixed(decs)) : "", 
-                    !isNaN(vdVal) ? Number(vdVal.toFixed(decs)) : "", 
-                    !isNaN(cotaVal) ? Number(cotaVal.toFixed(decs)) : "",
-                    obsPto
-                ]);
+                datos.push([ ptoVal, !isNaN(vaVal) ? Number(vaVal.toFixed(decs)) : "", aiStr !== "---" ? Number(parseFloat(aiStr).toFixed(decs)) : "", !isNaN(vdVal) ? Number(vdVal.toFixed(decs)) : "", !isNaN(cotaVal) ? Number(cotaVal.toFixed(decs)) : "", obsPto ]);
             });
-            let wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(datos), "Radiación");
+            let wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(datos), "Radiación");
             XLSX.writeFile(wb, `${p.nombre.replace(/\s+/g, '_')}_Nivelacion.xlsx`);
             showToast("Reporte descargado", "success");
         }
 
-        function toggleCalculadora() { 
-            vibrar();
-            const m = document.getElementById('calculadoraModal'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; 
-        }
-        
-        function calcIn(v) { vibrar(); document.getElementById('calcDisplay').value += v; }
-        function calcClear() { vibrar(); document.getElementById('calcDisplay').value = ''; }
-        function calcDel() { vibrar(); let d = document.getElementById('calcDisplay'); d.value = d.value.slice(0, -1); }
-        function calcEval() { 
-            vibrar(); 
-            try { 
-                let res = new Function('return ' + document.getElementById('calcDisplay').value)(); 
-                document.getElementById('calcDisplay').value = (res % 1 !== 0) ? res.toFixed(3) : res; 
-            } catch(e) { document.getElementById('calcDisplay').value = 'Error'; } 
-        }
+        function toggleCalculadora() { const m = document.getElementById('calculadoraModal'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
+        function calcIn(v) { document.getElementById('calcDisplay').value += v; }
+        function calcClear() { document.getElementById('calcDisplay').value = ''; }
+        function calcDel() { let d = document.getElementById('calcDisplay'); d.value = d.value.slice(0, -1); }
+        function calcEval() { try { let res = new Function('return ' + document.getElementById('calcDisplay').value)(); document.getElementById('calcDisplay').value = (res % 1 !== 0) ? res.toFixed(3) : res; } catch(e) { document.getElementById('calcDisplay').value = 'Error'; } }
     </script>
 </body>
 </html>

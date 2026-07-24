@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
     <style>
         /* --- ESTILOS UNIFICADOS COTA100 --- */
         :root {
@@ -22,6 +23,7 @@
             --input-bg: rgba(255,255,255,0.9);
             --success-color: #2e7d32;
             --success-bg: rgba(46, 204, 113, 0.2); 
+            --warning-color: #f57f17;
         }
 
         body.dark-mode {
@@ -40,83 +42,39 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            padding-bottom: 80px;
-            transition: background-color 0.3s, color 0.3s;
-            position: relative;
-            overflow-x: hidden;
-            min-height: 100vh;
+            background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px;
+            transition: background-color 0.3s, color 0.3s; position: relative; overflow-x: hidden; min-height: 100vh;
         }
 
-        /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
-        .fire-base {
-            position: fixed;
-            bottom: 0; left: 0; width: 100vw; height: 35vh;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .fire-wave {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200vw; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 10s linear infinite;
-        }
-        .fire-wave.delay {
-            bottom: -15px; opacity: 0.6;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 7s linear infinite reverse;
-        }
+        /* --- FONDO LÍQUIDO --- */
+        .fire-base { position: fixed; bottom: 0; left: 0; width: 100vw; height: 35vh; z-index: -2; pointer-events: none; overflow: hidden; }
+        .fire-wave { position: absolute; bottom: 0; left: 0; width: 200vw; height: 100%; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 10s linear infinite; }
+        .fire-wave.delay { bottom: -15px; opacity: 0.6; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 7s linear infinite reverse; }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
-        @media screen and (max-width: 480px) {
-            html { font-size: 13px; } 
-            .btn-accion { padding: 10px; font-size: 0.95rem; }
-            input, select { padding: 8px; font-size: 1.05rem;}
-            .panel-control { padding: 12px; margin-bottom: 12px;}
-            .top-bar { padding: 10px 15px; height: 65px; }
-            .btn-volver-mini { width: 38px; height: 38px; }
-            th { font-size: 0.75rem; padding: 6px 1px; }
-            td input { padding: 8px 2px; font-size: 1.15rem; }
-            .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px; }
-            .calculadora-modal { right: 10px; bottom: 65px; width: 230px;}
-        }
-
-        /* --- CABECERA DUAL --- */
-        .top-bar { 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
-            background-color: transparent; position: sticky; top: 0; z-index: 100; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
-        }
+        /* --- CABECERA --- */
+        .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid var(--card-border); background-color: transparent; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px; }
         .nav-buttons-left { display: flex; gap: 8px; }
-        .btn-volver-mini { 
-            background: transparent; border: none; 
-            color: var(--primary-color);
-            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: drop-shadow(0 0 5px var(--primary-glow));
-        }
+        .btn-volver-mini { background: transparent; border: none; color: var(--primary-color); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s; filter: drop-shadow(0 0 5px var(--primary-glow)); }
         .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
-        
         .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
         .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
 
         .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; max-width: 800px; margin: 0 auto; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- PANELES (GLASSMORPHISM) --- */
+        /* --- PANELES --- */
         .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
         .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
-        .btn-toggle-panel { background: none; border: none; font-size: 1.2rem; color: var(--text-color); pointer-events: none;}
         
-        .panel-contenido { display: block; margin-top: 10px; }
-        .project-selector { display: flex; gap: 8px; margin-bottom: 10px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .input-group { flex: 1; display: flex; flex-direction: column; }
+        .full-width { grid-column: 1 / -1; }
         
+        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8; display: flex; align-items: center; justify-content: space-between;}
+        .info-icon { background: rgba(128,128,128,0.1); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-left: 5px; color: var(--primary-color);}
+        .info-icon:active { transform: scale(0.9); background: var(--primary-color); color: #fff;}
+
         input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center;}
         input:focus { border-color: var(--primary-color); outline: none; background: transparent;}
         
@@ -126,12 +84,19 @@
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
         .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
-        .input-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .input-group { flex: 1; display: flex; flex-direction: column; }
-        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
-
         .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center;}
         .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
+
+        /* LISTA BM (BASE DE DATOS) */
+        .bm-list { margin-top: 8px; max-height: 220px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; padding-bottom: 5px;}
+        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); background: var(--card-bg); transition: transform 0.1s;}
+        .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .bm-info { display: flex; flex-direction: column; text-align: left; }
+        .bm-info strong { font-size: 0.95rem; color: var(--text-color); }
+        .bm-info span { font-size: 0.85rem; color: var(--primary-color); font-weight: 700; }
+        .bm-actions { display: flex; gap: 6px; }
+        .bm-actions button { background: none; border: none; border-radius: 4px; padding: 4px; font-size: 1.1rem; cursor: pointer; opacity: 0.6; transition: 0.2s;}
+        .bm-actions button:active { opacity: 1; transform: scale(0.9); }
 
         /* --- TABLA UNIFICADA --- */
         .table-wrapper { width: 100%; overflow-x: auto; border: 1px solid var(--card-border); border-radius: 8px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 12px;}
@@ -139,120 +104,63 @@
         th { background: var(--table-header); color: #fff; font-weight: 800; padding: 10px 2px; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 10; }
         td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0; text-align: center; vertical-align: middle;}
         td:last-child { border-right: none; }
-        
         td input { border: none; width: 100%; height: 100%; padding: 12px 2px; font-size: 1.15rem; font-weight: 800; background: transparent; color: var(--text-color); text-align: center;}
         td input:focus { background: rgba(255, 85, 0, 0.05); outline: 2px solid var(--primary-color); outline-offset: -2px;}
-        
-        .td-readonly { background: rgba(128,128,128,0.05); }
-
-        .info-box { background-color: rgba(25, 118, 210, 0.1); border-left: 5px solid #1976d2; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
 
         /* --- PANEL DE RESULTADOS --- */
         .panel-resultados { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; text-align: center; display: none; margin-bottom: 15px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .res-valor { font-size: 1.4rem; font-weight: 800; margin: 2px 0 10px; color: var(--primary-color); font-family: monospace;}
-        
         .tabla-resultados th { background-color: var(--primary-color); color: #000; }
-        .tabla-resultados td { font-family: monospace; font-size: 1.1rem; font-weight: 700; padding: 5px;}
-        
+        .tabla-resultados td { font-family: monospace; font-size: 1.1rem; font-weight: 700; padding: 8px;}
         .tol-tag { font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; font-weight: 800; color: #fff; display: inline-block; margin-bottom: 5px; }
         .tol-pass { background-color: var(--success-color); }
         .tol-fail { background-color: var(--danger-color); }
+        #canvasPoligonal { width: 100%; max-width: 100%; background: rgba(0,0,0,0.02); border: 1px dashed var(--border-color); border-radius: 8px; margin-top: 15px; }
 
-        /* --- CALCULADORA DISEÑO OPTIMIZADO COTA100 --- */
-        .btn-calculadora-flotante { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; background: var(--card-bg); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid var(--primary-color); cursor: pointer; z-index: 999; font-size: 1.4rem; backdrop-filter: blur(5px);}
-        .calculadora-modal { 
-            position: fixed; bottom: 80px; right: 15px; width: 240px; 
-            background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; 
-            padding: 15px; display: none; z-index: 1000; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
-            box-shadow: 0 4px 20px var(--primary-glow); 
-        }
-        .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800; color: var(--text-color); font-size: 0.85rem;}
-        .calc-header button { background: none; border: none; font-size: 1.2rem; font-weight: 800; color: var(--danger-color); cursor: pointer;}
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        
-        .calc-grid button { 
-            padding: 12px 0; font-size: 1.2rem; font-weight: 800; 
-            border: 1px solid var(--border-color); border-radius: 8px; 
-            background: var(--input-bg); color: var(--text-color); cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .calc-grid button:active { transform: scale(0.9); }
-        .calc-grid button.calc-op { color: var(--primary-color); background: rgba(255, 85, 0, 0.1); border-color: var(--card-border); }
-        .calc-grid button.calc-clear { color: var(--danger-color); border-color: rgba(211, 47, 47, 0.3); background: rgba(211, 47, 47, 0.05); }
-        .calc-grid button.calc-del { grid-column: span 2; background: rgba(128,128,128,0.1); }
-        .calc-grid button.calc-eval { grid-column: span 2; background: var(--primary-color); color: #fff; border: none; box-shadow: 0 2px 8px var(--primary-glow); }
-        
-        #calcDisplay { 
-            width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; 
-            border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; 
-            padding: 4px 10px; background: var(--input-bg); color: var(--text-color); 
-        }
-        #calcDisplay:focus { border-color: var(--primary-color); outline: none; }
-
-        /* --- TOAST NOTIFICATIONS --- */
-        #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 350px;}
-        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
-        .toast.error { border-left-color: var(--danger-color); }
-        .toast.success { border-left-color: #2e7d32; }
-        .toast.warning { border-left-color: #fbc02d; }
-        .toast.fade-out { animation: fadeOutToast 0.3s ease-in forwards; }
-        @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
-
-        /* --- CUSTOM CONFIRM MODAL --- */
-        .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.2s; backdrop-filter: blur(2px);}
-        .confirm-overlay.activo { opacity: 1; visibility: visible; }
-        .confirm-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(15px);}
-        .confirm-overlay.activo .confirm-box { transform: scale(1); }
-        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
-        .confirm-btns { display: flex; gap: 10px; }
-        .confirm-btn { flex: 1; padding: 12px; font-weight: 800; border-radius: 8px; border: none; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.2s;}
-        .confirm-btn:active { transform: scale(0.95); }
-        .confirm-btn-cancel { background: rgba(128,128,128,0.2); color: var(--text-color); }
-        .confirm-btn-ok { background: var(--primary-color); color: #fff; }
-
-        /* --- MODAL SELECTOR GENÉRICO --- */
-        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(2px); }
+        /* MODALES Y TOASTS CORREGIDOS */
+        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
         .overlay-select.activo { opacity: 1; }
-        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
+        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
         .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
         .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
         .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
-        .btn-opcion span.cota { color: var(--text-color); font-size: 0.95rem; font-weight: 700;}
-        .btn-opcion:active span.cota { color: #fff !important; }
+        
+        #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none;}
+        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards;}
+        .toast.fade-out { animation: fadeOutToast 0.3s ease-in forwards; }
+        
+        @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
 
+        /* IMPRESIÓN PDF */
+        @media print {
+            body * { visibility: hidden; }
+            #panelResultados, #panelResultados * { visibility: visible; }
+            #panelResultados { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; background: transparent; padding: 0;}
+            .btn-accion, .top-bar, #canvasPoligonal { display: none !important; }
+            .print-header { display: block !important; visibility: visible; text-align: center; margin-bottom: 20px; }
+            .print-header h1 { color: #000; font-size: 24px; text-transform: uppercase; }
+            .tabla-resultados { border-collapse: collapse; width: 100%; }
+            .tabla-resultados th, .tabla-resultados td { border: 1px solid #000; color: #000; }
+            .tol-tag { border: 2px solid #000; color: #000 !important; background: transparent !important; }
+        }
+        .print-header { display: none; }
+
+        @media screen and (max-width: 480px) {
+            html { font-size: 13px; } 
+            input { padding: 10px; font-size: 1.1rem;}
+            .panel-control { padding: 12px; margin-bottom: 12px;}
+            th { font-size: 0.75rem; padding: 6px 1px; }
+            td input { padding: 8px 2px; font-size: 1.15rem; }
+        }
     </style>
 </head>
 <body onload="inicializarApp()">
 
-    <!-- Fondo de Agua / Fuego Animado -->
-    <div class="fire-base">
-        <div class="fire-wave delay"></div>
-        <div class="fire-wave"></div>
-    </div>
-
-    <script>
-        try {
-            let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-            if (conf && conf.darkMode) document.body.classList.add('dark-mode');
-        } catch(e) {}
-    </script>
-
-    <!-- TOAST & CONFIRM MODALS -->
+    <div class="fire-base"><div class="fire-wave delay"></div><div class="fire-wave"></div></div>
     <div id="toast-container"></div>
 
-    <div class="confirm-overlay" id="customConfirmOverlay">
-        <div class="confirm-box">
-            <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
-            <div class="confirm-btns">
-                <button class="confirm-btn confirm-btn-cancel" id="btnConfirmCancel">Cancelar</button>
-                <button class="confirm-btn confirm-btn-ok" id="btnConfirmOk">Aceptar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL DE SELECCIÓN GENÉRICO (PROYECTO) -->
+    <!-- MODALES GENÉRICOS -->
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -262,56 +170,78 @@
         <div id="modalSelectContent" style="max-height:300px; overflow-y:auto; margin-bottom:5px;"></div>
     </div>
 
+    <!-- MODAL CONFIRMAR -->
+    <div class="overlay-select" id="customConfirmOverlay">
+        <div class="modal-select" id="customConfirmModal">
+            <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-accion" style="background:rgba(128,128,128,0.2); color:var(--text-color); flex:1;" id="btnConfirmCancel">Cancelar</button>
+                <button class="btn-accion" style="background:var(--primary-color); flex:1;" id="btnConfirmOk">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ALERTA DE INFORMACIÓN (INFO ICONS) -->
+    <div class="overlay-select" id="customAlertOverlay">
+        <div class="modal-select" id="customAlertModal">
+            <h3 style="color:var(--primary-color); font-weight:900; text-transform:uppercase; margin-bottom:10px; font-size: 1.1rem;">ℹ️ INFORMACIÓN</h3>
+            <div class="confirm-msg" id="customAlertMsg" style="font-size:0.95rem; font-weight:600; text-align:left;">Texto</div>
+            <button class="btn-accion" style="background:var(--table-header); width:100%;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <!-- MODAL TRASLACIÓN -->
+    <div class="overlay-select" id="customPromptOverlay"></div>
+    <div class="modal-select" id="customPromptModal">
+        <h3 style="color:var(--text-color); margin-bottom:10px; font-weight:900; text-transform:uppercase; font-size: 1.1rem;">NUEVA COORDENADA V-1</h3>
+        <p style="font-size:0.8rem; color:var(--text-color); opacity:0.8; margin-bottom:10px;">Ingresa las UTM oficiales. Todo el polígono se trasladará manteniendo la geometría.</p>
+        <input type="number" id="promptEste" step="0.001" placeholder="ESTE (X)" style="margin-bottom:10px;">
+        <input type="number" id="promptNorte" step="0.001" placeholder="NORTE (Y)" style="margin-bottom:15px;">
+        <div style="display:flex; gap:10px;">
+            <button class="btn-accion" style="background:var(--danger-color); flex:1;" onclick="document.getElementById('customPromptOverlay').style.display='none'">CANCELAR</button>
+            <button class="btn-accion" style="background:var(--primary-color); flex:1;" onclick="ejecutarTraslacion()">APLICAR</button>
+        </div>
+    </div>
+
+    <!-- APP -->
     <div class="top-bar">
         <div class="nav-buttons-left">
-            <!-- Botón Casa (Home) -->
-            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
-            <!-- Botón Atrás -->
-            <a href="poligonales.html" class="btn-volver-mini" onclick="vibrar()">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-            </a>
+            <a href="index.html" class="btn-volver-mini"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+            <a href="poligonales.html" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
         </div>
         <h2 class="top-bar-title">POLIGONAL <span>CERRADA</span></h2>
         <div style="width: 90px;"></div>
     </div>
 
     <div class="modulo-container">
-        
-        <div class="info-box">
-            <strong>ℹ️ REGLA TÉCNICA:</strong> Ajuste de circuitos que inician y terminan en el mismo punto. La matemática compensará automáticamente por el método de la brújula (Bowditch). Usa el <strong>Norte Local</strong> si no tienes BM oficial.
-        </div>
-
         <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
-            <div class="panel-titulo" onclick="togglePanel('panelProyecto')">
-                <span>📁 Base de Datos / Proyectos</span>
-                <span class="btn-toggle-panel">▼</span>
-            </div>
-            <div id="panelProyecto" class="panel-contenido">
-                <div class="project-selector">
-                    <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')">
-                        <span id="txtSelectProyecto">Cargando...</span>
-                        <span class="arrow">▼</span>
-                    </div>
+            <div class="panel-titulo" onclick="togglePanel('panelProyecto')"><span>📁 Base de Datos / Proyectos</span><span>▼</span></div>
+            <div id="panelProyecto">
+                <div class="project-selector" style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')"><span id="txtSelectProyecto">Cargando...</span><span class="arrow">▼</span></div>
                     <button class="btn-accion" style="width: auto; padding: 10px; background: var(--primary-color); margin-bottom:0;" onclick="crearNuevoProyecto()">+ NUEVO</button>
                     <button class="btn-accion" style="width: auto; padding: 10px; background: var(--danger-color); margin-bottom:0;" onclick="eliminarProyecto()">🗑️</button>
                 </div>
-                <div class="input-group full-width" style="margin-bottom: 12px;">
-                    <label>Nombre del Levantamiento</label>
-                    <input type="text" id="proyectName" placeholder="Ej: Polígono Mz B" oninput="renombrarProyecto()">
-                </div>
+                <div class="input-group full-width"><label>Nombre del Levantamiento</label><input type="text" id="proyectName" placeholder="Ej: Polígono Mz B" oninput="renombrarProyecto()"></div>
                 
-                <div style="border-top: 1px dashed var(--border-color); padding-top: 10px;">
+                <!-- BASE DE DATOS DE BMs PARA ESTE MÓDULO -->
+                <div style="border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: 12px;">
+                    <label style="color: var(--primary-color);">+ Registrar Vértice de Control Oficial</label>
+                    <div class="form-grid" style="margin-top: 4px;">
+                        <input type="text" id="newBMName" placeholder="Nombre (Ej: BM-1)" oninput="this.value = this.value.toUpperCase()">
+                        <input type="number" id="newBMEste" step="0.001" placeholder="Este (X)">
+                        <input type="number" id="newBMNorte" step="0.001" placeholder="Norte (Y)">
+                        <input type="text" id="newBMObs" class="full-width" placeholder="Observación (opcional)">
+                    </div>
+                    <button id="btnGuardarBM" class="btn-accion" style="padding: 10px; font-size: 0.9rem; margin-bottom: 10px;" onclick="addBM()">Guardar Vértice en Proyecto</button>
+                </div>
+                <label style="display: block; font-size:0.75rem; opacity:0.7;">Vértices de Control Guardados:</label>
+                <div class="bm-list" id="listaBMs"></div>
+                
+                <div style="border-top: 1px dashed var(--border-color); padding-top: 10px; margin-top:10px;">
                     <div style="display: flex; gap: 8px;">
                         <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: var(--table-header); margin: 0;" onclick="exportarBackup()">📤 Backup DB</button>
-                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;" onclick="vibrar()">
+                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;">
                             📥 Restaurar
                             <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importarBackup()">
                         </label>
@@ -321,534 +251,627 @@
         </div>
 
         <div class="panel-control" style="border-left: 4px solid var(--table-header);">
-            <div class="panel-titulo" style="color: var(--text-color);">⚙️ Configuración del Equipo</div>
-            <div class="input-row">
+            <div class="panel-titulo" style="color: var(--text-color);">⚙️ Configuración Geométrica</div>
+            <div class="form-grid">
                 <div class="input-group">
-                    <label>Precisión Angular (Segundos)</label>
-                    <input type="number" id="precisionEquipo" value="5" step="1" placeholder="Ej: 5" oninput="guardarEstadoApp()">
+                    <label>Tipo de Ángulo <span class="info-icon" onclick="showInfoAlert('Define cómo mediste con tu Estación Total. Elige <strong>Internos</strong> si barrer el ángulo encierra el polígono. Elige <strong>Externos</strong> si mediste por el lado de afuera.')">ℹ️</span></label>
+                    <div class="custom-select" onclick="abrirModalSelect('tipoAngulo')"><span id="txt_tipoAngulo">Internos</span><span class="arrow">▼</span></div>
+                    <input type="hidden" id="tipoAngulo" value="interno">
+                </div>
+                <div class="input-group">
+                    <label>Precisión Eq. (Seg) <span class="info-icon" onclick="showInfoAlert('Indica la precisión angular nominal de tu equipo (Ej. 5 segundos). Determina la tolerancia máxima permitida.')">ℹ️</span></label>
+                    <input type="number" id="precisionEquipo" value="5" step="1" oninput="guardarEstadoApp()">
+                </div>
+                <div class="input-group">
+                    <label>Método de Ajuste <span class="info-icon" onclick="showInfoAlert('<strong>Brújula (Bowditch):</strong> Asume que los ángulos y distancias tienen igual precisión.<br><br><strong>Tránsito:</strong> Asume que tu medición de ángulos fue mucho más precisa que las distancias (ideal con viento o neblina).')">ℹ️</span></label>
+                    <div class="custom-select" onclick="abrirModalSelect('metodoAjuste')"><span id="txt_metodoAjuste">Brújula (Bowditch)</span><span class="arrow">▼</span></div>
+                    <input type="hidden" id="metodoAjuste" value="brujula">
+                </div>
+                <div class="input-group">
+                    <label>Dist. Angular <span class="info-icon" onclick="showInfoAlert('<strong>Partes Iguales:</strong> Reparte el error de cierre angular equitativamente a todos los vértices.<br><br><strong>Ponderado:</strong> Le quita más error a los tramos cortos, donde el error por centrado de prisma suele ser mayor.')">ℹ️</span></label>
+                    <div class="custom-select" onclick="abrirModalSelect('metodoAngular')"><span id="txt_metodoAngular">Partes Iguales</span><span class="arrow">▼</span></div>
+                    <input type="hidden" id="metodoAngular" value="igual">
                 </div>
             </div>
-            <p style="font-size: 0.75rem; opacity: 0.7; margin-top: 5px; font-weight: 600; line-height: 1.2;">* Revisa la ficha técnica de tu Estación Total. Esto define tu margen de error tolerable.</p>
         </div>
 
         <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
             <div class="panel-titulo" style="color: var(--primary-color);">📍 1. Orientación de Partida</div>
             
-            <button class="btn-accion" style="background:var(--primary-color); font-size:0.85rem; padding:10px; margin-bottom:12px;" onclick="asumirNorteLocal()">🧭 Asumir Norte Local Automático</button>
-
-            <label style="color: var(--primary-color);">ESTACIÓN 1 (Vértice de inicio)</label>
-            <div class="input-row">
+            <label style="color: var(--primary-color); display:flex; justify-content:space-between; align-items:center;">
+                <div>ESTACIÓN 1 (Vértice de inicio) <span class="info-icon" onclick="showInfoAlert('Las coordenadas de arranque. Puedes cargar un vértice guardado o usar <strong>Trasladar a UTM</strong> si deseas mover todo tu polígono a una nueva coordenada oficial sin perder la forma que ya calculaste.')">ℹ️</span></div>
+                <div style="display:flex; gap:5px;">
+                    <button style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="seleccionarPuntoControl('est')">📍 Cargar</button>
+                    <button style="background:transparent; border:1px solid var(--primary-color); color:var(--primary-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="abrirPromptTraslacion()">Trasladar a UTM</button>
+                </div>
+            </label>
+            <div class="form-grid" style="margin-top:5px;">
                 <input type="number" id="eEstIni" step="0.001" placeholder="ESTE (X)" oninput="guardarEstadoApp()">
                 <input type="number" id="nEstIni" step="0.001" placeholder="NORTE (Y)" oninput="guardarEstadoApp()">
             </div>
             
-            <label style="color: var(--primary-color);">REFERENCIA (Vista Atrás / BM Cero)</label>
-            <div class="input-row">
+            <label style="color: var(--primary-color); display:flex; align-items:center; justify-content:space-between;">
+                <div>REFERENCIA (Vista Atrás) <span class="info-icon" style="margin-left: 5px;" onclick="showInfoAlert('El punto inicial contra el cual pusiste tu Estación Total en 0° 00\' 00\".')">ℹ️</span></div>
+                <button style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="seleccionarPuntoControl('ref')">📍 Cargar</button>
+            </label>
+            <div class="form-grid" style="margin-top:5px;">
                 <input type="number" id="eRefIni" step="0.001" placeholder="ESTE (X)" oninput="guardarEstadoApp()">
                 <input type="number" id="nRefIni" step="0.001" placeholder="NORTE (Y)" oninput="guardarEstadoApp()">
             </div>
+            <button class="btn-accion" style="background:transparent; color:var(--text-color); border:1px dashed var(--text-color); font-size:0.85rem; padding:8px; margin-top:5px;" onclick="asumirNorteLocal()">🧭 Asumir Norte Local (Azimut 0°)</button>
         </div>
 
         <div class="panel-control" style="padding: 15px 10px; border-left: 4px solid var(--primary-color);">
-            <div class="panel-titulo" style="padding-left: 5px;">📐 2. Ángulos y Distancias</div>
-            <p style="font-size: 0.75rem; font-weight: 700; opacity: 0.7; margin-bottom: 10px;">* Ángulos horizontales medidos a la derecha en cada vértice hacia el siguiente punto.</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <div class="panel-titulo" style="margin-bottom:0; border:none; padding:0;">📐 2. Lado y Ángulo</div>
+                <button style="background:transparent; border:none; font-size:1.2rem; cursor:pointer;" onclick="invertirSentido()" title="Invertir Sentido">🔄</button>
+            </div>
             
             <div class="table-wrapper">
                 <table id="tablaPoligonal">
-                    <thead>
-                        <tr>
-                            <th style="width: 20%;">VÉRTICE</th>
-                            <th style="width: 15%;">GRADOS</th>
-                            <th style="width: 15%;">MIN.</th>
-                            <th style="width: 15%;">SEG.</th>
-                            <th style="width: 35%;">DIST. (m)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cuerpoPoligonal">
-                        </tbody>
+                    <thead><tr><th style="width: 20%;">Vértice</th><th style="width: 15%;">Grad</th><th style="width: 15%;">Min</th><th style="width: 15%;">Seg</th><th style="width: 35%;">Dist. (m)</th></tr></thead>
+                    <tbody id="cuerpoPoligonal"></tbody>
                 </table>
             </div>
 
-            <div class="input-row" style="margin-bottom: 0;">
-                <button class="btn-accion" style="background:transparent; border: 1px solid #1976d2; color:#1976d2; margin-bottom:0;" onclick="agregarVertice(); vibrar();">➕ Vértice</button>
-                <button class="btn-accion" style="background:transparent; border: 1px solid var(--text-color); color:var(--text-color); margin-bottom:0;" onclick="quitarVertice(); vibrar();">➖ Borrar</button>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-accion" style="background:transparent; border: 1px solid #1976d2; color:#1976d2; flex:1;" onclick="agregarVertice()">➕ Añadir</button>
+                <button class="btn-accion" style="background:transparent; border: 1px solid var(--danger-color); color:var(--danger-color); flex:1;" onclick="quitarVertice()">➖ Borrar</button>
             </div>
         </div>
 
-        <button class="btn-accion" style="background-color: var(--primary-color); font-size: 1.2rem; margin-bottom: 15px; padding: 15px; box-shadow: 0 4px 15px rgba(255,85,0,0.3);" onclick="calcularPoligonal(); vibrar();">PROCESAR AJUSTE</button>
+        <button class="btn-accion" style="background-color: var(--primary-color); font-size: 1.2rem; margin-bottom: 15px; padding: 15px; box-shadow: 0 4px 15px rgba(255,85,0,0.3);" onclick="calcularPoligonal()">PROCESAR AJUSTE</button>
 
         <div class="panel-resultados" id="panelResultados">
-            <h3 style="text-transform: uppercase; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-size: 1.1rem;">REPORTE DE COMPENSACIÓN</h3>
-            
-            <div style="font-size: 0.75rem; font-weight: 800; color: #1976d2; margin-top: 10px;" id="resTipoAngulo">DETECTADO: ÁNGULOS INTERNOS</div>
-            <div id="tolBadge" class="tol-tag tol-pass" style="margin-top: 5px;">ESTADO: ACEPTABLE</div>
+            <div class="print-header">
+                <h1 id="printTitle">REPORTE DE POLIGONAL CERRADA</h1>
+                <p id="printDate"></p>
+            </div>
 
-            <div class="input-row" style="margin-top: 10px;">
+            <h3 style="text-transform: uppercase; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-size: 1.1rem;">REPORTE DE CIERRE</h3>
+            
+            <div id="tolBadge" class="tol-tag tol-pass" style="margin-top: 10px; font-size:0.9rem;">ESTADO: ACEPTABLE</div>
+            
+            <div class="form-grid" style="margin-top: 15px; background: rgba(128,128,128,0.05); padding:10px; border-radius:8px;">
                 <div class="input-group">
                     <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">ERROR ANGULAR</span>
-                    <div class="res-valor" id="resErrAng">00° 00' 00"</div>
-                    <span style="font-size: 0.75rem; opacity: 0.7;">Tolerancia: <span id="resTolAng"></span></span>
+                    <div class="res-valor" id="resErrAng" style="font-size:1.2rem; margin-bottom:0;">00° 00' 00"</div>
+                    <span style="font-size: 0.7rem; opacity: 0.7;">Tol: <span id="resTolAng"></span></span>
                 </div>
                 <div class="input-group">
                     <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">ERROR LINEAL</span>
-                    <div class="res-valor" id="resErrLin">0.000 m</div>
+                    <div class="res-valor" id="resErrLin" style="font-size:1.2rem; margin-bottom:0;">0.000 m</div>
+                    <span style="font-size: 0.7rem; opacity: 0.7;" id="resGeometriaDebil">Factor de Forma: OK</span>
                 </div>
             </div>
-            <div class="input-group" style="margin-top: 5px;">
-                <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">PRECISIÓN RELATIVA</span>
-                <div class="res-valor" id="resPrecision" style="font-size: 1.8rem;">1 : 0</div>
+
+            <div class="form-grid" style="margin-top: 10px;">
+                <div class="input-group"><span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">PRECISIÓN RELATIVA</span><div class="res-valor" id="resPrecision" style="font-size: 1.6rem; color:var(--text-color);">1 : 0</div></div>
+                <div class="input-group"><span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">ÁREA TOTAL</span><div class="res-valor" id="resArea" style="font-size: 1.6rem; color:var(--text-color);">0.00 Ha</div></div>
             </div>
 
-            <h3 style="color: var(--primary-color); margin: 15px 0 10px; font-size: 1rem; text-align: left;">COORDENADAS AJUSTADAS</h3>
-            <div class="table-wrapper" style="margin-bottom: 0;">
+            <canvas id="canvasPoligonal" width="400" height="300"></canvas>
+            <p id="txtTrampa" style="font-size:0.8rem; color:var(--danger-color); font-weight:800; margin-top:5px; display:none;">⚠️ Vértice Sospechoso Resaltado en Rojo</p>
+
+            <h3 style="color: var(--primary-color); margin: 20px 0 10px; font-size: 1rem; text-align: left;">COORDENADAS AJUSTADAS</h3>
+            <div class="table-wrapper" style="margin-bottom: 15px;">
                 <table class="tabla-resultados">
-                    <thead>
-                        <tr><th>VÉRTICE</th><th>ESTE (X)</th><th>NORTE (Y)</th></tr>
-                    </thead>
+                    <thead><tr><th>VÉRTICE</th><th>ESTE (X)</th><th>NORTE (Y)</th></tr></thead>
                     <tbody id="cuerpoResultados"></tbody>
                 </table>
             </div>
+
+            <div style="display:flex; gap:10px;">
+                <button class="btn-accion" style="background:var(--success-color); flex:1;" onclick="exportarCSV_PNEZD()">📥 CSV PNEZD</button>
+                <button class="btn-accion" style="background:var(--table-header); flex:1;" onclick="window.print()">🖨️ PDF / Imprimir</button>
+            </div>
         </div>
 
-    </div>
-
-    <!-- CALCULADORA FLOTANTE -->
-    <div class="btn-calculadora-flotante" onclick="toggleCalculadora()">🧮</div>
-    <div class="calculadora-modal" id="calculadoraModal">
-        <div class="calc-header"><span>CÁLCULO RÁPIDO</span><button onclick="toggleCalculadora()">X</button></div>
-        <input type="text" id="calcDisplay" disabled>
-        <div class="calc-grid">
-            <button onclick="calcInput('7')">7</button><button onclick="calcInput('8')">8</button><button onclick="calcInput('9')">9</button><button onclick="calcInput('/')" class="calc-op">÷</button>
-            <button onclick="calcInput('4')">4</button><button onclick="calcInput('5')">5</button><button onclick="calcInput('6')">6</button><button onclick="calcInput('*')" class="calc-op">×</button>
-            <button onclick="calcInput('1')">1</button><button onclick="calcInput('2')">2</button><button onclick="calcInput('3')">3</button><button onclick="calcInput('-')" class="calc-op">-</button>
-            <button onclick="calcClear()" class="calc-clear">C</button><button onclick="calcInput('0')">0</button><button onclick="calcInput('.')">.</button><button onclick="calcInput('+')" class="calc-op">+</button>
-            <button onclick="calcBackspace()" class="calc-del">⌫</button>
-            <button onclick="calcEval()" class="calc-eval">=</button>
-        </div>
     </div>
 
     <script>
-        /* --- UI: TOAST Y CONFIRM --- */
+        // --- UI Y NOTIFICACIONES ---
         function showToast(message, type = "default") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerText = message;
+            toast.className = `toast ${type}`; toast.innerText = message;
             container.appendChild(toast);
-            vibrar();
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                toast.addEventListener('animationend', () => toast.remove());
+            
+            setTimeout(() => { 
+                toast.classList.add('fade-out'); 
+                toast.addEventListener('animationend', () => toast.remove()); 
+                setTimeout(() => toast.remove(), 400); 
             }, 3000);
         }
 
         let confirmOkCallback = null;
         let confirmCancelCallback = null;
 
-        function showConfirm(message, onOk, onCancel = null) {
-            vibrar();
-            const overlay = document.getElementById('customConfirmOverlay');
-            document.getElementById('customConfirmMsg').innerText = message;
-            confirmOkCallback = onOk;
-            confirmCancelCallback = onCancel;
-            overlay.classList.add('activo');
-        }
-
         document.getElementById('btnConfirmCancel').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
+            vibrar(); document.getElementById('customConfirmOverlay').classList.remove('activo');
+            setTimeout(() => document.getElementById('customConfirmOverlay').style.display='none', 200);
             if (confirmCancelCallback) confirmCancelCallback();
         });
 
         document.getElementById('btnConfirmOk').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
+            vibrar(); document.getElementById('customConfirmOverlay').classList.remove('activo');
+            setTimeout(() => document.getElementById('customConfirmOverlay').style.display='none', 200);
             if (confirmOkCallback) confirmOkCallback();
         });
 
-        /* --- UI: MODAL SELECTOR GENÉRICO --- */
-        let tipoModalActual = "";
-        function abrirModalSelect(tipo) {
+        function showConfirm(message, onOk, onCancel = null) {
             vibrar();
-            tipoModalActual = tipo;
-            const titulo = document.getElementById('modalSelectTitle');
-            const contenido = document.getElementById('modalSelectContent');
-            contenido.innerHTML = "";
-            
-            if(tipo === 'proyecto') {
-                titulo.innerText = "📁 SELECCIONAR PROYECTO";
-                appData.proyectos.forEach(proj => {
-                    let isActivo = proj.id === appData.activoId;
-                    contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${proj.id}', '${proj.nombre}')"><span>${proj.nombre}</span></button>`;
-                });
-            }
-
-            document.getElementById('overlaySelect').style.display = 'block';
-            setTimeout(() => { document.getElementById('overlaySelect').classList.add('activo'); document.getElementById('modalSelect').classList.add('abierto'); }, 10);
+            document.getElementById('customConfirmMsg').innerText = message;
+            confirmOkCallback = onOk; confirmCancelCallback = onCancel;
+            document.getElementById('customConfirmOverlay').style.display = 'block';
+            setTimeout(() => document.getElementById('customConfirmOverlay').classList.add('activo'), 10);
         }
 
-        function cerrarModalSelect() {
+        function showInfoAlert(htmlMsg) {
             vibrar();
-            document.getElementById('overlaySelect').classList.remove('activo');
-            document.getElementById('modalSelect').classList.remove('abierto');
-            setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300);
+            document.getElementById('customAlertMsg').innerHTML = htmlMsg;
+            document.getElementById('customAlertOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customAlertOverlay').classList.add('activo'); document.getElementById('customAlertModal').classList.add('abierto'); }, 10);
         }
 
-        function seleccionarOpcionModal(valor, texto) {
-            cerrarModalSelect();
-            if(tipoModalActual === 'proyecto') {
-                cambiarProyectoActivo(valor);
-            }
+        function cerrarCustomAlert() {
+            vibrar(); document.getElementById('customAlertOverlay').classList.remove('activo'); document.getElementById('customAlertModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customAlertOverlay').style.display = 'none'; }, 300);
         }
 
-        /* --- SISTEMA DE BASE DE DATOS Y ESTADO --- */
-        let appData = { activoId: 1, proyectos: [] };
-        let globalConfig = { darkMode: false, vibracion: true, decimales: "3" };
+        // --- SISTEMA BD ---
+        let appData = { activoId: 1, proyectos: [], contadorProyectos: 1 };
+        let globalConfig = { darkMode: false, vibracion: false, decimales: "3" };
+        let editandoBMIndex = -1;
 
         function vibrar() { if (globalConfig.vibracion !== false && navigator.vibrate) navigator.vibrate(30); }
-        function togglePanel(id) { vibrar(); const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; }
+        function togglePanel(id) { const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; }
 
         function inicializarApp() {
-            // --- REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX ---
             localStorage.setItem('cota100_last_name', 'POLIGONAL CERRADA');
             localStorage.setItem('cota100_last_url', 'pol-cerrada.html');
-            // ----------------------------------------------------------
 
-            try {
-                let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-                if(conf) {
-                    globalConfig = conf;
-                    if(globalConfig.darkMode) document.body.classList.add('dark-mode');
-                }
-            } catch(e) {}
+            try { let conf = JSON.parse(localStorage.getItem('cota100_ajustes')); if(conf) { globalConfig = conf; if(globalConfig.darkMode) document.body.classList.add('dark-mode'); } } catch(e) {}
 
-            let stored = localStorage.getItem('cota100_db_polcerrada_v1');
-            if (stored) { 
-                appData = JSON.parse(stored); 
-                if(!appData.contadorProyectos) appData.contadorProyectos = appData.proyectos.length;
-            } else { 
-                appData.contadorProyectos = 1;
-                appData.proyectos.push(crearObjetoProyecto(1, "Poligonal Cerrada 1")); 
-                appData.activoId = 1; 
-            }
-            renderSelectProyectos(); 
-            cargarProyectoActivo();
+            let stored = localStorage.getItem('cota100_db_polcerrada_v4');
+            if (stored) { appData = JSON.parse(stored); if(!appData.contadorProyectos) appData.contadorProyectos = appData.proyectos.length; } 
+            else { appData.contadorProyectos = 1; appData.proyectos.push(crearObjetoProyecto(1, "Polígono 1")); appData.activoId = 1; }
+            
+            renderSelectProyectos(); cargarProyectoActivo();
         }
 
         function crearObjetoProyecto(id, nombre) {
             return {
-                id: id, nombre: nombre, precision: 5,
+                id: id, nombre: nombre, precision: 5, tipoAngulo: "interno", metodoAjuste: "brujula", metodoAngular: "igual",
+                bms: [],
                 ctrl: { eEi:"", nEi:"", eRi:"", nRi:"" },
-                tabla: [
-                    { pto:"V-1", g:"", m:"", s:"", dist:"" },
-                    { pto:"V-2", g:"", m:"", s:"", dist:"" },
-                    { pto:"V-3", g:"", m:"", s:"", dist:"" }
-                ]
+                tabla: [ { pto:"V-1", g:"", m:"", s:"", dist:"" }, { pto:"V-2", g:"", m:"", s:"", dist:"" }, { pto:"V-3", g:"", m:"", s:"", dist:"" } ]
             };
         }
 
         function obtenerProyectoActivo() { return appData.proyectos.find(p => p.id === appData.activoId); }
-        function guardarBD() { localStorage.setItem('cota100_db_polcerrada_v1', JSON.stringify(appData)); }
+        function guardarBD() { localStorage.setItem('cota100_db_polcerrada_v4', JSON.stringify(appData)); }
 
-        function renderSelectProyectos() {
-            let p = obtenerProyectoActivo();
-            document.getElementById('txtSelectProyecto').innerText = p ? p.nombre : "Sin Nombre";
-        }
+        function renderSelectProyectos() { document.getElementById('txtSelectProyecto').innerText = obtenerProyectoActivo() ? obtenerProyectoActivo().nombre : "Sin Nombre"; }
+        function crearNuevoProyecto() { appData.contadorProyectos = (appData.contadorProyectos || appData.proyectos.length) + 1; let nuevoId = Date.now(); appData.proyectos.push(crearObjetoProyecto(nuevoId, `Polígono ${appData.contadorProyectos}`)); appData.activoId = nuevoId; guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); showToast("Proyecto creado", "success"); }
+        function eliminarProyecto() { if(appData.proyectos.length === 1) return showToast("No puedes borrar el último.", "warning"); let p = obtenerProyectoActivo(); showConfirm(`¿Borrar "${p.nombre}"?`, () => { appData.proyectos = appData.proyectos.filter(proj => proj.id !== p.id); appData.activoId = appData.proyectos[0].id; guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); }); }
+        function cambiarProyectoActivo(idStr) { appData.activoId = parseInt(idStr); guardarBD(); cargarProyectoActivo(); }
+        function renombrarProyecto() { let p = obtenerProyectoActivo(); p.nombre = document.getElementById('proyectName').value.trim(); guardarBD(); renderSelectProyectos(); }
 
-        function crearNuevoProyecto() {
-            vibrar(); let nuevoId = Date.now();
-            appData.contadorProyectos = (appData.contadorProyectos || appData.proyectos.length) + 1;
-            let nombre = `Poligonal Cerrada ${appData.contadorProyectos}`;
-            appData.proyectos.push(crearObjetoProyecto(nuevoId, nombre));
-            appData.activoId = nuevoId; 
-            guardarBD(); 
-            renderSelectProyectos(); 
-            cargarProyectoActivo();
-            showToast("Proyecto creado", "success");
-        }
-
-        function eliminarProyecto() {
+        /* GESTIÓN DE BMS EN BD */
+        function addBM() {
             vibrar();
-            if(appData.proyectos.length === 1) return showToast("Crea otro proyecto antes de borrar el último.", "warning");
+            const name = document.getElementById('newBMName').value.toUpperCase().trim();
+            const eIn = parseFloat(document.getElementById('newBMEste').value);
+            const nIn = parseFloat(document.getElementById('newBMNorte').value);
+            const obs = document.getElementById('newBMObs').value.trim();
+
+            if(!name || isNaN(eIn) || isNaN(nIn)) return showToast("Faltan datos X, Y o Nombre.", "error");
             let p = obtenerProyectoActivo();
-            showConfirm(`⚠️ ¿Borrar "${p.nombre}" permanentemente?`, () => {
-                appData.proyectos = appData.proyectos.filter(proj => proj.id !== p.id);
-                appData.activoId = appData.proyectos[0].id; 
-                guardarBD(); 
-                renderSelectProyectos(); 
-                cargarProyectoActivo();
-                showToast("Proyecto eliminado", "success");
+            if(!p.bms) p.bms = [];
+
+            if(editandoBMIndex > -1) {
+                showConfirm("⚠️ ¿Actualizar este Vértice?", () => {
+                    if(p.bms.some((bm, i) => bm.nombre === name && i !== editandoBMIndex)) return showToast("Ya existe otro con ese nombre.", "warning");
+                    p.bms[editandoBMIndex] = { nombre: name, este: eIn, norte: nIn, obs: obs };
+                    editandoBMIndex = -1; 
+                    document.getElementById('btnGuardarBM').innerText = "Guardar Vértice en Proyecto"; 
+                    document.getElementById('btnGuardarBM').style.background = "var(--table-header)";
+                    finalizarGuardadoBM();
+                });
+            } else {
+                if(p.bms.some(bm => bm.nombre === name)) return showToast("Ya existe un vértice con ese nombre.", "warning");
+                p.bms.push({ nombre: name, este: eIn, norte: nIn, obs: obs }); 
+                finalizarGuardadoBM();
+            }
+        }
+
+        function finalizarGuardadoBM() {
+            document.getElementById('newBMName').value = ""; document.getElementById('newBMEste').value = ""; document.getElementById('newBMNorte').value = ""; document.getElementById('newBMObs').value = "";
+            guardarBD(); renderBMs(); showToast("Vértice guardado", "success");
+        }
+
+        function cargarEditBM(i) {
+            vibrar(); let p = obtenerProyectoActivo(); let bm = p.bms[i];
+            document.getElementById('newBMName').value = bm.nombre; document.getElementById('newBMEste').value = bm.este; document.getElementById('newBMNorte').value = bm.norte; document.getElementById('newBMObs').value = bm.obs || "";
+            editandoBMIndex = i; document.getElementById('btnGuardarBM').innerText = "Actualizar Vértice"; document.getElementById('btnGuardarBM').style.background = "var(--primary-color)";
+        }
+
+        function deleteBM(i) {
+            let p = obtenerProyectoActivo();
+            showConfirm(`⚠️ ¿Eliminar Vértice "${p.bms[i].nombre}"?`, () => { p.bms.splice(i, 1); guardarBD(); renderBMs(); showToast("Vértice eliminado", "success"); });
+        }
+
+        function renderBMs() {
+            let decs = parseInt(globalConfig.decimales) || 3; let p = obtenerProyectoActivo(); const list = document.getElementById('listaBMs'); list.innerHTML = ""; 
+            if(!p.bms) p.bms = [];
+            p.bms.forEach((bm, i) => { 
+                list.innerHTML += `
+                <div class="bm-item">
+                    <div class="bm-item-header">
+                        <div class="bm-info"><strong>${bm.nombre}</strong><span>E: ${bm.este.toFixed(decs)} | N: ${bm.norte.toFixed(decs)}</span></div>
+                        <div class="bm-actions">
+                            <button onclick="cargarEditBM(${i})">✏️</button>
+                            <button style="color:var(--danger-color);" onclick="deleteBM(${i})">🗑️</button>
+                        </div>
+                    </div>
+                </div>`;
             });
         }
 
-        function cambiarProyectoActivo(idStr) { appData.activoId = parseInt(idStr); guardarBD(); cargarProyectoActivo(); }
-        
-        function renombrarProyecto() { 
-            let p = obtenerProyectoActivo();
-            let newName = document.getElementById('proyectName').value.trim();
-            if(newName !== p.nombre && appData.proyectos.some(proj => proj.nombre === newName)) {
-                showToast(`⚠️ El proyecto "${newName}" ya existe.`, "warning");
-                document.getElementById('proyectName').value = p.nombre;
-                return;
-            }
-            p.nombre = newName; 
-            guardarBD(); 
-            renderSelectProyectos(); 
+        /* MODAL SELECTOR GENÉRICO */
+        let tipoModalActual = "";
+        let destinoCarga = "";
+
+        function seleccionarPuntoControl(destino) {
+            destinoCarga = destino;
+            abrirModalSelect('bm_control');
         }
 
-        // BOTÓN ASUMIR NORTE LOCAL
-        function asumirNorteLocal() {
+        function abrirModalSelect(tipo) {
             vibrar();
-            document.getElementById('eEstIni').value = "2000.000";
-            document.getElementById('nEstIni').value = "2000.000";
-            document.getElementById('eRefIni').value = "2000.000";
-            document.getElementById('nRefIni').value = "2100.000";
-            guardarEstadoApp();
-            showToast("✅ Norte Local Asumido. Azimut 0°.", "success");
+            tipoModalActual = tipo; const titulo = document.getElementById('modalSelectTitle'); const contenido = document.getElementById('modalSelectContent'); contenido.innerHTML = "";
+            let opciones = []; let actual = document.getElementById(tipo) ? document.getElementById(tipo).value : "";
+
+            if(tipo === 'proyecto') { titulo.innerText = "📁 PROYECTO"; appData.proyectos.forEach(proj => { opciones.push({val: proj.id, txt: proj.nombre}); }); actual = appData.activoId.toString(); }
+            else if(tipo === 'tipoAngulo') { titulo.innerText = "📐 TIPO DE ÁNGULO"; opciones = [{val:'interno', txt:'Internos'}, {val:'externo', txt:'Externos'}, {val:'def_der', txt:'Deflexión Derecha'}, {val:'def_izq', txt:'Deflexión Izquierda'}]; }
+            else if(tipo === 'metodoAjuste') { titulo.innerText = "⚙️ MÉTODO AJUSTE LINEAL"; opciones = [{val:'brujula', txt:'Brújula (Bowditch)'}, {val:'transito', txt:'Tránsito (ΔE, ΔN)'}]; }
+            else if(tipo === 'metodoAngular') { titulo.innerText = "🔄 DISTRIBUCIÓN ANGULAR"; opciones = [{val:'igual', txt:'Partes Iguales'}, {val:'ponderado', txt:'Proporcional a Distancia'}]; }
+            else if (tipo === 'bm_control') {
+                titulo.innerText = "📍 SELECCIONAR VÉRTICE";
+                let p = obtenerProyectoActivo();
+                if(!p.bms || p.bms.length === 0) {
+                    contenido.innerHTML = "<p style='text-align:center; opacity:0.6; padding:10px; font-weight:800;'>No hay vértices guardados.</p>";
+                } else {
+                    p.bms.forEach(bm => {
+                        contenido.innerHTML += `<button class="btn-opcion" onclick="aplicarPuntoControl('${bm.este}', '${bm.norte}')">
+                            <span>${bm.nombre}</span><span class="cota">E:${bm.este.toFixed(3)} N:${bm.norte.toFixed(3)}</span>
+                        </button>`;
+                    });
+                }
+            }
+
+            if(tipo !== 'bm_control') {
+                opciones.forEach(opt => { let isActivo = opt.val == actual; contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${opt.val}', '${opt.txt}')"><span>${opt.txt}</span></button>`; });
+            }
+
+            document.getElementById('overlaySelect').style.display = 'block'; setTimeout(() => { document.getElementById('overlaySelect').classList.add('activo'); document.getElementById('modalSelect').classList.add('abierto'); }, 10);
+        }
+
+        function cerrarModalSelect() { document.getElementById('overlaySelect').classList.remove('activo'); document.getElementById('modalSelect').classList.remove('abierto'); setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300); }
+        
+        function seleccionarOpcionModal(valor, texto) {
+            cerrarModalSelect();
+            if(tipoModalActual === 'proyecto') { cambiarProyectoActivo(valor); } 
+            else { document.getElementById(tipoModalActual).value = valor; document.getElementById('txt_'+tipoModalActual).innerText = texto; guardarEstadoApp(); }
+        }
+
+        function aplicarPuntoControl(este, norte) {
+            cerrarModalSelect();
+            if(destinoCarga === 'est') {
+                document.getElementById('eEstIni').value = parseFloat(este).toFixed(3);
+                document.getElementById('nEstIni').value = parseFloat(norte).toFixed(3);
+            } else if (destinoCarga === 'ref') {
+                document.getElementById('eRefIni').value = parseFloat(este).toFixed(3);
+                document.getElementById('nRefIni').value = parseFloat(norte).toFixed(3);
+            }
+            guardarEstadoApp(); showToast("Vértice cargado", "success");
+        }
+
+        // --- FUNCIONES EXTRA ---
+        function asumirNorteLocal() {
+            vibrar(); document.getElementById('eEstIni').value = "2000.000"; document.getElementById('nEstIni').value = "2000.000";
+            document.getElementById('eRefIni').value = "2000.000"; document.getElementById('nRefIni').value = "2100.000";
+            guardarEstadoApp(); showToast("✅ Norte Local 2000 Asumido.", "success");
+        }
+
+        function abrirPromptTraslacion() {
+            vibrar(); let e1 = document.getElementById('eEstIni').value; let n1 = document.getElementById('nEstIni').value;
+            if(!e1 || !n1) return showToast("La Estación 1 está vacía.", "warning");
+            document.getElementById('promptEste').value = e1; document.getElementById('promptNorte').value = n1;
+            document.getElementById('customPromptOverlay').style.display = 'block'; setTimeout(() => { document.getElementById('customPromptOverlay').classList.add('activo'); document.getElementById('customPromptModal').classList.add('abierto'); }, 10);
+        }
+
+        function ejecutarTraslacion() {
+            vibrar(); let eNew = parseFloat(document.getElementById('promptEste').value); let nNew = parseFloat(document.getElementById('promptNorte').value);
+            if(isNaN(eNew) || isNaN(nNew)) return;
+            let eOld = parseFloat(document.getElementById('eEstIni').value); let nOld = parseFloat(document.getElementById('nEstIni').value);
+            let dE = eNew - eOld; let dN = nNew - nOld;
+            
+            document.getElementById('eEstIni').value = eNew.toFixed(3); document.getElementById('nEstIni').value = nNew.toFixed(3);
+            let eR = parseFloat(document.getElementById('eRefIni').value); let nR = parseFloat(document.getElementById('nRefIni').value);
+            if(!isNaN(eR) && !isNaN(nR)) { document.getElementById('eRefIni').value = (eR + dE).toFixed(3); document.getElementById('nRefIni').value = (nR + dN).toFixed(3); }
+            
+            document.getElementById('customPromptOverlay').style.display = 'none'; guardarEstadoApp(); showToast("Coordenadas Trasladadas", "success");
+            if(document.getElementById('panelResultados').style.display === 'block') calcularPoligonal();
+        }
+
+        function invertirSentido() {
+            vibrar(); let filas = Array.from(document.querySelectorAll('#cuerpoPoligonal tr')); if(filas.length < 3) return;
+            let nV = filas.length; let newFilasData = [];
+            for (let i = 0; i < nV; i++) {
+                let current = filas[i]; let nextIdx = (i + 1) % nV; let prevIdx = (i - 1 + nV) % nV;
+                newFilasData.unshift({
+                    pto: current.querySelector('.in-pto').value,
+                    g: current.querySelector('.ang-g').value, m: current.querySelector('.ang-m').value, s: current.querySelector('.ang-s').value,
+                    dist: filas[prevIdx].querySelector('.dist').value 
+                });
+            }
+            
+            const tbody = document.getElementById('cuerpoPoligonal'); tbody.innerHTML = "";
+            newFilasData.forEach((fila) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td><input type="text" class="in-pto" value="${fila.pto}" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
+                                <td><input type="number" class="ang-g" value="${fila.g}" oninput="guardarEstadoApp()"></td>
+                                <td><input type="number" class="ang-m" value="${fila.m}" oninput="guardarEstadoApp()"></td>
+                                <td><input type="number" step="0.1" class="ang-s" value="${fila.s}" oninput="guardarEstadoApp()"></td>
+                                <td><input type="number" step="0.001" class="dist" value="${fila.dist}" oninput="guardarEstadoApp()"></td>`;
+                tbody.appendChild(tr);
+            });
+            guardarEstadoApp(); showToast("Sentido Invertido 🔄", "success");
         }
 
         function cargarProyectoActivo() {
             let p = obtenerProyectoActivo();
             document.getElementById('proyectName').value = p.nombre;
             document.getElementById('precisionEquipo').value = p.precision || 5;
+            document.getElementById('tipoAngulo').value = p.tipoAngulo || "interno";
+            document.getElementById('metodoAjuste').value = p.metodoAjuste || "brujula";
+            document.getElementById('metodoAngular').value = p.metodoAngular || "igual";
             
+            let tA = "Internos"; if(p.tipoAngulo==="externo") tA="Externos"; if(p.tipoAngulo==="def_der") tA="Deflexión Derecha"; if(p.tipoAngulo==="def_izq") tA="Deflexión Izquierda";
+            document.getElementById('txt_tipoAngulo').innerText = tA;
+            document.getElementById('txt_metodoAjuste').innerText = p.metodoAjuste === "brujula" ? "Brújula (Bowditch)" : "Tránsito (ΔE, ΔN)";
+            document.getElementById('txt_metodoAngular').innerText = p.metodoAngular === "igual" ? "Partes Iguales" : "Proporcional a Distancia";
+
             document.getElementById('eEstIni').value = p.ctrl.eEi || ""; document.getElementById('nEstIni').value = p.ctrl.nEi || "";
             document.getElementById('eRefIni').value = p.ctrl.eRi || ""; document.getElementById('nRefIni').value = p.ctrl.nRi || "";
 
             document.getElementById('panelResultados').style.display = 'none';
 
-            const tbody = document.getElementById('cuerpoPoligonal');
-            tbody.innerHTML = "";
+            const tbody = document.getElementById('cuerpoPoligonal'); tbody.innerHTML = "";
             if(!p.tabla || p.tabla.length < 3) p.tabla = crearObjetoProyecto(0,"").tabla;
 
-            p.tabla.forEach((fila, index) => {
+            p.tabla.forEach((fila) => {
                 const tr = document.createElement('tr');
-                let targetDist = (index === p.tabla.length - 1) ? 1 : index + 2;
-                tr.innerHTML = `
-                    <td><input type="text" class="in-pto" value="${fila.pto}" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
-                    <td><input type="number" class="ang-g" placeholder="°" value="${fila.g}" oninput="guardarEstadoApp()"></td>
-                    <td><input type="number" class="ang-m" placeholder="'" value="${fila.m}" oninput="guardarEstadoApp()"></td>
-                    <td><input type="number" step="0.1" class="ang-s" placeholder="''" value="${fila.s}" oninput="guardarEstadoApp()"></td>
-                    <td><input type="number" step="0.001" class="dist" placeholder="Dist a V-${targetDist}" value="${fila.dist}" oninput="guardarEstadoApp()"></td>
-                `;
+                tr.innerHTML = `<td><input type="text" class="in-pto" value="${fila.pto}" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
+                                <td><input type="number" class="ang-g" value="${fila.g}" oninput="guardarEstadoApp()"></td>
+                                <td><input type="number" class="ang-m" value="${fila.m}" oninput="guardarEstadoApp()"></td>
+                                <td><input type="number" step="0.1" class="ang-s" value="${fila.s}" oninput="guardarEstadoApp()"></td>
+                                <td><input type="number" step="0.001" class="dist" value="${fila.dist}" oninput="guardarEstadoApp()"></td>`;
                 tbody.appendChild(tr);
             });
-            renderSelectProyectos();
+            renderBMs();
         }
 
         function guardarEstadoApp() {
             let p = obtenerProyectoActivo(); if(!p) return;
             p.precision = parseFloat(document.getElementById('precisionEquipo').value) || 5;
-            p.ctrl = {
-                eEi: document.getElementById('eEstIni').value, nEi: document.getElementById('nEstIni').value,
-                eRi: document.getElementById('eRefIni').value, nRi: document.getElementById('nRefIni').value
-            };
-            
+            p.tipoAngulo = document.getElementById('tipoAngulo').value;
+            p.metodoAjuste = document.getElementById('metodoAjuste').value;
+            p.metodoAngular = document.getElementById('metodoAngular').value;
+            p.ctrl = { eEi: document.getElementById('eEstIni').value, nEi: document.getElementById('nEstIni').value, eRi: document.getElementById('eRefIni').value, nRi: document.getElementById('nRefIni').value };
             let filas = [];
-            document.querySelectorAll('#cuerpoPoligonal tr').forEach((tr) => {
-                filas.push({
-                    pto: tr.querySelector('.in-pto').value,
-                    g: tr.querySelector('.ang-g').value, m: tr.querySelector('.ang-m').value, s: tr.querySelector('.ang-s').value,
-                    dist: tr.querySelector('.dist').value
-                });
-            });
-            p.tabla = filas;
-            guardarBD();
+            document.querySelectorAll('#cuerpoPoligonal tr').forEach((tr) => { filas.push({ pto: tr.querySelector('.in-pto').value, g: tr.querySelector('.ang-g').value, m: tr.querySelector('.ang-m').value, s: tr.querySelector('.ang-s').value, dist: tr.querySelector('.dist').value }); });
+            p.tabla = filas; guardarBD();
         }
-
-        // --- BACKUP Y RESTAURACIÓN ---
-        function exportarBackup() {
-            vibrar(); const backup = JSON.parse(localStorage.getItem('cota100_db_polcerrada_v1'));
-            if(!backup || backup.proyectos.length === 0) return showToast("No hay datos para exportar.", "warning");
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
-            const dl = document.createElement('a');
-            const fecha = new Date().toISOString().split('T')[0];
-            dl.setAttribute("href", dataStr); dl.setAttribute("download", `DB_PolCerrada_${fecha}.json`);
-            document.body.appendChild(dl); dl.click(); dl.remove();
-            showToast("Backup exportado", "success");
-        }
-
-        function importarBackup() {
-            const fileInput = document.getElementById('importFile');
-            if (fileInput.files.length === 0) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const backup = JSON.parse(e.target.result);
-                    if(backup && backup.proyectos) {
-                        localStorage.setItem('cota100_db_polcerrada_v1', JSON.stringify(backup));
-                        showToast("✅ Base de datos restaurada. Recargando...", "success");
-                        setTimeout(() => window.location.reload(), 1500);
-                    } else showToast("❌ Archivo no válido.", "error");
-                } catch(err) { showToast("❌ Error al leer el archivo.", "error"); }
-            };
-            reader.readAsText(fileInput.files[0]);
-        }
-
-        // --- FUNCIONES MATEMÁTICAS ---
-        function calcularAzimut(E1, N1, E2, N2) { let dE = E2 - E1; let dN = N2 - N1; let az = Math.atan2(dE, dN) * 180 / Math.PI; if (az < 0) az += 360; return az; }
-        function gmsADecimal(g, m, s) { let signo = (g < 0) ? -1 : 1; return signo * (Math.abs(g) + (m / 60) + (s / 3600)); }
-        function decimalAGMSString(dec) {
-            let absoluto = Math.abs(dec); let g = Math.floor(absoluto); let mFloat = (absoluto - g) * 60;
-            let m = Math.floor(mFloat); let s = (mFloat - m) * 60; let signoStr = (dec < 0) ? "-" : "";
-            return `${signoStr}${g}° ${m.toString().padStart(2, '0')}' ${s.toFixed(1).padStart(4, '0')}"`;
-        }
-        function normalizarAzimut(az) { while (az >= 360.0) az -= 360.0; while (az < 0.0) az += 360.0; return az; }
 
         function agregarVertice() {
-            const tbody = document.getElementById('cuerpoPoligonal');
-            const numV = tbody.children.length + 1; 
-            const tr = document.createElement('tr');
-            
-            let filaAnterior = tbody.lastElementChild;
-            filaAnterior.querySelector('.dist').placeholder = `Dist. a V-${numV}`;
-            
-            tr.innerHTML = `
-                <td><input type="text" class="in-pto" value="V-${numV}" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
-                <td><input type="number" class="ang-g" placeholder="°" oninput="guardarEstadoApp()"></td>
-                <td><input type="number" class="ang-m" placeholder="'" oninput="guardarEstadoApp()"></td>
-                <td><input type="number" step="0.1" class="ang-s" placeholder="''" oninput="guardarEstadoApp()"></td>
-                <td><input type="number" step="0.001" class="dist" placeholder="Dist. a V-1" oninput="guardarEstadoApp()"></td>
-            `;
-            tbody.appendChild(tr);
-            guardarEstadoApp();
+            vibrar(); const tbody = document.getElementById('cuerpoPoligonal'); const numV = tbody.children.length + 1; const tr = document.createElement('tr');
+            tr.innerHTML = `<td><input type="text" class="in-pto" value="V-${numV}" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
+                            <td><input type="number" class="ang-g" oninput="guardarEstadoApp()"></td><td><input type="number" class="ang-m" oninput="guardarEstadoApp()"></td>
+                            <td><input type="number" step="0.1" class="ang-s" oninput="guardarEstadoApp()"></td><td><input type="number" step="0.001" class="dist" oninput="guardarEstadoApp()"></td>`;
+            tbody.appendChild(tr); guardarEstadoApp();
         }
 
-        function quitarVertice() {
-            const tbody = document.getElementById('cuerpoPoligonal');
-            if (tbody.children.length > 3) { 
-                tbody.removeChild(tbody.lastChild);
-                let nuevaUltima = tbody.lastElementChild;
-                nuevaUltima.querySelector('.dist').placeholder = `Dist. a V-1`;
-                guardarEstadoApp();
-            } else {
-                showToast("Mínimo de vértices requerido (3).", "warning");
-            }
-        }
+        function quitarVertice() { vibrar(); const tbody = document.getElementById('cuerpoPoligonal'); if (tbody.children.length > 3) { tbody.removeChild(tbody.lastChild); guardarEstadoApp(); } else { showToast("Mínimo 3 vértices.", "warning"); } }
+
+        // --- MATEMÁTICA CORE ---
+        function calcularAzimut(E1, N1, E2, N2) { let dE = E2 - E1; let dN = N2 - N1; let az = Math.atan2(dE, dN) * 180 / Math.PI; if (az < 0) az += 360; return az; }
+        function gmsADecimal(g, m, s) { let signo = (g < 0) ? -1 : 1; return signo * (Math.abs(g) + (m / 60) + (s / 3600)); }
+        function decimalAGMSString(dec) { let absoluto = Math.abs(dec); let g = Math.floor(absoluto); let mFloat = (absoluto - g) * 60; let m = Math.floor(mFloat); let s = (mFloat - m) * 60; let signoStr = (dec < 0) ? "-" : ""; return `${signoStr}${g}° ${m.toString().padStart(2, '0')}' ${s.toFixed(1).padStart(4, '0')}"`; }
+        function normalizarAzimut(az) { while (az >= 360.0) az -= 360.0; while (az < 0.0) az += 360.0; return az; }
 
         function calcularPoligonal() {
+            vibrar();
             let decs = parseInt(globalConfig.decimales) || 3;
             let precisionEquipo = parseFloat(document.getElementById('precisionEquipo').value) || 5;
-
             let eEstIni = parseFloat(document.getElementById('eEstIni').value); let nEstIni = parseFloat(document.getElementById('nEstIni').value);
             let eRefIni = parseFloat(document.getElementById('eRefIni').value); let nRefIni = parseFloat(document.getElementById('nRefIni').value);
 
             if(isNaN(eEstIni) || isNaN(eRefIni)) { showToast("Ingresa la Estación 1 y Referencia.", "warning"); return; }
-
             let azInicial = calcularAzimut(eEstIni, nEstIni, eRefIni, nRefIni);
 
-            let filas = document.querySelectorAll('#cuerpoPoligonal tr');
-            let nV = filas.length;
-            let angObs = []; let distancias = []; let perimetro = 0; let sumAngObs = 0;
+            let filas = document.querySelectorAll('#cuerpoPoligonal tr'); let nV = filas.length;
+            let angObs = []; let distancias = []; let perimetro = 0; let sumAngObs = 0; let sumInversaDist = 0; let inversas = [];
             let nombresEstaciones = [];
 
             for (let i = 0; i < nV; i++) {
                 nombresEstaciones.push(filas[i].querySelector('.in-pto').value || `V-${i+1}`);
-                let g = parseFloat(filas[i].querySelector('.ang-g').value) || 0;
-                let m = parseFloat(filas[i].querySelector('.ang-m').value) || 0;
-                let s = parseFloat(filas[i].querySelector('.ang-s').value) || 0;
-                let angDec = gmsADecimal(g, m, s);
-                angObs.push(angDec); sumAngObs += angDec;
-
+                let g = parseFloat(filas[i].querySelector('.ang-g').value) || 0; let m = parseFloat(filas[i].querySelector('.ang-m').value) || 0; let s = parseFloat(filas[i].querySelector('.ang-s').value) || 0;
+                let angDec = gmsADecimal(g, m, s); angObs.push(angDec); sumAngObs += angDec;
                 let dist = parseFloat(filas[i].querySelector('.dist').value);
-                if (isNaN(dist)) { showToast(`Falta la distancia en la fila ${i+1}`, "error"); return; }
+                if (isNaN(dist) || dist <= 0) { showToast(`Falta la distancia válida en Vértice ${i+1}`, "error"); return; }
                 distancias.push(dist); perimetro += dist;
+                let invD = 1.0 / dist; inversas.push(invD); sumInversaDist += invD;
             }
 
-            let teoricoInt = 180 * (nV - 2); let teoricoExt = 180 * (nV + 2);
-            let diffInt = Math.abs(sumAngObs - teoricoInt); let diffExt = Math.abs(sumAngObs - teoricoExt);
-            
-            let esInterno = diffInt < diffExt;
-            let sumTeorica = esInterno ? teoricoInt : teoricoExt;
-            document.getElementById('resTipoAngulo').innerText = esInterno ? "DETECTADO: ÁNGULOS INTERNOS" : "DETECTADO: ÁNGULOS EXTERNOS";
+            let tipoAngulo = document.getElementById('tipoAngulo').value;
+            let teorico = 0;
+            if(tipoAngulo === 'interno') teorico = 180 * (nV - 2);
+            else if(tipoAngulo === 'externo') teorico = 180 * (nV + 2);
+            else if(tipoAngulo === 'def_der') teorico = 360; 
+            else if(tipoAngulo === 'def_izq') teorico = -360;
 
-            let errorAngular = sumAngObs - sumTeorica;
-
+            let errorAngular = sumAngObs - teorico;
             let errorSegundos = Math.abs(errorAngular * 3600);
             let toleranciaSegundos = precisionEquipo * Math.sqrt(nV);
             let pasaTolerancia = errorSegundos <= toleranciaSegundos;
 
             document.getElementById('resTolAng').innerText = `± ${toleranciaSegundos.toFixed(1)}"`;
             let badge = document.getElementById('tolBadge');
-            if(pasaTolerancia) {
-                badge.className = "tol-tag tol-pass"; badge.innerText = "✓ ESTADO: ACEPTABLE";
-            } else {
-                badge.className = "tol-tag tol-fail"; badge.innerText = "⚠️ RECHAZADO: EXCEDE TOLERANCIA";
-            }
+            if(pasaTolerancia) { badge.className = "tol-tag tol-pass"; badge.innerText = "✓ CIERRE ANGULAR ACEPTABLE"; } else { badge.className = "tol-tag tol-fail"; badge.innerText = "⚠️ RECHAZADO: EXCEDE TOLERANCIA ANGULAR"; }
 
-            let compensacionUnitaria = -errorAngular / nV;
+            let metodoAngular = document.getElementById('metodoAngular').value;
             let angCompensados = [];
-            for (let i = 0; i < nV; i++) angCompensados.push(angObs[i] + compensacionUnitaria);
+            for (let i = 0; i < nV; i++) {
+                let corr = 0;
+                if(metodoAngular === 'igual') corr = -errorAngular / nV;
+                else corr = -errorAngular * (inversas[i] / sumInversaDist);
+                angCompensados.push(angObs[i] + corr);
+            }
 
             let azCalculados = [];
             let azActual = normalizarAzimut(azInicial + angCompensados[0]);
             azCalculados.push(azActual);
 
             for (let i = 1; i < nV; i++) {
-                azActual = normalizarAzimut(azActual + 180 + angCompensados[i]);
+                if(tipoAngulo.startsWith('def')) azActual = normalizarAzimut(azActual + angCompensados[i]);
+                else azActual = normalizarAzimut(azActual + 180 + angCompensados[i]);
                 azCalculados.push(azActual);
             }
 
-            let proyE = []; let proyN = []; let errorE = 0; let errorN = 0;
+            let proyE = []; let proyN = []; let sumAbsE = 0; let sumAbsN = 0; let errorE = 0; let errorN = 0;
             for (let i = 0; i < nV; i++) {
                 let azRad = azCalculados[i] * Math.PI / 180.0;
                 let dE = distancias[i] * Math.sin(azRad); let dN = distancias[i] * Math.cos(azRad);
-                proyE.push(dE); proyN.push(dN);
-                errorE += dE; errorN += dN;
+                proyE.push(dE); proyN.push(dN); errorE += dE; errorN += dN;
+                sumAbsE += Math.abs(dE); sumAbsN += Math.abs(dN);
             }
 
             let errorLineal = Math.sqrt(Math.pow(errorE, 2) + Math.pow(errorN, 2));
             let precisionRelativa = perimetro / errorLineal;
 
+            let azimutError = calcularAzimut(0, 0, errorE, errorN);
+            let diffs = [];
+            for(let i=0; i<nV; i++) {
+                let aLine = azCalculados[i];
+                let diff1 = Math.abs(aLine - azimutError); if(diff1 > 180) diff1 = 360 - diff1;
+                let diff2 = Math.abs(normalizarAzimut(aLine+180) - azimutError); if(diff2 > 180) diff2 = 360 - diff2;
+                diffs.push(Math.min(diff1, diff2));
+            }
+            let idxSospechoso = diffs.indexOf(Math.min(...diffs));
+
+            let metodoAjuste = document.getElementById('metodoAjuste').value;
             let coordE = [eEstIni]; let coordN = [nEstIni];
             let compAcumE = eEstIni; let compAcumN = nEstIni;
 
             for (let i = 0; i < nV; i++) {
-                let compE = -errorE * (distancias[i] / perimetro);
-                let compN = -errorN * (distancias[i] / perimetro);
-                compAcumE = compAcumE + proyE[i] + compE;
-                compAcumN = compAcumN + proyN[i] + compN;
-                
-                if(i < nV - 1) {
-                    coordE.push(compAcumE);
-                    coordN.push(compAcumN);
+                let compE = 0; let compN = 0;
+                if(metodoAjuste === 'brujula') {
+                    compE = -errorE * (distancias[i] / perimetro); compN = -errorN * (distancias[i] / perimetro);
+                } else {
+                    compE = -errorE * (Math.abs(proyE[i]) / sumAbsE); compN = -errorN * (Math.abs(proyN[i]) / sumAbsN);
                 }
+                compAcumE = compAcumE + proyE[i] + compE; compAcumN = compAcumN + proyN[i] + compN;
+                if(i < nV - 1) { coordE.push(compAcumE); coordN.push(compAcumN); }
             }
+
+            let area = 0;
+            let pE = [...coordE, coordE[0]]; let pN = [...coordN, coordN[0]];
+            for(let i=0; i<nV; i++){ area += (pE[i]*pN[i+1]) - (pE[i+1]*pN[i]); }
+            area = Math.abs(area) / 2.0;
+
+            let fForma = (perimetro * perimetro) / area;
+            let msgGeometria = fForma > 40 ? "<span style='color:var(--danger-color);'>Factor de Forma: Pobre (Alargado)</span>" : "<span style='color:var(--success-color);'>Factor de Forma: Fuerte</span>";
 
             document.getElementById('resErrAng').innerText = decimalAGMSString(errorAngular);
             document.getElementById('resErrLin').innerText = errorLineal.toFixed(decs) + " m";
+            document.getElementById('resArea').innerText = (area / 10000).toFixed(4) + " Ha";
+            document.getElementById('resGeometriaDebil').innerHTML = msgGeometria;
             
             let resPrec = document.getElementById('resPrecision');
-            if(precisionRelativa === Infinity || isNaN(precisionRelativa)) {
-                resPrec.innerText = "PERFECTO"; resPrec.style.color = "var(--success-color)";
-            } else {
-                resPrec.innerText = "1 : " + Math.round(precisionRelativa).toLocaleString();
-                resPrec.style.color = (precisionRelativa >= 10000) ? "var(--success-color)" : "var(--danger-color)";
-            }
+            if(precisionRelativa === Infinity || isNaN(precisionRelativa)) { resPrec.innerText = "PERFECTO"; } 
+            else { resPrec.innerText = "1 : " + Math.round(precisionRelativa).toLocaleString(); }
 
-            const tbodyRes = document.getElementById('cuerpoResultados');
-            tbodyRes.innerHTML = ""; 
+            const tbodyRes = document.getElementById('cuerpoResultados'); tbodyRes.innerHTML = ""; 
             for (let i = 0; i < coordE.length; i++) {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td style="color: var(--primary-color); font-weight: 800;">${nombresEstaciones[i]}</td>
-                    <td>${coordE[i].toFixed(decs)}</td>
-                    <td>${coordN[i].toFixed(decs)}</td>
-                `;
+                tr.innerHTML = `<td style="color: var(--primary-color); font-weight: 800;">${nombresEstaciones[i]}</td><td>${coordE[i].toFixed(decs)}</td><td>${coordN[i].toFixed(decs)}</td>`;
                 tbodyRes.appendChild(tr);
             }
 
             document.getElementById('panelResultados').style.display = 'block';
+            document.getElementById('printTitle').innerText = "REPORTE POLIGONAL CERRADA - " + document.getElementById('proyectName').value;
+            document.getElementById('printDate').innerText = "Fecha: " + new Date().toLocaleDateString();
+
+            dibujarCanvas(coordE, coordN, idxSospechoso, errorLineal);
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             showToast("Ajuste procesado", "success");
         }
 
-        /* --- CALCULADORA FLOTANTE --- */
-        function toggleCalculadora() { vibrar(); const m = document.getElementById('calculadoraModal'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
-        function calcInput(v) { vibrar(); document.getElementById('calcDisplay').value += v; }
-        function calcClear() { vibrar(); document.getElementById('calcDisplay').value = ''; }
-        function calcBackspace() { vibrar(); let d = document.getElementById('calcDisplay'); d.value = d.value.slice(0, -1); }
-        function calcEval() { vibrar(); try { let res = new Function('return ' + document.getElementById('calcDisplay').value)(); document.getElementById('calcDisplay').value = (res % 1 !== 0) ? res.toFixed(3) : res; } catch(e) { document.getElementById('calcDisplay').value = 'Error'; } }
+        function dibujarCanvas(E, N, idxSospechoso, errorLin) {
+            let canvas = document.getElementById('canvasPoligonal'); let ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let minE = Math.min(...E); let maxE = Math.max(...E); let minN = Math.min(...N); let maxN = Math.max(...N);
+            let diffE = maxE - minE; let diffN = maxN - minN; let maxDiff = Math.max(diffE, diffN);
+            let pad = 30; let scale = (Math.min(canvas.width, canvas.height) - 2 * pad) / maxDiff;
+
+            function xToCanvas(e) { return pad + (e - minE) * scale; } function yToCanvas(n) { return canvas.height - pad - (n - minN) * scale; }
+
+            ctx.lineWidth = 2; ctx.lineJoin = 'round';
+            for(let i=0; i<E.length; i++) {
+                let nextIdx = (i+1)%E.length; ctx.beginPath(); ctx.moveTo(xToCanvas(E[i]), yToCanvas(N[i])); ctx.lineTo(xToCanvas(E[nextIdx]), yToCanvas(N[nextIdx]));
+                if(errorLin > 0.05 && i === idxSospechoso) { ctx.strokeStyle = 'red'; ctx.lineWidth = 4; document.getElementById('txtTrampa').style.display = 'block'; } 
+                else { ctx.strokeStyle = '#1976d2'; ctx.lineWidth = 2; } ctx.stroke();
+            }
+
+            for(let i=0; i<E.length; i++) {
+                ctx.beginPath(); ctx.arc(xToCanvas(E[i]), yToCanvas(N[i]), 4, 0, 2*Math.PI);
+                ctx.fillStyle = (i===0) ? '#FF5500' : '#1a1e23'; ctx.fill();
+                ctx.fillStyle = '#000'; ctx.font = '10px sans-serif'; ctx.fillText('V'+(i+1), xToCanvas(E[i])+6, yToCanvas(N[i])-6);
+            }
+            if(errorLin <= 0.05) document.getElementById('txtTrampa').style.display = 'none';
+        }
+
+        function exportarCSV_PNEZD() {
+            vibrar(); let filas = document.querySelectorAll('#cuerpoResultados tr'); if(filas.length === 0) return showToast("No hay resultados", "warning");
+            let csv = "Punto,Este,Norte,Elevacion,Descripcion\n";
+            filas.forEach(tr => { let tds = tr.querySelectorAll('td'); csv += `${tds[0].innerText},${tds[1].innerText},${tds[2].innerText},0.000,Vértice Poligonal\n`; });
+            let blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+            let link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = "Poligonal_PNEZD.csv"; link.click();
+        }
+
+        function exportarBackup() {
+            vibrar(); const backup = JSON.parse(localStorage.getItem('cota100_db_polcerrada_v4'));
+            if(!backup || backup.proyectos.length === 0) return showToast("No hay datos para exportar.", "warning");
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
+            const dl = document.createElement('a'); const fecha = new Date().toISOString().split('T')[0];
+            dl.setAttribute("href", dataStr); dl.setAttribute("download", `DB_PolCerrada_${fecha}.json`);
+            document.body.appendChild(dl); dl.click(); dl.remove(); showToast("Backup exportado", "success");
+        }
+
+        function importarBackup() {
+            const fileInput = document.getElementById('importFile'); if (fileInput.files.length === 0) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    if(backup && backup.proyectos) { localStorage.setItem('cota100_db_polcerrada_v4', JSON.stringify(backup)); showToast("✅ DB restaurada...", "success"); setTimeout(() => window.location.reload(), 1500); } 
+                    else showToast("❌ Archivo no válido.", "error");
+                } catch(err) { showToast("❌ Error al leer el archivo.", "error"); }
+            }; reader.readAsText(fileInput.files[0]);
+        }
+
     </script>
 </body>
 </html>

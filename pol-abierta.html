@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
     <style>
         /* --- ESTILOS UNIFICADOS COTA100 --- */
         :root {
@@ -22,6 +23,7 @@
             --input-bg: rgba(255,255,255,0.9);
             --success-color: #2e7d32;
             --success-bg: rgba(46, 204, 113, 0.2); 
+            --warning-color: #f57f17;
         }
 
         body.dark-mode {
@@ -40,83 +42,39 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            padding-bottom: 80px;
-            transition: background-color 0.3s, color 0.3s;
-            position: relative;
-            overflow-x: hidden;
-            min-height: 100vh;
+            background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px;
+            transition: background-color 0.3s, color 0.3s; position: relative; overflow-x: hidden; min-height: 100vh;
         }
 
-        /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
-        .fire-base {
-            position: fixed;
-            bottom: 0; left: 0; width: 100vw; height: 35vh;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .fire-wave {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200vw; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 10s linear infinite;
-        }
-        .fire-wave.delay {
-            bottom: -15px; opacity: 0.6;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 7s linear infinite reverse;
-        }
+        /* --- FONDO LÍQUIDO --- */
+        .fire-base { position: fixed; bottom: 0; left: 0; width: 100vw; height: 35vh; z-index: -2; pointer-events: none; overflow: hidden; }
+        .fire-wave { position: absolute; bottom: 0; left: 0; width: 200vw; height: 100%; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 10s linear infinite; }
+        .fire-wave.delay { bottom: -15px; opacity: 0.6; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 7s linear infinite reverse; }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
-        @media screen and (max-width: 480px) {
-            html { font-size: 13px; } 
-            .btn-accion { padding: 10px; font-size: 0.95rem; }
-            input { padding: 10px; font-size: 1.05rem;}
-            .panel-control { padding: 12px; margin-bottom: 12px;}
-            .top-bar { padding: 10px 15px; height: 65px; }
-            .btn-volver-mini { width: 38px; height: 38px;}
-            th { font-size: 0.75rem; padding: 6px 1px; }
-            td input { padding: 8px 2px; font-size: 1.15rem; }
-            .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px; }
-            .calculadora-modal { right: 10px; bottom: 65px; width: 230px;}
-        }
-
-        /* --- CABECERA DUAL --- */
-        .top-bar { 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
-            background-color: transparent; position: sticky; top: 0; z-index: 100; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
-        }
+        /* --- CABECERA --- */
+        .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid var(--card-border); background-color: transparent; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px; }
         .nav-buttons-left { display: flex; gap: 8px; }
-        .btn-volver-mini { 
-            background: transparent; border: none; 
-            color: var(--primary-color);
-            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: drop-shadow(0 0 5px var(--primary-glow));
-        }
+        .btn-volver-mini { background: transparent; border: none; color: var(--primary-color); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s; filter: drop-shadow(0 0 5px var(--primary-glow)); }
         .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
-        
         .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
         .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
 
         .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; max-width: 800px; margin: 0 auto; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- PANELES (GLASSMORPHISM) --- */
+        /* --- PANELES --- */
         .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
         .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
-        .btn-toggle-panel { background: none; border: none; font-size: 1.2rem; color: var(--text-color); pointer-events: none;}
         
-        .panel-contenido { display: block; margin-top: 10px; }
-        .project-selector { display: flex; gap: 8px; margin-bottom: 10px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .input-group { flex: 1; display: flex; flex-direction: column; }
+        .full-width { grid-column: 1 / -1; }
         
+        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8; display: flex; align-items: center; justify-content: space-between;}
+        .info-icon { background: rgba(128,128,128,0.1); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-left: 5px; color: var(--primary-color);}
+        .info-icon:active { transform: scale(0.9); background: var(--primary-color); color: #fff;}
+
         input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center;}
         input:focus { border-color: var(--primary-color); outline: none; background: transparent;}
         
@@ -125,131 +83,86 @@
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
         .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
-
-        .input-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .input-group { flex: 1; display: flex; flex-direction: column; }
-        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
+        .ayuda-zona-txt { color: var(--primary-color); font-size: 0.75rem; font-weight: 800; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center;}
         .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
 
+        /* LISTA BM */
+        .bm-list { margin-top: 8px; max-height: 220px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; padding-bottom: 5px;}
+        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); background: var(--card-bg); transition: transform 0.1s;}
+        .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .bm-info { display: flex; flex-direction: column; text-align: left; }
+        .bm-info strong { font-size: 0.95rem; color: var(--text-color); }
+        .bm-info span { font-size: 0.85rem; color: var(--primary-color); font-weight: 700; }
+        .bm-actions { display: flex; gap: 6px; }
+        .bm-actions button { background: none; border: none; border-radius: 4px; padding: 4px; font-size: 1.1rem; cursor: pointer; opacity: 0.6; transition: 0.2s;}
+
         /* --- TABLA UNIFICADA --- */
         .table-wrapper { width: 100%; overflow-x: auto; border: 1px solid var(--card-border); border-radius: 8px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 12px;}
-        table { width: 100%; min-width: 500px; border-collapse: separate; border-spacing: 0; }
+        table { width: 100%; min-width: 650px; border-collapse: separate; border-spacing: 0; }
         th { background: var(--table-header); color: #fff; font-weight: 800; padding: 10px 2px; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 10; }
         td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0; text-align: center; vertical-align: middle;}
         td:last-child { border-right: none; }
-        
         td input { border: none; width: 100%; height: 100%; padding: 12px 2px; font-size: 1.15rem; font-weight: 800; background: transparent; color: var(--text-color); text-align: center;}
         td input:focus { background: rgba(255, 85, 0, 0.05); outline: 2px solid var(--primary-color); outline-offset: -2px;}
-        
         .td-readonly { background: rgba(128,128,128,0.05); }
 
-        .info-box { background-color: rgba(25, 118, 210, 0.1); border-left: 5px solid #1976d2; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
+        .info-box { background-color: rgba(25, 118, 210, 0.05); border-left: 5px solid #1976d2; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
 
         /* --- PANEL DE RESULTADOS --- */
         .panel-resultados { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; text-align: center; display: none; margin-bottom: 15px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .res-valor { font-size: 1.4rem; font-weight: 800; margin: 2px 0 10px; color: var(--primary-color); font-family: monospace;}
-        
         .tabla-resultados th { background-color: var(--primary-color); color: #000; }
-        .tabla-resultados td { font-family: monospace; font-size: 1.1rem; font-weight: 700; padding: 5px;}
-        
+        .tabla-resultados td { font-family: monospace; font-size: 1.1rem; font-weight: 700; padding: 8px;}
         .tol-tag { font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; font-weight: 800; color: #fff; display: inline-block; margin-bottom: 5px; }
         .tol-pass { background-color: var(--success-color); }
         .tol-fail { background-color: var(--danger-color); }
 
-        /* --- CALCULADORA DISEÑO OPTIMIZADO COTA100 --- */
+        /* MODALES Y TOASTS CORREGIDOS */
+        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
+        .overlay-select.activo { opacity: 1; }
+        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
+        .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
+        .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
+        
+        #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none;}
+        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards;}
+        .toast.fade-out { animation: fadeOutToast 0.3s ease-in forwards; }
+        
+        @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
+
+        /* CALCULADORA FLOTANTE */
         .btn-calculadora-flotante { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; background: var(--card-bg); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid var(--primary-color); cursor: pointer; z-index: 999; font-size: 1.4rem; backdrop-filter: blur(5px);}
-        .calculadora-modal { 
-            position: fixed; bottom: 80px; right: 15px; width: 240px; 
-            background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; 
-            padding: 15px; display: none; z-index: 1000; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
-            box-shadow: 0 4px 20px var(--primary-glow); 
-        }
+        .calculadora-modal { position: fixed; bottom: 80px; right: 15px; width: 240px; background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; padding: 15px; display: none; z-index: 1000; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); box-shadow: 0 4px 20px var(--primary-glow); }
         .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800; color: var(--text-color); font-size: 0.85rem;}
         .calc-header button { background: none; border: none; font-size: 1.2rem; font-weight: 800; color: var(--danger-color); cursor: pointer;}
         .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        
-        .calc-grid button { 
-            padding: 12px 0; font-size: 1.2rem; font-weight: 800; 
-            border: 1px solid var(--border-color); border-radius: 8px; 
-            background: var(--input-bg); color: var(--text-color); cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .calc-grid button { padding: 12px 0; font-size: 1.2rem; font-weight: 800; border: 1px solid var(--border-color); border-radius: 8px; background: var(--input-bg); color: var(--text-color); cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);}
         .calc-grid button:active { transform: scale(0.9); }
         .calc-grid button.calc-op { color: var(--primary-color); background: rgba(255, 85, 0, 0.1); border-color: var(--card-border); }
         .calc-grid button.calc-clear { color: var(--danger-color); border-color: rgba(211, 47, 47, 0.3); background: rgba(211, 47, 47, 0.05); }
         .calc-grid button.calc-del { grid-column: span 2; background: rgba(128,128,128,0.1); }
         .calc-grid button.calc-eval { grid-column: span 2; background: var(--primary-color); color: #fff; border: none; box-shadow: 0 2px 8px var(--primary-glow); }
-        
-        #calcDisplay { 
-            width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; 
-            border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; 
-            padding: 4px 10px; background: var(--input-bg); color: var(--text-color); 
+        #calcDisplay { width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; padding: 4px 10px; background: var(--input-bg); color: var(--text-color); }
+
+        @media screen and (max-width: 480px) {
+            html { font-size: 13px; } 
+            input { padding: 10px; font-size: 1.1rem;}
+            .panel-control { padding: 12px; margin-bottom: 12px;}
+            th { font-size: 0.75rem; padding: 6px 1px; }
+            td input { padding: 8px 2px; font-size: 1.15rem; }
         }
-        #calcDisplay:focus { border-color: var(--primary-color); outline: none; }
-
-        /* --- TOAST NOTIFICATIONS --- */
-        #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 350px;}
-        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
-        .toast.error { border-left-color: var(--danger-color); }
-        .toast.success { border-left-color: #2e7d32; }
-        .toast.warning { border-left-color: #fbc02d; }
-        .toast.fade-out { animation: fadeOutToast 0.3s ease-in forwards; }
-        @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
-
-        /* --- CUSTOM CONFIRM MODAL --- */
-        .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.2s; backdrop-filter: blur(2px);}
-        .confirm-overlay.activo { opacity: 1; visibility: visible; }
-        .confirm-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(15px);}
-        .confirm-overlay.activo .confirm-box { transform: scale(1); }
-        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
-        .confirm-btns { display: flex; gap: 10px; }
-        .confirm-btn { flex: 1; padding: 12px; font-weight: 800; border-radius: 8px; border: none; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.2s;}
-        .confirm-btn:active { transform: scale(0.95); }
-        .confirm-btn-cancel { background: rgba(128,128,128,0.2); color: var(--text-color); }
-        .confirm-btn-ok { background: var(--primary-color); color: #fff; }
-
-        /* --- MODAL SELECTOR GENÉRICO --- */
-        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(2px); }
-        .overlay-select.activo { opacity: 1; }
-        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
-        .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
-        .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
-        .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
     </style>
 </head>
 <body onload="inicializarApp()">
 
-    <!-- Fondo de Agua / Fuego Animado -->
-    <div class="fire-base">
-        <div class="fire-wave delay"></div>
-        <div class="fire-wave"></div>
-    </div>
-
-    <script>
-        try {
-            let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-            if (conf && conf.darkMode) document.body.classList.add('dark-mode');
-        } catch(e) {}
-    </script>
-
-    <!-- TOAST & CONFIRM MODALS -->
+    <div class="fire-base"><div class="fire-wave delay"></div><div class="fire-wave"></div></div>
     <div id="toast-container"></div>
 
-    <div class="confirm-overlay" id="customConfirmOverlay">
-        <div class="confirm-box">
-            <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
-            <div class="confirm-btns">
-                <button class="confirm-btn confirm-btn-cancel" id="btnConfirmCancel">Cancelar</button>
-                <button class="confirm-btn confirm-btn-ok" id="btnConfirmOk">Aceptar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL DE SELECCIÓN GENÉRICO (PROYECTO) -->
+    <!-- MODALES GENÉRICOS -->
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -259,54 +172,65 @@
         <div id="modalSelectContent" style="max-height:300px; overflow-y:auto; margin-bottom:5px;"></div>
     </div>
 
+    <!-- MODAL CONFIRMAR -->
+    <div class="overlay-select" id="customConfirmOverlay">
+        <div class="modal-select" id="customConfirmModal">
+            <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-accion" style="background:rgba(128,128,128,0.2); color:var(--text-color); flex:1;" id="btnConfirmCancel">Cancelar</button>
+                <button class="btn-accion" style="background:var(--primary-color); flex:1;" id="btnConfirmOk">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ALERTA DE INFORMACIÓN (INFO ICONS) -->
+    <div class="overlay-select" id="customAlertOverlay">
+        <div class="modal-select" id="customAlertModal">
+            <h3 style="color:var(--primary-color); font-weight:900; text-transform:uppercase; margin-bottom:10px; font-size: 1.1rem;">ℹ️ INFORMACIÓN</h3>
+            <div class="confirm-msg" id="customAlertMsg" style="font-size:0.95rem; font-weight:600; text-align:left;">Texto</div>
+            <button class="btn-accion" style="background:var(--table-header); width:100%;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <!-- APP -->
     <div class="top-bar">
         <div class="nav-buttons-left">
-            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
-            <a href="poligonales.html" class="btn-volver-mini" onclick="vibrar()">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-            </a>
+            <a href="index.html" class="btn-volver-mini" onclick="vibrar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+            <a href="poligonales.html" class="btn-volver-mini" onclick="vibrar()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
         </div>
-        <h2 class="top-bar-title">POLIGONAL <span>ABIERTA</span></h2>
+        <h2 class="top-bar-title">POLIGONAL <span>ABIERTA ENCUADRADA</span></h2>
         <div style="width: 90px;"></div>
     </div>
 
     <div class="modulo-container">
-        
-        <div class="info-box">
-            <strong>ℹ️ REGLA TÉCNICA:</strong> Ajuste de poligonales encuadradas (con azimut de partida y llegada conocidos). Si no tienes puntos oficiales, puedes usar el botón de <strong>Norte Local</strong> para iniciar el levantamiento.
-        </div>
-
         <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
-            <div class="panel-titulo" onclick="togglePanel('panelProyecto')">
-                <span>📁 Base de Datos / Proyectos</span>
-                <span class="btn-toggle-panel">▼</span>
-            </div>
-            <div id="panelProyecto" class="panel-contenido">
-                <div class="project-selector">
-                    <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')">
-                        <span id="txtSelectProyecto">Cargando...</span>
-                        <span class="arrow">▼</span>
-                    </div>
+            <div class="panel-titulo" onclick="togglePanel('panelProyecto')"><span>📁 Base de Datos / Proyectos</span><span>▼</span></div>
+            <div id="panelProyecto">
+                <div class="project-selector" style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')"><span id="txtSelectProyecto">Cargando...</span><span class="arrow">▼</span></div>
                     <button class="btn-accion" style="width: auto; padding: 10px; background: var(--primary-color); margin-bottom:0;" onclick="crearNuevoProyecto()">+ NUEVO</button>
                     <button class="btn-accion" style="width: auto; padding: 10px; background: var(--danger-color); margin-bottom:0;" onclick="eliminarProyecto()">🗑️</button>
                 </div>
-                <div class="input-group full-width" style="margin-bottom: 12px;">
-                    <label>Nombre del Levantamiento</label>
-                    <input type="text" id="proyectName" placeholder="Ej: Eje Colector" oninput="renombrarProyecto()">
-                </div>
+                <div class="input-group full-width"><label>Nombre del Levantamiento</label><input type="text" id="proyectName" placeholder="Ej: Eje Colector Principal" oninput="renombrarProyecto()"></div>
                 
-                <div style="border-top: 1px dashed var(--border-color); padding-top: 10px;">
+                <div style="border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: 12px;">
+                    <label style="color: var(--primary-color);">+ Registrar Vértice de Apoyo Geodésico</label>
+                    <div class="form-grid" style="margin-top: 4px;">
+                        <input type="text" id="newBMName" placeholder="Nombre (Ej: BM-01)" oninput="this.value = this.value.toUpperCase()">
+                        <input type="number" id="newBMEste" step="0.001" placeholder="Este (X)">
+                        <input type="number" id="newBMNorte" step="0.001" placeholder="Norte (Y)">
+                        <input type="number" id="newBMCota" step="0.001" placeholder="Cota (Z)">
+                        <input type="text" id="newBMObs" class="full-width" placeholder="Observación (opcional)">
+                    </div>
+                    <button id="btnGuardarBM" class="btn-accion" style="padding: 10px; font-size: 0.9rem; margin-bottom: 10px;" onclick="addBM()">Guardar Vértice en Proyecto</button>
+                </div>
+                <label style="display: block; font-size:0.75rem; opacity:0.7;">Vértices Guardados en DB:</label>
+                <div class="bm-list" id="listaBMs"></div>
+
+                <div style="border-top: 1px dashed var(--border-color); padding-top: 10px; margin-top:10px;">
                     <div style="display: flex; gap: 8px;">
                         <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: var(--table-header); margin: 0;" onclick="exportarBackup()">📤 Backup DB</button>
-                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;" onclick="vibrar()">
+                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;">
                             📥 Restaurar
                             <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importarBackup()">
                         </label>
@@ -316,587 +240,490 @@
         </div>
 
         <div class="panel-control" style="border-left: 4px solid var(--table-header);">
-            <div class="panel-titulo" style="color: var(--text-color);">⚙️ Configuración del Equipo</div>
-            <div class="input-row">
+            <div class="panel-titulo" style="color: var(--text-color);">⚙️ Parámetros del Eje Vial</div>
+            <div class="form-grid">
                 <div class="input-group">
-                    <label>Precisión Angular (Segundos)</label>
-                    <input type="number" id="precisionEquipo" value="5" step="1" placeholder="Ej: 5" oninput="guardarEstadoApp()">
+                    <label>Tipo de Ángulo <span class="info-icon" onclick="showInfoAlert('<strong>Internos/Externos:</strong> Barrido estándar a la derecha.<br><br><strong>Deflexión:</strong> Ángulo de quiebre de las tangentes de la carretera (Derecha positiva, Izquierda negativa). Muy usado en trazos viales.')">ℹ️</span></label>
+                    <div class="custom-select" onclick="abrirModalSelect('tipoAngulo')"><span id="txt_tipoAngulo">Internos / Derecha</span><span class="arrow">▼</span></div>
+                    <input type="hidden" id="tipoAngulo" value="interno">
+                </div>
+                <div class="input-group">
+                    <label>Precisión Eq. (Seg) <span class="info-icon" onclick="showInfoAlert('Indica la precisión nominal angular de tu Estación Total (Ej. 5 segundos) para el cálculo estricto de tolerancias.')">ℹ️</span></label>
+                    <input type="number" id="precisionEquipo" value="5" step="1" oninput="guardarEstadoApp()">
+                </div>
+                <div class="input-group full-width">
+                    <label>Zona de Trabajo UTM <span class="info-icon" onclick="showInfoAlert('Define la zona para georreferenciación cartográfica en caso debas proyectar.')">ℹ️</span></label>
+                    <div class="custom-select" onclick="abrirModalSelect('zonaUtm')"><span id="txt_zonaUtm">17 Sur</span><span class="arrow">▼</span></div>
+                    <input type="hidden" id="zonaUtm" value="17">
+                    <div class="ayuda-zona-txt">Tumbes, Piura, Lambayeque, La Libertad, Cajamarca.</div>
                 </div>
             </div>
-            <p style="font-size: 0.75rem; opacity: 0.7; margin-top: 5px; font-weight: 600; line-height: 1.2;">* Revisa la ficha técnica de tu Estación Total (Suele ser de 2", 3" o 5"). Define la tolerancia máxima.</p>
         </div>
 
         <div class="panel-control" style="border-left: 4px solid #1976d2;">
-            <div class="panel-titulo" style="color: #1976d2;">📍 1. Control de Partida</div>
-            
-            <button class="btn-accion" style="background:var(--primary-color); font-size:0.85rem; padding:10px; margin-bottom:12px;" onclick="asumirNorteLocal()">🧭 Asumir Norte Local Automático</button>
-
-            <label style="color: #1976d2;">ESTACIÓN INICIAL (Donde armas)</label>
-            <div class="input-row">
+            <div class="panel-titulo" style="color: #1976d2;">📍 1. Control de Orientación de Partida</div>
+            <label style="color: #1976d2;">
+                <div>ESTACIÓN INICIAL (Donde armas) <span class="info-icon" onclick="showInfoAlert('Punto geodésico inicial oficial.')">ℹ️</span></div>
+                <button style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="seleccionarPuntoControl('est_ini')">📍 Cargar</button>
+            </label>
+            <div class="form-grid" style="margin-top:5px;">
                 <input type="number" id="eEstIni" step="0.001" placeholder="ESTE (X)" oninput="guardarEstadoApp()">
                 <input type="number" id="nEstIni" step="0.001" placeholder="NORTE (Y)" oninput="guardarEstadoApp()">
+                <input type="number" id="zEstIni" step="0.001" placeholder="COTA (Z)" class="full-width" oninput="guardarEstadoApp()">
             </div>
-            <label style="color: #1976d2;">REFERENCIA INICIAL (Vista Atrás)</label>
-            <div class="input-row">
+            <label style="color: #1976d2;">
+                <div>REFERENCIA INICIAL (Vista Atrás) <span class="info-icon" onclick="showInfoAlert('Punto para calar a 0° 00\' 00\".')">ℹ️</span></div>
+                <button style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="seleccionarPuntoControl('ref_ini')">📍 Cargar</button>
+            </label>
+            <div class="form-grid" style="margin-top:5px;">
                 <input type="number" id="eRefIni" step="0.001" placeholder="ESTE (X)" oninput="guardarEstadoApp()">
                 <input type="number" id="nRefIni" step="0.001" placeholder="NORTE (Y)" oninput="guardarEstadoApp()">
             </div>
+            <button class="btn-accion" style="background:transparent; color:var(--text-color); border:1px dashed var(--text-color); font-size:0.85rem; padding:8px; margin-top:5px;" onclick="asumirNorteLocal()">🧭 Asumir Norte Local (Azimut 0°)</button>
         </div>
 
         <div class="panel-control" style="border-left: 4px solid var(--danger-color);">
-            <div class="panel-titulo" style="color: var(--danger-color);">🏁 2. Control de Llegada (Cierre)</div>
-            <label style="color: var(--danger-color);">ESTACIÓN FINAL (Último armado)</label>
-            <div class="input-row">
+            <div class="panel-titulo" style="color: var(--danger-color);">🏁 2. Control Geodésico de Llegada (Cierre)</div>
+            <label style="color: var(--danger-color);">
+                <div>ESTACIÓN FINAL (Último hito) <span class="info-icon" onclick="showInfoAlert('Punto oficial donde terminas la medición de campo.')">ℹ️</span></div>
+                <button style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="seleccionarPuntoControl('est_fin')">📍 Cargar</button>
+            </label>
+            <div class="form-grid" style="margin-top:5px;">
                 <input type="number" id="eEstFin" step="0.001" placeholder="ESTE (X)" oninput="guardarEstadoApp()">
                 <input type="number" id="nEstFin" step="0.001" placeholder="NORTE (Y)" oninput="guardarEstadoApp()">
+                <input type="number" id="zEstFin" step="0.001" placeholder="COTA (Z)" class="full-width" oninput="guardarEstadoApp()">
             </div>
-            <label style="color: var(--danger-color);">REFERENCIA FINAL (Vista Adelante)</label>
-            <div class="input-row">
+            <label style="color: var(--danger-color);">
+                <div>REFERENCIA FINAL (Cierre Visual) <span class="info-icon" onclick="showInfoAlert('Punto oficial para verificar el cierre angular final.')">ℹ️</span></div>
+                <button style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="seleccionarPuntoControl('ref_fin')">📍 Cargar</button>
+            </label>
+            <div class="form-grid" style="margin-top:5px;">
                 <input type="number" id="eRefFin" step="0.001" placeholder="ESTE (X)" oninput="guardarEstadoApp()">
                 <input type="number" id="nRefFin" step="0.001" placeholder="NORTE (Y)" oninput="guardarEstadoApp()">
             </div>
         </div>
 
         <div class="panel-control" style="padding: 15px 10px; border-left: 4px solid var(--primary-color);">
-            <div class="panel-titulo" style="padding-left: 5px;">📐 3. Ángulos y Distancias</div>
-            <p style="font-size: 0.75rem; font-weight: 700; opacity: 0.7; margin-bottom: 10px;">* Ángulos horizontales medidos hacia la derecha en cada estación. (Nombres Editables)</p>
+            <div class="panel-titulo" style="padding-left: 5px;">📐 3. Libreta (Ángulos, Dist., Z)</div>
             
             <div class="table-wrapper">
                 <table id="tablaPoligonal">
                     <thead>
                         <tr>
-                            <th style="width: 20%;">EST.</th>
-                            <th style="width: 15%;">GRADOS</th>
-                            <th style="width: 15%;">MIN.</th>
-                            <th style="width: 15%;">SEG.</th>
-                            <th style="width: 35%;">DIST. (m)</th>
+                            <th style="width: 15%;">EST.</th>
+                            <th style="width: 12%;">Grad</th>
+                            <th style="width: 10%;">Min</th>
+                            <th style="width: 10%;">Seg</th>
+                            <th style="width: 15%;">DIST (m)</th>
+                            <th style="width: 13%;">ANG. ZEN</th>
+                            <th style="width: 12%;">AI (m)</th>
+                            <th style="width: 13%;">AP (m)</th>
                         </tr>
                     </thead>
-                    <tbody id="cuerpoPoligonal">
-                        </tbody>
+                    <tbody id="cuerpoPoligonal"></tbody>
                 </table>
             </div>
 
-            <div class="input-row" style="margin-bottom: 0;">
-                <button class="btn-accion" style="background:transparent; border: 1px solid #1976d2; color:#1976d2; margin-bottom:0;" onclick="agregarVertice(); vibrar();">➕ Estación</button>
-                <button class="btn-accion" style="background:transparent; border: 1px solid var(--text-color); color:var(--text-color); margin-bottom:0;" onclick="quitarVertice(); vibrar();">➖ Borrar</button>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-accion" style="background:transparent; border: 1px solid #1976d2; color:#1976d2; flex:1;" onclick="agregarVertice()">➕ Estación</button>
+                <button class="btn-accion" style="background:transparent; border: 1px solid var(--danger-color); color:var(--danger-color); flex:1;" onclick="quitarVertice()">➖ Borrar</button>
             </div>
         </div>
 
-        <button class="btn-accion" style="background-color: var(--primary-color); font-size: 1.2rem; margin-bottom: 15px; padding: 15px; box-shadow: 0 4px 15px rgba(255,85,0,0.3);" onclick="calcularPoligonal(); vibrar();">PROCESAR AJUSTE</button>
+        <button class="btn-accion" style="background-color: var(--primary-color); font-size: 1.2rem; margin-bottom: 15px; padding: 15px; box-shadow: 0 4px 15px rgba(255,85,0,0.3);" onclick="calcularPoligonal()">PROCESAR AJUSTE</button>
 
         <div class="panel-resultados" id="panelResultados">
-            <h3 style="text-transform: uppercase; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-size: 1.1rem;">REPORTE DE COMPENSACIÓN</h3>
-            <div id="tolBadge" class="tol-tag tol-pass" style="margin-top: 10px;">ESTADO: ACEPTABLE</div>
-            <div class="input-row" style="margin-top: 10px;">
+            <h3 style="text-transform: uppercase; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-size: 1.1rem;">REPORTE DE COMPENSACIÓN VIAL</h3>
+            <div id="tolBadge" class="tol-tag tol-pass" style="margin-top: 10px; font-size:0.9rem;">ESTADO: ACEPTABLE</div>
+            
+            <div class="form-grid" style="margin-top: 15px; background: rgba(128,128,128,0.05); padding:10px; border-radius:8px;">
                 <div class="input-group">
-                    <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">ERROR ANGULAR</span>
-                    <div class="res-valor" id="resErrAng">00° 00' 00"</div>
-                    <span style="font-size: 0.75rem; opacity: 0.7;">Tolerancia: <span id="resTolAng"></span></span>
+                    <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">ERROR ANGULAR TOTAL</span>
+                    <div class="res-valor" id="resErrAng" style="font-size:1.2rem; margin-bottom:0;">00° 00' 00"</div>
+                    <span style="font-size: 0.7rem; opacity: 0.7;">Tol: <span id="resTolAng"></span></span>
                 </div>
                 <div class="input-group">
-                    <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">ERROR LINEAL</span>
-                    <div class="res-valor" id="resErrLin">0.000 m</div>
+                    <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">ERROR LINEAL TOTAL</span>
+                    <div class="res-valor" id="resErrLin" style="font-size:1.2rem; margin-bottom:0;">0.000 m</div>
                 </div>
-            </div>
-            <div class="input-group" style="margin-top: 5px;">
-                <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">PRECISIÓN RELATIVA</span>
-                <div class="res-valor" id="resPrecision" style="font-size: 1.8rem;">1 : 0</div>
             </div>
 
-            <h3 style="color: var(--primary-color); margin: 15px 0 10px; font-size: 1rem; text-align: left;">COORDENADAS AJUSTADAS</h3>
-            <div class="table-wrapper" style="margin-bottom: 0;">
+            <!-- F1: DESGLOSE DE ERROR LONGITUDINAL Y TRANSVERSAL -->
+            <div class="form-grid" style="margin-top: 5px; background: rgba(128,128,128,0.02); padding:10px; border-radius:8px;">
+                <div class="input-group">
+                    <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">ERROR LONGITUDINAL (E_L)</span>
+                    <div class="res-valor" id="resErrLong" style="font-size:1.1rem; color:var(--text-color); margin-bottom:0;">0.000 m</div>
+                    <span style="font-size:0.65rem; opacity:0.6;">(Falla en distanciometría)</span>
+                </div>
+                <div class="input-group">
+                    <span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">ERROR TRANSVERSAL (E_T)</span>
+                    <div class="res-valor" id="resErrTrans" style="font-size:1.1rem; color:var(--text-color); margin-bottom:0;">0.000 m</div>
+                    <span style="font-size:0.65rem; opacity:0.6;">(Falla en plomada/ángulo)</span>
+                </div>
+            </div>
+
+            <!-- ALTÍMETRO (EJE Z) -->
+            <div class="form-grid" style="margin-top: 10px;">
+                <div class="input-group"><span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">PRECISIÓN RELATIVA VIAL</span><div class="res-valor" id="resPrecision" style="font-size: 1.5rem; color:var(--text-color);">1 : 0</div></div>
+                <div class="input-group"><span style="font-size: 0.75rem; font-weight: 800; opacity: 0.7;">CIERRE ALTÍMETRO (ΔZ)</span><div class="res-valor" id="resErrZ" style="font-size: 1.5rem; color:var(--text-color);">0.000 m</div></div>
+            </div>
+
+            <h3 style="color: var(--primary-color); margin: 20px 0 10px; font-size: 1rem; text-align: left;">COORDENADAS COMPENSADAS VIALES (X, Y, Z)</h3>
+            <div class="table-wrapper" style="margin-bottom: 15px;">
                 <table class="tabla-resultados">
-                    <thead>
-                        <tr><th>ESTACIÓN</th><th>ESTE (X)</th><th>NORTE (Y)</th></tr>
-                    </thead>
+                    <thead><tr><th>ESTACIÓN</th><th>ESTE (X)</th><th>NORTE (Y)</th><th>COTA (Z)</th></tr></thead>
                     <tbody id="cuerpoResultados"></tbody>
                 </table>
             </div>
+
+            <button class="btn-accion" style="background:var(--success-color); width:100%;" onclick="exportarCSV_PNEZD()">📥 DESCARGAR REPORTE PNEZD (.CSV)</button>
         </div>
 
-    </div>
-
-    <!-- CALCULADORA FLOTANTE -->
-    <div class="btn-calculadora-flotante" onclick="toggleCalculadora()">🧮</div>
-    <div class="calculadora-modal" id="calculadoraModal">
-        <div class="calc-header"><span>CÁLCULO RÁPIDO</span><button onclick="toggleCalculadora()">X</button></div>
-        <input type="text" id="calcDisplay" disabled>
-        <div class="calc-grid">
-            <button onclick="calcInput('7')">7</button>
-            <button onclick="calcInput('8')">8</button>
-            <button onclick="calcInput('9')">9</button>
-            <button onclick="calcInput('/')" class="calc-op">÷</button>
-            <button onclick="calcInput('4')">4</button>
-            <button onclick="calcInput('5')">5</button>
-            <button onclick="calcInput('6')">6</button>
-            <button onclick="calcInput('*')" class="calc-op">×</button>
-            <button onclick="calcInput('1')">1</button>
-            <button onclick="calcInput('2')">2</button>
-            <button onclick="calcInput('3')">3</button>
-            <button onclick="calcInput('-')" class="calc-op">-</button>
-            <button onclick="calcClear()" class="calc-clear">C</button>
-            <button onclick="calcInput('0')">0</button>
-            <button onclick="calcInput('.')">.</button>
-            <button onclick="calcInput('+')" class="calc-op">+</button>
-            <button onclick="calcBackspace()" class="calc-del">⌫</button>
-            <button onclick="calcEval()" class="calc-eval">=</button>
-        </div>
     </div>
 
     <script>
-        /* --- UI: TOAST Y CONFIRM --- */
+        // --- TOAST NOTIFICATIONS REPARADAS ---
         function showToast(message, type = "default") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerText = message;
+            toast.className = `toast ${type}`; toast.innerText = message;
             container.appendChild(toast);
-            vibrar();
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                toast.addEventListener('animationend', () => toast.remove());
+            
+            setTimeout(() => { 
+                toast.classList.add('fade-out'); 
+                toast.addEventListener('animationend', () => toast.remove()); 
+                setTimeout(() => toast.remove(), 400); 
             }, 3000);
         }
 
         let confirmOkCallback = null;
         let confirmCancelCallback = null;
-
-        function showConfirm(message, onOk, onCancel = null) {
-            vibrar();
-            const overlay = document.getElementById('customConfirmOverlay');
-            document.getElementById('customConfirmMsg').innerText = message;
-            confirmOkCallback = onOk;
-            confirmCancelCallback = onCancel;
-            overlay.classList.add('activo');
-        }
+        let destinoCarga = "";
 
         document.getElementById('btnConfirmCancel').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
+            vibrar(); document.getElementById('customConfirmOverlay').classList.remove('activo');
+            setTimeout(() => document.getElementById('customConfirmOverlay').style.display='none', 200);
             if (confirmCancelCallback) confirmCancelCallback();
         });
 
         document.getElementById('btnConfirmOk').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
+            vibrar(); document.getElementById('customConfirmOverlay').classList.remove('activo');
+            setTimeout(() => document.getElementById('customConfirmOverlay').style.display='none', 200);
             if (confirmOkCallback) confirmOkCallback();
         });
 
-        /* --- UI: MODAL SELECTOR GENÉRICO --- */
-        let tipoModalActual = "";
-        function abrirModalSelect(tipo) {
-            vibrar();
-            tipoModalActual = tipo;
-            const titulo = document.getElementById('modalSelectTitle');
-            const contenido = document.getElementById('modalSelectContent');
-            contenido.innerHTML = "";
-            
-            if(tipo === 'proyecto') {
-                titulo.innerText = "📁 SELECCIONAR PROYECTO";
-                appData.proyectos.forEach(proj => {
-                    let isActivo = proj.id === appData.activoId;
-                    contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${proj.id}', '${proj.nombre}')"><span>${proj.nombre}</span></button>`;
-                });
-            }
-
-            document.getElementById('overlaySelect').style.display = 'block';
-            setTimeout(() => { document.getElementById('overlaySelect').classList.add('activo'); document.getElementById('modalSelect').classList.add('abierto'); }, 10);
+        function showConfirm(message, onOk, onCancel = null) {
+            vibrar(); document.getElementById('customConfirmMsg').innerText = message;
+            confirmOkCallback = onOk; confirmCancelCallback = onCancel;
+            document.getElementById('customConfirmOverlay').style.display = 'block';
+            setTimeout(() => document.getElementById('customConfirmOverlay').classList.add('activo'), 10);
         }
 
-        function cerrarModalSelect() {
-            vibrar();
-            document.getElementById('overlaySelect').classList.remove('activo');
-            document.getElementById('modalSelect').classList.remove('abierto');
-            setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300);
+        function showInfoAlert(htmlMsg) {
+            vibrar(); document.getElementById('customAlertMsg').innerHTML = htmlMsg;
+            document.getElementById('customAlertOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customAlertOverlay').classList.add('activo'); document.getElementById('customAlertModal').classList.add('abierto'); }, 10);
         }
 
-        function seleccionarOpcionModal(valor, texto) {
-            cerrarModalSelect();
-            if(tipoModalActual === 'proyecto') {
-                cambiarProyectoActivo(valor);
-            }
+        function cerrarCustomAlert() {
+            vibrar(); document.getElementById('customAlertOverlay').classList.remove('activo'); document.getElementById('customAlertModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customAlertOverlay').style.display = 'none'; }, 300);
         }
 
-        /* --- SISTEMA DE BASE DE DATOS Y ESTADO --- */
-        let appData = { activoId: 1, proyectos: [] };
-        let globalConfig = { darkMode: false, vibracion: true, decimales: "3" };
+        // --- SISTEMA BD Y ESTADO ---
+        let appData = { activoId: 1, proyectos: [], contadorProyectos: 1 };
+        let globalConfig = { darkMode: false, vibracion: false, decimales: "3" };
 
         function vibrar() { if (globalConfig.vibracion !== false && navigator.vibrate) navigator.vibrate(30); }
-        function togglePanel(id) { vibrar(); const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; }
+        function togglePanel(id) { const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; }
 
         function inicializarApp() {
-            // --- REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX ---
             localStorage.setItem('cota100_last_name', 'POLIGONAL ABIERTA');
             localStorage.setItem('cota100_last_url', 'pol-abierta.html');
-            // ----------------------------------------------------------
 
-            try {
-                let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-                if(conf) {
-                    globalConfig = conf;
-                    if(globalConfig.darkMode) document.body.classList.add('dark-mode');
-                }
-            } catch(e) {}
+            try { let conf = JSON.parse(localStorage.getItem('cota100_ajustes')); if(conf) { globalConfig = conf; if(globalConfig.darkMode) document.body.classList.add('dark-mode'); } } catch(e) {}
 
-            let stored = localStorage.getItem('cota100_db_polabierta_v1');
-            if (stored) { 
-                appData = JSON.parse(stored); 
-                if(!appData.contadorProyectos) appData.contadorProyectos = appData.proyectos.length;
-            } else { 
-                appData.contadorProyectos = 1;
-                appData.proyectos.push(crearObjetoProyecto(1, "Poligonal Abierta 1")); 
-                appData.activoId = 1; 
-            }
-            renderSelectProyectos(); 
-            cargarProyectoActivo();
+            let stored = localStorage.getItem('cota100_db_polabierta_v5');
+            if (stored) { appData = JSON.parse(stored); if(!appData.contadorProyectos) appData.contadorProyectos = appData.proyectos.length; } 
+            else { appData.contadorProyectos = 1; appData.proyectos.push(crearObjetoProyecto(1, "Eje Carretera Tramo 1")); appData.activoId = 1; }
+            
+            renderSelectProyectos(); cargarProyectoActivo();
         }
 
         function crearObjetoProyecto(id, nombre) {
             return {
-                id: id, nombre: nombre, precision: 5,
-                ctrl: { eEi:"", nEi:"", eRi:"", nRi:"", eEf:"", nEf:"", eRf:"", nRf:"" },
+                id: id, nombre: nombre, precision: 5, tipoAngulo: "interno", zonaUtm: "17", bms: [],
+                ctrl: { eEi:"", nEi:"", zEstIni:"", eRi:"", nRi:"", eEf:"", nEf:"", zEstFin:"", eRf:"", nRf:"" },
                 tabla: [
-                    { pto:"E-INI", g:"", m:"", s:"", dist:"", final:false },
-                    { pto:"E-1", g:"", m:"", s:"", dist:"", final:false },
-                    { pto:"E-FIN", g:"", m:"", s:"", dist:"", final:true }
+                    { pto:"E-0", g:"", m:"", s:"", dist:"", zen:"90", ai:"1.50", ap:"1.50", final:false },
+                    { pto:"E-1", g:"", m:"", s:"", dist:"", zen:"90", ai:"1.50", ap:"1.50", final:false },
+                    { pto:"E-FIN", g:"", m:"", s:"", dist:"", zen:"", ai:"", ap:"", final:true }
                 ]
             };
         }
 
         function obtenerProyectoActivo() { return appData.proyectos.find(p => p.id === appData.activoId); }
-        function guardarBD() { localStorage.setItem('cota100_db_polabierta_v1', JSON.stringify(appData)); }
+        function guardarBD() { localStorage.setItem('cota100_db_polabierta_v5', JSON.stringify(appData)); }
 
-        function renderSelectProyectos() {
-            let p = obtenerProyectoActivo();
-            document.getElementById('txtSelectProyecto').innerText = p ? p.nombre : "Sin Nombre";
-        }
+        function renderSelectProyectos() { document.getElementById('txtSelectProyecto').innerText = obtenerProyectoActivo() ? obtenerProyectoActivo().nombre : "Sin Nombre"; }
+        function crearNuevoProyecto() { appData.contadorProyectos = (appData.contadorProyectos || appData.proyectos.length) + 1; let nuevoId = Date.now(); appData.proyectos.push(crearObjetoProyecto(nuevoId, `Poligonal Abierta ${appData.contadorProyectos}`)); appData.activoId = nuevoId; guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); showToast("Proyecto vial creado", "success"); }
+        function eliminarProyecto() { if(appData.proyectos.length === 1) return showToast("No puedes borrar el último.", "warning"); let p = obtenerProyectoActivo(); showConfirm(`¿Borrar "${p.nombre}"?`, () => { appData.proyectos = appData.proyectos.filter(proj => proj.id !== p.id); appData.activoId = appData.proyectos[0].id; guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); }); }
+        function renombrarProyecto() { let p = obtenerProyectoActivo(); p.nombre = document.getElementById('proyectName').value.trim(); guardarBD(); renderSelectProyectos(); }
 
-        function crearNuevoProyecto() {
-            vibrar(); let nuevoId = Date.now();
-            appData.contadorProyectos = (appData.contadorProyectos || appData.proyectos.length) + 1;
-            let nombre = `Poligonal Abierta ${appData.contadorProyectos}`;
-            appData.proyectos.push(crearObjetoProyecto(nuevoId, nombre));
-            appData.activoId = nuevoId; 
-            guardarBD(); 
-            renderSelectProyectos(); 
-            cargarProyectoActivo();
-            showToast("Proyecto creado", "success");
-        }
-
-        function eliminarProyecto() {
+        /* BASE DE DATOS DE PUNTOS */
+        function addBM() {
             vibrar();
-            if(appData.proyectos.length === 1) return showToast("Crea otro proyecto antes de borrar el último.", "warning");
-            let p = obtenerProyectoActivo();
-            showConfirm(`⚠️ ¿Borrar "${p.nombre}" permanentemente?`, () => {
-                appData.proyectos = appData.proyectos.filter(proj => proj.id !== p.id);
-                appData.activoId = appData.proyectos[0].id; 
-                guardarBD(); 
-                renderSelectProyectos(); 
-                cargarProyectoActivo();
-                showToast("Proyecto eliminado", "success");
+            const name = document.getElementById('newBMName').value.toUpperCase().trim();
+            const eIn = parseFloat(document.getElementById('newBMEste').value); const nIn = parseFloat(document.getElementById('newBMNorte').value); const zIn = parseFloat(document.getElementById('newBMCota').value) || 0;
+            const obs = document.getElementById('newBMObs').value.trim();
+            if(!name || isNaN(eIn) || isNaN(nIn)) return showToast("Faltan datos válidos en el hito.", "error");
+            
+            let p = obtenerProyectoActivo(); if(!p.bms) p.bms = [];
+            if(p.bms.some(bm => bm.nombre === name)) return showToast("Ya existe ese nombre.", "warning");
+            
+            p.bms.push({ nombre: name, este: eIn, norte: nIn, cota: zIn, obs: obs });
+            document.getElementById('newBMName').value = ""; document.getElementById('newBMEste').value = ""; document.getElementById('newBMNorte').value = ""; document.getElementById('newBMCota').value = ""; document.getElementById('newBMObs').value = "";
+            guardarBD(); renderBMs(); showToast("Vértice de apoyo guardado", "success");
+        }
+
+        function deleteBM(i) { let p = obtenerProyectoActivo(); p.bms.splice(i, 1); guardarBD(); renderBMs(); showToast("Hito eliminado", "success"); }
+
+        function renderBMs() {
+            let p = obtenerProyectoActivo(); const list = document.getElementById('listaBMs'); list.innerHTML = ""; if(!p.bms) p.bms = [];
+            p.bms.forEach((bm, i) => { 
+                list.innerHTML += `<div class="bm-item"><div class="bm-item-header"><div class="bm-info"><strong>${bm.nombre}</strong><span>E: ${bm.este.toFixed(3)} | N: ${bm.norte.toFixed(3)} | Z: ${bm.cota.toFixed(3)}</span></div><button style="background:none; border:none; color:var(--danger-color); cursor:pointer;" onclick="deleteBM(${i})">🗑️</button></div></div>`;
             });
         }
 
-        function cambiarProyectoActivo(idStr) { appData.activoId = parseInt(idStr); guardarBD(); cargarProyectoActivo(); }
-        
-        function renombrarProyecto() { 
-            let p = obtenerProyectoActivo();
-            let newName = document.getElementById('proyectName').value.trim();
-            if(newName !== p.nombre && appData.proyectos.some(proj => proj.nombre === newName)) {
-                showToast(`⚠️ El proyecto "${newName}" ya existe.`, "warning");
-                document.getElementById('proyectName').value = p.nombre;
-                return;
-            }
-            p.nombre = newName; 
-            guardarBD(); 
-            renderSelectProyectos(); 
+        function seleccionarPuntoControl(destino) { destinoCarga = destino; abrirModalSelect('bm_control'); }
+
+        function aplicarPuntoControl(este, norte, cota) {
+            cerrarModalSelect();
+            if(destinoCarga === 'est_ini') { document.getElementById('eEstIni').value = este; document.getElementById('nEstIni').value = norte; document.getElementById('zEstIni').value = cota; }
+            else if(destinoCarga === 'ref_ini') { document.getElementById('eRefIni').value = este; document.getElementById('nRefIni').value = norte; }
+            else if(destinoCarga === 'est_fin') { document.getElementById('eEstFin').value = este; document.getElementById('nEstFin').value = norte; document.getElementById('zEstFin').value = cota; }
+            else if(destinoCarga === 'ref_fin') { document.getElementById('eRefFin').value = este; document.getElementById('nRefFin').value = norte; }
+            guardarEstadoApp(); showToast("Hito inyectado", "success");
         }
 
-        // BOTÓN ASUMIR NORTE
-        function asumirNorteLocal() {
+        /* MODALES SELECTOR */
+        let tipoModalActual = "";
+        function abrirModalSelect(tipo) {
             vibrar();
-            document.getElementById('eEstIni').value = "2000.000";
-            document.getElementById('nEstIni').value = "2000.000";
-            document.getElementById('eRefIni').value = "2000.000";
-            document.getElementById('nRefIni').value = "2100.000";
-            guardarEstadoApp();
-            showToast("✅ Norte Local Asumido. Azimut 0°.", "success");
+            tipoModalActual = tipo; const titulo = document.getElementById('modalSelectTitle'); const contenido = document.getElementById('modalSelectContent'); contenido.innerHTML = "";
+            let opciones = []; let actual = document.getElementById(tipo) ? document.getElementById(tipo).value : "";
+
+            if(tipo === 'proyecto') { titulo.innerText = "📁 PROYECTO"; appData.proyectos.forEach(proj => { opciones.push({val: proj.id, txt: proj.nombre}); }); actual = appData.activoId.toString(); }
+            else if(tipo === 'tipoAngulo') { titulo.innerText = "📐 TIPO DE ÁNGULO"; opciones = [{val:'interno', txt:'Internos / Derecha'}, {val:'def_der', txt:'Deflexión Derecha (+)'}, {val:'def_izq', txt:'Deflexión Izquierda (-)'}]; }
+            else if(tipo === 'zonaUtm') { titulo.innerText = "🌍 ZONA PERÚ"; opciones = [{val:'17', txt:'17 Sur'}, {val:'18', txt:'18 Sur'}, {val:'19', txt:'19 Sur'}]; }
+            else if(tipo === 'bm_control') {
+                titulo.innerText = "📍 ELEGIR HITO GEODÉSICO"; let p = obtenerProyectoActivo();
+                if(!p.bms || p.bms.length === 0) contenido.innerHTML = "<p style='padding:15px; font-weight:bold; opacity:0.6; text-align:center;'>No hay hitos registrados en la DB de esta obra.</p>";
+                else p.bms.forEach(bm => { contenido.innerHTML += `<button class="btn-opcion" onclick="aplicarPuntoControl('${bm.este}','${bm.norte}','${bm.cota}')"><span>${bm.nombre}</span><span class="cota">E:${bm.este.toFixed(1)} N:${bm.norte.toFixed(1)}</span></button>`; });
+            }
+
+            if(tipo !== 'bm_control') { opciones.forEach(opt => { let isActivo = opt.val == actual; contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${opt.val}', '${opt.txt}')"><span>${opt.txt}</span></button>`; }); }
+            document.getElementById('overlaySelect').style.display = 'block'; setTimeout(() => { document.getElementById('overlaySelect').classList.add('activo'); document.getElementById('modalSelect').classList.add('abierto'); }, 10);
         }
+        function cerrarModalSelect() { document.getElementById('overlaySelect').classList.remove('activo'); document.getElementById('modalSelect').classList.remove('abierto'); setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300); }
+        function seleccionarOpcionModal(valor, texto) {
+            cerrarModalSelect(); document.getElementById(tipoModalActual).value = valor; document.getElementById('txt_'+tipoModalActual).innerText = texto;
+            if(tipoModalActual === 'zonaUtm') {
+                let txt = ""; if(valor === "17") txt = "Tumbes, Piura, Lambayeque, La Libertad, Cajamarca."; if(valor === "18") txt = "Áncash, Lima, Ica, Huánuco, Pasco, Junín, Loreto, San Martín, Amazonas, Ayacucho, Huancavelica, Apurímac."; if(valor === "19") txt = "Arequipa, Moquegua, Tacna, Puno, Cusco, Madre de Dios."; document.querySelector('.ayuda-zona-txt').innerText = txt;
+            }
+            guardarEstadoApp();
+        }
+
+        function asumirNorteLocal() { document.getElementById('eEstIni').value = "5000.000"; document.getElementById('nEstIni').value = "5000.000"; document.getElementById('zEstIni').value = "100.000"; document.getElementById('eRefIni').value = "5000.000"; document.getElementById('nRefIni').value = "5100.000"; guardarEstadoApp(); showToast("Orientación Local Asumida", "success"); }
 
         function cargarProyectoActivo() {
-            let p = obtenerProyectoActivo();
-            document.getElementById('proyectName').value = p.nombre;
-            document.getElementById('precisionEquipo').value = p.precision || 5;
+            let p = obtenerProyectoActivo(); document.getElementById('proyectName').value = p.nombre; document.getElementById('precisionEquipo').value = p.precision || 5;
+            document.getElementById('tipoAngulo').value = p.tipoAngulo || "interno"; document.getElementById('zonaUtm').value = p.zonaUtm || "17";
             
-            // Cargar controles
-            document.getElementById('eEstIni').value = p.ctrl.eEi || ""; document.getElementById('nEstIni').value = p.ctrl.nEi || "";
+            let tA = p.tipoAngulo === 'interno' ? 'Internos / Derecha' : (p.tipoAngulo === 'def_der' ? 'Deflexión Derecha (+)' : 'Deflexión Izquierda (-)');
+            document.getElementById('txt_tipoAngulo').innerText = tA; document.getElementById('txt_zonaUtm').innerText = p.zonaUtm + " Sur";
+            
+            document.getElementById('eEstIni').value = p.ctrl.eEi || ""; document.getElementById('nEstIni').value = p.ctrl.nEi || ""; document.getElementById('zEstIni').value = p.ctrl.zEstIni || "";
             document.getElementById('eRefIni').value = p.ctrl.eRi || ""; document.getElementById('nRefIni').value = p.ctrl.nRi || "";
-            document.getElementById('eEstFin').value = p.ctrl.eEf || ""; document.getElementById('nEstFin').value = p.ctrl.nEf || "";
-            document.getElementById('eRefFin').value = p.ctrl.eRf || ""; document.getElementById('nRefFin').value = p.ctrl.nRf || "";
+            document.getElementById('eEstFin').value = p.ctrl.eEf || ""; document.getElementById('nEstFin').value = p.ctrl.nEf || ""; document.getElementById('zEstFin').value = p.ctrl.zEstFin || "";
+            document.getElementById('eRefFin').value = p.ctrl.eRf || ""; document.getElementById('nRefFin').value = p.ctrl.nRefFin || "";
 
-            // Ocultar resultados al cambiar
-            document.getElementById('panelResultados').style.display = 'none';
-
-            // Cargar tabla
-            const tbody = document.getElementById('cuerpoPoligonal');
-            tbody.innerHTML = "";
-            if(!p.tabla || p.tabla.length === 0) p.tabla = crearObjetoProyecto(0,"").tabla;
-
-            p.tabla.forEach((fila) => {
+            const tbody = document.getElementById('cuerpoPoligonal'); tbody.innerHTML = "";
+            p.tabla.forEach((f) => {
                 const tr = document.createElement('tr');
-                if(!fila.final) {
-                    tr.innerHTML = `
-                        <td><input type="text" class="in-pto" value="${fila.pto}" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
-                        <td><input type="number" class="ang-g" placeholder="°" value="${fila.g}" oninput="guardarEstadoApp()"></td>
-                        <td><input type="number" class="ang-m" placeholder="'" value="${fila.m}" oninput="guardarEstadoApp()"></td>
-                        <td><input type="number" step="0.1" class="ang-s" placeholder="''" value="${fila.s}" oninput="guardarEstadoApp()"></td>
-                        <td><input type="number" step="0.001" class="dist" placeholder="Dist." value="${fila.dist}" oninput="guardarEstadoApp()"></td>
-                    `;
-                } else {
-                    tr.innerHTML = `
-                        <td><input type="text" class="in-pto" value="${fila.pto}" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
-                        <td><input type="number" class="ang-g" placeholder="°" value="${fila.g}" oninput="guardarEstadoApp()"></td>
-                        <td><input type="number" class="ang-m" placeholder="'" value="${fila.m}" oninput="guardarEstadoApp()"></td>
-                        <td><input type="number" step="0.1" class="ang-s" placeholder="''" value="${fila.s}" oninput="guardarEstadoApp()"></td>
-                        <td class="td-readonly"><input type="text" value="Cierre Ref" disabled style="background:transparent; border:none; text-align:center; color:var(--text-color); font-weight:800; opacity:0.5;"></td>
-                    `;
-                }
+                tr.innerHTML = `<td><input type="text" class="in-pto" value="${f.pto}" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
+                                <td><input type="number" class="ang-g" value="${f.g}" oninput="guardarEstadoApp()"></td><td><input type="number" class="ang-m" value="${f.m}" oninput="guardarEstadoApp()"></td><td><input type="number" step="0.1" class="ang-s" value="${f.s}" oninput="guardarEstadoApp()"></td>
+                                <td class="${f.final?'td-readonly':''}">${f.final?'<input type="text" disabled value="Cierre" style="opacity:0.5;">':`<input type="number" step="0.001" class="dist" value="${f.dist}" oninput="guardarEstadoApp()">`}</td>
+                                <td class="${f.final?'td-readonly':''}">${f.final?'':`<input type="number" step="0.001" class="zen" value="${f.zen}" oninput="guardarEstadoApp()">`}</td>
+                                <td class="${f.final?'td-readonly':''}">${f.final?'':`<input type="number" step="0.001" class="ai" value="${f.ai}" oninput="guardarEstadoApp()">`}</td>
+                                <td class="${f.final?'td-readonly':''}">${f.final?'':`<input type="number" step="0.001" class="ap" value="${f.ap}" oninput="guardarEstadoApp()">`}</td>`;
                 tbody.appendChild(tr);
             });
-            renderSelectProyectos();
+            renderBMs();
         }
 
         function guardarEstadoApp() {
             let p = obtenerProyectoActivo(); if(!p) return;
-            p.precision = parseFloat(document.getElementById('precisionEquipo').value) || 5;
-            p.ctrl = {
-                eEi: document.getElementById('eEstIni').value, nEi: document.getElementById('nEstIni').value,
-                eRi: document.getElementById('eRefIni').value, nRi: document.getElementById('nRefIni').value,
-                eEf: document.getElementById('eEstFin').value, nEf: document.getElementById('nEstFin').value,
-                eRf: document.getElementById('eRefFin').value, nRf: document.getElementById('nRefFin').value
-            };
-            
-            let filas = [];
-            document.querySelectorAll('#cuerpoPoligonal tr').forEach((tr, i, arr) => {
-                let esFinal = (i === arr.length - 1);
-                filas.push({
-                    pto: tr.querySelector('.in-pto').value,
-                    g: tr.querySelector('.ang-g').value, m: tr.querySelector('.ang-m').value, s: tr.querySelector('.ang-s').value,
-                    dist: esFinal ? "" : tr.querySelector('.dist').value,
-                    final: esFinal
-                });
-            });
-            p.tabla = filas;
-            guardarBD();
+            p.precision = parseFloat(document.getElementById('precisionEquipo').value)||5; p.tipoAngulo = document.getElementById('tipoAngulo').value; p.zonaUtm = document.getElementById('zonaUtm').value;
+            p.ctrl = { eEi: document.getElementById('eEstIni').value, nEi: document.getElementById('nEstIni').value, zEstIni: document.getElementById('zEstIni').value, eRi: document.getElementById('eRefIni').value, nRi: document.getElementById('nRefIni').value, eEf: document.getElementById('eEstFin').value, nEf: document.getElementById('nEstFin').value, zEstFin: document.getElementById('zEstFin').value, eRf: document.getElementById('eRefFin').value, nRefFin: document.getElementById('nRefFin').value };
+            let filas = []; document.querySelectorAll('#cuerpoPoligonal tr').forEach((tr, i, arr) => { let esFin = (i === arr.length - 1); filas.push({ pto: tr.querySelector('.in-pto').value, g: tr.querySelector('.ang-g').value, m: tr.querySelector('.ang-m').value, s: tr.querySelector('.ang-s').value, dist: esFin?'':tr.querySelector('.dist').value, zen: esFin?'':tr.querySelector('.zen').value, ai: esFin?'':tr.querySelector('.ai').value, ap: esFin?'':tr.querySelector('.ap').value, final: esFin }); });
+            p.tabla = filas; guardarBD();
         }
 
-        // --- BACKUP Y RESTAURACIÓN ---
+        function agregarVertice() {
+            vibrar(); const tbody = document.getElementById('cuerpoPoligonal'); const n = tbody.children.length;
+            let last = tbody.lastElementChild;
+            last.querySelector('td:nth-child(5)').innerHTML = `<input type="number" step="0.001" class="dist" oninput="guardarEstadoApp()">`; last.querySelector('td:nth-child(5)').classList.remove('td-readonly');
+            last.querySelector('td:nth-child(6)').innerHTML = `<input type="number" step="0.001" class="zen" value="90" oninput="guardarEstadoApp()">`; last.querySelector('td:nth-child(6)').classList.remove('td-readonly');
+            last.querySelector('td:nth-child(7)').innerHTML = `<input type="number" step="0.001" class="ai" value="1.50" oninput="guardarEstadoApp()">`; last.querySelector('td:nth-child(7)').classList.remove('td-readonly');
+            last.querySelector('td:nth-child(8)').innerHTML = `<input type="number" step="0.001" class="ap" value="1.50" oninput="guardarEstadoApp()">`; last.querySelector('td:nth-child(8)').classList.remove('td-readonly');
+            
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td><input type="text" class="in-pto" value="E-FIN" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
+                            <td><input type="number" class="ang-g" oninput="guardarEstadoApp()"></td><td><input type="number" class="ang-m" oninput="guardarEstadoApp()"></td><td><input type="number" step="0.1" class="ang-s" oninput="guardarEstadoApp()"></td>
+                            <td class="td-readonly"><input type="text" disabled value="Cierre" style="opacity:0.5; background:transparent; border:none; text-align:center; color:var(--text-color); font-weight:800;"></td><td class="td-readonly"></td><td class="td-readonly"></td><td class="td-readonly"></td>`;
+            if(tbody.children[n-1].querySelector('.in-pto').value === 'E-FIN') tbody.children[n-1].querySelector('.in-pto').value = `E-${n-1}`;
+            tbody.appendChild(tr); guardarEstadoApp();
+        }
+
+        function quitarVertice() { vibrar(); const tbody = document.getElementById('cuerpoPoligonal'); if (tbody.children.length > 2) { tbody.removeChild(tbody.lastChild); let l = tbody.lastElementChild; l.querySelector('.in-pto').value = "E-FIN"; l.children[4].innerHTML = `<input type="text" disabled value="Cierre" style="opacity:0.5; background:transparent; border:none; text-align:center; color:var(--text-color); font-weight:800;">`; l.children[4].className = "td-readonly"; l.children[5].innerHTML = ""; l.children[5].className = "td-readonly"; l.children[6].innerHTML = ""; l.children[6].className = "td-readonly"; l.children[7].innerHTML = ""; l.children[7].className = "td-readonly"; guardarEstadoApp(); } else { showToast("Mínimo de estaciones alcanzado.", "warning"); } }
+
+        function calcularAzimut(E1, N1, E2, N2) { let dE = E2 - E1; let dN = N2 - N1; let az = Math.atan2(dE, dN) * 180 / Math.PI; if (az < 0) az += 360; return az; }
+        function gmsADecimal(g, m, s) { let signo = (g < 0) ? -1 : 1; return signo * (Math.abs(g) + (m / 60) + (s / 3600)); }
+        function decimalAGMSString(dec) { let absoluto = Math.abs(dec); let g = Math.floor(absoluto); let mFloat = (absoluto - g) * 60; let m = Math.floor(mFloat); let s = (mFloat - m) * 60; let signoStr = (dec < 0) ? "-" : ""; return `${signoStr}${g}° ${m.toString().padStart(2, '0')}' ${s.toFixed(1).padStart(4, '0')}"`; }
+        function normalizarAzimut(az) { while (az >= 360.0) az -= 360.0; while (az < 0.0) az += 360.0; return az; }
+
+        function calcularPoligonal() {
+            vibrar(); let decs = parseInt(globalConfig.decimales) || 3; let precisionEquipo = parseFloat(document.getElementById('precisionEquipo').value)||5;
+            let eEstIni = parseFloat(document.getElementById('eEstIni').value); let nEstIni = parseFloat(document.getElementById('nEstIni').value); let zEstIni = parseFloat(document.getElementById('zEstIni').value);
+            let eRefIni = parseFloat(document.getElementById('eRefIni').value); let nRefIni = parseFloat(document.getElementById('nRefIni').value);
+            let eEstFin = parseFloat(document.getElementById('eEstFin').value); let nEstFin = parseFloat(document.getElementById('nEstFin').value); let zEstFin = parseFloat(document.getElementById('zEstFin').value);
+            let eRefFin = parseFloat(document.getElementById('eRefFin').value); let nRefFin = parseFloat(document.getElementById('nRefFin').value);
+
+            if(isNaN(eEstIni) || isNaN(eEstFin) || isNaN(zEstIni) || isNaN(zEstFin)) { showToast("Completa los hitos geodésicos de control.", "warning"); return; }
+
+            let azIni = calcularAzimut(eEstIni, nEstIni, eRefIni, nRefIni); let azFinTeorico = calcularAzimut(eEstFin, nEstFin, eRefFin, nRefFin);
+
+            let filas = document.querySelectorAll('#cuerpoPoligonal tr'); let nAng = filas.length;
+            let angObs = []; let dists = []; let zens = []; let ais = []; let aps = []; let perimetro = 0; let nombres = [];
+
+            for (let i = 0; i < nAng; i++) {
+                nombres.push(filas[i].querySelector('.in-pto').value || `E-${i}`);
+                let g = parseFloat(filas[i].querySelector('.ang-g').value)||0; let m = parseFloat(filas[i].querySelector('.ang-m').value)||0; let s = parseFloat(filas[i].querySelector('.ang-s').value)||0;
+                angObs.push(gmsADecimal(g, m, s));
+                if (i < nAng - 1) {
+                    let d = parseFloat(filas[i].querySelector('.dist').value); let z = parseFloat(filas[i].querySelector('.zen').value)||90; let hI = parseFloat(filas[i].querySelector('.ai').value)||0; let hP = parseFloat(filas[i].querySelector('.ap').value)||0;
+                    if(isNaN(d)) { showToast(`Falta distancia en Estación ${i}`, "error"); return; }
+                    dists.push(d); zens.push(z); ais.push(hI); aps.push(hP); perimetro += d;
+                }
+            }
+
+            let tipoAngulo = document.getElementById('tipoAngulo').value;
+            let azActual = azIni;
+            for(let i=0; i<nAng; i++) {
+                let a = angObs[i];
+                if(tipoAngulo === 'def_der') azActual = normalizarAzimut(azActual + a);
+                else if(tipoAngulo === 'def_izq') azActual = normalizarAzimut(azActual - a);
+                else azActual = normalizarAzimut(azActual + a);
+                if(i < nAng - 1) azActual = normalizarAzimut(azActual + 180);
+            }
+
+            let errorAng = azActual - azFinTeorico; if (errorAng > 180) errorAng -= 360; if (errorAng < -180) errorAng += 360;
+            let errorSeg = Math.abs(errorAng * 3600); let tolSeg = precisionEquipo * Math.sqrt(nAng);
+            document.getElementById('tolBadge').className = errorSeg <= tolSeg ? "tol-tag tol-pass" : "tol-tag tol-fail";
+            document.getElementById('tolBadge').innerText = errorSeg <= tolSeg ? "✓ CUMPLE TOLERANCIA VIAL" : "⚠️ RECHAZADO: REVISAR EQUIPO";
+            document.getElementById('resTolAng').innerText = `± ${tolSeg.toFixed(1)}"`;
+
+            let corrAng = -errorAng / nAng;
+            azActual = azIni; let azCompensados = [];
+            for (let i = 0; i < nAng - 1; i++) {
+                let a = angObs[i] + corrAng;
+                if(tipoAngulo === 'def_der') azActual = normalizarAzimut(azActual + a);
+                else if(tipoAngulo === 'def_izq') azActual = normalizarAzimut(azActual - a);
+                else azActual = normalizarAzimut(azActual + a);
+                azCompensados.push(azActual); azActual = normalizarAzimut(azActual + 180);
+            }
+
+            let actE = eEstIni; let actN = nEstIni; let actZ = zEstIni;
+            let proyE = []; let proyN = []; let dZs = [];
+            for (let i = 0; i < dists.length; i++) {
+                let azRad = azCompensados[i] * Math.PI / 180.0;
+                let zenRad = zens[i] * Math.PI / 180.0;
+                let distHoriz = dists[i] * Math.sin(zenRad);
+                let dE = distHoriz * Math.sin(azRad); let dN = distHoriz * Math.cos(azRad);
+                let dZ = (dists[i] * Math.cos(zenRad)) + ais[i] - aps[i];
+
+                proyE.push(dE); proyN.push(dN); dZs.push(dZ);
+                actE += dE; actN += dN; actZ += dZ;
+            }
+
+            let errorE = actE - eEstFin; let errorN = actN - nEstFin; let errorZ = actZ - zEstFin;
+            let errorLineal = Math.sqrt(Math.pow(errorE,2) + Math.pow(errorN,2));
+            let precRel = perimetro / errorLineal;
+
+            let azCierreTeorico = calcularAzimut(eEstIni, nEstIni, eEstFin, nEstFin);
+            let azError = calcularAzimut(0, 0, errorE, errorN);
+            let angErrorRel = (azError - azCierreTeorico) * Math.PI / 180.0;
+            let errLongitudinal = errorLineal * Math.cos(angErrorRel);
+            let errTransversal = errorLineal * Math.sin(angErrorRel);
+
+            let coordE = [eEstIni]; let coordN = [nEstIni]; let coordZ = [zEstIni];
+            let cE = eEstIni; let cN = nEstIni; let cZ = zEstIni;
+            for(let i=0; i<dists.length; i++) {
+                let factor = dists[i] / perimetro;
+                cE += proyE[i] - (errorE * factor); cN += proyN[i] - (errorN * factor); cZ += dZs[i] - (errorZ * factor);
+                coordE.push(cE); coordN.push(cN); coordZ.push(cZ);
+            }
+
+            document.getElementById('resErrAng').innerText = decimalAGMSString(errorAng);
+            document.getElementById('resErrLin').innerText = errorLineal.toFixed(decs) + " m";
+            document.getElementById('resErrLong').innerText = errLongitudinal.toFixed(decs) + " m";
+            document.getElementById('resErrTrans').innerText = errTransversal.toFixed(decs) + " m";
+            document.getElementById('resErrZ').innerText = errorZ.toFixed(decs) + " m";
+            document.getElementById('resPrecision').innerText = isNaN(precRel) || precRel===Infinity ? "PERFECTO" : "1 : " + Math.round(precRel).toLocaleString();
+
+            const tbodyRes = document.getElementById('cuerpoResultados'); tbodyRes.innerHTML = "";
+            for(let i=0; i<coordE.length; i++) {
+                tbodyRes.innerHTML += `<tr><td style="color:var(--primary-color); font-weight:800;">${nombres[i]}</td><td>${coordE[i].toFixed(decs)}</td><td>${coordN[i].toFixed(decs)}</td><td>${coordZ[i].toFixed(decs)}</td></tr>`;
+            }
+            document.getElementById('panelResultados').style.display = 'block';
+            showToast("Ajuste Vial Completado", "success");
+        }
+
+        function exportarCSV_PNEZD() {
+            vibrar(); let rows = document.querySelectorAll('#cuerpoResultados tr'); if(rows.length === 0) return;
+            let csv = "Punto,Este,Norte,Elevacion,Descripcion\n";
+            rows.forEach(tr => { let tds = tr.querySelectorAll('td'); csv += `${tds[0].innerText},${tds[1].innerText},${tds[2].innerText},${tds[3].innerText},Estación_Ajustada_Vial\n`; });
+            let blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+            let link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = "Eje_Vial_Ajustado.csv"; link.click();
+        }
+
+        function toggleCalculadora() { const m = document.getElementById('calculadoraModal'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
+        function calcInput(v) { document.getElementById('calcDisplay').value += v; }
+        function calcClear() { document.getElementById('calcDisplay').value = ''; }
+        function calcBackspace() { let d = document.getElementById('calcDisplay'); d.value = d.value.slice(0, -1); }
+        function calcEval() { try { let res = new Function('return ' + document.getElementById('calcDisplay').value)(); document.getElementById('calcDisplay').value = (res % 1 !== 0) ? res.toFixed(3) : res; } catch(e) { document.getElementById('calcDisplay').value = 'Error'; } }
+        
         function exportarBackup() {
-            vibrar(); const backup = JSON.parse(localStorage.getItem('cota100_db_polabierta_v1'));
+            vibrar(); const backup = JSON.parse(localStorage.getItem('cota100_db_polabierta_v5'));
             if(!backup || backup.proyectos.length === 0) return showToast("No hay datos para exportar.", "warning");
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
-            const dl = document.createElement('a');
-            const fecha = new Date().toISOString().split('T')[0];
+            const dl = document.createElement('a'); const fecha = new Date().toISOString().split('T')[0];
             dl.setAttribute("href", dataStr); dl.setAttribute("download", `DB_PolAbierta_${fecha}.json`);
-            document.body.appendChild(dl); dl.click(); dl.remove();
-            showToast("Backup exportado", "success");
+            document.body.appendChild(dl); dl.click(); dl.remove(); showToast("Backup exportado", "success");
         }
 
         function importarBackup() {
-            const fileInput = document.getElementById('importFile');
-            if (fileInput.files.length === 0) return;
+            const fileInput = document.getElementById('importFile'); if (fileInput.files.length === 0) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const backup = JSON.parse(e.target.result);
-                    if(backup && backup.proyectos) {
-                        localStorage.setItem('cota100_db_polabierta_v1', JSON.stringify(backup));
-                        showToast("✅ Base de datos restaurada. Recargando...", "success");
-                        setTimeout(() => window.location.reload(), 1500);
-                    } else showToast("❌ Archivo no válido.", "error");
+                    if(backup && backup.proyectos) { localStorage.setItem('cota100_db_polabierta_v5', JSON.stringify(backup)); showToast("✅ DB restaurada...", "success"); setTimeout(() => window.location.reload(), 1500); } 
+                    else showToast("❌ Archivo no válido.", "error");
                 } catch(err) { showToast("❌ Error al leer el archivo.", "error"); }
-            };
-            reader.readAsText(fileInput.files[0]);
+            }; reader.readAsText(fileInput.files[0]);
         }
-
-        // --- FUNCIONES MATEMÁTICAS ---
-        function calcularAzimut(E1, N1, E2, N2) { let dE = E2 - E1; let dN = N2 - N1; let az = Math.atan2(dE, dN) * 180 / Math.PI; if (az < 0) az += 360; return az; }
-        function gmsADecimal(g, m, s) { let signo = (g < 0) ? -1 : 1; return signo * (Math.abs(g) + (m / 60) + (s / 3600)); }
-        function decimalAGMSString(dec) {
-            let absoluto = Math.abs(dec); let g = Math.floor(absoluto); let mFloat = (absoluto - g) * 60;
-            let m = Math.floor(mFloat); let s = (mFloat - m) * 60; let signoStr = (dec < 0) ? "-" : "";
-            return `${signoStr}${g}° ${m.toString().padStart(2, '0')}' ${s.toFixed(1).padStart(4, '0')}"`;
-        }
-        function normalizarAzimut(az) { while (az >= 360.0) az -= 360.0; while (az < 0.0) az += 360.0; return az; }
-
-        function agregarVertice() {
-            const tbody = document.getElementById('cuerpoPoligonal');
-            const tr = document.createElement('tr');
-            const numEstaciones = tbody.children.length - 1; 
-            
-            let filaAnterior = tbody.lastElementChild.previousElementSibling;
-            if (filaAnterior.querySelector('.in-pto').value === `E-${numEstaciones-2}`) {
-                filaAnterior.querySelector('.in-pto').value = `E-${numEstaciones-1}`;
-            }
-            
-            let ultimaActual = tbody.lastElementChild;
-            ultimaActual.querySelector('.in-pto').value = `E-${numEstaciones}`;
-            ultimaActual.querySelector('td:last-child').innerHTML = `<input type="number" step="0.001" class="dist" placeholder="Dist" oninput="guardarEstadoApp()">`;
-            ultimaActual.querySelector('td:last-child').classList.remove('td-readonly');
-
-            tr.innerHTML = `
-                <td><input type="text" class="in-pto" value="E-FIN" style="color:var(--primary-color);" oninput="guardarEstadoApp()"></td>
-                <td><input type="number" class="ang-g" placeholder="°" oninput="guardarEstadoApp()"></td>
-                <td><input type="number" class="ang-m" placeholder="'" oninput="guardarEstadoApp()"></td>
-                <td><input type="number" step="0.1" class="ang-s" placeholder="''" oninput="guardarEstadoApp()"></td>
-                <td class="td-readonly"><input type="text" value="Cierre Ref" disabled style="background:transparent; border:none; text-align:center; color:var(--text-color); font-weight:800; opacity:0.5;"></td>
-            `;
-            tbody.appendChild(tr);
-            guardarEstadoApp();
-        }
-
-        function quitarVertice() {
-            const tbody = document.getElementById('cuerpoPoligonal');
-            if (tbody.children.length > 2) {
-                tbody.removeChild(tbody.lastChild);
-                let nuevaUltima = tbody.lastElementChild;
-                nuevaUltima.querySelector('.in-pto').value = "E-FIN";
-                nuevaUltima.querySelector('td:last-child').innerHTML = `<input type="text" value="Cierre Ref" disabled style="background:transparent; border:none; text-align:center; color:var(--text-color); font-weight:800; opacity:0.5;">`;
-                nuevaUltima.querySelector('td:last-child').classList.add('td-readonly');
-                guardarEstadoApp();
-            } else {
-                showToast("No puedes borrar más estaciones.", "warning");
-            }
-        }
-
-        function calcularPoligonal() {
-            let decs = parseInt(globalConfig.decimales) || 3;
-            let precisionEquipo = parseFloat(document.getElementById('precisionEquipo').value) || 5;
-
-            let eEstIni = parseFloat(document.getElementById('eEstIni').value); let nEstIni = parseFloat(document.getElementById('nEstIni').value);
-            let eRefIni = parseFloat(document.getElementById('eRefIni').value); let nRefIni = parseFloat(document.getElementById('nRefIni').value);
-            let eEstFin = parseFloat(document.getElementById('eEstFin').value); let nEstFin = parseFloat(document.getElementById('nEstFin').value);
-            let eRefFin = parseFloat(document.getElementById('eRefFin').value); let nRefFin = parseFloat(document.getElementById('nRefFin').value);
-
-            if(isNaN(eEstIni) || isNaN(eRefIni) || isNaN(eEstFin) || isNaN(eRefFin)) { showToast("Llena todas las coordenadas de control antes de procesar.", "warning"); return; }
-
-            let azInicialReal = calcularAzimut(eEstIni, nEstIni, eRefIni, nRefIni);
-            let azFinalTeorico = calcularAzimut(eEstFin, nEstFin, eRefFin, nRefFin);
-
-            let filas = document.querySelectorAll('#cuerpoPoligonal tr');
-            let nAngulos = filas.length;
-            let angObs = []; let distancias = []; let perimetro = 0;
-            let nombresEstaciones = [];
-
-            for (let i = 0; i < nAngulos; i++) {
-                nombresEstaciones.push(filas[i].querySelector('.in-pto').value || `Est-${i}`);
-                let g = parseFloat(filas[i].querySelector('.ang-g').value) || 0;
-                let m = parseFloat(filas[i].querySelector('.ang-m').value) || 0;
-                let s = parseFloat(filas[i].querySelector('.ang-s').value) || 0;
-                angObs.push(gmsADecimal(g, m, s));
-
-                if (i < nAngulos - 1) { 
-                    let dist = parseFloat(filas[i].querySelector('.dist').value);
-                    if (isNaN(dist)) { showToast(`Falta la distancia en la fila ${i+1}`, "error"); return; }
-                    distancias.push(dist); perimetro += dist;
-                }
-            }
-
-            let azCalculados = [azInicialReal];
-            let azActual = azInicialReal;
-            for (let i = 0; i < nAngulos; i++) {
-                azActual = normalizarAzimut(azActual + angObs[i]); 
-                if (i < nAngulos - 1) azActual = normalizarAzimut(azActual + 180);
-                azCalculados.push(azActual);
-            }
-
-            let azCierreCalculado = azCalculados[azCalculados.length - 1];
-            let errorAngular = azCierreCalculado - azFinalTeorico;
-            if (errorAngular > 180) errorAngular -= 360;
-            if (errorAngular < -180) errorAngular += 360;
-
-            let errorSegundos = Math.abs(errorAngular * 3600);
-            let toleranciaSegundos = precisionEquipo * Math.sqrt(nAngulos);
-            let pasaTolerancia = errorSegundos <= toleranciaSegundos;
-
-            document.getElementById('resTolAng').innerText = `± ${toleranciaSegundos.toFixed(1)}"`;
-            let badge = document.getElementById('tolBadge');
-            if(pasaTolerancia) {
-                badge.className = "tol-tag tol-pass"; badge.innerText = "✓ ESTADO: ACEPTABLE";
-            } else {
-                badge.className = "tol-tag tol-fail"; badge.innerText = "⚠️ RECHAZADO: EXCEDE TOLERANCIA";
-            }
-
-            let compensacionAngular = -errorAngular / nAngulos;
-            let angCompensados = [];
-            for (let i = 0; i < nAngulos; i++) angCompensados.push(angObs[i] + compensacionAngular);
-
-            let azCompensados = [azInicialReal];
-            azActual = azInicialReal;
-            for (let i = 0; i < nAngulos - 1; i++) {
-                azActual = normalizarAzimut(azActual + angCompensados[i]);
-                azCompensados.push(azActual); 
-                azActual = normalizarAzimut(azActual + 180); 
-            }
-
-            let proyE = []; let proyN = []; let actualE = eEstIni; let actualN = nEstIni;
-            for (let i = 0; i < distancias.length; i++) {
-                let azRad = azCompensados[i+1] * Math.PI / 180.0;
-                let dE = distancias[i] * Math.sin(azRad); let dN = distancias[i] * Math.cos(azRad);
-                proyE.push(dE); proyN.push(dN);
-                actualE += dE; actualN += dN;
-            }
-
-            let errorE = actualE - eEstFin; let errorN = actualN - nEstFin;
-            let errorLineal = Math.sqrt(Math.pow(errorE, 2) + Math.pow(errorN, 2));
-            let precisionRelativa = perimetro / errorLineal;
-
-            let coordE = [eEstIni]; let coordN = [nEstIni];
-            let compAcumE = eEstIni; let compAcumN = nEstIni;
-            for (let i = 0; i < distancias.length; i++) {
-                let compE = -errorE * (distancias[i] / perimetro);
-                let compN = -errorN * (distancias[i] / perimetro);
-                compAcumE = compAcumE + proyE[i] + compE;
-                compAcumN = compAcumN + proyN[i] + compN;
-                coordE.push(compAcumE); coordN.push(compAcumN);
-            }
-
-            document.getElementById('resErrAng').innerText = decimalAGMSString(errorAngular);
-            document.getElementById('resErrLin').innerText = errorLineal.toFixed(decs) + " m";
-            
-            let resPrec = document.getElementById('resPrecision');
-            if(precisionRelativa === Infinity || isNaN(precisionRelativa)) {
-                resPrec.innerText = "PERFECTO"; resPrec.style.color = "var(--success-color)";
-            } else {
-                resPrec.innerText = "1 : " + Math.round(precisionRelativa).toLocaleString();
-                resPrec.style.color = (precisionRelativa >= 10000) ? "var(--success-color)" : "var(--danger-color)";
-            }
-
-            const tbodyRes = document.getElementById('cuerpoResultados');
-            tbodyRes.innerHTML = ""; 
-
-            for (let i = 0; i < coordE.length; i++) {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td style="color: var(--primary-color); font-weight: 800;">${nombresEstaciones[i]}</td>
-                    <td>${coordE[i].toFixed(decs)}</td>
-                    <td>${coordN[i].toFixed(decs)}</td>
-                `;
-                tbodyRes.appendChild(tr);
-            }
-
-            document.getElementById('panelResultados').style.display = 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            showToast("Ajuste procesado", "success");
-        }
-
-        /* --- CALCULADORA FLOTANTE --- */
-        function toggleCalculadora() { vibrar(); const m = document.getElementById('calculadoraModal'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
-        function calcInput(v) { vibrar(); document.getElementById('calcDisplay').value += v; }
-        function calcClear() { vibrar(); document.getElementById('calcDisplay').value = ''; }
-        function calcBackspace() { vibrar(); let d = document.getElementById('calcDisplay'); d.value = d.value.slice(0, -1); }
-        function calcEval() { vibrar(); try { let res = new Function('return ' + document.getElementById('calcDisplay').value)(); document.getElementById('calcDisplay').value = (res % 1 !== 0) ? res.toFixed(3) : res; } catch(e) { document.getElementById('calcDisplay').value = 'Error'; } }
     </script>
 </body>
 </html>

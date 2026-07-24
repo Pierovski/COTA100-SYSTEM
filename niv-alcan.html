@@ -52,25 +52,18 @@
 
         /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
         .fire-base {
-            position: fixed;
-            bottom: 0; left: 0; width: 100vw; height: 35vh;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
+            position: fixed; bottom: 0; left: 0; width: 100vw; height: 35vh;
+            z-index: -2; pointer-events: none; overflow: hidden;
         }
         .fire-wave {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200vw; height: 100%;
+            position: absolute; bottom: 0; left: 0; width: 200vw; height: 100%;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 10s linear infinite;
+            background-size: 50% 100%; animation: waveFire 10s linear infinite;
         }
         .fire-wave.delay {
             bottom: -15px; opacity: 0.6;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 7s linear infinite reverse;
+            background-size: 50% 100%; animation: waveFire 7s linear infinite reverse;
         }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
@@ -81,12 +74,13 @@
             .panel-control { padding: 12px; margin-bottom: 12px;}
             .top-bar { padding: 10px 15px; height: 65px; }
             .btn-volver-mini { width: 38px; height: 38px; }
-            .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px; }
+            .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px;}
             .calculadora-modal { right: 10px; bottom: 65px; width: 230px;}
             th { font-size: 0.75rem; padding: 6px 1px; }
             td { font-size: 1rem; padding: 8px 2px; } 
         }
 
+        /* --- CABECERA DUAL --- */
         .top-bar { 
             display: flex; align-items: center; justify-content: space-between; 
             padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
@@ -114,7 +108,7 @@
         .btn-toggle-panel { background: none; border: none; font-size: 1.2rem; color: var(--text-color); pointer-events: none;}
         
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .input-group { display: flex; flex-direction: column; }
+        .input-group { display: flex; flex-direction: column; position: relative;}
         .full-width { grid-column: 1 / -1; }
 
         label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
@@ -125,21 +119,17 @@
         /* CUSTOM SELECT BUTTONS */
         .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
-        .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
-        .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
-        .project-selector { display: flex; gap: 8px; margin-bottom: 10px; }
-        
-        .bm-list { margin-top: 8px; max-height: 180px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; }
-        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
-        .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        /* LISTA BM DRAG AND DROP OPTIMIZADO */
+        .bm-list { margin-top: 8px; max-height: 220px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; padding-bottom: 5px;}
+        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); background: var(--card-bg); transition: transform 0.1s; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: pan-y;}
+        .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; pointer-events: none; }
         .bm-info { display: flex; flex-direction: column; text-align: left; }
         .bm-info strong { font-size: 0.95rem; color: var(--text-color); }
         .bm-info span { font-size: 0.85rem; color: var(--primary-color); font-weight: 700; }
-        
-        .bm-actions { display: flex; gap: 2px; }
-        .bm-actions button { background: none; border: none; border-radius: 4px; padding: 4px 6px; font-size: 0.9rem; cursor: pointer; opacity: 0.4; transition: 0.2s; filter: grayscale(100%); }
-        .bm-actions button:hover, .bm-actions button:active { opacity: 1; filter: grayscale(0%); background: rgba(128,128,128,0.1); }
+        .bm-actions { display: flex; gap: 6px; pointer-events: auto; }
+        .bm-actions button { background: none; border: none; border-radius: 4px; padding: 4px; font-size: 1.1rem; cursor: pointer; opacity: 0.6; transition: 0.2s;}
+        .bm-actions button:active { opacity: 1; transform: scale(0.9); }
         .bm-obs { display: none; font-size: 0.8rem; color: #888; margin-top: 6px; text-align: left; background: rgba(128,128,128,0.05); padding: 6px; border-radius: 4px; border-left: 3px solid var(--primary-color); }
 
         .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center;}
@@ -148,6 +138,7 @@
         .btn-excel { background: transparent; color: var(--excel-color); border: 2px solid var(--excel-color); margin-top: 15px; display: none;}
         body.dark-mode .btn-excel { color: #81c784; border-color: #81c784; }
 
+        /* TABLA PRINCIPAL */
         .seccion-tabla { display: none; margin-top: 15px; }
         .table-wrapper { width: 100%; max-height: 55vh; overflow-y: auto; overflow-x: auto; border: 1px solid var(--card-border); border-radius: 8px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         table { width: 100%; min-width: 650px; border-collapse: separate; border-spacing: 0; }
@@ -159,42 +150,36 @@
         .res-ai span { color: var(--primary-color); font-family: monospace; font-size: 1.4rem;}
 
         .fila-ok td { background-color: var(--success-bg) !important; color: var(--success-text) !important; transition: background-color 0.2s, color 0.2s; border-bottom-color: rgba(46, 204, 113, 0.4);}
-        .fila-ok td:first-child::after { content: ' ✓'; font-weight: 900; }
-        .celda-prog { cursor: pointer; } 
+        .celda-prog { cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px;} 
+        .icono-terr { display: inline-block; font-size: 0.9rem; padding: 2px 4px; background: rgba(128,128,128,0.2); border-radius: 4px; border: 1px solid var(--border-color); cursor: pointer; opacity: 0.8; }
+        .icono-terr:active { transform: scale(0.9); }
+
+        /* F7: TARJETA GIGANTE */
+        #tarjetaGigante {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95); z-index: 10000;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        .tg-prog { font-size: 3rem; color: #fff; font-weight: 900; letter-spacing: 2px; }
+        .tg-lectura { font-size: 7rem; color: #00FF00; font-weight: 900; margin-top: 10px; line-height: 1; text-shadow: 0 0 20px rgba(0,255,0,0.5);}
+        .tg-label { font-size: 1.2rem; color: #aaa; text-transform: uppercase; font-weight: 800; letter-spacing: 4px;}
 
         /* --- CALCULADORA DISEÑO OPTIMIZADO COTA100 --- */
         .btn-calculadora-flotante { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; background: var(--card-bg); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid var(--primary-color); cursor: pointer; z-index: 999; font-size: 1.4rem; backdrop-filter: blur(5px);}
-        .calculadora-modal { 
-            position: fixed; bottom: 80px; right: 15px; width: 240px; 
-            background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; 
-            padding: 15px; display: none; z-index: 1000; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
-            box-shadow: 0 4px 20px var(--primary-glow); 
-        }
+        .calculadora-modal { position: fixed; bottom: 80px; right: 15px; width: 240px; background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; padding: 15px; display: none; z-index: 1000; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); box-shadow: 0 4px 20px var(--primary-glow); }
         .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800; color: var(--text-color); font-size: 0.85rem;}
         .calc-header button { background: none; border: none; font-size: 1.2rem; font-weight: 800; color: var(--danger-color); cursor: pointer;}
         .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        
-        .calc-grid button { 
-            padding: 12px 0; font-size: 1.2rem; font-weight: 800; 
-            border: 1px solid var(--border-color); border-radius: 8px; 
-            background: var(--input-bg); color: var(--text-color); cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .calc-grid button { padding: 12px 0; font-size: 1.2rem; font-weight: 800; border: 1px solid var(--border-color); border-radius: 8px; background: var(--input-bg); color: var(--text-color); cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);}
         .calc-grid button:active { transform: scale(0.9); }
         .calc-grid button.calc-op { color: var(--primary-color); background: rgba(255, 85, 0, 0.1); border-color: var(--card-border); }
         .calc-grid button.calc-clear { color: var(--danger-color); border-color: rgba(211, 47, 47, 0.3); background: rgba(211, 47, 47, 0.05); }
         .calc-grid button.calc-del { grid-column: span 2; background: rgba(128,128,128,0.1); }
         .calc-grid button.calc-eval { grid-column: span 2; background: var(--primary-color); color: #fff; border: none; box-shadow: 0 2px 8px var(--primary-glow); }
-        
-        #calcDisplay { 
-            width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; 
-            border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; 
-            padding: 4px 10px; background: var(--input-bg); color: var(--text-color); 
-        }
-        #calcDisplay:focus { border-color: var(--primary-color); outline: none; }
+        #calcDisplay { width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; padding: 4px 10px; background: var(--input-bg); color: var(--text-color); }
 
-        /* --- TOAST NOTIFICATIONS --- */
+        /* TOAST Y MODALS */
         #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 350px;}
         .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
         .toast.error { border-left-color: var(--danger-color); }
@@ -204,28 +189,20 @@
         @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
 
-        /* --- CUSTOM CONFIRM MODAL --- */
-        .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.2s; backdrop-filter: blur(2px);}
-        .confirm-overlay.activo { opacity: 1; visibility: visible; }
-        .confirm-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(15px);}
-        .confirm-overlay.activo .confirm-box { transform: scale(1); }
-        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
-        .confirm-btns { display: flex; gap: 10px; }
-        .confirm-btn { flex: 1; padding: 12px; font-weight: 800; border-radius: 8px; border: none; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.2s;}
-        .confirm-btn:active { transform: scale(0.95); }
-        .confirm-btn-cancel { background: rgba(128,128,128,0.2); color: var(--text-color); }
-        .confirm-btn-ok { background: var(--primary-color); color: #fff; }
-
-        /* --- MODAL SELECTOR GENÉRICO --- */
-        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(2px); }
+        /* MODALES DE CONFIRMACIÓN Y ALERTA (GLASSMORPHISM) */
+        .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
         .overlay-select.activo { opacity: 1; }
         .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
         .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
+        
+        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
+        .confirm-btns { display: flex; gap: 10px; }
+        .confirm-btn { flex: 1; padding: 12px; font-weight: 800; border-radius: 8px; border: none; font-size: 0.95rem; cursor: pointer; text-transform: uppercase; transition: 0.2s;}
+        .confirm-btn:active { transform: scale(0.95); }
+
         .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
         .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
         .btn-opcion span.cota { color: var(--text-color); font-size: 0.95rem; font-weight: 700;}
-        .btn-opcion:active span.cota { color: #fff !important; }
-
     </style>
 </head>
 <body onload="inicializarApp()">
@@ -236,23 +213,42 @@
         <div class="fire-wave"></div>
     </div>
 
-    <script>
-        try {
-            let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-            if (conf && conf.darkMode) document.body.classList.add('dark-mode');
-        } catch(e) {}
-    </script>
+    <!-- TARJETA GIGANTE FLOTANTE -->
+    <div id="tarjetaGigante" onclick="this.style.display='none'">
+        <div class="tg-label">PROGRESIVA</div>
+        <div class="tg-prog" id="tgProg">0+000</div>
+        <div class="tg-label" style="margin-top:30px;">ZANJA</div>
+        <div class="tg-lectura" id="tgZanja">1.500</div>
+        <div style="margin-top:40px; font-weight:800; color:#fff; opacity:0.5; border: 1px solid #fff; padding: 5px 15px; border-radius:20px;">Toca para cerrar</div>
+    </div>
 
-    <!-- TOAST & CONFIRM MODALS -->
+    <!-- TOAST & MODALS -->
     <div id="toast-container"></div>
 
-    <div class="confirm-overlay" id="customConfirmOverlay">
-        <div class="confirm-box">
-            <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
-            <div class="confirm-btns">
-                <button class="confirm-btn confirm-btn-cancel" id="btnConfirmCancel">Cancelar</button>
-                <button class="confirm-btn confirm-btn-ok" id="btnConfirmOk">Aceptar</button>
-            </div>
+    <div class="overlay-select" id="customConfirmOverlay"></div>
+    <div class="modal-select" id="customConfirmModal">
+        <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
+        <div class="confirm-btns">
+            <button class="confirm-btn" style="background:rgba(128,128,128,0.2); color:var(--text-color);" id="btnConfirmCancel" onclick="btnConfirmCancelClick()">CANCELAR</button>
+            <button class="confirm-btn" style="background:var(--primary-color); color:#fff;" id="btnConfirmOk" onclick="btnConfirmOkClick()">ACEPTAR</button>
+        </div>
+    </div>
+
+    <div class="overlay-select" id="customAlertOverlay"></div>
+    <div class="modal-select" id="customAlertModal">
+        <div class="confirm-msg" id="customAlertMsg">Información</div>
+        <div class="confirm-btns">
+            <button class="confirm-btn" style="background:var(--primary-color); color:#fff; width:100%;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <div class="overlay-select" id="customPromptOverlay"></div>
+    <div class="modal-select" id="customPromptModal">
+        <h3 id="customPromptTitle" style="color:var(--text-color); margin-bottom:10px; font-weight:900; text-transform:uppercase; font-size: 1.1rem;">INGRESO</h3>
+        <input type="text" id="customPromptInput" style="margin-bottom:15px; background:var(--input-bg); border:1px solid var(--primary-color); width:100%; padding:10px; font-weight:bold; border-radius:8px; color:var(--text-color);" onfocus="this.select()">
+        <div class="confirm-btns">
+            <button class="confirm-btn" style="background:var(--danger-color); color:#fff;" onclick="document.getElementById('customPromptInput').value=''; document.getElementById('customPromptInput').focus();">BORRAR</button>
+            <button class="confirm-btn" style="background:var(--primary-color); color:#fff;" id="btnPromptOk" onclick="btnPromptOkClick()">GUARDAR</button>
         </div>
     </div>
 
@@ -266,21 +262,19 @@
         <div id="modalSelectContent" style="max-height:300px; overflow-y:auto; margin-bottom:5px;"></div>
     </div>
 
-    <!-- VARIABLES OCULTAS PARA GUARDAR ESTADOS DE LOS CUSTOM SELECTS -->
+    <!-- VARIABLES OCULTAS -->
     <input type="hidden" id="hdnSelectPerfil" value="">
     <input type="hidden" id="hdnSelectBM" value="">
 
     <div class="top-bar">
         <div class="nav-buttons-left">
-            <!-- Botón Casa (Home) -->
-            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
+            <a href="index.html" class="btn-volver-mini">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
             </a>
-            <!-- Botón Atrás actualizado con SVG -->
-            <a href="nivelacion.html" class="btn-volver-mini" onclick="vibrar()">
+            <a href="nivelacion.html" class="btn-volver-mini">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="19" y1="12" x2="5" y2="12"></line>
                     <polyline points="12 19 5 12 12 5"></polyline>
@@ -288,7 +282,7 @@
             </a>
         </div>
         <h2 class="top-bar-title">ALCANTARILLADO <span>Control de Redes</span></h2>
-        <div style="width: 90px;"></div> 
+        <div style="width: 45px;"></div> 
     </div>
 
     <div class="modulo-container">
@@ -298,18 +292,17 @@
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panelProyecto">
-                <div class="project-selector">
+                
+                <div class="project-selector" style="display: flex; gap: 6px; margin-bottom: 12px; align-items: center;">
                     <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')">
                         <span id="txtSelectProyecto">Cargando...</span>
                         <span class="arrow">▼</span>
                     </div>
-                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--primary-color); margin-bottom: 0;" onclick="crearNuevoProyecto()">+ NUEVO</button>
-                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--danger-color); margin-bottom: 0;" onclick="eliminarProyecto()">🗑️</button>
+                    <button class="btn-accion" style="width: 42px; padding: 10px; background: var(--table-header); margin:0;" onclick="editarNombreProyecto()">✏️</button>
+                    <button class="btn-accion" style="width: 42px; padding: 10px; background: var(--primary-color); margin:0;" onclick="crearNuevoProyecto()">➕</button>
+                    <button class="btn-accion" style="width: 42px; padding: 10px; background: var(--danger-color); margin:0;" onclick="eliminarProyecto()">🗑️</button>
                 </div>
-                <div class="input-group full-width" style="margin-bottom: 12px;">
-                    <label>Nombre de la Red / Obra</label>
-                    <input type="text" id="proyectName" placeholder="Ej: Red de Agua Sector 4" oninput="renombrarProyecto(); guardarEstadoAlcan();">
-                </div>
+
                 <div style="border-top: 1px solid var(--border-color); padding-top: 10px;">
                     <label style="color: var(--primary-color);">+ Registrar BM</label>
                     <div class="form-grid" style="margin-top: 4px;">
@@ -319,12 +312,14 @@
                     </div>
                     <button id="btnGuardarBM" class="btn-accion" style="padding: 10px; font-size: 0.9rem;" onclick="addBM()">Guardar BM en Proyecto</button>
                 </div>
+                
+                <label style="margin-top: 10px; display: block; font-size:0.75rem; opacity:0.7;">Mantén presionado para reordenar</label>
                 <div class="bm-list" id="listaBMs"></div>
                 
                 <div style="border-top: 1px dashed var(--border-color); padding-top: 12px; margin-top: 12px;">
                     <div style="display: flex; gap: 8px;">
                         <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: var(--table-header); margin: 0;" onclick="exportarBackupAlcan()">📤 Backup DB</button>
-                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;" onclick="vibrar()">
+                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;">
                             📥 Restaurar
                             <input type="file" id="importAlcanFile" accept=".json" style="display: none;" onchange="importarBackupAlcan()">
                         </label>
@@ -346,17 +341,29 @@
                         <span class="arrow">▼</span>
                     </div>
                 </div>
-                <button class="btn-accion btn-auto" onclick="autocalcularTramo()">🪄 Deducir Dato Faltante</button>
+                <div style="display: flex; gap:8px;">
+                    <button class="btn-accion btn-auto" style="flex:1;" onclick="autocalcularTramo()">🪄 Deducir Dato</button>
+                    <button class="btn-accion btn-auto" style="flex:1;" onclick="toggleCroquis()">👁️ Ver Croquis</button>
+                </div>
+                
+                <!-- CANVAS MEJORADO -->
+                <canvas id="croquisCanvas" width="300" height="150" style="display:none; width:100%; border:1px solid var(--border-color); border-radius:8px; margin-bottom:10px; background: var(--card-bg);"></canvas>
+
                 <div class="form-grid">
                     <div class="input-group"><label>Cota Fondo Inicial</label><input type="text" inputmode="decimal" id="cotaIni" placeholder="0.000" oninput="formatDecimal(this); evaluarLimiteVA(); desmarcarPerfil(); guardarEstadoAlcan();"></div>
                     <div class="input-group"><label>Cota Fondo Final</label><input type="text" inputmode="decimal" id="cotaFin" placeholder="0.000" oninput="formatDecimal(this); evaluarLimiteVA(); desmarcarPerfil(); guardarEstadoAlcan();"></div>
                     <div class="input-group"><label>Distancia Total (m)</label><input type="text" inputmode="decimal" id="distTotal" placeholder="0.000" oninput="formatDecimal(this); desmarcarPerfil(); guardarEstadoAlcan();"></div>
-                    <div class="input-group"><label>Pendiente (% al 100)</label><input type="text" inputmode="decimal" id="pte" placeholder="0.000" oninput="formatDecimal(this); desmarcarPerfil(); guardarEstadoAlcan();"></div>
+                    <div class="input-group">
+                        <label>Pendiente (%)</label>
+                        <!-- CAJA PENDIENTE SIMPLIFICADA -->
+                        <input type="text" inputmode="decimal" id="pte" placeholder="0.000" oninput="formatDecimal(this); evaluarNormativa(this); desmarcarPerfil(); guardarEstadoAlcan();">
+                        <span id="alertaNorma" style="color:var(--danger-color); font-size:0.75rem; font-weight:800; display:none;">⚠️ Pend. Mínima</span>
+                    </div>
                 </div>
                 <div style="border-top: 1px dashed var(--border-color); padding-top: 10px; margin-top: 10px;">
                     <label style="color: var(--text-color);">💾 Guardar este Tramo/Perfil en el proyecto</label>
                     <div style="display: flex; gap: 8px; margin-top: 5px;">
-                        <input type="text" id="nombrePerfilNuevo" placeholder="Ej: BZ1 - BZ2" style="flex: 1; text-align: left; padding: 10px;" oninput="this.value = this.value.toUpperCase()">
+                        <input type="text" id="nombrePerfilNuevo" placeholder="Ej: BZ1 - BZ2" style="flex: 1; text-align: left; padding: 10px; background:var(--input-bg); border:1px solid var(--border-color); border-radius:8px; font-weight:800; color:var(--text-color);" oninput="this.value = this.value.toUpperCase()">
                         <button class="btn-accion" style="width: auto; padding: 10px 15px; background: #1976d2; margin: 0;" onclick="guardarPerfil()">Guardar</button>
                     </div>
                 </div>
@@ -397,16 +404,24 @@
         </div>
 
         <div class="seccion-tabla" id="seccionTabla">
-            <div class="res-ai" id="resAI">AI (Altura Instrumento): <br><span id="txtAI">0.000</span></div>
+            <div class="res-ai" id="resAI">AI (Altura Instrumento Inicial): <br><span id="txtAI">0.000</span></div>
+            
+            <!-- BOTONES DE PL Y EXTRAS -->
+            <div style="display: flex; gap:8px; margin-bottom: 10px;">
+                <button class="btn-accion btn-auto" style="flex:1; margin:0;" onclick="gestionarPL()">📍 Añadir PL</button>
+                <button class="btn-accion btn-auto" style="flex:1; margin:0;" onclick="interpolarProg()">🔍 Interpolar Cota/Lectura</button>
+            </div>
+            <button class="btn-accion btn-auto" style="width:100%; margin-bottom:15px; color:var(--danger-color); border-color:var(--danger-color);" onclick="limpiarPLs()">🗑️ Reset PLs de esta Libreta</button>
+
             <div class="table-wrapper">
-                <table id="tablaAlcantarillado">
+                <table id="tablaAlcantarillado" style="user-select:none; -webkit-user-select:none;">
                     <thead>
                         <tr>
-                            <th style="width: 17%;">PROG.</th>
-                            <th style="width: 21%;">L. ZANJA</th>
-                            <th style="width: 21%;">L. LOMO<br><span style="font-size:0.6rem; opacity:0.8;" id="infoTubo">Tubo+Cama</span></th>
-                            <th style="width: 20.5%; color: #aaa;">C. Zanja</th>
-                            <th style="width: 20.5%; color: #aaa;">C. Lomo</th>
+                            <th style="width: 25%;">PROG.</th>
+                            <th style="width: 18%;">L. ZANJA</th>
+                            <th style="width: 18%;">L. LOMO<br><span style="font-size:0.6rem; opacity:0.8;" id="infoTubo">Tubo+Cama</span></th>
+                            <th style="width: 19.5%; color: #aaa;">C. Zanja</th>
+                            <th style="width: 19.5%; color: #aaa;">C. Lomo</th>
                         </tr>
                     </thead>
                     <tbody id="cuerpoTabla"></tbody>
@@ -444,54 +459,69 @@
     </div>
 
     <script>
-        /* --- UI: TOAST Y CONFIRM --- */
+        /* --- SISTEMA DE UI: TOAST Y MODALS PERSONALIZADOS --- */
         function showToast(message, type = "default") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             toast.innerText = message;
             container.appendChild(toast);
-            vibrar();
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                toast.addEventListener('animationend', () => toast.remove());
-            }, 3000);
+            setTimeout(() => { toast.classList.add('fade-out'); toast.addEventListener('animationend', () => toast.remove()); }, 3000);
         }
 
         let confirmOkCallback = null;
         let confirmCancelCallback = null;
+        let promptOkCallback = null;
 
-        function showConfirm(message, onOk, onCancel = null) {
-            vibrar();
-            const overlay = document.getElementById('customConfirmOverlay');
-            document.getElementById('customConfirmMsg').innerText = message;
-            confirmOkCallback = onOk;
-            confirmCancelCallback = onCancel;
-            overlay.classList.add('activo');
+        function showCustomAlert(message) {
+            document.getElementById('customAlertMsg').innerHTML = message;
+            document.getElementById('customAlertOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customAlertOverlay').classList.add('activo'); document.getElementById('customAlertModal').classList.add('abierto'); }, 10);
+        }
+        function cerrarCustomAlert() {
+            document.getElementById('customAlertOverlay').classList.remove('activo'); document.getElementById('customAlertModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customAlertOverlay').style.display = 'none'; }, 300);
         }
 
-        document.getElementById('btnConfirmCancel').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
-            if (confirmCancelCallback) confirmCancelCallback();
-        });
+        function showCustomConfirm(message, onOk, onCancel = null, okText = "ACEPTAR", cancelText = "CANCELAR") {
+            document.getElementById('customConfirmMsg').innerHTML = message.replace(/\n/g, '<br>');
+            document.getElementById('btnConfirmOk').innerText = okText;
+            document.getElementById('btnConfirmCancel').innerText = cancelText;
+            confirmOkCallback = onOk; confirmCancelCallback = onCancel;
+            document.getElementById('customConfirmOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customConfirmOverlay').classList.add('activo'); document.getElementById('customConfirmModal').classList.add('abierto'); }, 10);
+        }
+        function cerrarCustomConfirm() {
+            document.getElementById('customConfirmOverlay').classList.remove('activo'); document.getElementById('customConfirmModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customConfirmOverlay').style.display = 'none'; }, 300);
+        }
+        function btnConfirmOkClick() { cerrarCustomConfirm(); if (confirmOkCallback) confirmOkCallback(); }
+        function btnConfirmCancelClick() { cerrarCustomConfirm(); if (confirmCancelCallback) confirmCancelCallback(); }
 
-        document.getElementById('btnConfirmOk').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
-            if (confirmOkCallback) confirmOkCallback();
-        });
+        function showCustomPrompt(title, defaultVal, onOk) {
+            document.getElementById('customPromptTitle').innerText = title;
+            let inp = document.getElementById('customPromptInput');
+            inp.value = defaultVal; promptOkCallback = onOk;
+            document.getElementById('customPromptOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customPromptOverlay').classList.add('activo'); document.getElementById('customPromptModal').classList.add('abierto'); inp.focus(); }, 10);
+        }
+        function cerrarCustomPrompt() {
+            document.getElementById('customPromptOverlay').classList.remove('activo'); document.getElementById('customPromptModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customPromptOverlay').style.display = 'none'; }, 300);
+        }
+        function btnPromptOkClick() {
+            let val = document.getElementById('customPromptInput').value;
+            cerrarCustomPrompt(); if (promptOkCallback) promptOkCallback(val);
+        }
 
         /* --- UI: MODAL SELECTOR GENÉRICO --- */
         let tipoModalActual = "";
         function abrirModalSelect(tipo) {
-            vibrar();
             tipoModalActual = tipo;
             const titulo = document.getElementById('modalSelectTitle');
             const contenido = document.getElementById('modalSelectContent');
             contenido.innerHTML = "";
             let p = obtenerProyectoActivo();
-            let decs = parseInt(globalConfig.decimales) || 3;
 
             if(tipo === 'proyecto') {
                 titulo.innerText = "📁 SELECCIONAR PROYECTO";
@@ -510,6 +540,7 @@
                 }
             } else if(tipo === 'bm') {
                 titulo.innerText = "📍 SELECCIONAR BM";
+                let decs = parseInt(globalConfig.decimales) || 3;
                 contenido.innerHTML += `<button class="btn-opcion" onclick="seleccionarOpcionModal('', '-- ELEGIR BM --')"><span>-- ELEGIR BM --</span></button>`;
                 p.bms.forEach(bm => {
                     let isActivo = document.getElementById('hdnSelectBM').value === bm.cota.toString();
@@ -522,7 +553,6 @@
         }
 
         function cerrarModalSelect() {
-            vibrar();
             document.getElementById('overlaySelect').classList.remove('activo');
             document.getElementById('modalSelect').classList.remove('abierto');
             setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300);
@@ -530,9 +560,8 @@
 
         function seleccionarOpcionModal(valor, textoExtra) {
             cerrarModalSelect();
-            if(tipoModalActual === 'proyecto') {
-                cambiarProyectoActivo(valor);
-            } else if(tipoModalActual === 'perfil') {
+            if(tipoModalActual === 'proyecto') { cambiarProyectoActivo(valor); } 
+            else if(tipoModalActual === 'perfil') {
                 document.getElementById('hdnSelectPerfil').value = valor;
                 document.getElementById('txtSelectPerfil').innerText = textoExtra;
                 cargarPerfil(valor);
@@ -544,30 +573,24 @@
         }
 
         /* --- SISTEMA PRINCIPAL --- */
-        let appDataAlcan = { activoId: 1, proyectos: [] };
-        let globalConfig = { darkMode: false, vibracion: true, decimales: "3", alertaMira: "5", wakeLockEnabled: false };
+        let appDataAlcan = { activoId: 1, proyectos: [], contadorProyectos: 1 };
+        let globalConfig = { darkMode: false, vibracion: false, decimales: "3", alertaMira: "5", wakeLockEnabled: false };
         let wakeLock = null;
         let editandoBMIndex = -1;
+        const iconosTerr = ['➖', '🪨', '💧'];
 
         function formatDecimal(input) {
             let val = input.value.replace(/,/g, '.');
             val = val.replace(/[^0-9.-]/g, ''); 
+            if (val.indexOf('-') > 0) val = val.replace('-', '');
             let parts = val.split('.');
             if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('');
             if(input.value !== val) input.value = val;
         }
 
-        function vibrar() { if (globalConfig.vibracion !== false && navigator.vibrate) navigator.vibrate(30); }
-
-        async function solicitarWakeLock() {
-            if ('wakeLock' in navigator) {
-                try { wakeLock = await navigator.wakeLock.request('screen'); }
-                catch (err) {}
-            }
-        }
+        async function solicitarWakeLock() { if ('wakeLock' in navigator) { try { wakeLock = await navigator.wakeLock.request('screen'); } catch (err) {} } }
 
         function inicializarApp() {
-            // --- REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX ---
             localStorage.setItem('cota100_last_name', 'ALCANTARILLADO');
             localStorage.setItem('cota100_last_url', 'niv-alcan.html');
 
@@ -581,20 +604,26 @@
             } catch(e) {}
 
             let stored = localStorage.getItem('cota100_db_alcan_v3');
-            if (stored) { appDataAlcan = JSON.parse(stored); } 
-            else { appDataAlcan.proyectos.push({ id: 1, nombre: "Nueva Obra 1", bms: [], perfiles: [] }); appDataAlcan.activoId = 1; }
+            if (stored) { 
+                appDataAlcan = JSON.parse(stored); 
+                if(!appDataAlcan.contadorProyectos) appDataAlcan.contadorProyectos = appDataAlcan.proyectos.length;
+            } else { 
+                appDataAlcan.contadorProyectos = 1;
+                let prefijo = JSON.parse(localStorage.getItem('cota100_ajustes'))?.proyecto || "OBRA";
+                appDataAlcan.proyectos.push({ id: 1, nombre: `${prefijo} 1`, bms: [], perfiles: [], estadoActivo: {pls:{}, lockedRows:{}} }); 
+                appDataAlcan.activoId = 1; 
+            }
             
             cargarProyectoActivo();
+            initTouchDragBM();
         }
 
         function obtenerProyectoActivo() { return appDataAlcan.proyectos.find(p => p.id === appDataAlcan.activoId); }
         function guardarBD() { localStorage.setItem('cota100_db_alcan_v3', JSON.stringify(appDataAlcan)); }
 
         function exportarBackupAlcan() {
-            vibrar();
             const backup = JSON.parse(localStorage.getItem('cota100_db_alcan_v3'));
             if(!backup || backup.proyectos.length === 0) return showToast("No hay datos para exportar.", "warning");
-            
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
             const downloadAnchorNode = document.createElement('a');
             const fecha = new Date().toISOString().split('T')[0];
@@ -609,7 +638,6 @@
         function importarBackupAlcan() {
             const fileInput = document.getElementById('importAlcanFile');
             if (fileInput.files.length === 0) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
@@ -618,17 +646,14 @@
                         localStorage.setItem('cota100_db_alcan_v3', JSON.stringify(backup));
                         showToast("✅ Base de datos restaurada. Recargando...", "success");
                         setTimeout(() => window.location.reload(), 1500);
-                    } else {
-                        showToast("❌ Archivo no válido para esta versión.", "error");
-                    }
+                    } else showToast("❌ Archivo no válido para esta versión.", "error");
                 } catch(err) { showToast("❌ Error al leer el archivo.", "error"); }
             };
             reader.readAsText(fileInput.files[0]);
         }
 
         function guardarEstadoAlcan() {
-            let p = obtenerProyectoActivo();
-            if(!p) return;
+            let p = obtenerProyectoActivo(); if(!p) return;
             p.estadoActivo = {
                 cotaIni: document.getElementById('cotaIni').value, cotaFin: document.getElementById('cotaFin').value,
                 distTotal: document.getElementById('distTotal').value, pte: document.getElementById('pte').value,
@@ -638,26 +663,24 @@
                 bmSeleccionado: document.getElementById('hdnSelectBM').value, tablaHTML: document.getElementById('cuerpoTabla').innerHTML,
                 tablaVisible: document.getElementById('seccionTabla').style.display === 'block',
                 panelOculto: document.getElementById('panelEstacion').style.display === 'none',
-                aiTexto: document.getElementById('txtAI').innerText, tuboTexto: document.getElementById('infoTubo').innerText
+                aiTexto: document.getElementById('txtAI').innerText, tuboTexto: document.getElementById('infoTubo').innerText,
+                pls: p.estadoActivo ? p.estadoActivo.pls : {}, lockedRows: p.estadoActivo ? p.estadoActivo.lockedRows : {}
             };
             guardarBD();
         }
 
         function cargarProyectoActivo() {
             let p = obtenerProyectoActivo();
-            document.getElementById('proyectName').value = p.nombre;
-            
             if(p.estadoActivo) {
                 document.getElementById('cotaIni').value = p.estadoActivo.cotaIni || ""; document.getElementById('cotaFin').value = p.estadoActivo.cotaFin || "";
                 document.getElementById('distTotal').value = p.estadoActivo.distTotal || ""; document.getElementById('pte').value = p.estadoActivo.pte || "";
                 document.getElementById('cotaBM').value = p.estadoActivo.cotaBM || ""; document.getElementById('vistaAtras').value = p.estadoActivo.vistaAtras || "";
                 document.getElementById('camaApoyo').value = p.estadoActivo.camaApoyo || ""; document.getElementById('alturaTubo').value = p.estadoActivo.alturaTubo || "";
                 document.getElementById('intervalo').value = p.estadoActivo.intervalo || "10.000";
-                
                 document.getElementById('hdnSelectPerfil').value = p.estadoActivo.perfilSeleccionado || ""; 
                 document.getElementById('hdnSelectBM').value = p.estadoActivo.bmSeleccionado || "";
-
-                evaluarLimiteVA();
+                
+                evaluarLimiteVA(); evaluarNormativa(document.getElementById('pte'));
 
                 if (p.estadoActivo.tablaVisible) {
                     document.getElementById('cuerpoTabla').innerHTML = p.estadoActivo.tablaHTML || "";
@@ -670,13 +693,9 @@
                     document.getElementById('panelEstacion').style.display = 'block';
                 }
             } else {
-                document.getElementById('hdnSelectPerfil').value = ""; 
-                document.getElementById('hdnSelectBM').value = "";
+                document.getElementById('hdnSelectPerfil').value = ""; document.getElementById('hdnSelectBM').value = "";
             }
-
-            renderSelectProyectos();
-            renderBMs(); 
-            renderPerfiles();
+            renderSelectProyectos(); renderBMs(); renderPerfiles();
         }
 
         function renderSelectProyectos() { 
@@ -685,21 +704,20 @@
         }
         
         function crearNuevoProyecto() { 
-            vibrar(); 
-            let num = 1;
-            while(appDataAlcan.proyectos.some(p => p.nombre === `Nueva Obra ${num}`)) { num++; }
+            appDataAlcan.contadorProyectos = (appDataAlcan.contadorProyectos || appDataAlcan.proyectos.length) + 1;
+            let prefijo = JSON.parse(localStorage.getItem('cota100_ajustes'))?.proyecto || "OBRA";
+            let nombre = `${prefijo} ${appDataAlcan.contadorProyectos}`;
             let nuevoId = Date.now(); 
-            appDataAlcan.proyectos.push({ id: nuevoId, nombre: `Nueva Obra ${num}`, bms: [], perfiles: [] }); 
+            appDataAlcan.proyectos.push({ id: nuevoId, nombre: nombre, bms: [], perfiles: [], estadoActivo: {pls:{}, lockedRows:{}} }); 
             appDataAlcan.activoId = nuevoId; 
             guardarBD(); cargarProyectoActivo(); 
             showToast("Proyecto creado", "success");
         }
         
         function eliminarProyecto() { 
-            vibrar(); 
             if(appDataAlcan.proyectos.length === 1) return showToast("Crea otro proyecto antes de borrar el último.", "warning"); 
             let p = obtenerProyectoActivo(); 
-            showConfirm(`⚠️ ¿Borrar "${p.nombre}" permanentemente?`, () => {
+            showCustomConfirm(`⚠️ ¿Borrar "${p.nombre}" permanentemente?`, () => {
                 appDataAlcan.proyectos = appDataAlcan.proyectos.filter(proj => proj.id !== p.id); 
                 appDataAlcan.activoId = appDataAlcan.proyectos[0].id; 
                 guardarBD(); cargarProyectoActivo(); 
@@ -709,223 +727,255 @@
         
         function cambiarProyectoActivo(idStr) { appDataAlcan.activoId = parseInt(idStr); guardarBD(); cargarProyectoActivo(); }
         
-        function renombrarProyecto() { 
+        function editarNombreProyecto() { 
             let p = obtenerProyectoActivo();
-            let newName = document.getElementById('proyectName').value.trim();
-            if(newName !== p.nombre && appDataAlcan.proyectos.some(proj => proj.nombre === newName)) {
-                showToast(`⚠️ La obra "${newName}" ya existe.`, "warning");
-                document.getElementById('proyectName').value = p.nombre;
-                return;
+            showCustomPrompt("EDITAR NOMBRE DE LA OBRA", p.nombre, (newName) => {
+                if(newName && newName.trim() !== "") { p.nombre = newName.trim().toUpperCase(); guardarBD(); renderSelectProyectos(); showToast("Nombre actualizado", "success"); }
+            });
+        }
+
+        /* --- DRAG AND DROP BMs (LONG PRESS) --- */
+        let draggingItemBM = null; let dragTimer = null;
+        function initTouchDragBM() {
+            const list = document.getElementById('listaBMs');
+            list.addEventListener('touchstart', e => {
+                let item = e.target.closest('.bm-item');
+                if(item && !e.target.closest('button')) {
+                    dragTimer = setTimeout(() => {
+                        draggingItemBM = item; draggingItemBM.style.opacity = '0.5'; draggingItemBM.style.transform = 'scale(0.95)'; draggingItemBM.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+                    }, 400); 
+                }
+            }, {passive: true});
+            list.addEventListener('touchmove', e => {
+                if(!draggingItemBM) { clearTimeout(dragTimer); return; }
+                e.preventDefault(); const touch = e.touches[0]; const target = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.bm-item');
+                if(target && target !== draggingItemBM) {
+                    let rect = target.getBoundingClientRect(); let next = (touch.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+                    list.insertBefore(draggingItemBM, next && target.nextSibling || target);
+                }
+            }, {passive: false});
+            list.addEventListener('touchend', e => {
+                clearTimeout(dragTimer);
+                if(!draggingItemBM) return;
+                draggingItemBM.style.opacity = '1'; draggingItemBM.style.transform = 'scale(1)'; draggingItemBM.style.boxShadow = 'none'; draggingItemBM = null;
+                guardarOrdenBMs();
+            });
+        }
+
+        function guardarOrdenBMs() {
+            let p = obtenerProyectoActivo(); let nuevosBMs = [];
+            document.querySelectorAll('#listaBMs .bm-item').forEach(item => {
+                let nombre = item.querySelector('.bm-info strong').innerText; let bmData = p.bms.find(b => b.nombre === nombre);
+                if(bmData) nuevosBMs.push(bmData);
+            });
+            p.bms = nuevosBMs; guardarBD();
+        }
+
+        function clickEnBM(div, event) {
+            if(draggingItemBM) return;
+            if(!event.target.closest('button')) {
+                let obsDiv = div.closest('.bm-item').querySelector('.bm-obs');
+                if(obsDiv) obsDiv.style.display = obsDiv.style.display === "none" ? "block" : "none";
             }
-            p.nombre = newName; 
-            guardarBD(); renderSelectProyectos(); 
         }
 
         function addBM() {
-            vibrar();
             const name = document.getElementById('newBMName').value.toUpperCase().trim();
             const cotaInput = document.getElementById('newBMCota').value.replace(',', '.');
-            const cota = parseFloat(cotaInput);
-            const obs = document.getElementById('newBMObs').value.trim();
+            const cota = parseFloat(cotaInput); const obs = document.getElementById('newBMObs').value.trim();
             
             if(!name || isNaN(cota)) return showToast("Datos de nombre y cota inválidos.", "error");
             let p = obtenerProyectoActivo();
-            
             const finalizarGuardado = () => {
-                document.getElementById('newBMName').value = ""; 
-                document.getElementById('newBMCota').value = "";
-                document.getElementById('newBMObs').value = "";
-                guardarBD(); renderBMs();
-                showToast("BM guardado", "success");
+                document.getElementById('newBMName').value = ""; document.getElementById('newBMCota').value = ""; document.getElementById('newBMObs').value = "";
+                guardarBD(); renderBMs(); showToast("BM guardado", "success");
             };
 
             if(editandoBMIndex > -1) {
-                showConfirm("⚠️ ¿Actualizar los datos de este BM?", () => {
-                    if(p.bms.some((bm, i) => bm.nombre === name && i !== editandoBMIndex)) {
-                        return showToast("⚠️ Ya existe otro BM con ese nombre.", "warning");
-                    }
-                    
+                showCustomConfirm("⚠️ ¿Actualizar los datos de este BM?", () => {
+                    if(p.bms.some((bm, i) => bm.nombre === name && i !== editandoBMIndex)) return showToast("⚠️ Ya existe otro BM con ese nombre.", "warning");
                     p.bms[editandoBMIndex] = { nombre: name, cota: cota, obs: obs };
-
-                    editandoBMIndex = -1;
-                    let btn = document.getElementById('btnGuardarBM');
-                    btn.innerText = "Guardar BM en Proyecto";
-                    btn.style.background = "var(--table-header)";
-                    
+                    editandoBMIndex = -1; let btn = document.getElementById('btnGuardarBM'); btn.innerText = "Guardar BM en Proyecto"; btn.style.background = "var(--table-header)";
                     finalizarGuardado();
-                    
                     let currentSelect = document.getElementById('hdnSelectBM').value;
-                    if(currentSelect && parseFloat(currentSelect) !== cota) {
-                        document.getElementById('hdnSelectBM').value = cota;
-                        seleccionarBM(cota); 
-                    }
+                    if(currentSelect && parseFloat(currentSelect) !== cota) { document.getElementById('hdnSelectBM').value = cota; seleccionarBM(cota); }
                 });
             } else {
                 if(p.bms.some(bm => bm.nombre === name)) return showToast("⚠️ Ya existe un BM con ese nombre.", "warning");
-                p.bms.push({ nombre: name, cota: cota, obs: obs });
-                finalizarGuardado();
+                p.bms.push({ nombre: name, cota: cota, obs: obs }); finalizarGuardado();
             }
         }
 
-        function cargarEditBM(i) {
-            vibrar();
-            let p = obtenerProyectoActivo();
-            let bm = p.bms[i];
-            document.getElementById('newBMName').value = bm.nombre;
-            document.getElementById('newBMCota').value = bm.cota;
-            document.getElementById('newBMObs').value = bm.obs || "";
-            editandoBMIndex = i;
-            let btn = document.getElementById('btnGuardarBM');
-            btn.innerText = "Actualizar BM";
-            btn.style.background = "var(--primary-color)";
+        function cargarEditBM(nombreBM) {
+            let p = obtenerProyectoActivo(); let idx = p.bms.findIndex(b => b.nombre === nombreBM); if(idx === -1) return; let bm = p.bms[idx];
+            document.getElementById('newBMName').value = bm.nombre; document.getElementById('newBMCota').value = bm.cota; document.getElementById('newBMObs').value = bm.obs || "";
+            editandoBMIndex = idx; let btn = document.getElementById('btnGuardarBM'); btn.innerText = "Actualizar BM"; btn.style.background = "var(--primary-color)";
         }
 
-        function moverBM(index, dir) {
-            vibrar();
-            let p = obtenerProyectoActivo();
-            if(index + dir < 0 || index + dir >= p.bms.length) return;
-            let temp = p.bms[index];
-            p.bms[index] = p.bms[index + dir];
-            p.bms[index + dir] = temp;
-            guardarBD(); renderBMs();
-        }
-
-        function deleteBM(i) { 
-            vibrar(); 
-            let p = obtenerProyectoActivo(); 
-            showConfirm(`⚠️ ¿Eliminar el BM "${p.bms[i].nombre}"?`, () => {
-                p.bms.splice(i, 1); guardarBD(); renderBMs(); showToast("BM eliminado", "success");
+        function deleteBM(nombreBM) { 
+            let p = obtenerProyectoActivo(); let idx = p.bms.findIndex(b => b.nombre === nombreBM); if(idx === -1) return;
+            showCustomConfirm(`⚠️ ¿Eliminar el BM "${nombreBM}"?`, () => {
+                p.bms.splice(idx, 1); guardarBD(); renderBMs(); showToast("BM eliminado", "success");
             }); 
         }
 
-        function toggleObsBM(i) {
-            let obsDiv = document.getElementById(`obs-bm-${i}`);
-            if(obsDiv) {
-                obsDiv.style.display = obsDiv.style.display === "none" ? "block" : "none";
-            }
-        }
-
         function renderBMs() { 
-            let decs = parseInt(globalConfig.decimales) || 3;
-            let p = obtenerProyectoActivo(); 
-            const list = document.getElementById('listaBMs'); 
-            
-            let currentSelection = document.getElementById('hdnSelectBM').value;
-            let txt = "-- ELEGIR BM --";
-
+            let decs = parseInt(globalConfig.decimales) || 3; let p = obtenerProyectoActivo(); const list = document.getElementById('listaBMs'); 
+            let currentSelection = document.getElementById('hdnSelectBM').value; let txt = "-- ELEGIR BM --";
             list.innerHTML = ""; 
-
-            p.bms.forEach((bm, i) => { 
+            p.bms.forEach((bm) => { 
                 list.innerHTML += `
-                <div class="bm-item" onclick="toggleObsBM(${i})">
+                <div class="bm-item" onclick="clickEnBM(this, event)">
                     <div class="bm-item-header">
                         <div class="bm-info"><strong>${bm.nombre}</strong><span>Elev: ${bm.cota.toFixed(decs)} m</span></div>
                         <div class="bm-actions" onclick="event.stopPropagation()">
-                            <button onclick="moverBM(${i}, -1)">⬆️</button>
-                            <button onclick="moverBM(${i}, 1)">⬇️</button>
-                            <button onclick="cargarEditBM(${i})">✏️</button>
-                            <button style="color:var(--danger-color);" onclick="deleteBM(${i})">🗑️</button>
+                            <button onclick="cargarEditBM('${bm.nombre}')">✏️</button>
+                            <button style="color:var(--danger-color);" onclick="deleteBM('${bm.nombre}')">🗑️</button>
                         </div>
                     </div>
-                    <div id="obs-bm-${i}" class="bm-obs">${bm.obs || 'Sin observaciones'}</div>
+                    <div class="bm-obs" style="width:100%;">${bm.obs || 'Sin observaciones'}</div>
                 </div>`;
-                
-                if (currentSelection && parseFloat(currentSelection) === bm.cota) {
-                    txt = bm.nombre;
-                }
+                if (currentSelection && parseFloat(currentSelection) === bm.cota) { txt = bm.nombre; }
             });
-
             document.getElementById('txtSelectBM').innerText = txt;
         }
 
         function seleccionarBM(cota) { 
             let decs = parseInt(globalConfig.decimales) || 3;
-            if(cota) document.getElementById('cotaBM').value = parseFloat(cota).toFixed(decs); 
-            else document.getElementById('cotaBM').value = "";
+            if(cota) document.getElementById('cotaBM').value = parseFloat(cota).toFixed(decs); else document.getElementById('cotaBM').value = "";
             evaluarLimiteVA(); guardarEstadoAlcan(); 
         }
 
         function guardarPerfil() { 
-            vibrar(); 
-            let p = obtenerProyectoActivo(); 
-            let nom = document.getElementById('nombrePerfilNuevo').value.trim(); 
-            let ci = document.getElementById('cotaIni').value; 
-            let cf = document.getElementById('cotaFin').value; 
-            let dist = document.getElementById('distTotal').value; 
-            let pte = document.getElementById('pte').value; 
-            
-            if(!nom || ci==="" || cf==="" || dist==="" || pte==="") return showToast("⚠️ Llena todos los datos de diseño antes de guardar.", "warning"); 
-            
-            if(!p.perfiles) p.perfiles = []; 
-            let idx = p.perfiles.findIndex(per => per.nombre === nom); 
-            
+            let p = obtenerProyectoActivo(); let nom = document.getElementById('nombrePerfilNuevo').value.trim(); 
+            let ci = document.getElementById('cotaIni').value; let cf = document.getElementById('cotaFin').value; let dist = document.getElementById('distTotal').value; let pte = document.getElementById('pte').value; 
+            if(!nom || ci==="" || cf==="" || dist==="" || pte==="") return showToast("⚠️ Llena todos los datos de diseño.", "warning"); 
+            if(!p.perfiles) p.perfiles = []; let idx = p.perfiles.findIndex(per => per.nombre === nom); 
             if(idx >= 0) { 
-                showConfirm("Ya existe un tramo con ese nombre. ¿Sobreescribir?", () => {
-                    p.perfiles[idx] = {nombre: nom, ci: ci, cf: cf, dist: dist, pte: pte};
-                    finalizarGuardarPerfil();
-                });
-            } else { 
-                p.perfiles.push({nombre: nom, ci: ci, cf: cf, dist: dist, pte: pte}); 
-                finalizarGuardarPerfil();
-            } 
+                showCustomConfirm("Ya existe un tramo con ese nombre. ¿Sobreescribir?", () => { p.perfiles[idx] = {nombre: nom, ci: ci, cf: cf, dist: dist, pte: pte}; finalizarGuardarPerfil(); });
+            } else { p.perfiles.push({nombre: nom, ci: ci, cf: cf, dist: dist, pte: pte}); finalizarGuardarPerfil(); } 
         }
 
         function finalizarGuardarPerfil() {
-            guardarBD(); 
-            document.getElementById('nombrePerfilNuevo').value = ""; 
-            renderPerfiles(); 
-            showToast("✅ Tramo guardado en el proyecto.", "success"); 
-            guardarEstadoAlcan(); 
+            guardarBD(); document.getElementById('nombrePerfilNuevo').value = ""; renderPerfiles(); showToast("✅ Tramo guardado", "success"); guardarEstadoAlcan(); 
         }
 
         function renderPerfiles() { 
-            let p = obtenerProyectoActivo(); 
-            let txt = "-- INGRESO MANUAL --";
-            let currentSelection = document.getElementById('hdnSelectPerfil').value;
-
-            if(p.perfiles && currentSelection !== "") { 
-                let per = p.perfiles[parseInt(currentSelection)];
-                if(per) txt = per.nombre;
-            } 
+            let p = obtenerProyectoActivo(); let txt = "-- INGRESO MANUAL --"; let currentSelection = document.getElementById('hdnSelectPerfil').value;
+            if(p.perfiles && currentSelection !== "") { let per = p.perfiles[parseInt(currentSelection)]; if(per) txt = per.nombre; } 
             document.getElementById('txtSelectPerfil').innerText = txt;
         }
         
         function cargarPerfil(indexStr) { 
             if(indexStr === "") {
-                document.getElementById('cotaIni').value = ""; document.getElementById('cotaFin').value = "";
-                document.getElementById('distTotal').value = ""; document.getElementById('pte').value = "";
-                evaluarLimiteVA(); guardarEstadoAlcan();
-                return;
+                document.getElementById('cotaIni').value = ""; document.getElementById('cotaFin').value = ""; document.getElementById('distTotal').value = ""; document.getElementById('pte').value = "";
+                evaluarLimiteVA(); guardarEstadoAlcan(); return;
             }
             let p = obtenerProyectoActivo(); let per = p.perfiles[parseInt(indexStr)]; 
             if(per) { 
-                document.getElementById('cotaIni').value = per.ci; 
-                document.getElementById('cotaFin').value = per.cf; 
-                document.getElementById('distTotal').value = per.dist; 
-                document.getElementById('pte').value = per.pte; 
-                evaluarLimiteVA(); guardarEstadoAlcan(); 
+                document.getElementById('cotaIni').value = per.ci; document.getElementById('cotaFin').value = per.cf; document.getElementById('distTotal').value = per.dist; document.getElementById('pte').value = per.pte; 
+                evaluarLimiteVA(); evaluarNormativa(document.getElementById('pte')); guardarEstadoAlcan(); 
             } 
         }
         
-        function desmarcarPerfil() { 
-            document.getElementById('hdnSelectPerfil').value = ""; 
-            document.getElementById('txtSelectPerfil').innerText = "-- INGRESO MANUAL --";
+        function desmarcarPerfil() { document.getElementById('hdnSelectPerfil').value = ""; document.getElementById('txtSelectPerfil').innerText = "-- INGRESO MANUAL --"; }
+        function togglePanel(id) { const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; guardarEstadoAlcan(); }
+
+        /* --- F2: ALERTA NORMATIVA PENDIENTE --- */
+        function evaluarNormativa(input) {
+            let v = parseFloat(input.value);
+            let alerta = document.getElementById('alertaNorma');
+            if(!isNaN(v) && v < 0.5 && v > 0) { input.style.borderColor = "var(--danger-color)"; alerta.style.display = "block"; } 
+            else { input.style.borderColor = "var(--border-color)"; alerta.style.display = "none"; }
         }
 
-        function togglePanel(id) { vibrar(); const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; guardarEstadoAlcan(); }
+        /* --- F3: MINI CROQUIS DE PERFIL OPTIMIZADO --- */
+        function toggleCroquis() {
+            let cv = document.getElementById('croquisCanvas');
+            if(cv.style.display === 'block') { cv.style.display = 'none'; return; }
+            let ci = parseFloat(document.getElementById('cotaIni').value); let cf = parseFloat(document.getElementById('cotaFin').value);
+            let dist = parseFloat(document.getElementById('distTotal').value); let pte = parseFloat(document.getElementById('pte').value);
+            if(isNaN(ci) || isNaN(cf)) return showToast("Ingresa Cota Inicial y Final", "warning");
+            
+            cv.style.display = 'block';
+            let ctx = cv.getContext('2d'); ctx.clearRect(0, 0, cv.width, cv.height);
+            
+            // Fondo con degradado
+            let grd = ctx.createLinearGradient(0, 0, 0, 150);
+            grd.addColorStop(0, "rgba(25, 118, 210, 0.05)");
+            grd.addColorStop(1, "rgba(255, 85, 0, 0.1)");
+            ctx.fillStyle = grd; ctx.fillRect(0,0,300,150);
+
+            // Calcular proporciones
+            let isBaja = ci >= cf;
+            let y1 = isBaja ? 40 : 110;
+            let y2 = isBaja ? 110 : 40;
+            if(ci === cf) { y1 = 75; y2 = 75; }
+
+            // Dibujar línea de terreno/referencia (punteada)
+            ctx.beginPath(); ctx.setLineDash([5, 5]); ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+            ctx.moveTo(30, y1); ctx.lineTo(270, y1); ctx.stroke();
+            ctx.setLineDash([]); // Reset dash
+
+            // Dibujar Tubería
+            ctx.beginPath(); ctx.strokeStyle = '#FF5500'; ctx.lineWidth = 6;
+            ctx.moveTo(30, y1); ctx.lineTo(270, y2); ctx.stroke();
+
+            // Nodos (Buzones)
+            ctx.beginPath(); ctx.arc(30, y1, 6, 0, 2*Math.PI); ctx.fillStyle = '#1a1e23'; ctx.fill();
+            ctx.beginPath(); ctx.arc(270, y2, 6, 0, 2*Math.PI); ctx.fill();
+
+            // Textos informativos
+            ctx.fillStyle = '#1a1e23'; ctx.font = 'bold 13px Rajdhani'; 
+            ctx.textAlign = 'left'; ctx.fillText(`C.I: ${ci.toFixed(3)}`, 10, y1 - 15);
+            ctx.textAlign = 'right'; ctx.fillText(`C.F: ${cf.toFixed(3)}`, 290, y2 + 20);
+            ctx.textAlign = 'center';
+            if(!isNaN(dist)) ctx.fillText(`L = ${dist.toFixed(2)}m`, 150, 25);
+            if(!isNaN(pte)) {
+                ctx.fillStyle = '#FF5500';
+                ctx.fillText(`Pend. = ${pte.toFixed(2)}%`, 150, 140);
+            }
+        }
+
+        /* --- F4: INTERPOLADOR RÁPIDO Y LECTURA --- */
+        function interpolarProg() {
+            let decs = parseInt(globalConfig.decimales) || 3;
+            let ci = parseFloat(document.getElementById('cotaIni').value); let p = parseFloat(document.getElementById('pte').value);
+            let aiTexto = document.getElementById('txtAI').innerText; let ai = parseFloat(aiTexto);
+
+            if(isNaN(ci) || isNaN(p) || isNaN(ai) || aiTexto === "0.000") return showToast("Genera la libreta o llena parámetros primero", "warning");
+            
+            showCustomPrompt("PROGRESIVA A INTERPOLAR (Ej: 12.50)", "", (val) => {
+                let prog = parseFloat(val.replace(',', '.')); if(isNaN(prog)) return;
+                
+                // Gravedad estándar: Cota va bajando
+                let cotaZ = ci - ((p / 100) * prog);
+                let cama = parseFloat(document.getElementById('camaApoyo').value) || 0; let altura = parseFloat(document.getElementById('alturaTubo').value) || 0;
+                let cotaL = cotaZ + cama + altura;
+                
+                let lZanja = ai - cotaZ;
+                let lLomo = ai - cotaL;
+
+                showCustomAlert(`🎯 <strong>INTERPOLACIÓN 0+${prog.toFixed(2)}</strong><br><br>
+                Cota Zanja: <strong>${cotaZ.toFixed(decs)}</strong><br>
+                Lectura Zanja: <strong style="color:var(--success-text)">${lZanja.toFixed(decs)}</strong><br><br>
+                Cota Lomo: <strong>${cotaL.toFixed(decs)}</strong><br>
+                Lectura Lomo: <strong style="color:var(--success-text)">${lLomo.toFixed(decs)}</strong>`);
+            });
+        }
 
         function autocalcularTramo() {
-            vibrar(); 
             let decs = parseInt(globalConfig.decimales) || 3;
             let ci = parseFloat(document.getElementById('cotaIni').value); let cf = parseFloat(document.getElementById('cotaFin').value); let d = parseFloat(document.getElementById('distTotal').value); let p = parseFloat(document.getElementById('pte').value);
             let nulos = 0; if(isNaN(ci)) nulos++; if(isNaN(cf)) nulos++; if(isNaN(d)) nulos++; if(isNaN(p)) nulos++;
-            
             if (nulos !== 1) return showToast("⚠️ Deja exactamente UNA casilla vacía para deducir el dato.", "warning");
             
-            if (isNaN(p)) document.getElementById('pte').value = (((cf - ci) / d) * 100).toFixed(decs); 
-            else if (isNaN(cf)) document.getElementById('cotaFin').value = (ci + ((p / 100) * d)).toFixed(decs); 
-            else if (isNaN(ci)) document.getElementById('cotaIni').value = (cf - ((p / 100) * d)).toFixed(decs); 
-            else if (isNaN(d)) document.getElementById('distTotal').value = Math.abs(((cf - ci) / p) * 100).toFixed(decs);
+            // Asumiendo saneamiento estándar (Flujo hacia abajo)
+            // Drop = CotaIni - CotaFin
+            if (isNaN(p)) { let pteCalc = ((ci - cf) / d) * 100; document.getElementById('pte').value = pteCalc.toFixed(decs); evaluarNormativa(document.getElementById('pte')); }
+            else if (isNaN(cf)) document.getElementById('cotaFin').value = (ci - ((p / 100) * d)).toFixed(decs); 
+            else if (isNaN(ci)) document.getElementById('cotaIni').value = (cf + ((p / 100) * d)).toFixed(decs); 
+            else if (isNaN(d)) document.getElementById('distTotal').value = Math.abs(((ci - cf) / (p / 100))).toFixed(decs);
             
             showToast("✨ Dato deducido con éxito.", "success");
             evaluarLimiteVA(); desmarcarPerfil(); guardarEstadoAlcan();
@@ -942,55 +992,141 @@
             } else { alerta.innerText = ""; }
         }
 
+        /* --- F1: PUNTOS DE CAMBIO (PL) --- */
+        function gestionarPL() {
+            showCustomPrompt("PROGRESIVA DEL NUEVO PL (m)", "", (progStr) => {
+                let prog = parseFloat(progStr.replace(',','.')); if(isNaN(prog)) return showToast("Progresiva no válida", "error");
+                showCustomPrompt("COTA DE BM PARA EL PL", "", (bmStr) => {
+                    let bm = parseFloat(bmStr.replace(',','.')); if(isNaN(bm)) return showToast("Cota BM no válida", "error");
+                    showCustomPrompt("VISTA ATRÁS (+) PARA EL PL", "", (vaStr) => {
+                        let va = parseFloat(vaStr.replace(',','.')); if(isNaN(va)) return showToast("Vista Atrás no válida", "error");
+                        
+                        let p = obtenerProyectoActivo(); if(!p.estadoActivo) p.estadoActivo = {}; if(!p.estadoActivo.pls) p.estadoActivo.pls = {};
+                        p.estadoActivo.pls[prog] = {bm: bm, va: va};
+                        guardarBD(); generarLibreta(); showToast("✅ PL Insertado", "success");
+                    });
+                });
+            });
+        }
+        function limpiarPLs() {
+            showCustomConfirm("¿Borrar todos los Puntos de Cambio (PL) de esta libreta?", () => {
+                let p = obtenerProyectoActivo(); if(p.estadoActivo && p.estadoActivo.pls) { p.estadoActivo.pls = {}; guardarBD(); generarLibreta(); showToast("PLs reseteados", "success"); }
+            });
+        }
+
+        /* --- F8 & F5 & F7: LÓGICA DE FILAS (Terreno, Lock, Tarjeta Gigante) --- */
+        function cicloTerreno(span, event) {
+            event.stopPropagation();
+            let act = span.innerText; let nxt = iconosTerr[(iconosTerr.indexOf(act) + 1) % iconosTerr.length];
+            span.innerText = nxt;
+            let tr = span.closest('tr');
+            if(tr.classList.contains('fila-ok')) { // update lock
+                let p = obtenerProyectoActivo(); let prog = parseFloat(tr.dataset.prog);
+                if(p.estadoActivo.lockedRows[prog]) p.estadoActivo.lockedRows[prog].terr = nxt; guardarBD();
+            }
+        }
+
+        function manejarRowTap(tr, event, prog, zanjaStr) {
+            if(event.target.closest('.icono-terr')) return;
+            let currentTime = new Date().getTime(); let tapLength = currentTime - (tr.dataset.lastTap || 0);
+            tr.dataset.lastTap = currentTime;
+            
+            if(tapLength < 350 && tapLength > 0) { // Doble tap (F7: Tarjeta Gigante)
+                clearTimeout(tr.tapTimer);
+                document.getElementById('tgProg').innerText = `0+${prog.toString().padStart(3,'0')}`;
+                document.getElementById('tgZanja').innerText = zanjaStr;
+                document.getElementById('tarjetaGigante').style.display = "flex";
+            } else { // Single tap (F5: Check & Lock)
+                tr.tapTimer = setTimeout(() => {
+                    tr.classList.toggle('fila-ok');
+                    let isLocked = tr.classList.contains('fila-ok');
+                    let p = obtenerProyectoActivo(); if(!p.estadoActivo.lockedRows) p.estadoActivo.lockedRows = {};
+                    if(isLocked) {
+                        p.estadoActivo.lockedRows[prog] = { lz: tr.dataset.lz, ll: tr.dataset.ll, cz: tr.dataset.cz, cl: tr.dataset.cl, terr: tr.querySelector('.icono-terr').innerText };
+                    } else { delete p.estadoActivo.lockedRows[prog]; }
+                    guardarBD();
+                }, 360);
+            }
+        }
+
         function generarLibreta() {
-            vibrar();
             let decs = parseInt(globalConfig.decimales) || 3;
             let limiteMira = parseFloat(globalConfig.alertaMira) || 5.000;
 
-            let ci = parseFloat(document.getElementById('cotaIni').value); let d = parseFloat(document.getElementById('distTotal').value); let p = parseFloat(document.getElementById('pte').value);
-            if(isNaN(ci) || isNaN(d) || isNaN(p)) return showToast("⚠️ Faltan datos de Diseño.", "warning");
+            let ci = parseFloat(document.getElementById('cotaIni').value); let d = parseFloat(document.getElementById('distTotal').value); let pte = parseFloat(document.getElementById('pte').value);
+            if(isNaN(ci) || isNaN(d) || isNaN(pte)) return showToast("⚠️ Faltan datos de Diseño.", "warning");
             
             let bm = parseFloat(document.getElementById('cotaBM').value); let va = parseFloat(document.getElementById('vistaAtras').value);
             let cama = parseFloat(document.getElementById('camaApoyo').value) || 0; let altura = parseFloat(document.getElementById('alturaTubo').value) || 0;
             let intervalo = parseFloat(document.getElementById('intervalo').value);
             if(isNaN(bm) || isNaN(va)) return showToast("⚠️ Faltan datos de Campo.", "warning");
 
+            // Sentido gravitacional estándar: CotaZanja = CotaIni - (pte% * dist)
+            let baseAI = bm + va;
+            document.getElementById('txtAI').innerText = baseAI.toFixed(decs);
             document.getElementById('panelEstacion').style.display = 'none';
             document.getElementById('infoTubo').innerText = `Cama ${cama.toFixed(2)} + Tubo ${altura.toFixed(2)}`;
-            let ai = bm + va;
-            document.getElementById('txtAI').innerText = ai.toFixed(decs);
-            let tbody = document.getElementById('cuerpoTabla');
-            tbody.innerHTML = "";
+            let tbody = document.getElementById('cuerpoTabla'); tbody.innerHTML = "";
+
+            let proj = obtenerProyectoActivo(); let pls = (proj.estadoActivo && proj.estadoActivo.pls) ? proj.estadoActivo.pls : {};
+            let locked = (proj.estadoActivo && proj.estadoActivo.lockedRows) ? proj.estadoActivo.lockedRows : {};
+
+            let currentAI = baseAI;
 
             for(let i=0; i <= d; i += intervalo) {
-                let cotaZanja = ci + ((p / 100) * i);
+                // Check if PL exists here or before
+                let activePLProg = -1;
+                Object.keys(pls).forEach(k => { let pk = parseFloat(k); if(pk <= i && pk > activePLProg) activePLProg = pk; });
+                if(activePLProg !== -1) currentAI = pls[activePLProg].bm + pls[activePLProg].va;
+                else currentAI = baseAI;
+
+                let cotaZanja = ci - ((pte / 100) * i);
                 let cotaLomo = cotaZanja + cama + altura;
-                let leerZanja = ai - cotaZanja;
-                let leerLomo = ai - cotaLomo;
                 
+                let leerZanja, leerLomo, czStr, clStr, terrIcon = '➖', cssRow = '';
+
+                // F5: Check & Lock override
+                if(locked[i]) {
+                    leerZanja = parseFloat(locked[i].lz); leerLomo = parseFloat(locked[i].ll);
+                    czStr = parseFloat(locked[i].cz).toFixed(decs); clStr = parseFloat(locked[i].cl).toFixed(decs);
+                    terrIcon = locked[i].terr || '➖'; cssRow = 'fila-ok';
+                } else {
+                    leerZanja = currentAI - cotaZanja; leerLomo = currentAI - cotaLomo;
+                    czStr = cotaZanja.toFixed(decs); clStr = cotaLomo.toFixed(decs);
+                }
+
                 let styleZanja = (leerZanja >= limiteMira || leerZanja <= 0) ? 'color: var(--danger-color); font-weight: 900;' : '';
                 let styleLomo = (leerLomo >= limiteMira || leerLomo <= 0) ? 'color: var(--danger-color); font-weight: 900;' : '';
+                
+                let lzStr = leerZanja.toFixed(decs); let llStr = leerLomo.toFixed(decs);
 
-                tbody.innerHTML += `<tr>
-                    <td class="celda-prog" onclick="this.parentElement.classList.toggle('fila-ok'); vibrar(); guardarEstadoAlcan();">0+${i.toString().padStart(3,'0')}</td>
-                    <td style="${styleZanja}">${leerZanja.toFixed(decs)}</td>
-                    <td style="${styleLomo}">${leerLomo.toFixed(decs)}</td>
-                    <td>${cotaZanja.toFixed(decs)}</td>
-                    <td>${cotaLomo.toFixed(decs)}</td>
+                tbody.innerHTML += `<tr class="${cssRow}" data-prog="${i}" data-lz="${lzStr}" data-ll="${llStr}" data-cz="${czStr}" data-cl="${clStr}" onclick="manejarRowTap(this, event, ${i}, '${lzStr}')">
+                    <td class="celda-prog"><span class="icono-terr" onclick="cicloTerreno(this, event)">${terrIcon}</span> 0+${i.toString().padStart(3,'0')}</td>
+                    <td style="${styleZanja}">${lzStr}</td>
+                    <td style="${styleLomo}">${llStr}</td>
+                    <td>${czStr}</td>
+                    <td>${clStr}</td>
                 </tr>`;
+
+                // Render PL info banner
+                if(pls[i]) {
+                    tbody.innerHTML += `<tr><td colspan="5" style="background:rgba(25, 118, 210, 0.1); color:#1976d2; font-size:0.8rem; padding:4px;">📍 NUEVO PL DESDE AQUÍ (AI: ${currentAI.toFixed(decs)})</td></tr>`;
+                }
             }
-            document.getElementById('seccionTabla').style.display = 'block';
-            document.getElementById('btnExcel').style.display = 'block';
-            guardarEstadoAlcan();
-            showToast("✅ Libreta Generada", "success");
+            document.getElementById('seccionTabla').style.display = 'block'; document.getElementById('btnExcel').style.display = 'block';
+            guardarEstadoAlcan(); showToast("✅ Libreta Generada", "success");
         }
 
-        function exportarXLSX() { vibrar(); let wb = XLSX.utils.table_to_book(document.getElementById("tablaAlcantarillado")); XLSX.writeFile(wb, "Libreta_Alcantarillado.xlsx"); showToast("Reporte descargado", "success");}
-        function toggleCalculadora() { vibrar(); const m = document.getElementById('calculadoraModal'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
-        function calcInput(v) { vibrar(); document.getElementById('calcDisplay').value += v; }
-        function calcClear() { vibrar(); document.getElementById('calcDisplay').value = ''; }
-        function calcBackspace() { vibrar(); let d = document.getElementById('calcDisplay'); d.value = d.value.slice(0, -1); }
-        function calcEval() { vibrar(); try { let res = new Function('return ' + document.getElementById('calcDisplay').value)(); document.getElementById('calcDisplay').value = (res % 1 !== 0) ? res.toFixed(3) : res; } catch(e) { document.getElementById('calcDisplay').value = 'Error'; } }
+        function exportarXLSX() { 
+            let wb = XLSX.utils.table_to_book(document.getElementById("tablaAlcantarillado")); 
+            XLSX.writeFile(wb, "Libreta_Alcantarillado.xlsx"); 
+            showToast("Reporte descargado", "success");
+        }
+        function toggleCalculadora() { const m = document.getElementById('calculadoraModal'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
+        function calcInput(v) { document.getElementById('calcDisplay').value += v; }
+        function calcClear() { document.getElementById('calcDisplay').value = ''; }
+        function calcBackspace() { let d = document.getElementById('calcDisplay'); d.value = d.value.slice(0, -1); }
+        function calcEval() { try { let res = new Function('return ' + document.getElementById('calcDisplay').value)(); document.getElementById('calcDisplay').value = (res % 1 !== 0) ? res.toFixed(3) : res; } catch(e) { document.getElementById('calcDisplay').value = 'Error'; } }
     </script>
 </body>
 </html>

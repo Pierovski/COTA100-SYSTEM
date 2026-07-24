@@ -38,47 +38,35 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            padding-bottom: 80px;
+            background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px;
             transition: background-color 0.3s, color 0.3s;
-            position: relative;
-            overflow-x: hidden;
-            min-height: 100vh;
+            position: relative; overflow-x: hidden; min-height: 100vh;
         }
 
         /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
         .fire-base {
-            position: fixed;
-            bottom: 0; left: 0; width: 100vw; height: 35vh;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
+            position: fixed; bottom: 0; left: 0; width: 100vw; height: 35vh;
+            z-index: -2; pointer-events: none; overflow: hidden;
         }
         .fire-wave {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200vw; height: 100%;
+            position: absolute; bottom: 0; left: 0; width: 200vw; height: 100%;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 10s linear infinite;
+            background-size: 50% 100%; animation: waveFire 10s linear infinite;
         }
         .fire-wave.delay {
             bottom: -15px; opacity: 0.6;
             background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 7s linear infinite reverse;
+            background-size: 50% 100%; animation: waveFire 7s linear infinite reverse;
         }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
-        /* --- CABECERA DUAL --- */
+        /* --- CABECERA --- */
         .top-bar { 
             display: flex; align-items: center; justify-content: space-between; 
             padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
             background-color: transparent; position: sticky; top: 0; z-index: 100; 
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
         }
-        .nav-buttons-left { display: flex; gap: 8px; }
         .btn-volver-mini { 
             background: transparent; border: none; color: var(--primary-color);
             width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
@@ -89,12 +77,12 @@
         
         .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.5rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1; letter-spacing: -1px;}
         .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.8rem; letter-spacing: 2px;}
-        .spacer { width: 90px; }
+        .spacer { width: 45px; }
 
         .modulo-container { padding: 25px 15px; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- PANELES (GLASSMORPHISM) --- */
+        /* --- PANELES GLASSMORPHISM --- */
         .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 18px; margin-bottom: 5px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
         .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
         .btn-toggle-panel { background: none; border: none; font-size: 1.2rem; color: var(--text-color); pointer-events: none; transition: transform 0.3s;}
@@ -105,18 +93,17 @@
         .input-row { display: flex; gap: 12px; margin-bottom: 12px; }
         .input-group { flex: 1; display: flex; flex-direction: column; }
         .full-width { grid-column: 1 / -1; }
-        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
+        label { margin-bottom: 5px; font-weight: 800; color: var(--text-color); opacity: 0.8; font-size: 0.8rem; text-transform: uppercase; }
         
-        input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center;}
+        input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); border-radius: 8px; transition: 0.2s; text-align: center;}
         input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
         
-        /* --- CUSTOM SELECTOR (TIPO BOTÓN) --- */
+        /* --- CUSTOM SELECTOR --- */
         .custom-select { width: 100%; padding: 15px 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
-        .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
-        /* --- SWITCH DE ENERGÍA --- */
+        /* --- SWITCH --- */
         .switch-container { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(128,128,128,0.1); }
         .switch-container:last-child { border-bottom: none; }
         .switch { position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0;}
@@ -144,14 +131,15 @@
         .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
         .btn-opcion { width: 100%; padding: 16px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s;}
         .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
+        
+        .helper-text { font-size: 0.75rem; color: var(--text-color); opacity: 0.7; margin-top: 4px; line-height: 1.3; text-align: left; font-weight: 600;}
 
         @media screen and (max-width: 480px) {
             html { font-size: 13px; } 
             input, .custom-select { padding: 14px 10px; font-size: 1.1rem;}
-            .panel-control { padding: 12px; margin-bottom: 8px;}
+            .panel-control { padding: 15px; margin-bottom: 8px;}
             .top-bar { padding: 10px 15px; height: 65px; }
             .btn-volver-mini { width: 40px; height: 40px;}
-            .spacer { width: 90px; }
         }
     </style>
 </head>
@@ -181,35 +169,28 @@
     </div>
 
     <div class="top-bar">
-        <div class="nav-buttons-left">
-            <a href="index.html" class="btn-volver-mini" onclick="vibrarUI()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
-            <a href="index.html" class="btn-volver-mini" onclick="vibrarUI()">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-            </a>
-        </div>
+        <a href="index.html" class="btn-volver-mini" onclick="feedbackUI()">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
         <h2 class="top-bar-title">AJUSTES <span>Sistema Global</span></h2>
         <div class="spacer"></div>
     </div>
 
     <div class="modulo-container">
 
-        <div class="panel-control" style="border-left: 5px solid var(--primary-color);">
+        <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
             <div class="panel-titulo" onclick="togglePanel('panel1', this)">
                 <span>📦 1. Datos de Control de Obra</span>
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panel1" class="panel-contenido" style="display: block;">
                 <div class="input-group full-width" style="margin-bottom: 12px;">
-                    <label>Proyecto Activo por Defecto</label>
-                    <input type="text" id="ajusteProyecto" placeholder="EJ: REDES DE DRENAJE" oninput="this.value = this.value.toUpperCase()">
+                    <label>Prefijo de Nuevos Proyectos</label>
+                    <input type="text" id="ajusteProyecto" placeholder="EJ: LOTE URBANO" oninput="this.value = this.value.toUpperCase()">
+                    <div class="helper-text">* Los módulos añadirán numeración automática (Ej. LOTE URBANO 1).</div>
                 </div>
                 <div class="input-row">
                     <div class="input-group">
@@ -224,64 +205,84 @@
             </div>
         </div>
 
-        <div class="panel-control" style="border-left: 5px solid #1976d2;">
-            <div class="panel-titulo" style="color: #1976d2;" onclick="togglePanel('panel2', this)">
+        <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
+            <div class="panel-titulo" onclick="togglePanel('panel2', this)">
                 <span>🔋 2. Interfaz y Energía</span>
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panel2" class="panel-contenido">
                 <div class="switch-container">
                     <div style="padding-right: 15px;">
-                        <label style="display:block; margin:0; color: #1976d2;">Modo Oscuro</label>
-                        <span style="font-size:0.75rem; font-weight:600; opacity:0.7; color: var(--text-color);">Ahorra batería en pantallas AMOLED.</span>
+                        <label style="display:block; margin:0;">Modo Oscuro</label>
+                        <span class="helper-text" style="margin-top:0;">Ahorra batería en pantallas AMOLED.</span>
                     </div>
                     <label class="switch">
-                        <input type="checkbox" id="checkDarkMode" onchange="toggleDarkMode(); vibrarUI();">
+                        <input type="checkbox" id="checkDarkMode" onchange="toggleDarkMode();">
                         <span class="slider"></span>
                     </label>
                 </div>
 
                 <div class="switch-container">
                     <div style="padding-right: 15px;">
-                        <label style="display:block; margin:0; color: #1976d2;">Mantener Pantalla Activa</label>
-                        <span style="font-size:0.75rem; font-weight:600; opacity:0.7; color: var(--text-color);">Evita que el celular se bloquee en campo.</span>
+                        <label style="display:block; margin:0;">Mantener Pantalla Activa</label>
+                        <span class="helper-text" style="margin-top:0;">Evita que el celular se bloquee en campo.</span>
                     </div>
                     <label class="switch">
-                        <input type="checkbox" id="checkWakeLock" onchange="toggleWakeLock(); vibrarUI();">
+                        <input type="checkbox" id="checkWakeLock" onchange="toggleWakeLock();">
                         <span class="slider"></span>
                     </label>
                 </div>
 
                 <div class="switch-container">
                     <div style="padding-right: 15px;">
-                        <label style="display:block; margin:0; color: #1976d2;">Vibración Táctil Global</label>
-                        <span style="font-size:0.75rem; font-weight:600; opacity:0.7; color: var(--text-color);">Desactívalo para máximo ahorro de energía.</span>
+                        <label style="display:block; margin:0;">Vibración Táctil Global</label>
+                        <span class="helper-text" style="margin-top:0;">Desactívalo para máximo ahorro de energía.</span>
                     </div>
                     <label class="switch">
-                        <input type="checkbox" id="checkVibracion" onchange="vibrarUI()">
+                        <input type="checkbox" id="checkVibracion" onchange="feedbackUI()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="switch-container">
+                    <div style="padding-right: 15px;">
+                        <label style="display:block; margin:0;">Sonido de Confirmación (Beep)</label>
+                        <span class="helper-text" style="margin-top:0;">Alerta sonora al procesar u operar el sistema.</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="checkSonido" onchange="feedbackUI()">
                         <span class="slider"></span>
                     </label>
                 </div>
             </div>
         </div>
 
-        <div class="panel-control" style="border-left: 5px solid var(--success-color);">
-            <div class="panel-titulo" style="color: var(--success-color);" onclick="togglePanel('panel3', this)">
+        <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
+            <div class="panel-titulo" onclick="togglePanel('panel3', this)">
                 <span>🧮 3. Preferencias de Cálculo</span>
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panel3" class="panel-contenido">
+                <div class="input-group full-width" style="margin-bottom: 12px;">
+                    <label>Zona UTM por Defecto</label>
+                    <div class="custom-select" onclick="abrirModalSelect('zona')">
+                        <span id="txtZona">17 Sur</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <input type="hidden" id="ajusteZona" value="17">
+                </div>
+
                 <div class="input-row">
                     <div class="input-group">
                         <label>Precisión de Decimales</label>
                         <div class="custom-select" onclick="abrirModalSelect('decimales')">
-                            <span id="txtDecimales">3 Decimales (Milímetro)</span>
+                            <span id="txtDecimales">3 Decimales</span>
                             <span class="arrow">▼</span>
                         </div>
                         <input type="hidden" id="ajusteDecimales" value="3">
                     </div>
                     <div class="input-group">
-                        <label>Alerta Lectura de Mira</label>
+                        <label>Alerta de Mira</label>
                         <div class="custom-select" onclick="abrirModalSelect('alertaMira')">
                             <span id="txtAlertaMira">Máximo 5.00 m</span>
                             <span class="arrow">▼</span>
@@ -290,7 +291,7 @@
                     </div>
                 </div>
                 <div class="input-group full-width" style="margin-top: 5px;">
-                    <label>Unidad de Presión por Defecto</label>
+                    <label>Unidad de Presión Barométrica</label>
                     <div class="custom-select" onclick="abrirModalSelect('presion')">
                         <span id="txtUnidadPresion">hPa / mbar (Estándar)</span>
                         <span class="arrow">▼</span>
@@ -300,45 +301,54 @@
             </div>
         </div>
 
-        <div class="panel-control" style="border-left: 5px solid #8e24aa;">
-            <div class="panel-titulo" style="color: #8e24aa;" onclick="togglePanel('panel4', this)">
-                <span>📥 4. Formato de Importación</span>
+        <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
+            <div class="panel-titulo" onclick="togglePanel('panel4', this)">
+                <span>📥 4. Importación y Exportación</span>
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panel4" class="panel-contenido">
-                <div class="input-group full-width">
-                    <label>Formato CSV/TXT Predeterminado</label>
+                <div class="input-group full-width" style="margin-bottom: 12px;">
+                    <label>Formato de Columnas (Importar)</label>
                     <div class="custom-select" onclick="abrirModalSelect('formato')">
                         <span id="txtFormatoCSV">Punto, Este, Norte (P-E-N)</span>
                         <span class="arrow">▼</span>
                     </div>
                     <input type="hidden" id="ajusteFormatoCSV" value="PEN">
-                    <span style="font-size:0.75rem; font-weight:600; opacity:0.7; color: var(--text-color); margin-top: 5px;">* Formato base para cargar coordenadas en Áreas y Poligonales.</span>
+                </div>
+
+                <div class="input-group full-width">
+                    <label>Delimitador CSV (Exportar)</label>
+                    <div class="custom-select" onclick="abrirModalSelect('delimitador')">
+                        <span id="txtDelimitador">Punto y Coma ( ; ) - Excel Español</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <input type="hidden" id="ajusteDelimitador" value=";">
+                    <div class="helper-text">* Evita que Excel agrupe las coordenadas en una sola celda.</div>
                 </div>
             </div>
         </div>
 
-        <div class="panel-control" style="border-left: 5px solid var(--danger-color); background: rgba(211,47,47,0.02);">
+        <div class="panel-control" style="border-left: 4px solid var(--danger-color); background: rgba(211,47,47,0.02);">
             <div class="panel-titulo" style="color: var(--danger-color);" onclick="togglePanel('panel5', this)">
                 <span>💾 5. Respaldo y Mantenimiento</span>
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panel5" class="panel-contenido">
-                <button class="btn-accion" style="background:var(--table-header);" onclick="exportarBackupTotal(); vibrarUI();">📤 Exportar Backup Global (.json)</button>
+                <button class="btn-accion" style="background:var(--table-header);" onclick="exportarBackupTotal(); feedbackUI();">📤 Exportar Backup Global (.json)</button>
+                <div id="lblLastBackup" class="helper-text" style="text-align: center; margin-top: -5px; margin-bottom: 15px; font-weight: 700;">Último respaldo: Nunca</div>
                 
-                <label class="btn-accion" style="background:transparent; color:var(--text-color); border:2px solid var(--card-border); cursor: pointer; display: block;" onclick="vibrarUI()">
+                <label class="btn-accion" style="background:transparent; color:var(--text-color); border:2px solid var(--card-border); cursor: pointer; display: block;" onclick="feedbackUI()">
                     📥 Restaurar Sistema Completo
                     <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importarBackupTotal()">
                 </label>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
-                    <button class="btn-accion" style="background:transparent; color:var(--text-color); border: 2px solid var(--border-color); font-size: 0.9rem; margin:0;" onclick="forzarActualizacionPWA(); vibrarUI();">🔄 Vaciar Caché</button>
-                    <button class="btn-accion" style="background:var(--danger-color); font-size: 0.9rem; margin:0;" onclick="factoryReset(); vibrarUI();">🚨 Reset Factory</button>
+                <div style="display: grid; grid-template-columns: 1fr; margin-top: 15px;">
+                    <button class="btn-accion" style="background:var(--danger-color); font-size: 0.95rem; margin:0;" onclick="factoryReset(); feedbackUI();">🚨 Reset Factory</button>
                 </div>
             </div>
         </div>
 
-        <button class="btn-accion btn-guardar" onclick="guardarAjustes(true); vibrarUI();">💾 GUARDAR PREFERENCIAS</button>
+        <button class="btn-accion btn-guardar" onclick="guardarAjustes(true); feedbackUI();">💾 GUARDAR PREFERENCIAS</button>
 
     </div>
 
@@ -346,12 +356,32 @@
 
     <script>
         let wakeLock = null;
-        let usarVibracion = true;
         let tipoModalActual = "";
+        let usarVibracion = true;
+        let usarSonido = false;
+
+        // --- SISTEMA DE FEEDBACK (VIBRACIÓN Y SONIDO) ---
+        function feedbackUI() {
+            if (usarVibracion && navigator.vibrate) navigator.vibrate(30);
+            if (usarSonido) {
+                try {
+                    let ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    let osc = ctx.createOscillator();
+                    let gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(800, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.05, ctx.currentTime);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.1);
+                } catch(e) {}
+            }
+        }
 
         // --- SISTEMA DE VENTANAS MODALES ---
         function abrirModalSelect(tipo) {
-            vibrarUI();
+            feedbackUI();
             tipoModalActual = tipo;
             const titulo = document.getElementById('modalSelectTitle');
             const contenido = document.getElementById('modalSelectContent');
@@ -360,9 +390,13 @@
             let opciones = [];
             let actual = "";
 
-            if(tipo === 'decimales') {
-                titulo.innerText = "📐 PRECISIÓN DE DECIMALES";
-                opciones = [{val: '3', txt: '3 Decimales (Milímetro)'}, {val: '4', txt: '4 Decimales (Décima de mm)'}];
+            if(tipo === 'zona') {
+                titulo.innerText = "🌍 ZONA UTM DEFAULT";
+                opciones = [{val: '17', txt: '17 Sur (Costa Norte)'}, {val: '18', txt: '18 Sur (Centro)'}, {val: '19', txt: '19 Sur (Sur)'}];
+                actual = document.getElementById('ajusteZona').value;
+            } else if(tipo === 'decimales') {
+                titulo.innerText = "📐 PRECISIÓN DECIMALES";
+                opciones = [{val: '3', txt: '3 Decimales'}, {val: '4', txt: '4 Decimales'}];
                 actual = document.getElementById('ajusteDecimales').value;
             } else if (tipo === 'alertaMira') {
                 titulo.innerText = "⚠️ ALERTA DE MIRA";
@@ -376,6 +410,10 @@
                 titulo.innerText = "📥 FORMATO CSV";
                 opciones = [{val: 'PEN', txt: 'Punto, Este, Norte (P-E-N)'}, {val: 'EN', txt: 'Solo Este, Norte (E-N)'}];
                 actual = document.getElementById('ajusteFormatoCSV').value;
+            } else if (tipo === 'delimitador') {
+                titulo.innerText = "📤 SEPARADOR EXCEL";
+                opciones = [{val: ';', txt: 'Punto y Coma ( ; ) - Excel Español'}, {val: ',', txt: 'Coma ( , ) - Excel Inglés'}];
+                actual = document.getElementById('ajusteDelimitador').value;
             }
 
             opciones.forEach(opt => {
@@ -388,7 +426,7 @@
         }
 
         function cerrarModalSelect() {
-            vibrarUI();
+            feedbackUI();
             document.getElementById('overlaySelect').classList.remove('activo');
             document.getElementById('modalSelect').classList.remove('abierto');
             setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300);
@@ -396,7 +434,10 @@
 
         function seleccionarOpcionModal(valor, texto) {
             cerrarModalSelect();
-            if(tipoModalActual === 'decimales') {
+            if(tipoModalActual === 'zona') {
+                document.getElementById('ajusteZona').value = valor;
+                document.getElementById('txtZona').innerText = texto;
+            } else if(tipoModalActual === 'decimales') {
                 document.getElementById('ajusteDecimales').value = valor;
                 document.getElementById('txtDecimales').innerText = texto;
             } else if(tipoModalActual === 'alertaMira') {
@@ -408,16 +449,15 @@
             } else if(tipoModalActual === 'formato') {
                 document.getElementById('ajusteFormatoCSV').value = valor;
                 document.getElementById('txtFormatoCSV').innerText = texto;
+            } else if(tipoModalActual === 'delimitador') {
+                document.getElementById('ajusteDelimitador').value = valor;
+                document.getElementById('txtDelimitador').innerText = texto;
             }
         }
 
         // --- SISTEMA GENERAL ---
-        function vibrarUI() {
-            if (usarVibracion && navigator.vibrate) navigator.vibrate(30);
-        }
-
         function togglePanel(id, headerElement) {
-            vibrarUI();
+            feedbackUI();
             const panel = document.getElementById(id);
             const icon = headerElement.querySelector('.btn-toggle-panel');
             if (panel.style.display === "none" || panel.style.display === "") {
@@ -430,11 +470,9 @@
         }
 
         function cargarAjustes() {
-            // Nota: Este módulo no altera cota100_last_url, preservando tu avance.
-
             let conf = JSON.parse(localStorage.getItem('cota100_ajustes')) || {
-                darkMode: false, wakeLockEnabled: false, vibracion: true,
-                decimales: "3", alertaMira: "5", unidadPresion: "hpa", formatoCSV: "PEN"
+                darkMode: false, wakeLockEnabled: false, vibracion: true, sonido: false,
+                zonaDefecto: "17", decimales: "3", alertaMira: "5", unidadPresion: "hpa", formatoCSV: "PEN", delimitadorCSV: ";"
             };
             
             document.getElementById('ajusteProyecto').value = conf.proyecto || "";
@@ -444,10 +482,16 @@
             document.getElementById('checkDarkMode').checked = !!conf.darkMode;
             document.getElementById('checkWakeLock').checked = !!conf.wakeLockEnabled;
             document.getElementById('checkVibracion').checked = conf.vibracion !== false; 
+            document.getElementById('checkSonido').checked = !!conf.sonido;
             
             // Cargar selectores personalizados
+            document.getElementById('ajusteZona').value = conf.zonaDefecto || "17";
+            if (conf.zonaDefecto === "18") document.getElementById('txtZona').innerText = "18 Sur (Centro)";
+            else if (conf.zonaDefecto === "19") document.getElementById('txtZona').innerText = "19 Sur (Sur)";
+            else document.getElementById('txtZona').innerText = "17 Sur (Costa Norte)";
+
             document.getElementById('ajusteDecimales').value = conf.decimales || "3";
-            document.getElementById('txtDecimales').innerText = (conf.decimales === "4") ? "4 Decimales (Décima de mm)" : "3 Decimales (Milímetro)";
+            document.getElementById('txtDecimales').innerText = (conf.decimales === "4") ? "4 Decimales" : "3 Decimales";
 
             document.getElementById('ajusteAlertaMira').value = conf.alertaMira || "5";
             document.getElementById('txtAlertaMira').innerText = (conf.alertaMira === "4") ? "Máximo 4.00 m" : "Máximo 5.00 m";
@@ -458,9 +502,19 @@
             document.getElementById('ajusteFormatoCSV').value = conf.formatoCSV || "PEN";
             document.getElementById('txtFormatoCSV').innerText = (conf.formatoCSV === "EN") ? "Solo Este, Norte (E-N)" : "Punto, Este, Norte (P-E-N)";
 
+            document.getElementById('ajusteDelimitador').value = conf.delimitadorCSV || ";";
+            document.getElementById('txtDelimitador').innerText = (conf.delimitadorCSV === ",") ? "Coma ( , ) - Excel Inglés" : "Punto y Coma ( ; ) - Excel Español";
+
             usarVibracion = document.getElementById('checkVibracion').checked;
+            usarSonido = document.getElementById('checkSonido').checked;
 
             if(conf.wakeLockEnabled) solicitarWakeLock();
+
+            // Cargar fecha del último backup
+            let lastBackup = localStorage.getItem('cota100_last_backup');
+            if(lastBackup) {
+                document.getElementById('lblLastBackup').innerHTML = `Último respaldo: <span style="color:var(--primary-color);">${lastBackup}</span>`;
+            }
         }
 
         function guardarAjustes(mostrarNotificacion = false) {
@@ -471,15 +525,22 @@
                 darkMode: document.getElementById('checkDarkMode').checked,
                 wakeLockEnabled: document.getElementById('checkWakeLock').checked,
                 vibracion: document.getElementById('checkVibracion').checked,
+                sonido: document.getElementById('checkSonido').checked,
+                zonaDefecto: document.getElementById('ajusteZona').value,
                 decimales: document.getElementById('ajusteDecimales').value,
                 alertaMira: document.getElementById('ajusteAlertaMira').value,
                 unidadPresion: document.getElementById('ajusteUnidadPresion').value,
-                formatoCSV: document.getElementById('ajusteFormatoCSV').value
+                formatoCSV: document.getElementById('ajusteFormatoCSV').value,
+                delimitadorCSV: document.getElementById('ajusteDelimitador').value
             };
             
             usarVibracion = conf.vibracion;
+            usarSonido = conf.sonido;
             localStorage.setItem('cota100_ajustes', JSON.stringify(conf));
             
+            // Sincronizar zona global si cambia aquí
+            localStorage.setItem("cota100_zona", conf.zonaDefecto);
+
             if(mostrarNotificacion) {
                 mostrarToast("Preferencias actualizadas");
                 setTimeout(() => { window.location.href = "index.html"; }, 1000); 
@@ -497,6 +558,12 @@
             const isEnabled = document.getElementById('checkWakeLock').checked;
             if(isEnabled) await solicitarWakeLock();
             else liberarWakeLock();
+            guardarAjustes(false);
+        }
+
+        function toggleSonido() {
+            usarSonido = document.getElementById('checkSonido').checked;
+            feedbackUI();
             guardarAjustes(false);
         }
 
@@ -521,7 +588,7 @@
         // --- SISTEMA DE BACKUP TOTAL ---
         function exportarBackupTotal() {
             const backup = {
-                version_export: "3.0",
+                version_export: "5.0",
                 fecha: new Date().toISOString(),
                 ajustes: JSON.parse(localStorage.getItem('cota100_ajustes')),
                 db_simple: JSON.parse(localStorage.getItem('cota100_db_simple_v4')),
@@ -533,6 +600,12 @@
             
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
             const dl = document.createElement('a');
+            
+            // Generar fecha legible y guardar en memoria
+            let fechaStr = new Date().toLocaleString('es-PE', { hour12: true });
+            localStorage.setItem('cota100_last_backup', fechaStr);
+            document.getElementById('lblLastBackup').innerHTML = `Último respaldo: <span style="color:var(--primary-color);">${fechaStr}</span>`;
+
             dl.setAttribute("href", dataStr);
             dl.setAttribute("download", `COTA100_BACKUP_TOTAL_${new Date().toISOString().split('T')[0]}.json`);
             document.body.appendChild(dl); dl.click(); dl.remove();
@@ -562,14 +635,6 @@
         }
 
         // --- MANTENIMIENTO ---
-        function forzarActualizacionPWA() {
-            if(confirm("¿Forzar actualización y limpiar caché visual? No se borrarán tus datos guardados.")) {
-                if ('caches' in window) { caches.keys().then(names => { for (let name of names) caches.delete(name); }); }
-                if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(regs => { for(let reg of regs) reg.unregister(); }); }
-                setTimeout(() => { window.location.reload(true); }, 500);
-            }
-        }
-
         function factoryReset() {
             if(confirm("🚨 ADVERTENCIA: Estás a punto de borrar TODAS las libretas, poligonales y áreas de la memoria de tu teléfono.\n\n¿Estás seguro?")) {
                 let check = prompt("Escribe BORRAR en mayúsculas para confirmar:");

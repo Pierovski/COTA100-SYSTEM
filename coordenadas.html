@@ -30,7 +30,6 @@
             --input-bg: rgba(45,45,45,0.9);
         }
 
-        /* Ajustes específicos para el modo oscuro en este módulo */
         body.dark-mode .info-box { background-color: rgba(255, 85, 0, 0.05) !important; color: #e0e0e0 !important; border-left-color: var(--primary-color) !important;}
         body.dark-mode .alerta-critica { background-color: rgba(211, 47, 47, 0.05) !important; color: #e0e0e0 !important; border-left-color: var(--danger-color) !important;}
         body.dark-mode .alerta-critica p { color: #e0e0e0; }
@@ -44,109 +43,52 @@
 
         body { 
             background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px; 
-            transition: background-color 0.3s, color 0.3s;
-            position: relative;
-            overflow-x: hidden;
-            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s; position: relative; overflow-x: hidden; min-height: 100vh;
         }
 
-        /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
-        .fire-base {
-            position: fixed;
-            bottom: 0; left: 0; width: 100vw; height: 35vh;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .fire-wave {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200vw; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 10s linear infinite;
-        }
-        .fire-wave.delay {
-            bottom: -15px; opacity: 0.6;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 7s linear infinite reverse;
-        }
+        /* FONDO ANIMADO */
+        .fire-base { position: fixed; bottom: 0; left: 0; width: 100vw; height: 35vh; z-index: -2; pointer-events: none; overflow: hidden; }
+        .fire-wave { position: absolute; bottom: 0; left: 0; width: 200vw; height: 100%; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 10s linear infinite; }
+        .fire-wave.delay { bottom: -15px; opacity: 0.6; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 7s linear infinite reverse; }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
-        /* --- CABECERA DUAL --- */
-        .top-bar { 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
-            background-color: transparent; position: sticky; top: 0; z-index: 100; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
-        }
+        /* CABECERA DUAL */
+        .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid var(--card-border); background-color: transparent; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px; }
         .nav-buttons-left { display: flex; gap: 8px; }
-        .btn-volver-mini { 
-            background: transparent; border: none; color: var(--primary-color);
-            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: drop-shadow(0 0 5px var(--primary-glow));
-        }
+        .btn-volver-mini { background: transparent; border: none; color: var(--primary-color); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 0 5px var(--primary-glow)); }
         .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
-        
-        .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.5rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1; letter-spacing: -1px;}
-        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.8rem; letter-spacing: 2px;}
+        .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.4rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1; letter-spacing: -0.5px;}
+        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.75rem; letter-spacing: 2px;}
         .spacer { width: 90px; }
 
         .modulo-container { padding: 25px 15px; max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- TARJETAS DEL MENÚ (GLASSMORPHISM) --- */
-        .tech-list-card {
-            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; 
-            padding: 22px 18px; display: flex; align-items: center; text-decoration: none; 
-            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; 
-            opacity: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-        }
-        
+        /* TARJETAS DEL MENÚ */
+        .tech-list-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 22px 18px; display: flex; align-items: center; text-decoration: none; transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; opacity: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
         @keyframes slideInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-        .card-animar:nth-child(1) { animation: slideInUp 0.4s 0.1s forwards; }
-        .card-animar:nth-child(2) { animation: slideInUp 0.4s 0.15s forwards; }
-        .card-animar:nth-child(3) { animation: slideInUp 0.4s 0.2s forwards; }
-        .card-animar:nth-child(4) { animation: slideInUp 0.4s 0.25s forwards; }
-
-        .tech-list-card:active { 
-            transform: scale(0.96); 
-            background: linear-gradient(135deg, #FF3300 0%, #FF8C00 60%, #FFD700 100%);
-            border-color: transparent;
-            box-shadow: 0 8px 25px rgba(255, 85, 0, 0.4); 
-        }
-
-        .icon-box { 
-            width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; 
-            color: var(--primary-color); margin-right: 18px; flex-shrink: 0; transition: 0.3s;
-        }
-
+        .card-animar:nth-child(1) { animation: slideInUp 0.4s 0.1s forwards; } .card-animar:nth-child(2) { animation: slideInUp 0.4s 0.15s forwards; } .card-animar:nth-child(3) { animation: slideInUp 0.4s 0.2s forwards; } .card-animar:nth-child(4) { animation: slideInUp 0.4s 0.25s forwards; }
+        .tech-list-card:active { transform: scale(0.96); background: linear-gradient(135deg, #FF3300 0%, #FF8C00 60%, #FFD700 100%); border-color: transparent; box-shadow: 0 8px 25px rgba(255, 85, 0, 0.4); }
+        .icon-box { width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; color: var(--primary-color); margin-right: 18px; flex-shrink: 0; transition: 0.3s; }
         .text-box { flex: 1; text-align: left; display: flex; flex-direction: column;}
         .text-box h3 { font-size: 1.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-color); margin-bottom: 4px; line-height: 1; transition: 0.3s;}
         .text-box p { font-size: 0.85rem; color: #888; font-weight: 600; line-height: 1.3; margin: 0; transition: 0.3s;}
+        .tech-list-card:active .icon-box, .tech-list-card:active .text-box h3, .tech-list-card:active .text-box p { color: #ffffff; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 
-        .tech-list-card:active .icon-box, 
-        .tech-list-card:active .text-box h3, 
-        .tech-list-card:active .text-box p {
-            color: #ffffff;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
+        .pantalla { display: none; animation: slideIn 0.3s ease-out forwards; } .pantalla.activa { display: block; }
 
-        .pantalla { display: none; animation: slideIn 0.3s ease-out forwards; }
-        .pantalla.activa { display: block; }
-
-        /* --- UI COMPONENTES GLASSMORPHISM --- */
+        /* UI COMPONENTES */
         .seccion-modulo { border: 1px solid var(--card-border); border-radius: 12px; padding: 18px; margin-bottom: 15px; background-color: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
-        .seccion-titulo { color: var(--primary-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; text-transform: uppercase;}
-
+        
+        /* ACORDEÓN PARÁMETROS */
+        .panel-plegable-btn { display: flex; justify-content: space-between; align-items: center; width: 100%; background: rgba(128,128,128,0.05); border: 1px dashed var(--card-border); padding: 12px 15px; border-radius: 8px; color: var(--primary-color); font-weight: 800; font-size: 0.95rem; text-transform: uppercase; cursor: pointer; transition: 0.2s; margin-bottom: 15px;}
+        .panel-plegable-btn:active { background: rgba(255,85,0,0.1); }
+        .panel-plegable-contenido { display: none; margin-bottom: 15px; padding-top: 5px;}
+        
         .tabs { display: flex; margin-bottom: 15px; border-radius: 10px; overflow: hidden; border: 1px solid var(--card-border); background: var(--card-bg); backdrop-filter: blur(10px);}
-        .tab-btn { flex: 1; padding: 15px; background-color: transparent; color: var(--text-color); border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.95rem; transition: 0.3s;}
+        .tab-btn { flex: 1; padding: 15px; background-color: transparent; color: var(--text-color); border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; transition: 0.3s;}
         .tab-btn.activa { background-color: var(--primary-color); color: #fff; }
-        .tab-content { display: none; }
-        .tab-content.activa { display: block; }
+        .tab-content { display: none; } .tab-content.activa { display: block; }
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
         .input-group { display: flex; flex-direction: column; }
@@ -154,19 +96,19 @@
         
         label { margin-bottom: 5px; font-weight: 800; color: var(--text-color); opacity: 0.8; font-size: 0.8rem; text-transform: uppercase; }
         input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-color); border-radius: 8px; transition: 0.2s; text-align: center;}
+        input[type="text"] { text-align: left; }
         input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
         input.error { border-color: var(--error-color); background-color: rgba(211, 47, 47, 0.05); }
         
-        /* --- CUSTOM SELECTOR (TIPO BOTÓN) --- */
         .custom-select { width: 100%; padding: 15px 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
-        .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
         
         .helper-text { font-size: 0.8rem; color: var(--text-color); opacity: 0.7; margin-top: 4px; line-height: 1.4; text-align: center; font-weight: 600;}
         .error-text { color: var(--error-color); font-size: 0.8rem; font-weight: 800; margin-top: 5px; display: none; text-align: center; }
+        .ayuda-zona-txt { color: var(--primary-color); font-size: 0.75rem; font-weight: 800; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .btn-calc { width: 100%; padding: 18px; font-size: 1.25rem; background-color: var(--primary-color); color: #fff; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-top: 5px; margin-bottom: 15px; box-shadow: 0 6px 15px rgba(255,85,0,0.25); transition: 0.2s;}
+        .btn-calc { width: 100%; padding: 18px; font-size: 1.2rem; background-color: var(--primary-color); color: #fff; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-top: 5px; margin-bottom: 15px; box-shadow: 0 6px 15px rgba(255,85,0,0.25); transition: 0.2s;}
         .btn-calc:active { transform: scale(0.98);}
 
         .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 18px; border: 1px solid var(--card-border); border-radius: 12px; background-color: var(--card-bg); display: none; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
@@ -179,17 +121,14 @@
         .btn-action { padding: 15px; font-weight: 800; border-radius: 8px; cursor: pointer; border: none; font-size: 1rem; text-transform: uppercase;}
         .btn-copiar { background-color: var(--table-header); color: #fff; }
         .btn-limpiar { background-color: transparent; color: var(--error-color); border: 2px solid var(--error-color); }
-        .btn-map { grid-column: 1 / -1; background-color: rgba(46,125,50,0.05); color: var(--success-color); border: 1px solid var(--success-color); }
+        .btn-map { grid-column: 1 / -1; background-color: rgba(46,125,50,0.1); color: var(--success-color); border: 1px solid var(--success-color); }
 
         .info-box { background-color: rgba(255, 85, 0, 0.05); border-left: 5px solid var(--primary-color); padding: 15px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; font-weight: 600; margin-bottom: 15px;}
-        .info-box strong { color: var(--primary-color); font-weight: 800;}
-        .drop-zone { border: 2px dashed var(--primary-color); border-radius: 12px; padding: 35px 20px; text-align: center; background-color: rgba(255,85,0,0.02); margin-bottom: 15px; color: var(--primary-color); font-weight: 800; text-transform: uppercase;}
-        
+        .drop-zone { border: 2px dashed var(--primary-color); border-radius: 12px; padding: 35px 20px; text-align: center; background-color: rgba(255,85,0,0.02); margin-bottom: 15px; color: var(--primary-color); font-weight: 800; text-transform: uppercase; cursor: pointer;}
         .alerta-critica { background-color: rgba(211, 47, 47, 0.05); border-left: 5px solid var(--error-color); padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
         .alerta-critica h4 { color: var(--error-color); margin-bottom: 6px; font-size: 0.95rem; text-transform: uppercase; font-weight: 900;}
-        .alerta-critica p { color: var(--text-color); font-size: 0.85rem; line-height: 1.4; margin: 0; font-weight: 600; opacity: 0.9;}
 
-        /* --- MODAL DE VENTANA (GLASSMORPHISM) --- */
+        /* MODALES */
         .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
         .overlay-select.activo { opacity: 1; }
         .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
@@ -211,19 +150,13 @@
 </head>
 <body>
 
-    <div class="fire-base">
-        <div class="fire-wave delay"></div>
-        <div class="fire-wave"></div>
-    </div>
+    <div class="fire-base"><div class="fire-wave delay"></div><div class="fire-wave"></div></div>
 
     <script>
-        try {
-            let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-            if (conf && conf.darkMode) document.body.classList.add('dark-mode');
-        } catch(e) {}
+        try { let conf = JSON.parse(localStorage.getItem('cota100_ajustes')); if (conf && conf.darkMode) document.body.classList.add('dark-mode'); } catch(e) {}
     </script>
 
-    <!-- MODAL DE SELECCIÓN GENÉRICO (LAS "VENTANAS") -->
+    <!-- MODAL DE SELECCIÓN -->
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -233,423 +166,341 @@
         <div id="modalSelectContent" style="max-height:350px; overflow-y:auto; margin-bottom:5px;"></div>
     </div>
 
-    <!-- MENÚ PRINCIPAL DE COORDENADAS -->
+    <!-- MENÚ PRINCIPAL -->
     <div id="menu-coordenadas" class="pantalla activa">
         <div class="top-bar">
-            <!-- Botón Casa (Home) solo uno porque es la raíz del módulo -->
             <a href="index.html" class="btn-volver-mini">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             </a>
-            <h2 class="top-bar-title">COORDENADAS <span>Módulos de Cálculo</span></h2>
+            <h2 class="top-bar-title">COORDENADAS <span>Módulos Topográficos</span></h2>
             <div class="spacer"></div>
         </div>
 
         <div class="modulo-container">
             <a href="#" onclick="cambiarPantalla('calc-datum'); return false;" class="tech-list-card card-animar">
-                <div class="icon-box">
-                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                </div>
-                <div class="text-box">
-                    <h3>Cambio de Datum</h3>
-                    <p>Transformación PSAD56 ⇄ WGS84 manual y masiva (CSV).</p>
-                </div>
+                <div class="icon-box"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+                <div class="text-box"><h3>Datum y KML</h3><p>PSAD56 ⇄ WGS84 y Exportación directa a Google Earth.</p></div>
             </a>
 
-            <a href="#" onclick="cambiarPantalla('calc-utm-geo'); return false;" class="tech-list-card card-animar">
-                <div class="icon-box">
-                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                </div>
-                <div class="text-box">
-                    <h3>UTM ⇄ Geográficas</h3>
-                    <p>Conversión, Factores de Escala (K) y Convergencia.</p>
-                </div>
+            <a href="#" onclick="cambiarPantalla('calc-proyecciones'); return false;" class="tech-list-card card-animar">
+                <div class="icon-box"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg></div>
+                <div class="text-box"><h3>Proyecciones (PTL)</h3><p>UTM a Geográficas y Cálculo de Factor Combinado (Topo 1:1).</p></div>
             </a>
 
-            <a href="#" onclick="cambiarPantalla('calc-utm-topo'); return false;" class="tech-list-card card-animar">
-                <div class="icon-box">
-                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>
-                </div>
-                <div class="text-box">
-                    <h3>UTM a Topográficas</h3>
-                    <p>Cálculo de Factor Combinado y coordenadas PTL (1:1).</p>
-                </div>
+            <a href="#" onclick="cambiarPantalla('calc-csv'); return false;" class="tech-list-card card-animar">
+                <div class="icon-box"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
+                <div class="text-box"><h3>Gestor Masivo CSV</h3><p>Ajuste de Cota Z, Filtro por Descripción y Limpieza de PNEZD.</p></div>
             </a>
 
             <a href="#" onclick="cambiarPantalla('calc-geoidal'); return false;" class="tech-list-card card-animar">
-                <div class="icon-box">
-                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                </div>
-                <div class="text-box">
-                    <h3>Transf. de Cotas</h3>
-                    <p>Conversión Elipsoidal (GPS) a Ortométrica (NM).</p>
-                </div>
+                <div class="icon-box"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+                <div class="text-box"><h3>Cotas y Geoidal</h3><p>Corrección GPS con modelo EGM2008 / EGM96 local.</p></div>
             </a>
         </div>
     </div>
 
-    <!-- SUBMÓDULO: CAMBIO DE DATUM -->
+    <!-- 1. SUBMÓDULO: DATUM Y KML -->
     <div id="calc-datum" class="pantalla">
         <div class="top-bar">
             <div class="nav-buttons-left">
-                <a href="index.html" class="btn-volver-mini">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                </a>
-                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
             </div>
-            <h2 class="top-bar-title">Cambio de <span>Datum</span></h2>
-            <div style="width: 90px;"></div>
+            <h2 class="top-bar-title">Datum & <span>Google Earth</span></h2>
+            <div style="width: 45px;"></div>
         </div>
         
         <div class="modulo-container">
-            <div class="alerta-critica">
-                <h4>⚠️ Aviso de Precisión</h4>
-                <p>El método de 3 Parámetros tiene un margen de error residual de <strong>±3 a 5 metros</strong>. Válido para ubicación y replanteo general. <br><em>No utilizar para expedientes de linderos oficiales ante SUNARP o COFOPRI.</em></p>
+            <button class="panel-plegable-btn" onclick="toggleAcordeon('infoDatum')" style="background: rgba(25, 118, 210, 0.05); color: #1976d2; border-color: #1976d2;">ℹ️ GUÍA DEL MÓDULO <span>▼</span></button>
+            <div id="infoDatum" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px; border-color: #1976d2;">
+                <p style="font-size: 0.85rem; color: var(--text-color); line-height: 1.4; margin:0;"><strong>¿Para qué sirve?</strong><br>Transforma coordenadas entre el antiguo sistema PSAD56 (planos mineros/Cofopri) y el actual WGS84.<br><br><strong>¿Cómo funciona?</strong><br>Aplica la fórmula de Molodensky de 3 parámetros. El método "Nacional" tiene un error de ±3 a 5m. Para precisión centimétrica, usa parámetros "Locales" calculados en tu zona.</p>
             </div>
 
-            <div class="seccion-modulo">
+            <div class="tabs"><button class="tab-btn activa" onclick="cambiarTab('datum', 'manual')" id="btnTabManual_datum">Punto a Punto</button><button class="tab-btn" onclick="cambiarTab('datum', 'masivo')" id="btnTabMasivo_datum">Masivo CSV</button></div>
+
+            <button class="panel-plegable-btn" onclick="toggleAcordeon('paramDatum')">⚙️ Parámetros de Transformación <span>▼</span></button>
+            <div id="paramDatum" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px;">
                 <div class="form-grid">
                     <div class="input-group full-width">
                         <label>Dirección</label>
-                        <div class="custom-select" onclick="abrirModalSelect('direccionTransf')">
-                            <span id="txt_direccionTransf">PSAD56 ➔ WGS84</span>
-                            <span class="arrow">▼</span>
-                        </div>
+                        <div class="custom-select" onclick="abrirModalSelect('direccionTransf')"><span id="txt_direccionTransf">PSAD56 ➔ WGS84</span><span class="arrow">▼</span></div>
                         <input type="hidden" id="direccionTransf" value="psad_to_wgs">
                     </div>
                     <div class="input-group full-width">
-                        <label>Parámetros de Transformación</label>
-                        <div class="custom-select" onclick="abrirModalSelect('tipoParametros')">
-                            <span id="txt_tipoParametros">Nacionales (Promedio Perú)</span>
-                            <span class="arrow">▼</span>
-                        </div>
+                        <label>Parámetros</label>
+                        <div class="custom-select" onclick="abrirModalSelect('tipoParametros')"><span id="txt_tipoParametros">Nacionales (Promedio Perú)</span><span class="arrow">▼</span></div>
                         <input type="hidden" id="tipoParametros" value="nacional">
                     </div>
                 </div>
-
                 <div class="form-grid" id="cajaParametros" style="display: none; background: rgba(255,85,0,0.05); padding: 15px; border-radius: 8px; border: 1px dashed var(--primary-color); margin-top: 10px;">
-                    <div class="full-width helper-text" style="text-align: left; margin-bottom: 12px; font-size: 0.85rem; background: var(--input-bg); padding: 12px; border-radius: 6px; border: 1px solid var(--card-border);">
-                        <strong style="color: var(--primary-color); font-size: 0.95rem;">💡 ¿Cómo y cuándo usarlos?</strong><br><br>
-                        • <strong>Nacionales:</strong> Son fijos (ΔX:-288, ΔY:175, ΔZ:-376). Tienen un error de 3 a 5 metros dependiendo de tu región.<br><br>
-                        • <strong>Locales:</strong> Ingresa aquí los Deltas (Δ) exactos de tu obra para reducir el error a centímetros. Se obtienen al estacionar tu GPS en un hito conocido y restar matemáticamente: <br><em>(Coordenada WGS84 satelital) - (Coordenada PSAD56 del plano antiguo)</em>.
-                    </div>
-                    
                     <div class="input-group"><label>ΔX</label><input type="number" id="dxLocal" step="0.001" value="-288.0"></div>
                     <div class="input-group"><label>ΔY</label><input type="number" id="dyLocal" step="0.001" value="175.0"></div>
                     <div class="input-group"><label>ΔZ</label><input type="number" id="dzLocal" step="0.001" value="-376.0"></div>
                 </div>
-
                 <div class="form-grid" style="margin-top: 15px;">
                     <div class="input-group full-width">
                         <label>Zona UTM</label>
-                        <div class="custom-select" onclick="abrirModalSelect('zonaUtm')">
-                            <span id="txt_zonaUtm">17 Sur</span>
-                            <span class="arrow">▼</span>
-                        </div>
+                        <div class="custom-select" onclick="abrirModalSelect('zonaUtm')"><span id="txt_zonaUtm">17 Sur</span><span class="arrow">▼</span></div>
                         <input type="hidden" id="zonaUtm" value="17">
+                        <div class="ayuda-zona-txt">Tumbes, Piura, Lambayeque, La Libertad, Cajamarca.</div>
                     </div>
                 </div>
-                <div id="ayudaZona" class="helper-text" style="margin-top: 10px; color: var(--primary-color);">Tumbes, Piura, Lambayeque, La Libertad, Cajamarca.</div>
             </div>
 
-            <div class="tabs"><button class="tab-btn activa" onclick="cambiarTab('manual')" id="btnTabManual">Punto a Punto</button><button class="tab-btn" onclick="cambiarTab('masivo')" id="btnTabMasivo">Masivo CSV</button></div>
-
-            <div id="tab-manual" class="tab-content activa">
+            <div id="tab-manual-datum" class="tab-content activa seccion-modulo">
                 <div class="form-grid">
-                    <div class="input-group"><label id="lblEsteIn">ESTE (X) - PSAD56</label><input type="number" id="esteIn" step="0.001" inputmode="decimal" placeholder="Ej: 715000" oninput="validarDigitos('esteIn','errEste','norteIn','errNorte','btnCalcular')"><div id="errEste" class="error-text">⚠️ 6 dígitos exactos.</div></div>
-                    <div class="input-group"><label id="lblNorteIn">NORTE (Y) - PSAD56</label><input type="number" id="norteIn" step="0.001" inputmode="decimal" placeholder="Ej: 9105000" oninput="validarDigitos('esteIn','errEste','norteIn','errNorte','btnCalcular')"><div id="errNorte" class="error-text">⚠️ 7 dígitos exactos.</div></div>
+                    <div class="input-group"><label id="lblEsteIn">ESTE (X) - PSAD56</label><input type="number" id="esteIn" step="0.001" inputmode="decimal" placeholder="Ej: 715000"></div>
+                    <div class="input-group"><label id="lblNorteIn">NORTE (Y) - PSAD56</label><input type="number" id="norteIn" step="0.001" inputmode="decimal" placeholder="Ej: 9105000"></div>
                 </div>
                 <button class="btn-calc" onclick="ejecutarTransformacion()" id="btnCalcular">Calcular Conversión</button>
-                
-                <div class="result-grid" id="cajaResultado">
-                    <div class="result-box-inner"><div class="result-label" id="lblEsteOut">ESTE (WGS84)</div><div class="result-value" id="resEste">0.000</div></div>
-                    <div class="result-box-inner"><div class="result-label" id="lblNorteOut">NORTE (WGS84)</div><div class="result-value" id="resNorte">0.000</div></div>
-                    <button class="btn-action btn-copiar" onclick="copiarTxt('resEste', 'resNorte')">📋 Copiar</button>
-                    <button class="btn-action btn-limpiar" onclick="limpiarFormularioDatum()">🗑️ Limpiar</button>
-                    <button class="btn-action btn-map" onclick="verEnGoogleMapsDatum()">🗺️ Ver en Maps</button>
-                </div>
             </div>
 
-            <div id="tab-masivo" class="tab-content">
+            <div class="result-grid" id="cajaResultado">
+                <div class="result-box-inner"><div class="result-label" id="lblEsteOut">ESTE (WGS84)</div><div class="result-value" id="resEste">0.000</div></div>
+                <div class="result-box-inner"><div class="result-label" id="lblNorteOut">NORTE (WGS84)</div><div class="result-value" id="resNorte">0.000</div></div>
+                <button class="btn-action btn-copiar" onclick="copiarTxt('resEste', 'resNorte')">📋 Copiar</button>
+                <button class="btn-action btn-map" onclick="verEnGoogleMapsDatum()">🗺️ Ver en Maps</button>
+            </div>
+
+            <div id="tab-masivo-datum" class="tab-content seccion-modulo">
                 <div class="input-group" style="margin-bottom: 15px;">
-                    <label>Formato de Columnas</label>
-                    <div class="custom-select" onclick="abrirModalSelect('formatoColumnas')">
-                        <span id="txt_formatoColumnas">P, E, N, Z, D (Completo)</span>
-                        <span class="arrow">▼</span>
-                    </div>
-                    <input type="hidden" id="formatoColumnas" value="PENZD">
+                    <label>Formato de Salida</label>
+                    <div class="custom-select" onclick="abrirModalSelect('formatoSalida')"><span id="txt_formatoSalida">Descargar CSV (PNEZD)</span><span class="arrow">▼</span></div>
+                    <input type="hidden" id="formatoSalida" value="csv">
                 </div>
-                
-                <div class="info-box" style="margin-top: 0; margin-bottom: 15px;">
-                    <strong>💡 TIP PARA QGIS / CIVIL 3D:</strong><br>
-                    Si vas a usar este CSV en software de diseño, añade manualmente el código EPSG en la primera celda del archivo (Ej. EPSG:32717 para Zona 17 Sur) para que se georreferencie de forma automática.
+                <div class="drop-zone" id="dropZoneDatum" onclick="document.getElementById('fileInputDatum').click()">
+                    <p>📂 TOCA PARA CARGAR CSV / TXT</p>
+                    <input type="file" id="fileInputDatum" accept=".csv, .txt" style="display: none;" onchange="actualizarNombreFile(this, 'dropZoneDatum')">
                 </div>
-
-                <div class="drop-zone" id="dropZone"><p>TOCA AQUÍ PARA CARGAR ARCHIVO</p><input type="file" id="fileInput" accept=".csv, .txt" style="margin-top: 15px; font-size: 0.9rem;"></div>
-                <button class="btn-calc" onclick="procesarArchivo()">Procesar y Descargar</button>
+                <button class="btn-calc" onclick="procesarArchivoDatum()">Transformar y Descargar</button>
             </div>
-            
         </div>
     </div>
 
-    <!-- SUBMÓDULO: UTM ⇄ GEO -->
-    <div id="calc-utm-geo" class="pantalla">
+    <!-- 2. SUBMÓDULO: PROYECCIONES (UTM/GEO/PTL) -->
+    <div id="calc-proyecciones" class="pantalla">
         <div class="top-bar">
             <div class="nav-buttons-left">
-                <a href="index.html" class="btn-volver-mini">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                </a>
-                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
             </div>
-            <h2 class="top-bar-title">UTM ⇄ <span>Geo</span></h2>
-            <div style="width: 90px;"></div>
+            <h2 class="top-bar-title">Proyecciones <span>UTM & PTL</span></h2>
+            <div style="width: 45px;"></div>
         </div>
         
         <div class="modulo-container">
-            <div class="seccion-modulo">
-                <div class="form-grid">
-                    <div class="input-group full-width">
-                        <label>Dirección</label>
-                        <div class="custom-select" onclick="abrirModalSelect('dirUtmGeo')">
-                            <span id="txt_dirUtmGeo">UTM ➔ Lat/Lon (Decimales)</span>
-                            <span class="arrow">▼</span>
+            <button class="panel-plegable-btn" onclick="toggleAcordeon('infoProy')" style="background: rgba(25, 118, 210, 0.05); color: #1976d2; border-color: #1976d2;">ℹ️ GUÍA DEL MÓDULO <span>▼</span></button>
+            <div id="infoProy" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px; border-color: #1976d2;">
+                <p style="font-size: 0.85rem; color: var(--text-color); line-height: 1.4; margin:0;"><strong>UTM a Geográficas:</strong> Convierte planos a Lat/Lon para GPS de mano o visualización en mapas online.<br><br><strong>Plano Topográfico Local (PTL):</strong> La Tierra es curva, pero AutoCAD es plano. Para que la distancia de tu Estación Total cuadre al milímetro con el plano (Escala 1:1), debes proyectar las coordenadas UTM a Topográficas usando el Factor Combinado (CSF) desde un BM Base.</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn activa" onclick="cambiarTab('proy', 'geo')" id="btnTabGeo">UTM ⇄ Geo</button>
+                <button class="tab-btn" onclick="cambiarTab('proy', 'ptl')" id="btnTabPtl">PTL (1:1)</button>
+            </div>
+
+            <!-- UTM <-> GEO -->
+            <div id="tab-geo" class="tab-content activa">
+                <button class="panel-plegable-btn" onclick="toggleAcordeon('paramGeo')">⚙️ Parámetros Geográficos <span>▼</span></button>
+                <div id="paramGeo" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px;">
+                    <div class="form-grid">
+                        <div class="input-group full-width">
+                            <label>Dirección</label>
+                            <div class="custom-select" onclick="abrirModalSelect('dirUtmGeo')"><span id="txt_dirUtmGeo">UTM ➔ Lat/Lon (Decimales)</span><span class="arrow">▼</span></div>
+                            <input type="hidden" id="dirUtmGeo" value="u2g">
                         </div>
-                        <input type="hidden" id="dirUtmGeo" value="u2g">
-                    </div>
-                    <div class="input-group">
-                        <label>Hemisferio</label>
-                        <div class="custom-select" onclick="abrirModalSelect('hemiGeo')">
-                            <span id="txt_hemiGeo">Sur (-)</span>
-                            <span class="arrow">▼</span>
+                        <div class="input-group">
+                            <label>Hemisferio</label>
+                            <div class="custom-select" onclick="abrirModalSelect('hemiGeo')"><span id="txt_hemiGeo">Sur (-)</span><span class="arrow">▼</span></div>
+                            <input type="hidden" id="hemiGeo" value="S">
                         </div>
-                        <input type="hidden" id="hemiGeo" value="S">
-                    </div>
-                    <div class="input-group">
-                        <label>Zona UTM</label>
-                        <div class="custom-select" onclick="abrirModalSelect('zonaUtmGeo')">
-                            <span id="txt_zonaUtmGeo">17</span>
-                            <span class="arrow">▼</span>
+                        <div class="input-group">
+                            <label>Zona UTM</label>
+                            <div class="custom-select" onclick="abrirModalSelect('zonaUtmGeo')"><span id="txt_zonaUtmGeo">17</span><span class="arrow">▼</span></div>
+                            <input type="hidden" id="zonaUtmGeo" value="17">
                         </div>
-                        <input type="hidden" id="zonaUtmGeo" value="17">
                     </div>
+                    <div class="ayuda-zona-txt" style="margin-top:-5px; margin-bottom:10px;">Tumbes, Piura, Lambayeque, La Libertad, Cajamarca.</div>
+                </div>
+
+                <div class="seccion-modulo" id="input-u2g">
+                    <div class="form-grid">
+                        <div class="input-group"><label>ESTE UTM (X)</label><input type="number" id="esteGeo" step="0.001" placeholder="Ej: 715000"></div>
+                        <div class="input-group"><label>NORTE UTM (Y)</label><input type="number" id="norteGeo" step="0.001" placeholder="Ej: 9105000"></div>
+                    </div>
+                    <button class="btn-calc" onclick="ejecutarUtmGeo()">Calcular Coordenadas</button>
+                </div>
+
+                <div class="seccion-modulo" id="input-g2u" style="display: none;">
+                    <div class="form-grid">
+                        <div class="input-group"><label>LATITUD (Decimal)</label><input type="number" id="latIn" step="0.000001" placeholder="Ej: -8.123456"></div>
+                        <div class="input-group"><label>LONGITUD (Decimal)</label><input type="number" id="lonIn" step="0.000001" placeholder="Ej: -79.123456"></div>
+                    </div>
+                    <button class="btn-calc" onclick="ejecutarUtmGeo()">Calcular UTM</button>
+                </div>
+
+                <div class="result-grid" id="cajaResGeoU2G">
+                    <div class="result-box-wide"><div class="result-label">GRADOS DECIMALES (LAT, LON)</div><div class="result-value-wide" id="resLatDec">0.0</div><div class="result-value-wide" id="resLonDec">0.0</div></div>
+                    <button class="btn-action btn-copiar" onclick="copiarTxt('resLatDec', 'resLonDec')">📋 Copiar</button>
+                    <button class="btn-action btn-map" onclick="verEnGoogleMapsGeoU2G()">🗺️ Maps</button>
+                </div>
+
+                <div class="result-grid" id="cajaResGeoG2U">
+                    <div class="result-box-inner"><div class="result-label">ESTE UTM (X)</div><div class="result-value" id="resEsteGeoOut">0.000</div></div>
+                    <div class="result-box-inner"><div class="result-label">NORTE UTM (Y)</div><div class="result-value" id="resNorteGeoOut">0.000</div></div>
+                    <div class="result-box-inner" style="background:rgba(255,85,0,0.05); border-color:var(--primary-color);"><div class="result-label">Factor Escala (K)</div><div class="result-value" id="resK" style="font-size: 1.2rem;">0.000000</div></div>
+                    <div class="result-box-inner" style="background:rgba(46,125,50,0.05); border-color:var(--success-color);"><div class="result-label">Convergencia (γ)</div><div class="result-value" id="resConv" style="font-size: 1.2rem; color:var(--success-color);">0° 0' 0"</div></div>
                 </div>
             </div>
-            
-            <div class="form-grid" id="input-u2g">
-                <div class="input-group"><label>ESTE UTM (X)</label><input type="number" id="esteGeo" step="0.001" inputmode="decimal" placeholder="Ej: 715000" oninput="validarDigitos('esteGeo','errEsteGeo','norteGeo','errNorteGeo','btnCalcularGeo')"><div id="errEsteGeo" class="error-text">⚠️ 6 dígitos.</div></div>
-                <div class="input-group"><label>NORTE UTM (Y)</label><input type="number" id="norteGeo" step="0.001" inputmode="decimal" placeholder="Ej: 9105000" oninput="validarDigitos('esteGeo','errEsteGeo','norteGeo','errNorteGeo','btnCalcularGeo')"><div id="errNorteGeo" class="error-text">⚠️ 7 dígitos.</div></div>
-            </div>
-            
-            <div class="form-grid" id="input-g2u" style="display: none;">
-                <div class="input-group"><label>LATITUD (Decimal)</label><input type="number" id="latIn" step="0.000001" inputmode="decimal" placeholder="Ej: -8.123456"></div>
-                <div class="input-group"><label>LONGITUD (Decimal)</label><input type="number" id="lonIn" step="0.000001" inputmode="decimal" placeholder="Ej: -79.123456"></div>
-            </div>
-            
-            <button class="btn-calc" onclick="ejecutarUtmGeo()" id="btnCalcularGeo">Calcular Coordenadas</button>
-            
-            <div class="result-grid" id="cajaResGeoU2G">
-                <div class="result-box-wide"><div class="result-label">GRADOS DECIMALES (LAT, LON)</div><div class="result-value-wide" id="resLatDec">0.0</div><div class="result-value-wide" id="resLonDec">0.0</div></div>
-                <button class="btn-action btn-copiar" onclick="copiarTxt('resLatDec', 'resLonDec')">📋 Copiar</button>
-                <button class="btn-action btn-limpiar" onclick="limpiarFormularioGeo()">🗑️ Limpiar</button>
-                <button class="btn-action btn-map" onclick="verEnGoogleMapsGeoU2G()">🗺️ Ver en Maps</button>
-            </div>
-            
-            <div class="result-grid" id="cajaResGeoG2U">
-                <div class="result-box-inner"><div class="result-label">ESTE UTM (X)</div><div class="result-value" id="resEsteGeoOut">0.000</div></div>
-                <div class="result-box-inner"><div class="result-label">NORTE UTM (Y)</div><div class="result-value" id="resNorteGeoOut">0.000</div></div>
-                
-                <div class="result-box-inner" style="background:rgba(255,85,0,0.05); border-color:var(--primary-color);"><div class="result-label">Factor Escala (K)</div><div class="result-value" id="resK" style="font-size: 1.2rem;">0.000000</div></div>
-                <div class="result-box-inner" style="background:rgba(46,125,50,0.05); border-color:var(--success-color);"><div class="result-label">Convergencia (γ)</div><div class="result-value" id="resConv" style="font-size: 1.2rem; color:var(--success-color);">0° 0' 0"</div></div>
 
-                <button class="btn-action btn-copiar" onclick="copiarTxt('resEsteGeoOut', 'resNorteGeoOut')">📋 Copiar</button>
-                <button class="btn-action btn-limpiar" onclick="limpiarFormularioGeo()">🗑️ Limpiar</button>
-                <button class="btn-action btn-map" onclick="verEnGoogleMapsGeoG2U()">🗺️ Ver en Maps</button>
+            <!-- PTL -->
+            <div id="tab-ptl" class="tab-content">
+                <div class="alerta-critica">
+                    <h4>⚠️ Ojo: Evita la Doble Corrección</h4>
+                    <p>Al generar tus coordenadas PTL (Topográficas) aquí, el software ya asume el estiramiento de la cuadrícula. Por lo tanto, <strong>la configuración de PPM/Escala en tu Estación Total debe quedar ESTRICTAMENTE en 1.000000.</strong></p>
+                </div>
+                <div class="seccion-modulo">
+                    <div class="seccion-titulo">1. PUNTO BASE (Origen del Estiramiento)</div>
+                    <div class="form-grid">
+                        <div class="input-group full-width"><label>ELEVACIÓN (Cota m.s.nm)</label><input type="number" id="cotaBase" step="0.001" placeholder="Ej: 2850.000"></div>
+                        <div class="input-group"><label>ESTE BASE (X)</label><input type="number" id="esteBase" step="0.001" placeholder="Ej: 715000"></div>
+                        <div class="input-group"><label>NORTE BASE (Y)</label><input type="number" id="norteBase" step="0.001" placeholder="Ej: 9105000"></div>
+                    </div>
+                </div>
+                <div class="seccion-modulo">
+                    <div class="seccion-titulo">2. PUNTO A PROYECTAR</div>
+                    <div class="form-grid">
+                        <div class="input-group"><label>ESTE UTM (X)</label><input type="number" id="estePunto" step="0.001" placeholder="Ej: 715100"></div>
+                        <div class="input-group"><label>NORTE UTM (Y)</label><input type="number" id="nortePunto" step="0.001" placeholder="Ej: 9105200"></div>
+                    </div>
+                    <button class="btn-calc" onclick="ejecutarPtl()">Generar PTL (1:1)</button>
+                </div>
+                <div class="result-grid" id="cajaResultadoPtl">
+                    <div class="result-box-inner"><div class="result-label">ESTE TOPO</div><div class="result-value" id="resEsteTopo">0.000</div></div>
+                    <div class="result-box-inner"><div class="result-label">NORTE TOPO</div><div class="result-value" id="resNorteTopo">0.000</div></div>
+                    <div class="result-box-wide" style="padding: 10px;">Factor CSF Matemático: <strong id="resFactorCombinadoVal">1.00000000</strong></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- SUBMÓDULO: UTM A TOPO -->
-    <div id="calc-utm-topo" class="pantalla">
+    <!-- 3. SUBMÓDULO: GESTOR MASIVO CSV -->
+    <div id="calc-csv" class="pantalla">
         <div class="top-bar">
             <div class="nav-buttons-left">
-                <a href="index.html" class="btn-volver-mini">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                </a>
-                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
             </div>
-            <h2 class="top-bar-title">UTM a <span>Topo</span></h2>
-            <div style="width: 90px;"></div>
+            <h2 class="top-bar-title">Gestor <span>Masivo CSV</span></h2>
+            <div style="width: 45px;"></div>
         </div>
         
         <div class="modulo-container">
-            <div class="alerta-critica">
-                <h4>⚠️ Ojo: Evita la Doble Corrección</h4>
-                <p>Al generar tus coordenadas PTL (Plano Topográfico Local) aquí, el software ya asume el estiramiento. Por lo tanto, <strong>la configuración de PPM/Escala en tu Estación Total debe quedar ESTRICTAMENTE en 1.000000.</strong></p>
+            <button class="panel-plegable-btn" onclick="toggleAcordeon('infoCsv')" style="background: rgba(25, 118, 210, 0.05); color: #1976d2; border-color: #1976d2;">ℹ️ GUÍA DEL MÓDULO <span>▼</span></button>
+            <div id="infoCsv" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px; border-color: #1976d2;">
+                <p style="font-size: 0.85rem; color: var(--text-color); line-height: 1.4; margin:0;"><strong>El salvavidas de gabinete.</strong> Aquí puedes procesar la data descargada de la Estación Total antes de llevarla a Civil 3D.<br><br><strong>Ajuste Z:</strong> Para subir o bajar todo el terreno si te equivocaste de BM.<br><strong>Filtro:</strong> Escribe "BZ" o "EJE" y descarga solo esos puntos.<br><strong>Limpiar:</strong> Pásale un archivo sucio (con espacios, comillas o tabulaciones) y te devolverá un PNEZD estricto separado por comas.</p>
             </div>
-            
-            <div class="seccion-modulo">
-                <div class="seccion-titulo">1. PUNTO DE ORIGEN (BASE / BM)</div>
-                <div class="helper-text" style="text-align: left; margin-bottom: 10px;">El <strong>Vértice de Amarre</strong> (Punto de Control). Fija el plano en el terreno. De aquí parte el estiramiento.</div>
-                <div class="form-grid">
-                    <div class="input-group full-width"><label>ELEVACIÓN (Cota m.s.n.m)</label><input type="number" id="cotaBase" step="0.001" inputmode="decimal" placeholder="Ej: 2850.000"></div>
-                    <div class="input-group"><label>ESTE BASE (X)</label><input type="number" id="esteBase" step="0.001" inputmode="decimal" placeholder="Ej: 715000"></div>
-                    <div class="input-group"><label>NORTE BASE (Y)</label><input type="number" id="norteBase" step="0.001" inputmode="decimal" placeholder="Ej: 9105000"></div>
+
+            <div class="tabs">
+                <button class="tab-btn activa" onclick="cambiarTab('csv', 'ajuste')" id="btnTabAjuste">Ajuste Z</button>
+                <button class="tab-btn" onclick="cambiarTab('csv', 'filtro')" id="btnTabFiltro">Filtro Desc</button>
+                <button class="tab-btn" onclick="cambiarTab('csv', 'limpio')" id="btnTabLimpio">Limpiar</button>
+            </div>
+
+            <!-- AJUSTE Z -->
+            <div id="tab-ajuste" class="tab-content activa seccion-modulo">
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <label>Delta Z (m) a sumar</label>
+                    <input type="number" id="deltaZCSV" step="0.001" placeholder="Ej: +1.450 o -0.300">
                 </div>
-            </div>
-
-            <div class="seccion-modulo">
-                <div class="seccion-titulo">2. PUNTO A ESTIRAR</div>
-                <div class="helper-text" style="text-align: left; margin-bottom: 10px;">Ingresa el punto UTM de diseño que deseas proyectar a escala real 1:1.</div>
-                <div class="form-grid">
-                    <div class="input-group"><label>ESTE UTM (X)</label><input type="number" id="estePunto" step="0.001" inputmode="decimal" placeholder="Ej: 715100"></div>
-                    <div class="input-group"><label>NORTE UTM (Y)</label><input type="number" id="nortePunto" step="0.001" inputmode="decimal" placeholder="Ej: 9105200"></div>
+                <div class="drop-zone" id="dropZoneAjuste" onclick="document.getElementById('fileAjuste').click()">
+                    <p>📂 CARGAR CSV / TXT PNEZD</p>
+                    <input type="file" id="fileAjuste" accept=".csv, .txt" style="display: none;" onchange="actualizarNombreFile(this, 'dropZoneAjuste')">
                 </div>
+                <button class="btn-calc" onclick="procesarCSV('ajuste')">Ajustar Z y Descargar</button>
             </div>
 
-            <button class="btn-calc" onclick="ejecutarPtl()" id="btnCalcularPtl">Generar PTL (1:1)</button>
-
-            <div class="result-grid" id="cajaResultadoPtl">
-                
-                <div class="result-box-wide" style="background-color: rgba(255,85,0,0.05); border: 2px solid var(--primary-color);">
-                    <div class="result-label" style="color: var(--primary-color);">FACTOR A INGRESAR EN LA ESTACIÓN TOTAL</div>
-                    <div class="result-value-wide" style="color: var(--text-color); font-size: 2rem;">1.000000</div>
+            <!-- FILTRO POR DESCRIPCIÓN -->
+            <div id="tab-filtro" class="tab-content seccion-modulo">
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <label>Descripción a Buscar</label>
+                    <input type="text" id="descFiltro" placeholder="Ej: BZ o EJE" style="text-transform: uppercase;">
                 </div>
-
-                <div class="result-box-inner"><div class="result-label">ESTE TOPOGRÁFICO</div><div class="result-value" id="resEsteTopo">0.000</div></div>
-                <div class="result-box-inner"><div class="result-label">NORTE TOPOGRÁFICO</div><div class="result-value" id="resNorteTopo">0.000</div></div>
-                
-                <div class="result-box-wide" style="background-color: transparent; border: none; padding: 5px;">
-                    <div class="helper-text" style="font-size: 0.8rem; font-family: monospace;">Factor CSF Matemático Aplicado: <span id="resFactorCombinadoVal" style="color:var(--text-color); font-weight:bold;">1.00000000</span></div>
+                <div class="drop-zone" id="dropZoneFiltro" onclick="document.getElementById('fileFiltro').click()">
+                    <p>📂 CARGAR CSV / TXT PNEZD</p>
+                    <input type="file" id="fileFiltro" accept=".csv, .txt" style="display: none;" onchange="actualizarNombreFile(this, 'dropZoneFiltro')">
                 </div>
-
-                <button class="btn-action btn-copiar" onclick="copiarTxt('resEsteTopo', 'resNorteTopo')">📋 Copiar PTL</button>
-                <button class="btn-action btn-limpiar" onclick="limpiarFormularioPtl()">🗑️ Limpiar Todo</button>
+                <button class="btn-calc" onclick="procesarCSV('filtro')">Filtrar y Descargar</button>
             </div>
 
-            <div class="info-box">
-                <strong>💡 TRUNCAMIENTO RECOMENDADO:</strong><br>
-                Para evitar confundir UTM con Topográficas en replanteos de campo, elude el primer dígito de la coordenada generada. (Ej. en vez de anotar 715000, anota 15000).
-            </div>
-            
-            <div class="alerta-critica" style="margin-top: 15px;">
-                <h4>⚠️ ALCANCE MÁXIMO DEL PTL:</h4>
-                <p>El factor de estiramiento pierde precisión a grandes distancias. En obras lineales mayores a 2.5 km o con alto desnivel, estaciona un nuevo Punto de Origen para no arrastrar error.</p>
+            <!-- LIMPIADOR ESTRICTO -->
+            <div id="tab-limpio" class="tab-content seccion-modulo">
+                <div class="drop-zone" id="dropZoneLimpio" onclick="document.getElementById('fileLimpio').click()">
+                    <p>📂 CARGAR ARCHIVO SUCIO</p>
+                    <input type="file" id="fileLimpio" accept=".csv, .txt" style="display: none;" onchange="actualizarNombreFile(this, 'dropZoneLimpio')">
+                </div>
+                <button class="btn-calc" onclick="procesarCSV('limpiar')">Limpiar Formato PNEZD</button>
             </div>
         </div>
     </div>
 
-    <!-- SUBMÓDULO: TRANSF DE COTAS -->
+    <!-- 4. SUBMÓDULO: COTAS Y GEOIDAL -->
     <div id="calc-geoidal" class="pantalla">
         <div class="top-bar">
             <div class="nav-buttons-left">
-                <a href="index.html" class="btn-volver-mini">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                </a>
-                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
             </div>
             <h2 class="top-bar-title">Transf. de <span>Cotas</span></h2>
-            <div style="width: 90px;"></div>
+            <div style="width: 45px;"></div>
         </div>
         
         <div class="modulo-container">
-            <div class="info-box" style="margin-bottom: 0;">
-                <strong>📖 TEORÍA: ¿Por qué transformar la cota?</strong><br><br>
-                <strong>1. Cota Elipsoidal (h):</strong> Es la altura "cruda" que te da el GPS basada en una figura matemática lisa (Elipsoide WGS84). No tiene en cuenta la gravedad. <em>(El agua no fluye según esta cota).</em><br><br>
-                <strong>2. Cota Ortométrica (H):</strong> Es la altura real sobre el Nivel Medio del Mar. Esta es la que necesitas para drenajes, saneamiento y obras civiles.<br><br>
-                <strong>3. Ondulación (N):</strong> Es la diferencia física entre ambas. La fórmula sagrada es: <strong>H = h - N</strong>.
+            <button class="panel-plegable-btn" onclick="toggleAcordeon('infoGeoidal')" style="background: rgba(25, 118, 210, 0.05); color: #1976d2; border-color: #1976d2;">ℹ️ GUÍA DEL MÓDULO <span>▼</span></button>
+            <div id="infoGeoidal" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px; border-color: #1976d2;">
+                <p style="font-size: 0.85rem; color: var(--text-color); line-height: 1.4; margin:0;"><strong>¿Por qué transformar la cota?</strong><br>El GPS (RTK o navegador) te da una altura <strong>elipsoidal</strong> cruda que no respeta la gravedad física. El agua no fluye según esa cota.<br><br>Al aplicar la ondulación geoidal, obtienes la cota <strong>Ortométrica</strong> (Nivel Medio del Mar), que es la exigida en obras de gravedad (saneamiento, canales). El módulo usa una malla matemática offline interpolada exclusiva para Perú (±1.5m precisión).</p>
             </div>
 
-            <div class="alerta-critica" style="margin-top: 15px;">
-                <h4>⚠️ Precisión Offline (Aprox ±1.5m)</h4>
-                <p>Para no saturar tu celular, esta app NO usa la pesada malla oficial EGM08 global. Utiliza una <strong>malla matemática reducida e interpolada</strong> exclusiva para la caja delimitadora de Perú. <br><br><em>Úsala como una referencia rápida de campo. Para control milimétrico o informes finales, usa la calculadora web del IGN o haz una calibración de sitio.</em></p>
-            </div>
-
-            <div class="seccion-modulo">
-                <div class="seccion-titulo">DATOS DEL PUNTO (GPS)</div>
+            <button class="panel-plegable-btn" onclick="toggleAcordeon('paramGeoidal')">⚙️ Parámetros de Ubicación <span>▼</span></button>
+            <div id="paramGeoidal" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px;">
                 <div class="form-grid">
                     <div class="input-group full-width">
-                        <label>Ingreso de Coordenadas por:</label>
-                        <div class="custom-select" onclick="abrirModalSelect('tipoIngresoGeoidal')">
-                            <span id="txt_tipoIngresoGeoidal">Coordenadas UTM</span>
-                            <span class="arrow">▼</span>
-                        </div>
+                        <label>Ingreso por:</label>
+                        <div class="custom-select" onclick="abrirModalSelect('tipoIngresoGeoidal')"><span id="txt_tipoIngresoGeoidal">Coordenadas UTM</span><span class="arrow">▼</span></div>
                         <input type="hidden" id="tipoIngresoGeoidal" value="utm">
                     </div>
                 </div>
-
-                <div class="form-grid" id="geo-utm">
+                <div class="form-grid" id="geo-utm-params">
                     <div class="input-group full-width">
-                        <label>ZONA Y HEMISFERIO</label>
-                        <div style="display: flex; gap: 10px;">
-                            <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('zonaGeoidal')">
-                                <span id="txt_zonaGeoidal">17</span>
-                                <span class="arrow">▼</span>
-                            </div>
-                            <input type="hidden" id="zonaGeoidal" value="17">
-                            
-                            <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('hemiGeoidal')">
-                                <span id="txt_hemiGeoidal">Sur (-)</span>
-                                <span class="arrow">▼</span>
-                            </div>
-                            <input type="hidden" id="hemiGeoidal" value="S">
-                        </div>
+                        <label>ZONA UTM</label>
+                        <div class="custom-select" onclick="abrirModalSelect('zonaGeoidal')"><span id="txt_zonaGeoidal">17</span><span class="arrow">▼</span></div>
+                        <input type="hidden" id="zonaGeoidal" value="17">
+                        <div class="ayuda-zona-txt">Tumbes, Piura, Lambayeque, La Libertad, Cajamarca.</div>
                     </div>
+                    <div class="input-group full-width" style="display: none;">
+                        <!-- Oculto para campo, asume Sur en Perú -->
+                        <div class="custom-select" onclick="abrirModalSelect('hemiGeoidal')"><span id="txt_hemiGeoidal">Sur (-)</span><span class="arrow">▼</span></div>
+                        <input type="hidden" id="hemiGeoidal" value="S">
+                    </div>
+                </div>
+            </div>
+
+            <div class="seccion-modulo">
+                <div class="form-grid" id="geo-utm">
                     <div class="input-group"><label>ESTE (X)</label><input type="number" id="esteGeoidal" step="0.001" placeholder="Ej: 715000"></div>
                     <div class="input-group"><label>NORTE (Y)</label><input type="number" id="norteGeoidal" step="0.001" placeholder="Ej: 9105000"></div>
                 </div>
-
                 <div class="form-grid" id="geo-latlon" style="display: none;">
                     <div class="input-group"><label>LATITUD</label><input type="number" id="latGeoidal" step="0.000001" placeholder="Ej: -8.111222"></div>
                     <div class="input-group"><label>LONGITUD</label><input type="number" id="lonGeoidal" step="0.000001" placeholder="Ej: -79.022333"></div>
                 </div>
-
                 <div class="form-grid" style="margin-top: 10px;">
-                    <div class="input-group full-width"><label>COTA ELIPSOIDAL (h) - Opcional</label><input type="number" id="cotaElipsoidal" step="0.001" placeholder="Altura cruda del GPS (Ej: 150.320)"></div>
+                    <div class="input-group full-width"><label>COTA ELIPSOIDAL (h) - Opcional</label><input type="number" id="cotaElipsoidal" step="0.001" placeholder="Altura cruda GPS (Ej: 150.320)"></div>
                 </div>
+                <button class="btn-calc" onclick="ejecutarGeoidalOffline()">Calcular Cota Real</button>
             </div>
-
-            <button class="btn-calc" onclick="ejecutarGeoidalOffline()">Calcular Cota Real</button>
 
             <div class="result-grid" id="cajaResGeoidal">
                 <div class="result-box-wide" style="background-color: rgba(255,85,0,0.05); border: 2px solid var(--primary-color);">
-                    <div class="result-label" style="color: var(--primary-color);">ONDULACIÓN (N) APROXIMADA EN PERÚ</div>
+                    <div class="result-label" style="color: var(--primary-color);">ONDULACIÓN (N) MODELO PERÚ</div>
                     <div class="result-value-wide" id="resN" style="color: var(--text-color); font-size: 2rem;">0.000 m</div>
                 </div>
-                
                 <div class="result-box-inner"><div class="result-label">COTA GPS (h)</div><div class="result-value" id="res_h" style="font-size: 1.3rem; color: #555;">--</div></div>
                 <div class="result-box-inner" style="border-color: var(--success-color); background-color: rgba(46,125,50,0.05);"><div class="result-label" style="color: var(--success-color);">COTA ORTOMÉTRICA (H)</div><div class="result-value" id="res_H" style="font-size: 1.4rem; color: var(--success-color);">--</div></div>
             </div>
@@ -657,363 +508,177 @@
     </div>
 
     <script>
-        // --- NAVEGACIÓN Y ESTADO DE APP ---
-        let nameMap = {
-            'calc-datum': 'CAMBIO DE DATUM',
-            'calc-utm-geo': 'UTM ⇄ GEO',
-            'calc-utm-topo': 'UTM A TOPO',
-            'calc-geoidal': 'TRANSF. DE COTAS'
-        };
-
-        window.onload = function() {
-            // REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX
-            if(window.location.hash) {
-                let mod = window.location.hash.substring(1);
-                if(document.getElementById(mod)) {
-                    cambiarPantalla(mod);
-                }
-            } else {
-                localStorage.setItem('cota100_last_name', 'COORDENADAS');
-                localStorage.setItem('cota100_last_url', 'coordenadas.html');
-            }
-
-            // Aplicar Modo Oscuro
-            try {
-                let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-                if (conf && conf.darkMode) document.body.classList.add('dark-mode');
-            } catch(e) {}
-
-            // Cargar Zona Guardada en los nuevos inputs ocultos y actualizar el texto visible
-            let zG = localStorage.getItem("cota100_zona");
-            if(zG) { 
-                document.getElementById('zonaUtm').value = zG; 
-                document.getElementById('txt_zonaUtm').innerText = zG + " Sur";
-                
-                document.getElementById('zonaUtmGeo').value = zG; 
-                document.getElementById('txt_zonaUtmGeo').innerText = zG;
-                
-                document.getElementById('zonaGeoidal').value = zG; 
-                document.getElementById('txt_zonaGeoidal').innerText = zG;
-                
-                actualizarAyudaZona(); 
-            }
-        };
-
+        // --- NAVEGACIÓN Y TABS ---
         function cambiarPantalla(idPantalla) {
             document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
             document.getElementById(idPantalla).classList.add('activa');
-            
-            // Sincronizar zonas entre calculadoras
-            let baseZona = document.getElementById('zonaUtm').value;
-            if(idPantalla === 'calc-utm-geo') {
-                document.getElementById('zonaUtmGeo').value = baseZona;
-                document.getElementById('txt_zonaUtmGeo').innerText = baseZona;
-            }
-            if(idPantalla === 'calc-geoidal') {
-                document.getElementById('zonaGeoidal').value = baseZona;
-                document.getElementById('txt_zonaGeoidal').innerText = baseZona;
-            }
-
             window.scrollTo(0,0);
-            
-            if(idPantalla !== 'menu-coordenadas') {
-                history.pushState({ modulo: idPantalla }, "", `#${idPantalla}`);
-                localStorage.setItem('cota100_last_name', nameMap[idPantalla]);
-                localStorage.setItem('cota100_last_url', `coordenadas.html#${idPantalla}`);
-            } else {
-                localStorage.setItem('cota100_last_name', 'COORDENADAS');
-                localStorage.setItem('cota100_last_url', 'coordenadas.html');
+        }
+        function volverAlMenu() { cambiarPantalla('menu-coordenadas'); }
+        function cambiarTab(grupo, modo) {
+            if(grupo === 'datum') {
+                document.getElementById('btnTabManual_datum').classList.remove('activa'); document.getElementById('btnTabMasivo_datum').classList.remove('activa');
+                document.getElementById('tab-manual-datum').classList.remove('activa'); document.getElementById('tab-masivo-datum').classList.remove('activa');
+                if(modo === 'manual') { document.getElementById('btnTabManual_datum').classList.add('activa'); document.getElementById('tab-manual-datum').classList.add('activa'); } 
+                else { document.getElementById('btnTabMasivo_datum').classList.add('activa'); document.getElementById('tab-masivo-datum').classList.add('activa'); }
+            } else if (grupo === 'proy') {
+                document.getElementById('btnTabGeo').classList.remove('activa'); document.getElementById('btnTabPtl').classList.remove('activa');
+                document.getElementById('tab-geo').classList.remove('activa'); document.getElementById('tab-ptl').classList.remove('activa');
+                if(modo === 'geo') { document.getElementById('btnTabGeo').classList.add('activa'); document.getElementById('tab-geo').classList.add('activa'); } 
+                else { document.getElementById('btnTabPtl').classList.add('activa'); document.getElementById('tab-ptl').classList.add('activa'); }
+            } else if (grupo === 'csv') {
+                document.getElementById('btnTabAjuste').classList.remove('activa'); document.getElementById('btnTabFiltro').classList.remove('activa'); document.getElementById('btnTabLimpio').classList.remove('activa');
+                document.getElementById('tab-ajuste').classList.remove('activa'); document.getElementById('tab-filtro').classList.remove('activa'); document.getElementById('tab-limpio').classList.remove('activa');
+                if(modo === 'ajuste') { document.getElementById('btnTabAjuste').classList.add('activa'); document.getElementById('tab-ajuste').classList.add('activa'); } 
+                else if(modo === 'filtro') { document.getElementById('btnTabFiltro').classList.add('activa'); document.getElementById('tab-filtro').classList.add('activa'); }
+                else { document.getElementById('btnTabLimpio').classList.add('activa'); document.getElementById('tab-limpio').classList.add('activa'); }
             }
         }
-
-        function volverAlMenu() {
-            cambiarPantalla('menu-coordenadas');
-            history.pushState(null, "", window.location.pathname);
+        function toggleAcordeon(id) {
+            let el = document.getElementById(id);
+            el.style.display = el.style.display === "block" ? "none" : "block";
         }
-
-        window.onpopstate = function(event) {
-            if(event.state && event.state.modulo) cambiarPantalla(event.state.modulo);
-            else cambiarPantalla('menu-coordenadas');
-        };
-
-        /* --- UI: LÓGICA DE VENTANA MODAL PARA DESPLEGABLES --- */
-        let tipoModalActual = "";
-        function abrirModalSelect(tipo) {
-            tipoModalActual = tipo;
-            const titulo = document.getElementById('modalSelectTitle');
-            const contenido = document.getElementById('modalSelectContent');
-            contenido.innerHTML = "";
-            
-            let opciones = [];
-            let actual = document.getElementById(tipo).value;
-
-            if(tipo === 'direccionTransf') {
-                titulo.innerText = "🔄 DIRECCIÓN";
-                opciones = [{val:'psad_to_wgs', txt:'PSAD56 ➔ WGS84'}, {val:'wgs_to_psad', txt:'WGS84 ➔ PSAD56'}];
-            } else if(tipo === 'tipoParametros') {
-                titulo.innerText = "⚙️ PARÁMETROS";
-                opciones = [{val:'nacional', txt:'Nacionales (Promedio Perú)'}, {val:'local', txt:'Locales (Topografía)'}];
-            } else if(tipo === 'zonaUtm' || tipo === 'zonaUtmGeo' || tipo === 'zonaGeoidal') {
-                titulo.innerText = "🌍 ZONA UTM";
-                if(tipo === 'zonaUtm') {
-                    opciones = [{val:'17', txt:'17 Sur'}, {val:'18', txt:'18 Sur'}, {val:'19', txt:'19 Sur'}];
-                } else {
-                    opciones = [{val:'17', txt:'17'}, {val:'18', txt:'18'}, {val:'19', txt:'19'}];
-                }
-            } else if(tipo === 'formatoColumnas') {
-                titulo.innerText = "📥 FORMATO CSV";
-                opciones = [{val:'PENZD', txt:'P, E, N, Z, D (Completo)'}, {val:'EN', txt:'Solo E, N (Básico)'}];
-            } else if(tipo === 'dirUtmGeo') {
-                titulo.innerText = "🔄 DIRECCIÓN";
-                opciones = [{val:'u2g', txt:'UTM ➔ Lat/Lon'}, {val:'g2u', txt:'Lat/Lon ➔ UTM'}];
-            } else if(tipo === 'hemiGeo' || tipo === 'hemiGeoidal') {
-                titulo.innerText = "🌐 HEMISFERIO";
-                opciones = [{val:'S', txt:'Sur (-)'}, {val:'N', txt:'Norte (+)'}];
-            } else if(tipo === 'tipoIngresoGeoidal') {
-                titulo.innerText = "📍 INGRESO POR";
-                opciones = [{val:'utm', txt:'Coordenadas UTM'}, {val:'latlon', txt:'Latitud y Longitud'}];
-            }
-
-            opciones.forEach(opt => {
-                let isActivo = opt.val === actual;
-                contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${opt.val}', '${opt.txt}')"><span>${opt.txt}</span></button>`;
-            });
-
-            document.getElementById('overlaySelect').style.display = 'block';
-            setTimeout(() => { document.getElementById('overlaySelect').classList.add('activo'); document.getElementById('modalSelect').classList.add('abierto'); }, 10);
-        }
-
-        function cerrarModalSelect() {
-            document.getElementById('overlaySelect').classList.remove('activo');
-            document.getElementById('modalSelect').classList.remove('abierto');
-            setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300);
-        }
-
-        function seleccionarOpcionModal(valor, texto) {
-            cerrarModalSelect();
-            document.getElementById(tipoModalActual).value = valor;
-            document.getElementById('txt_' + tipoModalActual).innerText = texto;
-            
-            // Disparar eventos asociados que antes estaban en el onchange del select
-            if(tipoModalActual === 'direccionTransf') actualizarInterfaz();
-            if(tipoModalActual === 'tipoParametros') toggleParametros();
-            if(tipoModalActual === 'zonaUtm') actualizarAyudaZona();
-            if(tipoModalActual === 'dirUtmGeo') toggleInputsGeo();
-            if(tipoModalActual === 'tipoIngresoGeoidal') toggleIngresoGeoidal();
-        }
-
-        // --- UI DATUM ---
-        function cambiarTab(modo) {
-            document.getElementById('btnTabManual').classList.remove('activa'); document.getElementById('btnTabMasivo').classList.remove('activa');
-            document.getElementById('tab-manual').classList.remove('activa'); document.getElementById('tab-masivo').classList.remove('activa');
-            if(modo === 'manual') { document.getElementById('btnTabManual').classList.add('activa'); document.getElementById('tab-manual').classList.add('activa'); } 
-            else { document.getElementById('btnTabMasivo').classList.add('activa'); document.getElementById('tab-masivo').classList.add('activa'); }
+        function actualizarNombreFile(input, dropZoneId) {
+            let dz = document.getElementById(dropZoneId);
+            if(input.files && input.files[0]) dz.innerHTML = `<p style="color:var(--text-color);">✅ Archivo cargado:<br><strong style="color:var(--primary-color); font-size:1.1rem;">${input.files[0].name}</strong></p>`;
         }
 
         function actualizarInterfaz() {
             let dir = document.getElementById('direccionTransf').value;
             if (dir === 'psad_to_wgs') {
-                document.getElementById('lblEsteIn').innerText = 'ESTE (X) - PSAD56'; document.getElementById('lblNorteIn').innerText = 'NORTE (Y) - PSAD56';
-                document.getElementById('lblEsteOut').innerText = 'ESTE (WGS84)'; document.getElementById('lblNorteOut').innerText = 'NORTE (WGS84)';
+                document.getElementById('lblEsteIn').innerText = 'ESTE (X) - PSAD56'; 
+                document.getElementById('lblNorteIn').innerText = 'NORTE (Y) - PSAD56';
+                document.getElementById('lblEsteOut').innerText = 'ESTE (WGS84)'; 
+                document.getElementById('lblNorteOut').innerText = 'NORTE (WGS84)';
             } else {
-                document.getElementById('lblEsteIn').innerText = 'ESTE (X) - WGS84'; document.getElementById('lblNorteIn').innerText = 'NORTE (Y) - WGS84';
-                document.getElementById('lblEsteOut').innerText = 'ESTE (PSAD56)'; document.getElementById('lblNorteOut').innerText = 'NORTE (PSAD56)';
+                document.getElementById('lblEsteIn').innerText = 'ESTE (X) - WGS84'; 
+                document.getElementById('lblNorteIn').innerText = 'NORTE (Y) - WGS84';
+                document.getElementById('lblEsteOut').innerText = 'ESTE (PSAD56)'; 
+                document.getElementById('lblNorteOut').innerText = 'NORTE (PSAD56)';
             }
             document.getElementById('cajaResultado').style.display = 'none';
         }
 
-        function toggleParametros() {
-            let tipo = document.getElementById('tipoParametros').value;
-            document.getElementById('cajaParametros').style.display = (tipo === 'local') ? 'grid' : 'none';
-        }
-
-        function getDeltas() {
-            if(document.getElementById('tipoParametros').value === 'local') {
-                return {
-                    x: parseFloat(document.getElementById('dxLocal').value) || 0,
-                    y: parseFloat(document.getElementById('dyLocal').value) || 0,
-                    z: parseFloat(document.getElementById('dzLocal').value) || 0
-                };
-            }
-            return { x: -288.0, y: 175.0, z: -376.0 };
-        }
-
-        function actualizarAyudaZona() {
-            let zona = document.getElementById('zonaUtm').value;
+        function actualizarAyudaZona(zona) {
             let texto = "";
             if(zona === "17") texto = "Tumbes, Piura, Lambayeque, La Libertad, Cajamarca.";
             if(zona === "18") texto = "Áncash, Lima, Ica, Huánuco, Pasco, Junín, Loreto, San Martín, Amazonas, Ayacucho, Huancavelica, Apurímac.";
             if(zona === "19") texto = "Arequipa, Moquegua, Tacna, Puno, Cusco, Madre de Dios.";
-            document.getElementById('ayudaZona').innerText = texto;
-            localStorage.setItem("cota100_zona", zona);
             
-            // Sincronizar el dato oculto y visual de la otra calculadora
-            document.getElementById('zonaUtmGeo').value = zona;
-            document.getElementById('txt_zonaUtmGeo').innerText = zona;
+            let els = document.querySelectorAll('.ayuda-zona-txt');
+            els.forEach(el => el.innerText = texto);
+            localStorage.setItem("cota100_zona", zona);
         }
 
-        function validarDigitos(idE, idErrE, idN, idErrN, idBtn) {
-            let eIn=document.getElementById(idE); let nIn=document.getElementById(idN); let btn=document.getElementById(idBtn);
-            if(!eIn || !nIn) return true;
-            let eV=eIn.value.split('.')[0]; let nV=nIn.value.split('.')[0]; let err=false;
-            if(eV.length>0 && eV.length!==6){ eIn.classList.add('error'); document.getElementById(idErrE).style.display='block'; err=true; } else { eIn.classList.remove('error'); document.getElementById(idErrE).style.display='none'; }
-            if(nV.length>0 && nV.length!==7){ nIn.classList.add('error'); document.getElementById(idErrN).style.display='block'; err=true; } else { nIn.classList.remove('error'); document.getElementById(idErrN).style.display='none'; }
-            btn.style.opacity = err?'0.5':'1'; btn.style.pointerEvents = err?'none':'auto';
-            return !err;
+        /* --- UI: MODAL SELECTOR --- */
+        let tipoModalActual = "";
+        function abrirModalSelect(tipo) {
+            tipoModalActual = tipo; const titulo = document.getElementById('modalSelectTitle'); const contenido = document.getElementById('modalSelectContent'); contenido.innerHTML = "";
+            let opciones = []; let actual = document.getElementById(tipo).value;
+
+            if(tipo === 'direccionTransf') { titulo.innerText = "🔄 DIRECCIÓN"; opciones = [{val:'psad_to_wgs', txt:'PSAD56 ➔ WGS84'}, {val:'wgs_to_psad', txt:'WGS84 ➔ PSAD56'}]; } 
+            else if(tipo === 'tipoParametros') { titulo.innerText = "⚙️ PARÁMETROS"; opciones = [{val:'nacional', txt:'Nacionales (Promedio Perú)'}, {val:'local', txt:'Locales (Topografía)'}]; } 
+            else if(tipo.startsWith('zona')) { titulo.innerText = "🌍 ZONA UTM"; opciones = [{val:'17', txt:'17 Sur'}, {val:'18', txt:'18 Sur'}, {val:'19', txt:'19 Sur'}]; } 
+            else if(tipo === 'formatoSalida') { titulo.innerText = "📥 FORMATO SALIDA"; opciones = [{val:'csv', txt:'Descargar CSV (PNEZD)'}, {val:'kml', txt:'Descargar Google Earth (.kml)'}]; } 
+            else if(tipo === 'dirUtmGeo') { titulo.innerText = "🔄 DIRECCIÓN"; opciones = [{val:'u2g', txt:'UTM ➔ Lat/Lon'}, {val:'g2u', txt:'Lat/Lon ➔ UTM'}]; } 
+            else if(tipo.startsWith('hemi')) { titulo.innerText = "🌐 HEMISFERIO"; opciones = [{val:'S', txt:'Sur (-)'}, {val:'N', txt:'Norte (+)'}]; } 
+            else if(tipo === 'tipoIngresoGeoidal') { titulo.innerText = "📍 INGRESO POR"; opciones = [{val:'utm', txt:'Coordenadas UTM'}, {val:'latlon', txt:'Latitud y Longitud'}]; }
+
+            opciones.forEach(opt => { let isActivo = opt.val === actual; contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${opt.val}', '${opt.txt}')"><span>${opt.txt}</span></button>`; });
+            document.getElementById('overlaySelect').style.display = 'block'; setTimeout(() => { document.getElementById('overlaySelect').classList.add('activo'); document.getElementById('modalSelect').classList.add('abierto'); }, 10);
         }
 
-        function copiarTxt(id1, id2) {
-            let v1 = document.getElementById(id1).innerText.replace(/[a-zA-Z\s:]/g, ''); 
-            let v2 = document.getElementById(id2).innerText.replace(/[a-zA-Z\s:]/g, '');
-            navigator.clipboard.writeText(`${v1}\t${v2}`).then(() => alert("Copiado al portapapeles."));
+        function cerrarModalSelect() { document.getElementById('overlaySelect').classList.remove('activo'); document.getElementById('modalSelect').classList.remove('abierto'); setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300); }
+
+        function seleccionarOpcionModal(valor, texto) {
+            cerrarModalSelect(); document.getElementById(tipoModalActual).value = valor; document.getElementById('txt_' + tipoModalActual).innerText = texto;
+            if(tipoModalActual === 'direccionTransf') { actualizarInterfaz(); }
+            if(tipoModalActual === 'tipoParametros') { document.getElementById('cajaParametros').style.display = valor === 'local' ? 'grid' : 'none'; }
+            if(tipoModalActual === 'dirUtmGeo') { document.getElementById('input-u2g').style.display = valor === 'u2g' ? 'block' : 'none'; document.getElementById('input-g2u').style.display = valor === 'g2u' ? 'block' : 'none'; document.getElementById('cajaResGeoU2G').style.display = 'none'; document.getElementById('cajaResGeoG2U').style.display = 'none'; }
+            if(tipoModalActual === 'tipoIngresoGeoidal') { document.getElementById('geo-latlon').style.display = valor === 'latlon' ? 'grid' : 'none'; document.getElementById('geo-utm').style.display = valor === 'utm' ? 'grid' : 'none'; document.getElementById('geo-utm-params').style.display = valor === 'utm' ? 'grid' : 'none'; }
+            if(tipoModalActual === 'zonaUtm' || tipoModalActual === 'zonaUtmGeo' || tipoModalActual === 'zonaGeoidal') {
+                document.getElementById('zonaUtm').value = valor; document.getElementById('txt_zonaUtm').innerText = valor + " Sur";
+                document.getElementById('zonaUtmGeo').value = valor; document.getElementById('txt_zonaUtmGeo').innerText = valor;
+                document.getElementById('zonaGeoidal').value = valor; document.getElementById('txt_zonaGeoidal').innerText = valor;
+                actualizarAyudaZona(valor);
+            }
         }
 
-        // --- MATEMÁTICAS CORE ---
-        const PI = Math.PI;
-        const PSAD56 = { a: 6378388.0, f: 1/297.0 };
-        const WGS84 = { a: 6378137.0, f: 1/298.257223563 };
+        window.onload = function() {
+            if(window.location.hash) {
+                let mod = window.location.hash.substring(1);
+                if(document.getElementById(mod)) cambiarPantalla(mod);
+            }
 
-        function formatDMS(deg) {
-            let d = Math.abs(deg); let dInt = Math.floor(d); let mFloat = (d - dInt) * 60; let mInt = Math.floor(mFloat);
-            let sFloat = (mFloat - mInt) * 60; let sign = deg < 0 ? "-" : "";
-            return `${sign}${dInt}° ${mInt}' ${sFloat.toFixed(2)}"`;
-        }
+            let zG = localStorage.getItem("cota100_zona") || "17";
+            document.getElementById('zonaUtm').value = zG; document.getElementById('txt_zonaUtm').innerText = zG + " Sur";
+            document.getElementById('zonaUtmGeo').value = zG; document.getElementById('txt_zonaUtmGeo').innerText = zG;
+            document.getElementById('zonaGeoidal').value = zG; document.getElementById('txt_zonaGeoidal').innerText = zG;
+            actualizarAyudaZona(zG);
+            actualizarInterfaz();
+        };
 
-        function molodenskyTransform(lat, lon, fromEllip, toEllip, deltaX, deltaY, deltaZ) {
-            let latRad = lat * PI / 180.0; let lonRad = lon * PI / 180.0;
-            let a = fromEllip.a; let f = fromEllip.f;
-            let da = toEllip.a - fromEllip.a; let df = toEllip.f - fromEllip.f; let e2 = 2*f - f*f;
-            let sinLat = Math.sin(latRad); let cosLat = Math.cos(latRad);
-            let sinLon = Math.sin(lonRad); let cosLon = Math.cos(lonRad);
-            let rm = a * (1 - e2) / Math.pow(1 - e2 * sinLat * sinLat, 1.5);
-            let rn = a / Math.sqrt(1 - e2 * sinLat * sinLat);
-            let dLat = (-deltaX * sinLat * cosLon - deltaY * sinLat * sinLon + deltaZ * cosLat + (a * df + f * da) * Math.sin(2 * latRad)) / rm;
-            let dLon = (-deltaX * sinLon + deltaY * cosLon) / (rn * cosLat);
-            return { lat: lat + (dLat * 180.0 / PI), lon: lon + (dLon * 180.0 / PI) };
-        }
+        // --- CORE MATEMÁTICO ---
+        const PI = Math.PI; const PSAD56 = { a: 6378388.0, f: 1/297.0 }; const WGS84 = { a: 6378137.0, f: 1/298.257223563 };
+        function formatDMS(deg) { let d = Math.abs(deg); let dInt = Math.floor(d); let mFloat = (d - dInt) * 60; let mInt = Math.floor(mFloat); let sFloat = (mFloat - mInt) * 60; let sign = deg < 0 ? "-" : ""; return `${sign}${dInt}° ${mInt}' ${sFloat.toFixed(2)}"`; }
+        function molodenskyTransform(lat, lon, fromEllip, toEllip, deltaX, deltaY, deltaZ) { let latRad = lat * PI / 180.0; let lonRad = lon * PI / 180.0; let a = fromEllip.a; let f = fromEllip.f; let da = toEllip.a - fromEllip.a; let df = toEllip.f - fromEllip.f; let e2 = 2*f - f*f; let sinLat = Math.sin(latRad); let cosLat = Math.cos(latRad); let sinLon = Math.sin(lonRad); let cosLon = Math.cos(lonRad); let rm = a * (1 - e2) / Math.pow(1 - e2 * sinLat * sinLat, 1.5); let rn = a / Math.sqrt(1 - e2 * sinLat * sinLat); let dLat = (-deltaX * sinLat * cosLon - deltaY * sinLat * sinLon + deltaZ * cosLat + (a * df + f * da) * Math.sin(2 * latRad)) / rm; let dLon = (-deltaX * sinLon + deltaY * cosLon) / (rn * cosLat); return { lat: lat + (dLat * 180.0 / PI), lon: lon + (dLon * 180.0 / PI) }; }
+        function utmToLatLon(x, y, zone, isSouth, a, f) { let e2 = 2*f - f*f; let ep2 = e2 / (1 - e2); if (isSouth) y = y - 10000000.0; let lonOrigin = (zone - 1) * 6 - 180 + 3; x = x - 500000.0; let m = y / 0.9996; let mu = m / (a * (1 - e2/4 - 3*e2*e2/64 - 5*Math.pow(e2,3)/256)); let e1 = (1 - Math.sqrt(1 - e2)) / (1 + Math.sqrt(1 - e2)); let phi1Rad = mu + (3*e1/2 - 27*Math.pow(e1,3)/32)*Math.sin(2*mu) + (21*e1*e1/16 - 55*Math.pow(e1,4)/32)*Math.sin(4*mu) + (151*Math.pow(e1,3)/96)*Math.sin(6*mu); let n1 = a / Math.sqrt(1 - e2 * Math.sin(phi1Rad)*Math.sin(phi1Rad)); let t1 = Math.tan(phi1Rad) * Math.tan(phi1Rad); let c1 = ep2 * Math.cos(phi1Rad) * Math.cos(phi1Rad); let r1 = a * (1 - e2) / Math.pow(1 - e2 * Math.sin(phi1Rad)*Math.sin(phi1Rad), 1.5); let d = x / (n1 * 0.9996); let latRad = phi1Rad - (n1 * Math.tan(phi1Rad) / r1) * (d*d/2 - (5 + 3*t1 + 10*c1 - 4*c1*c1 - 9*ep2)*Math.pow(d,4)/24 + (61 + 90*t1 + 298*c1 + 45*t1*t1 - 252*ep2 - 3*c1*c1)*Math.pow(d,6)/720); let lonRad = (d - (1 + 2*t1 + c1)*Math.pow(d,3)/6 + (5 - 2*c1 + 28*t1 - 3*c1*c1 + 8*ep2 + 24*t1*t1)*Math.pow(d,5)/120) / Math.cos(phi1Rad); return { lat: latRad * 180.0 / PI, lon: lonOrigin + (lonRad * 180.0 / PI) }; }
+        function latLonToUtm(lat, lon, zone, a, f) { let latRad = lat * PI / 180.0; let lonRad = lon * PI / 180.0; let lonOrigin = (zone - 1) * 6 - 180 + 3; let lonOriginRad = lonOrigin * PI / 180.0; let e2 = 2*f - f*f; let ep2 = e2 / (1 - e2); let n = a / Math.sqrt(1 - e2 * Math.sin(latRad)*Math.sin(latRad)); let t = Math.tan(latRad) * Math.tan(latRad); let c = ep2 * Math.cos(latRad) * Math.cos(latRad); let A = Math.cos(latRad) * (lonRad - lonOriginRad); let m = a * ((1 - e2/4 - 3*e2*e2/64 - 5*Math.pow(e2,3)/256)*latRad - (3*e2/8 + 3*e2*e2/32 + 45*Math.pow(e2,3)/1024)*Math.sin(2*latRad) + (15*e2*e2/256 + 45*Math.pow(e2,3)/1024)*Math.sin(4*latRad) - (35*Math.pow(e2,3)/3072)*Math.sin(6*latRad)); let x = 0.9996 * n * (A + (1 - t + c)*Math.pow(A,3)/6 + (5 - 18*t + t*t + 72*c - 58*ep2)*Math.pow(A,5)/120); let k = 0.9996 * (1 + (A*A/2)*(1+c) + (Math.pow(A,4)/24)*(5 - 4*t + 42*c + 13*c*c - 28*ep2)); let gammaRad = Math.sin(latRad) * (lonRad - lonOriginRad); let gammaDeg = gammaRad * 180.0 / PI; x = x + 500000.0; let y = 0.9996 * (m + n * Math.tan(latRad) * (A*A/2 + (5 - t + 9*c + 4*c*c)*Math.pow(A,4)/24 + (61 - 58*t + t*t + 600*c - 330*ep2)*Math.pow(A,6)/720)); if (lat < 0) y = y + 10000000.0; return { este: x, norte: y, k: k, gamma: gammaDeg }; }
 
-        function utmToLatLon(x, y, zone, isSouth, a, f) {
-            let e2 = 2*f - f*f; let ep2 = e2 / (1 - e2);
-            if (isSouth) y = y - 10000000.0;
-            let lonOrigin = (zone - 1) * 6 - 180 + 3; x = x - 500000.0;
-            let m = y / 0.9996;
-            let mu = m / (a * (1 - e2/4 - 3*e2*e2/64 - 5*Math.pow(e2,3)/256));
-            let e1 = (1 - Math.sqrt(1 - e2)) / (1 + Math.sqrt(1 - e2));
-            let phi1Rad = mu + (3*e1/2 - 27*Math.pow(e1,3)/32)*Math.sin(2*mu) + (21*e1*e1/16 - 55*Math.pow(e1,4)/32)*Math.sin(4*mu) + (151*Math.pow(e1,3)/96)*Math.sin(6*mu);
-            let n1 = a / Math.sqrt(1 - e2 * Math.sin(phi1Rad)*Math.sin(phi1Rad));
-            let t1 = Math.tan(phi1Rad) * Math.tan(phi1Rad); let c1 = ep2 * Math.cos(phi1Rad) * Math.cos(phi1Rad);
-            let r1 = a * (1 - e2) / Math.pow(1 - e2 * Math.sin(phi1Rad)*Math.sin(phi1Rad), 1.5);
-            let d = x / (n1 * 0.9996);
-            let latRad = phi1Rad - (n1 * Math.tan(phi1Rad) / r1) * (d*d/2 - (5 + 3*t1 + 10*c1 - 4*c1*c1 - 9*ep2)*Math.pow(d,4)/24 + (61 + 90*t1 + 298*c1 + 45*t1*t1 - 252*ep2 - 3*c1*c1)*Math.pow(d,6)/720);
-            let lonRad = (d - (1 + 2*t1 + c1)*Math.pow(d,3)/6 + (5 - 2*c1 + 28*t1 - 3*c1*c1 + 8*ep2 + 24*t1*t1)*Math.pow(d,5)/120) / Math.cos(phi1Rad);
-            return { lat: latRad * 180.0 / PI, lon: lonOrigin + (lonRad * 180.0 / PI) };
-        }
+        function copiarTxt(id1, id2) { let v1 = document.getElementById(id1).innerText; let v2 = document.getElementById(id2).innerText; navigator.clipboard.writeText(`${v1}\t${v2}`); alert("Copiado al portapapeles"); }
+        function descargarArchivo(contenido, nombre, mime) { let blob = new Blob(["\uFEFF" + contenido], { type: mime }); let link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = nombre; link.click(); }
 
-        function latLonToUtm(lat, lon, zone, a, f) {
-            let latRad = lat * PI / 180.0; let lonRad = lon * PI / 180.0;
-            let lonOrigin = (zone - 1) * 6 - 180 + 3; let lonOriginRad = lonOrigin * PI / 180.0;
-            let e2 = 2*f - f*f; let ep2 = e2 / (1 - e2);
-            let n = a / Math.sqrt(1 - e2 * Math.sin(latRad)*Math.sin(latRad));
-            let t = Math.tan(latRad) * Math.tan(latRad); let c = ep2 * Math.cos(latRad) * Math.cos(latRad);
-            let A = Math.cos(latRad) * (lonRad - lonOriginRad);
-            let m = a * ((1 - e2/4 - 3*e2*e2/64 - 5*Math.pow(e2,3)/256)*latRad - (3*e2/8 + 3*e2*e2/32 + 45*Math.pow(e2,3)/1024)*Math.sin(2*latRad) + (15*e2*e2/256 + 45*Math.pow(e2,3)/1024)*Math.sin(4*latRad) - (35*Math.pow(e2,3)/3072)*Math.sin(6*latRad));
-            let x = 0.9996 * n * (A + (1 - t + c)*Math.pow(A,3)/6 + (5 - 18*t + t*t + 72*c - 58*ep2)*Math.pow(A,5)/120); 
-            let k = 0.9996 * (1 + (A*A/2)*(1+c) + (Math.pow(A,4)/24)*(5 - 4*t + 42*c + 13*c*c - 28*ep2));
-            let gammaRad = Math.sin(latRad) * (lonRad - lonOriginRad);
-            let gammaDeg = gammaRad * 180.0 / PI;
-            x = x + 500000.0;
-            let y = 0.9996 * (m + n * Math.tan(latRad) * (A*A/2 + (5 - t + 9*c + 4*c*c)*Math.pow(A,4)/24 + (61 - 58*t + t*t + 600*c - 330*ep2)*Math.pow(A,6)/720));
-            if (lat < 0) y = y + 10000000.0;
-            return { este: x, norte: y, k: k, gamma: gammaDeg };
-        }
-
-        // --- CÁLCULOS UI DATUM ---
+        // --- SUBMÓDULO 1: DATUM Y KML ---
+        function getDeltas() { if(document.getElementById('tipoParametros').value === 'local') return { x: parseFloat(document.getElementById('dxLocal').value)||0, y: parseFloat(document.getElementById('dyLocal').value)||0, z: parseFloat(document.getElementById('dzLocal').value)||0 }; return { x: -288.0, y: 175.0, z: -376.0 }; }
         function ejecutarTransformacion() {
-            if(!validarDigitos('esteIn', 'errEste', 'norteIn', 'errNorte', 'btnCalcular')) return; 
-            let decs = parseInt(JSON.parse(localStorage.getItem('cota100_ajustes'))?.decimales) || 3;
             let este = parseFloat(document.getElementById('esteIn').value); let norte = parseFloat(document.getElementById('norteIn').value);
-            let zona = parseInt(document.getElementById('zonaUtm').value); let dir = document.getElementById('direccionTransf').value;
-            let deltas = getDeltas();
+            let zona = parseInt(document.getElementById('zonaUtm').value); let dir = document.getElementById('direccionTransf').value; let deltas = getDeltas();
             if(isNaN(este) || isNaN(norte)) { alert("Faltan datos."); return; }
             let res;
-            if (dir === 'psad_to_wgs') {
-                let geo1 = utmToLatLon(este, norte, zona, true, PSAD56.a, PSAD56.f);
-                let geo2 = molodenskyTransform(geo1.lat, geo1.lon, PSAD56, WGS84, deltas.x, deltas.y, deltas.z);
-                res = latLonToUtm(geo2.lat, geo2.lon, zona, WGS84.a, WGS84.f);
-            } else {
-                let geo1 = utmToLatLon(este, norte, zona, true, WGS84.a, WGS84.f);
-                let geo2 = molodenskyTransform(geo1.lat, geo1.lon, WGS84, PSAD56, -deltas.x, -deltas.y, -deltas.z);
-                res = latLonToUtm(geo2.lat, geo2.lon, zona, PSAD56.a, PSAD56.f);
-            }
-            document.getElementById('resEste').innerText = res.este.toFixed(decs); document.getElementById('resNorte').innerText = res.norte.toFixed(decs);
-            document.getElementById('cajaResultado').style.display = 'grid';
+            if (dir === 'psad_to_wgs') { let geo1 = utmToLatLon(este, norte, zona, true, PSAD56.a, PSAD56.f); let geo2 = molodenskyTransform(geo1.lat, geo1.lon, PSAD56, WGS84, deltas.x, deltas.y, deltas.z); res = latLonToUtm(geo2.lat, geo2.lon, zona, WGS84.a, WGS84.f); } 
+            else { let geo1 = utmToLatLon(este, norte, zona, true, WGS84.a, WGS84.f); let geo2 = molodenskyTransform(geo1.lat, geo1.lon, WGS84, PSAD56, -deltas.x, -deltas.y, -deltas.z); res = latLonToUtm(geo2.lat, geo2.lon, zona, PSAD56.a, PSAD56.f); }
+            document.getElementById('resEste').innerText = res.este.toFixed(3); document.getElementById('resNorte').innerText = res.norte.toFixed(3); document.getElementById('cajaResultado').style.display = 'grid';
         }
-
-        function limpiarFormularioDatum() { document.getElementById('esteIn').value = ''; document.getElementById('norteIn').value = ''; document.getElementById('cajaResultado').style.display = 'none'; document.getElementById('esteIn').focus(); validarDigitos('esteIn', 'errEste', 'norteIn', 'errNorte', 'btnCalcular'); }
-        
         function verEnGoogleMapsDatum() {
-            let este, norte; let dir = document.getElementById('direccionTransf').value; let zona = parseInt(document.getElementById('zonaUtm').value);
-            if (dir === 'psad_to_wgs') { este = parseFloat(document.getElementById('resEste').innerText); norte = parseFloat(document.getElementById('resNorte').innerText); } 
-            else { este = parseFloat(document.getElementById('esteIn').value); norte = parseFloat(document.getElementById('norteIn').value); }
-            let latLon = utmToLatLon(este, norte, zona, true, WGS84.a, WGS84.f);
-            window.open(`https://www.google.com/maps/search/?api=1&query=$?q=${latLon.lat},${latLon.lon}`, '_blank');
+            let este = parseFloat(document.getElementById('resEste').innerText); let norte = parseFloat(document.getElementById('resNorte').innerText); let zona = parseInt(document.getElementById('zonaUtm').value);
+            let latLon = utmToLatLon(este, norte, zona, true, WGS84.a, WGS84.f); window.open(`https://www.google.com/maps/search/?api=1&query=$?q=${latLon.lat},${latLon.lon}`, '_blank');
         }
-
-        function procesarArchivo() {
-            let fileInput = document.getElementById('fileInput'); let formato = document.getElementById('formatoColumnas').value;
-            let zona = parseInt(document.getElementById('zonaUtm').value); let dir = document.getElementById('direccionTransf').value;
-            let deltas = getDeltas();
-            let decs = parseInt(JSON.parse(localStorage.getItem('cota100_ajustes'))?.decimales) || 3;
-            if (!fileInput.files.length) { alert("Selecciona un archivo."); return; }
+        function procesarArchivoDatum() {
+            let fileInput = document.getElementById('fileInputDatum'); let formatOut = document.getElementById('formatoSalida').value;
+            let zona = parseInt(document.getElementById('zonaUtm').value); let dir = document.getElementById('direccionTransf').value; let deltas = getDeltas();
+            if (!fileInput.files.length) { alert("Selecciona un archivo primero."); return; }
             let file = fileInput.files[0]; let reader = new FileReader();
             reader.onload = function(e) {
-                let lineas = e.target.result.split(/\r?\n/); let resultadoCSV = ""; let procesadas = 0;
+                let lineas = e.target.result.split(/\r?\n/); let resCSV = ""; let kmlPoints = ""; let procesadas = 0;
                 for (let i = 0; i < lineas.length; i++) {
                     let linea = lineas[i].trim(); if (linea === "") continue;
-                    let sep = linea.includes(';') ? ';' : (linea.includes('\t') ? '\t' : ',');
-                    let columnas = linea.split(sep); let colE = (formato === "PENZD") ? 1 : 0; let colN = (formato === "PENZD") ? 2 : 1;
-                    if(columnas.length <= colN) continue;
-                    let este = parseFloat(columnas[colE]); let norte = parseFloat(columnas[colN]);
-                    if (isNaN(este) || isNaN(norte)) { resultadoCSV += linea + "\n"; continue; }
-                    let res;
+                    let cols = linea.split(/[,\t;]/); if(cols.length < 3) continue;
+                    let pto = cols[0]; let este = parseFloat(cols[1]); let norte = parseFloat(cols[2]); let cota = cols[3] || "0"; let desc = cols[4] || "";
+                    if (isNaN(este) || isNaN(norte)) continue;
+                    let res, geoFin;
                     if (dir === 'psad_to_wgs') {
-                        let geo1 = utmToLatLon(este, norte, zona, true, PSAD56.a, PSAD56.f);
-                        let geo2 = molodenskyTransform(geo1.lat, geo1.lon, PSAD56, WGS84, deltas.x, deltas.y, deltas.z);
-                        res = latLonToUtm(geo2.lat, geo2.lon, zona, WGS84.a, WGS84.f);
+                        let geo1 = utmToLatLon(este, norte, zona, true, PSAD56.a, PSAD56.f); let geo2 = molodenskyTransform(geo1.lat, geo1.lon, PSAD56, WGS84, deltas.x, deltas.y, deltas.z);
+                        res = latLonToUtm(geo2.lat, geo2.lon, zona, WGS84.a, WGS84.f); geoFin = geo2;
                     } else {
-                        let geo1 = utmToLatLon(este, norte, zona, true, WGS84.a, WGS84.f);
-                        let geo2 = molodenskyTransform(geo1.lat, geo1.lon, WGS84, PSAD56, -deltas.x, -deltas.y, -deltas.z);
-                        res = latLonToUtm(geo2.lat, geo2.lon, zona, PSAD56.a, PSAD56.f);
+                        let geo1 = utmToLatLon(este, norte, zona, true, WGS84.a, WGS84.f); let geo2 = molodenskyTransform(geo1.lat, geo1.lon, WGS84, PSAD56, -deltas.x, -deltas.y, -deltas.z);
+                        res = latLonToUtm(geo2.lat, geo2.lon, zona, PSAD56.a, PSAD56.f); geoFin = geo1; // KML always needs WGS84
                     }
-                    columnas[colE] = res.este.toFixed(decs); columnas[colN] = res.norte.toFixed(decs);
-                    resultadoCSV += columnas.join(sep) + "\n"; procesadas++;
+                    resCSV += `${pto},${res.este.toFixed(3)},${res.norte.toFixed(3)},${cota},${desc}\n`;
+                    kmlPoints += `<Placemark><name>${pto}</name><description>${desc} (Z:${cota})</description><Point><coordinates>${geoFin.lon},${geoFin.lat},0</coordinates></Point></Placemark>\n`;
+                    procesadas++;
                 }
-                let sufijo = dir === 'psad_to_wgs' ? '_WGS84' : '_PSAD56';
-                let nombre = file.name.split('.')[0] + sufijo + ".csv";
-                let blob = new Blob(["\uFEFF" + resultadoCSV], { type: 'text/csv;charset=utf-8;' });
-                let link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = nombre;
-                link.click(); alert(`Se transformaron ${procesadas} puntos.`);
-            };
-            reader.readAsText(file);
+                if(formatOut === 'kml') {
+                    let kmlFile = `<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>Export_Cota100</name>${kmlPoints}</Document></kml>`;
+                    descargarArchivo(kmlFile, file.name.split('.')[0] + ".kml", 'application/vnd.google-earth.kml+xml');
+                } else { descargarArchivo(resCSV, file.name.split('.')[0] + "_Transf.csv", 'text/csv;charset=utf-8;'); }
+                alert(`Se procesaron ${procesadas} puntos.`);
+            }; reader.readAsText(file);
         }
 
-        // --- CÁLCULOS UTM GEO ---
-        function toggleInputsGeo() {
-            let dir = document.getElementById('dirUtmGeo').value;
-            if(dir === 'u2g') {
-                document.getElementById('input-u2g').style.display = 'grid'; document.getElementById('input-g2u').style.display = 'none';
-                document.getElementById('cajaResGeoU2G').style.display = 'none'; document.getElementById('cajaResGeoG2U').style.display = 'none';
-            } else {
-                document.getElementById('input-u2g').style.display = 'none'; document.getElementById('input-g2u').style.display = 'grid';
-                document.getElementById('cajaResGeoU2G').style.display = 'none'; document.getElementById('cajaResGeoG2U').style.display = 'none';
-            }
-        }
-
+        // --- SUBMÓDULO 2: PROYECCIONES ---
         function ejecutarUtmGeo() {
-            let decs = parseInt(JSON.parse(localStorage.getItem('cota100_ajustes'))?.decimales) || 3;
             let dir = document.getElementById('dirUtmGeo').value; let zona = parseInt(document.getElementById('zonaUtmGeo').value); let hemi = document.getElementById('hemiGeo').value === 'S';
             if(dir === 'u2g') {
-                if(!validarDigitos('esteGeo', 'errEsteGeo', 'norteGeo', 'errNorteGeo', 'btnCalcularGeo')) return;
                 let este = parseFloat(document.getElementById('esteGeo').value); let norte = parseFloat(document.getElementById('norteGeo').value);
                 if(isNaN(este) || isNaN(norte)) { alert("Faltan datos."); return; }
                 let geo = utmToLatLon(este, norte, zona, hemi, WGS84.a, WGS84.f);
@@ -1023,45 +688,77 @@
                 let lat = parseFloat(document.getElementById('latIn').value); let lon = parseFloat(document.getElementById('lonIn').value);
                 if(isNaN(lat) || isNaN(lon)) { alert("Faltan datos."); return; }
                 let utm = latLonToUtm(lat, lon, zona, WGS84.a, WGS84.f);
-                document.getElementById('resEsteGeoOut').innerText = utm.este.toFixed(decs); document.getElementById('resNorteGeoOut').innerText = utm.norte.toFixed(decs);
+                document.getElementById('resEsteGeoOut').innerText = utm.este.toFixed(3); document.getElementById('resNorteGeoOut').innerText = utm.norte.toFixed(3);
                 document.getElementById('resK').innerText = utm.k.toFixed(6); document.getElementById('resConv').innerText = formatDMS(utm.gamma);
                 document.getElementById('cajaResGeoG2U').style.display = 'grid';
             }
         }
-
-        function limpiarFormularioGeo() {
-            document.getElementById('esteGeo').value = ''; document.getElementById('norteGeo').value = '';
-            document.getElementById('latIn').value = ''; document.getElementById('lonIn').value = '';
-            document.getElementById('cajaResGeoU2G').style.display = 'none'; document.getElementById('cajaResGeoG2U').style.display = 'none';
-        }
-
         function verEnGoogleMapsGeoU2G() { let lat = document.getElementById('resLatDec').innerText; let lon = document.getElementById('resLonDec').innerText; window.open(`https://www.google.com/maps/search/?api=1&query=$?q=${lat},${lon}`, '_blank'); }
-        function verEnGoogleMapsGeoG2U() { let lat = document.getElementById('latIn').value; let lon = document.getElementById('lonIn').value; window.open(`https://www.google.com/maps/search/?api=1&query=$?q=${lat},${lon}`, '_blank'); }
-
-        // --- CÁLCULOS PTL ---
         function ejecutarPtl() {
-            let decs = parseInt(JSON.parse(localStorage.getItem('cota100_ajustes'))?.decimales) || 3;
             let esteBase = parseFloat(document.getElementById('esteBase').value); let norteBase = parseFloat(document.getElementById('norteBase').value); let cotaBase = parseFloat(document.getElementById('cotaBase').value);
             let estePunto = parseFloat(document.getElementById('estePunto').value); let nortePunto = parseFloat(document.getElementById('nortePunto').value);
-            if(isNaN(esteBase) || isNaN(norteBase) || isNaN(cotaBase) || isNaN(estePunto) || isNaN(nortePunto)) { alert("Completa todos los datos de la Base y del Punto."); return; }
-            const R = 6378137.0; 
-            let factorElevacion = R / (R + cotaBase); let deltaE_Base = esteBase - 500000.0;
-            let factorEscala = 0.9996 * (1 + (Math.pow(deltaE_Base, 2) / (2 * Math.pow(R, 2))));
-            let csf = factorElevacion * factorEscala;
-            let deltaE_UTM = estePunto - esteBase; let deltaN_UTM = nortePunto - norteBase;
-            let deltaE_Topo = deltaE_UTM / csf; let deltaN_Topo = deltaN_UTM / csf;
+            if(isNaN(esteBase) || isNaN(norteBase) || isNaN(cotaBase) || isNaN(estePunto) || isNaN(nortePunto)) { alert("Completa todos los datos."); return; }
+            const R = 6378137.0; let factorElevacion = R / (R + cotaBase); let deltaE_Base = esteBase - 500000.0;
+            let factorEscala = 0.9996 * (1 + (Math.pow(deltaE_Base, 2) / (2 * Math.pow(R, 2)))); let csf = factorElevacion * factorEscala;
+            let deltaE_Topo = (estePunto - esteBase) / csf; let deltaN_Topo = (nortePunto - norteBase) / csf;
             document.getElementById('resFactorCombinadoVal').innerText = csf.toFixed(8);
-            document.getElementById('resEsteTopo').innerText = (esteBase + deltaE_Topo).toFixed(decs);
-            document.getElementById('resNorteTopo').innerText = (norteBase + deltaN_Topo).toFixed(decs);
+            document.getElementById('resEsteTopo').innerText = (esteBase + deltaE_Topo).toFixed(3); document.getElementById('resNorteTopo').innerText = (norteBase + deltaN_Topo).toFixed(3);
             document.getElementById('cajaResultadoPtl').style.display = 'grid';
         }
 
-        function limpiarFormularioPtl() { document.getElementById('estePunto').value = ''; document.getElementById('nortePunto').value = ''; document.getElementById('cajaResultadoPtl').style.display = 'none'; }
+        // --- SUBMÓDULO 3: GESTOR MASIVO CSV (NUEVAS FUNCIONES) ---
+        function procesarCSV(accion) {
+            let fileInput;
+            if(accion === 'ajuste') fileInput = document.getElementById('fileAjuste');
+            else if(accion === 'filtro') fileInput = document.getElementById('fileFiltro');
+            else fileInput = document.getElementById('fileLimpio');
 
-        // --- ONDULACIÓN GEOIDAL (MALLA PERÚ OFFLINE) ---
-        const offlineEGM96_Peru = {
-            latStart: 0, latEnd: -20, latStep: -2,
-            lonStart: -82, lonEnd: -68, lonStep: 2,
+            if (!fileInput.files.length) { alert("Selecciona un archivo CSV/TXT primero."); return; }
+            let file = fileInput.files[0]; let reader = new FileReader();
+
+            reader.onload = function(e) {
+                let lineas = e.target.result.split(/\r?\n/); let resCSV = ""; let procesadas = 0;
+                let dz = parseFloat(document.getElementById('deltaZCSV').value) || 0;
+                let filtroStr = document.getElementById('descFiltro').value.trim().toUpperCase();
+
+                for (let i = 0; i < lineas.length; i++) {
+                    let linea = lineas[i].trim(); if (linea === "") continue;
+                    
+                    if (accion === 'limpiar') {
+                        linea = linea.replace(/['"]/g, ''); // Quita comillas
+                        linea = linea.replace(/[\t;|\s+]/g, ','); // Todo a comas
+                        linea = linea.replace(/,+/g, ','); // Quita comas extra
+                        if (linea.match(/[a-zA-Z]/) && i === 0) continue; // Salta la cabecera
+                        let c = linea.split(',');
+                        if(c.length >= 3) { resCSV += `${c[0]},${parseFloat(c[1]).toFixed(3)},${parseFloat(c[2]).toFixed(3)},${c[3]?parseFloat(c[3]).toFixed(3):'0.000'},${c[4]||''}\n`; procesadas++; }
+                        continue;
+                    }
+
+                    // Lectura estándar
+                    let sep = linea.includes(';') ? ';' : (linea.includes('\t') ? '\t' : ',');
+                    let cols = linea.split(sep); if(cols.length < 3) continue;
+                    
+                    if (accion === 'ajuste') {
+                        if(cols.length >= 4 && !isNaN(parseFloat(cols[3]))) {
+                            cols[3] = (parseFloat(cols[3]) + dz).toFixed(3);
+                            resCSV += cols.join(',') + "\n"; procesadas++;
+                        } else { resCSV += linea + "\n"; } // Sin Z lo pasa igual
+                    } 
+                    else if (accion === 'filtro') {
+                        let desc = (cols[4] || "").toUpperCase();
+                        if (desc.includes(filtroStr)) { resCSV += cols.join(',') + "\n"; procesadas++; }
+                    }
+                }
+                
+                let sufijo = accion === 'ajuste' ? '_CotasAjustadas' : (accion === 'filtro' ? '_Filtrado' : '_PNEZD_Limpio');
+                descargarArchivo(resCSV, file.name.split('.')[0] + sufijo + ".csv", 'text/csv;charset=utf-8;');
+                alert(`Se procesaron ${procesadas} puntos correctamente.`);
+            }; reader.readAsText(file);
+        }
+
+        // --- SUBMÓDULO 4: COTAS Y GEOIDAL (MALLA PERÚ OFFLINE) ---
+        const EGM_PERU = {
+            latStart: 0, latEnd: -20, latStep: -2, lonStart: -82, lonEnd: -68, lonStep: 2,
             grid: [
                 [14.0, 16.5, 18.0, 20.0, 22.5, 24.0, 26.5, 28.0],
                 [15.5, 17.0, 19.5, 21.5, 23.0, 25.5, 27.5, 29.0],
@@ -1078,56 +775,34 @@
         };
 
         function interpolarBilineal(lat, lon) {
-            let m = offlineEGM96_Peru;
-            if (lat > m.latStart || lat < m.latEnd || lon < m.lonStart || lon > m.lonEnd) return null;
-
+            let m = EGM_PERU; if (lat > m.latStart || lat < m.latEnd || lon < m.lonStart || lon > m.lonEnd) return null;
             let latIdx = (lat - m.latStart) / m.latStep; let lonIdx = (lon - m.lonStart) / m.lonStep;
-            let lat0 = Math.floor(latIdx); let lat1 = lat0 + 1;
-            let lon0 = Math.floor(lonIdx); let lon1 = lon0 + 1;
-
+            let lat0 = Math.floor(latIdx); let lat1 = lat0 + 1; let lon0 = Math.floor(lonIdx); let lon1 = lon0 + 1;
             if (lat1 >= m.grid.length) lat1 = lat0; if (lon1 >= m.grid[0].length) lon1 = lon0;
-
-            let v00 = m.grid[lat0][lon0]; let v01 = m.grid[lat0][lon1];
-            let v10 = m.grid[lat1][lon0]; let v11 = m.grid[lat1][lon1];
+            let v00 = m.grid[lat0][lon0]; let v01 = m.grid[lat0][lon1]; let v10 = m.grid[lat1][lon0]; let v11 = m.grid[lat1][lon1];
             let dLat = latIdx - lat0; let dLon = lonIdx - lon0;
-
             let c0 = v00 * (1 - dLon) + v01 * dLon; let c1 = v10 * (1 - dLon) + v11 * dLon;
             return c0 * (1 - dLat) + c1 * dLat;
         }
 
-        function toggleIngresoGeoidal() {
-            let tipo = document.getElementById('tipoIngresoGeoidal').value;
-            document.getElementById('geo-latlon').style.display = tipo === 'latlon' ? 'grid' : 'none';
-            document.getElementById('geo-utm').style.display = tipo === 'utm' ? 'grid' : 'none';
-        }
-
         function ejecutarGeoidalOffline() {
-            let decs = parseInt(JSON.parse(localStorage.getItem('cota100_ajustes'))?.decimales) || 3;
             let tipo = document.getElementById('tipoIngresoGeoidal').value; let lat, lon;
-            if(tipo === 'latlon') {
-                lat = parseFloat(document.getElementById('latGeoidal').value); lon = parseFloat(document.getElementById('lonGeoidal').value);
-            } else {
+            if(tipo === 'latlon') { lat = parseFloat(document.getElementById('latGeoidal').value); lon = parseFloat(document.getElementById('lonGeoidal').value); } 
+            else {
                 let este = parseFloat(document.getElementById('esteGeoidal').value); let norte = parseFloat(document.getElementById('norteGeoidal').value);
                 let zona = parseInt(document.getElementById('zonaGeoidal').value); let hemi = document.getElementById('hemiGeoidal').value === 'S';
                 if(isNaN(este) || isNaN(norte)) { alert("Faltan coordenadas UTM."); return; }
                 let geo = utmToLatLon(este, norte, zona, hemi, WGS84.a, WGS84.f); lat = geo.lat; lon = geo.lon;
             }
-
             if(isNaN(lat) || isNaN(lon)) { alert("Faltan datos de ubicación."); return; }
 
             let N = interpolarBilineal(lat, lon);
-            if (N === null) { alert("⚠️ Las coordenadas están fuera del límite de la malla offline de Perú."); return; }
+            if (N === null) { alert("⚠️ Coordenadas fuera de la malla offline de Perú."); return; }
 
             let h_elipsoidal = parseFloat(document.getElementById('cotaElipsoidal').value);
             document.getElementById('resN').innerText = N.toFixed(3) + " m";
-            
-            if(!isNaN(h_elipsoidal)) {
-                let H = h_elipsoidal - N;
-                document.getElementById('res_h').innerText = h_elipsoidal.toFixed(decs);
-                document.getElementById('res_H').innerText = H.toFixed(decs);
-            } else {
-                document.getElementById('res_h').innerText = "--"; document.getElementById('res_H').innerText = "--";
-            }
+            if(!isNaN(h_elipsoidal)) { document.getElementById('res_h').innerText = h_elipsoidal.toFixed(3); document.getElementById('res_H').innerText = (h_elipsoidal - N).toFixed(3); } 
+            else { document.getElementById('res_h').innerText = "--"; document.getElementById('res_H').innerText = "--"; }
             document.getElementById('cajaResGeoidal').style.display = 'grid';
         }
     </script>
