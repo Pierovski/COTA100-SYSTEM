@@ -93,7 +93,10 @@
         .input-row { display: flex; gap: 12px; margin-bottom: 12px; }
         .input-group { flex: 1; display: flex; flex-direction: column; }
         .full-width { grid-column: 1 / -1; }
-        label { margin-bottom: 5px; font-weight: 800; color: var(--text-color); opacity: 0.8; font-size: 0.8rem; text-transform: uppercase; }
+        
+        label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-weight: 800; color: var(--text-color); opacity: 0.8; font-size: 0.8rem; text-transform: uppercase; }
+        .info-icon { background: rgba(128,128,128,0.1); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-left: 5px; color: var(--primary-color);}
+        .info-icon:active { transform: scale(0.9); background: var(--primary-color); color: #fff;}
         
         input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); border-radius: 8px; transition: 0.2s; text-align: center;}
         input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
@@ -102,6 +105,7 @@
         .custom-select { width: 100%; padding: 15px 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
+        .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
         /* --- SWITCH --- */
         .switch-container { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(128,128,128,0.1); }
@@ -124,7 +128,7 @@
         }
         .notificacion.mostrar { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-        /* --- MODAL DE VENTANA (GLASSMORPHISM) --- */
+        /* --- MODAL DE VENTANAS (GLASSMORPHISM) --- */
         .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
         .overlay-select.activo { opacity: 1; }
         .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
@@ -133,6 +137,14 @@
         .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
         
         .helper-text { font-size: 0.75rem; color: var(--text-color); opacity: 0.7; margin-top: 4px; line-height: 1.3; text-align: left; font-weight: 600;}
+
+        /* STORAGE BAR */
+        .storage-container { margin-bottom: 15px; background: rgba(128,128,128,0.03); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border); }
+        .storage-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; font-weight: 800; color: var(--text-color); text-transform: uppercase; }
+        .storage-track { width: 100%; height: 14px; background: rgba(128,128,128,0.2); border-radius: 7px; overflow: hidden; position: relative; }
+        .storage-fill { height: 100%; width: 0%; background: var(--success-color); transition: width 0.5s ease-out; }
+        .storage-fill.warning { background: #fbc02d; }
+        .storage-fill.danger { background: var(--danger-color); }
 
         @media screen and (max-width: 480px) {
             html { font-size: 13px; } 
@@ -158,7 +170,7 @@
         } catch(e) {}
     </script>
 
-    <!-- MODAL DE SELECCIÓN GENÉRICO (LAS "VENTANAS") -->
+    <!-- MODAL DE SELECCIÓN GENÉRICO -->
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -166,6 +178,15 @@
             <button onclick="cerrarModalSelect()" style="background:none; border:none; font-size:1.5rem; color:var(--danger-color); font-weight:800; cursor:pointer; padding:0 10px;">X</button>
         </div>
         <div id="modalSelectContent" style="max-height:350px; overflow-y:auto; margin-bottom:5px;"></div>
+    </div>
+
+    <!-- MODAL ALERTA DE INFORMACIÓN (INFO ICONS) -->
+    <div class="overlay-select" id="customAlertOverlay">
+        <div class="modal-select" id="customAlertModal">
+            <h3 style="color:var(--primary-color); font-weight:900; text-transform:uppercase; margin-bottom:10px; font-size: 1.1rem;">ℹ️ INFORMACIÓN</h3>
+            <div id="customAlertMsg" style="font-size:0.95rem; font-weight:600; text-align:left; color:var(--text-color); margin-bottom:15px;">Texto</div>
+            <button class="btn-accion" style="background:var(--table-header); margin-bottom:0;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+        </div>
     </div>
 
     <div class="top-bar">
@@ -188,13 +209,15 @@
             </div>
             <div id="panel1" class="panel-contenido" style="display: block;">
                 <div class="input-group full-width" style="margin-bottom: 12px;">
-                    <label>Prefijo de Nuevos Proyectos</label>
+                    <label>
+                        Prefijo de Proyectos
+                        <span class="info-icon" onclick="showInfoAlert('Nombre base que se asignará automáticamente cuando crees un nuevo proyecto (Ej. si pones LOTE, el sistema creará LOTE 1, LOTE 2).')">ℹ️</span>
+                    </label>
                     <input type="text" id="ajusteProyecto" placeholder="EJ: LOTE URBANO" oninput="this.value = this.value.toUpperCase()">
-                    <div class="helper-text">* Los módulos añadirán numeración automática (Ej. LOTE URBANO 1).</div>
                 </div>
                 <div class="input-row">
                     <div class="input-group">
-                        <label>Topógrafo / Operador</label>
+                        <label>Operador</label>
                         <input type="text" id="ajusteOperador" placeholder="EJ: PIERO C." oninput="this.value = this.value.toUpperCase()">
                     </div>
                     <div class="input-group">
@@ -214,7 +237,7 @@
                 <div class="switch-container">
                     <div style="padding-right: 15px;">
                         <label style="display:block; margin:0;">Modo Oscuro</label>
-                        <span class="helper-text" style="margin-top:0;">Ahorra batería en pantallas AMOLED.</span>
+                        <span class="helper-text" style="margin-top:0;">Ahorra batería en pantallas OLED.</span>
                     </div>
                     <label class="switch">
                         <input type="checkbox" id="checkDarkMode" onchange="toggleDarkMode();">
@@ -235,22 +258,14 @@
 
                 <div class="switch-container">
                     <div style="padding-right: 15px;">
-                        <label style="display:block; margin:0;">Vibración Táctil Global</label>
-                        <span class="helper-text" style="margin-top:0;">Desactívalo para máximo ahorro de energía.</span>
+                        <label style="display:flex; align-items:center; margin:0;">
+                            Sonido (Beep)
+                            <span class="info-icon" onclick="showInfoAlert('Emite un tono acústico de confirmación al presionar botones críticos o procesar cálculos.')">ℹ️</span>
+                        </label>
+                        <span class="helper-text" style="margin-top:0;">Alerta sonora al operar el sistema.</span>
                     </div>
                     <label class="switch">
-                        <input type="checkbox" id="checkVibracion" onchange="feedbackUI()">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-
-                <div class="switch-container">
-                    <div style="padding-right: 15px;">
-                        <label style="display:block; margin:0;">Sonido de Confirmación (Beep)</label>
-                        <span class="helper-text" style="margin-top:0;">Alerta sonora al procesar u operar el sistema.</span>
-                    </div>
-                    <label class="switch">
-                        <input type="checkbox" id="checkSonido" onchange="feedbackUI()">
+                        <input type="checkbox" id="checkSonido" onchange="toggleSonido()">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -264,7 +279,10 @@
             </div>
             <div id="panel3" class="panel-contenido">
                 <div class="input-group full-width" style="margin-bottom: 12px;">
-                    <label>Zona UTM por Defecto</label>
+                    <label>
+                        Zona UTM (Defecto)
+                        <span class="info-icon" onclick="showInfoAlert('Zona geográfica por defecto para las conversiones y módulos que requieran proyección cartográfica (Perú abarca 17, 18 y 19).')">ℹ️</span>
+                    </label>
                     <div class="custom-select" onclick="abrirModalSelect('zona')">
                         <span id="txtZona">17 Sur</span>
                         <span class="arrow">▼</span>
@@ -274,7 +292,10 @@
 
                 <div class="input-row">
                     <div class="input-group">
-                        <label>Precisión de Decimales</label>
+                        <label>
+                            Decimales
+                            <span class="info-icon" onclick="showInfoAlert('Nivel de precisión con el que se mostrarán las coordenadas y resultados en las tablas.')">ℹ️</span>
+                        </label>
                         <div class="custom-select" onclick="abrirModalSelect('decimales')">
                             <span id="txtDecimales">3 Decimales</span>
                             <span class="arrow">▼</span>
@@ -282,16 +303,19 @@
                         <input type="hidden" id="ajusteDecimales" value="3">
                     </div>
                     <div class="input-group">
-                        <label>Alerta de Mira</label>
+                        <label>
+                            Alerta Mira
+                            <span class="info-icon" onclick="showInfoAlert('Altura máxima permitida en módulos de nivelación antes de lanzar una alerta visual (rojo) por exceder la altura de la mira topográfica de aluminio.')">ℹ️</span>
+                        </label>
                         <div class="custom-select" onclick="abrirModalSelect('alertaMira')">
-                            <span id="txtAlertaMira">Máximo 5.00 m</span>
+                            <span id="txtAlertaMira">Máx 5.00 m</span>
                             <span class="arrow">▼</span>
                         </div>
                         <input type="hidden" id="ajusteAlertaMira" value="5">
                     </div>
                 </div>
                 <div class="input-group full-width" style="margin-top: 5px;">
-                    <label>Unidad de Presión Barométrica</label>
+                    <label>Unidad de Presión (Atmosfera)</label>
                     <div class="custom-select" onclick="abrirModalSelect('presion')">
                         <span id="txtUnidadPresion">hPa / mbar (Estándar)</span>
                         <span class="arrow">▼</span>
@@ -308,7 +332,10 @@
             </div>
             <div id="panel4" class="panel-contenido">
                 <div class="input-group full-width" style="margin-bottom: 12px;">
-                    <label>Formato de Columnas (Importar)</label>
+                    <label>
+                        Formato CSV (Importar)
+                        <span class="info-icon" onclick="showInfoAlert('Indica en qué orden están tus archivos de texto. PEN = Punto, Este, Norte. EN = Solo Este, Norte.')">ℹ️</span>
+                    </label>
                     <div class="custom-select" onclick="abrirModalSelect('formato')">
                         <span id="txtFormatoCSV">Punto, Este, Norte (P-E-N)</span>
                         <span class="arrow">▼</span>
@@ -317,38 +344,61 @@
                 </div>
 
                 <div class="input-group full-width">
-                    <label>Delimitador CSV (Exportar)</label>
+                    <label>
+                        Delimitador CSV (Exportar)
+                        <span class="info-icon" onclick="showInfoAlert('Depende del idioma de tu computadora. En Latinoamérica y España, el Excel suele abrir CSVs con Punto y Coma (;). En computadoras en inglés, usa Coma (,).')">ℹ️</span>
+                    </label>
                     <div class="custom-select" onclick="abrirModalSelect('delimitador')">
-                        <span id="txtDelimitador">Punto y Coma ( ; ) - Excel Español</span>
+                        <span id="txtDelimitador">Punto y Coma ( ; )</span>
                         <span class="arrow">▼</span>
                     </div>
                     <input type="hidden" id="ajusteDelimitador" value=";">
-                    <div class="helper-text">* Evita que Excel agrupe las coordenadas en una sola celda.</div>
                 </div>
             </div>
         </div>
 
         <div class="panel-control" style="border-left: 4px solid var(--danger-color); background: rgba(211,47,47,0.02);">
             <div class="panel-titulo" style="color: var(--danger-color);" onclick="togglePanel('panel5', this)">
-                <span>💾 5. Respaldo y Mantenimiento</span>
+                <span>💾 5. Almacenamiento y Respaldo</span>
                 <span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panel5" class="panel-contenido">
-                <button class="btn-accion" style="background:var(--table-header);" onclick="exportarBackupTotal(); feedbackUI();">📤 Exportar Backup Global (.json)</button>
+                
+                <!-- Gestor Visual de Almacenamiento -->
+                <div class="storage-container">
+                    <div class="storage-header">
+                        <span>USO DE MEMORIA (CACHÉ)</span>
+                        <span id="storageTxt">0%</span>
+                    </div>
+                    <div class="storage-track">
+                        <div class="storage-fill" id="storageFill"></div>
+                    </div>
+                    <div class="helper-text" style="text-align: center; margin-top: 8px;">Capacidad máxima estimada del navegador: 5 MB</div>
+                </div>
+
+                <!-- Botones de Limpieza Selectiva -->
+                <div class="form-grid" style="gap: 8px;">
+                    <button class="btn-accion" style="background:transparent; border:1px solid var(--danger-color); color:var(--danger-color); padding:10px; font-size:0.85rem;" onclick="limpiarDB('nivelacion')">Limpiar Nivelación</button>
+                    <button class="btn-accion" style="background:transparent; border:1px solid var(--danger-color); color:var(--danger-color); padding:10px; font-size:0.85rem;" onclick="limpiarDB('poligonales')">Limpiar Poligonales</button>
+                    <button class="btn-accion full-width" style="background:transparent; border:1px solid var(--danger-color); color:var(--danger-color); padding:10px; font-size:0.85rem; margin-bottom:15px;" onclick="limpiarDB('areas')">Limpiar Áreas y Lotes</button>
+                </div>
+
+                <!-- Web Share API Export -->
+                <button class="btn-accion" style="background:var(--primary-color);" onclick="exportarBackupTotal();">📤 COMPARTIR / EXPORTAR DB (.json)</button>
                 <div id="lblLastBackup" class="helper-text" style="text-align: center; margin-top: -5px; margin-bottom: 15px; font-weight: 700;">Último respaldo: Nunca</div>
                 
-                <label class="btn-accion" style="background:transparent; color:var(--text-color); border:2px solid var(--card-border); cursor: pointer; display: block;" onclick="feedbackUI()">
-                    📥 Restaurar Sistema Completo
+                <label class="btn-accion" style="background:transparent; color:var(--text-color); border:2px dashed var(--card-border); cursor: pointer; display: block;" onclick="feedbackUI()">
+                    📥 Restaurar desde Backup
                     <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importarBackupTotal()">
                 </label>
 
-                <div style="display: grid; grid-template-columns: 1fr; margin-top: 15px;">
-                    <button class="btn-accion" style="background:var(--danger-color); font-size: 0.95rem; margin:0;" onclick="factoryReset(); feedbackUI();">🚨 Reset Factory</button>
+                <div style="border-top: 1px solid rgba(211,47,47,0.2); padding-top: 15px; margin-top: 5px;">
+                    <button class="btn-accion" style="background:var(--danger-color); font-size: 0.95rem; margin:0;" onclick="factoryReset();">🚨 BORRAR TODO EL SISTEMA</button>
                 </div>
             </div>
         </div>
 
-        <button class="btn-accion btn-guardar" onclick="guardarAjustes(true); feedbackUI();">💾 GUARDAR PREFERENCIAS</button>
+        <button class="btn-accion btn-guardar" onclick="guardarAjustes(true);">💾 GUARDAR PREFERENCIAS</button>
 
     </div>
 
@@ -357,12 +407,10 @@
     <script>
         let wakeLock = null;
         let tipoModalActual = "";
-        let usarVibracion = true;
         let usarSonido = false;
 
-        // --- SISTEMA DE FEEDBACK (VIBRACIÓN Y SONIDO) ---
+        // --- SISTEMA DE FEEDBACK (SONIDO) ---
         function feedbackUI() {
-            if (usarVibracion && navigator.vibrate) navigator.vibrate(30);
             if (usarSonido) {
                 try {
                     let ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -377,6 +425,20 @@
                     osc.stop(ctx.currentTime + 0.1);
                 } catch(e) {}
             }
+        }
+
+        function showInfoAlert(htmlMsg) {
+            feedbackUI();
+            document.getElementById('customAlertMsg').innerHTML = htmlMsg;
+            document.getElementById('customAlertOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customAlertOverlay').classList.add('activo'); document.getElementById('customAlertModal').classList.add('abierto'); }, 10);
+        }
+
+        function cerrarCustomAlert() {
+            feedbackUI();
+            document.getElementById('customAlertOverlay').classList.remove('activo');
+            document.getElementById('customAlertModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customAlertOverlay').style.display = 'none'; }, 300);
         }
 
         // --- SISTEMA DE VENTANAS MODALES ---
@@ -412,7 +474,7 @@
                 actual = document.getElementById('ajusteFormatoCSV').value;
             } else if (tipo === 'delimitador') {
                 titulo.innerText = "📤 SEPARADOR EXCEL";
-                opciones = [{val: ';', txt: 'Punto y Coma ( ; ) - Excel Español'}, {val: ',', txt: 'Coma ( , ) - Excel Inglés'}];
+                opciones = [{val: ';', txt: 'Punto y Coma ( ; )'}, {val: ',', txt: 'Coma ( , )'}];
                 actual = document.getElementById('ajusteDelimitador').value;
             }
 
@@ -435,23 +497,17 @@
         function seleccionarOpcionModal(valor, texto) {
             cerrarModalSelect();
             if(tipoModalActual === 'zona') {
-                document.getElementById('ajusteZona').value = valor;
-                document.getElementById('txtZona').innerText = texto;
+                document.getElementById('ajusteZona').value = valor; document.getElementById('txtZona').innerText = texto;
             } else if(tipoModalActual === 'decimales') {
-                document.getElementById('ajusteDecimales').value = valor;
-                document.getElementById('txtDecimales').innerText = texto;
+                document.getElementById('ajusteDecimales').value = valor; document.getElementById('txtDecimales').innerText = texto;
             } else if(tipoModalActual === 'alertaMira') {
-                document.getElementById('ajusteAlertaMira').value = valor;
-                document.getElementById('txtAlertaMira').innerText = texto;
+                document.getElementById('ajusteAlertaMira').value = valor; document.getElementById('txtAlertaMira').innerText = texto;
             } else if(tipoModalActual === 'presion') {
-                document.getElementById('ajusteUnidadPresion').value = valor;
-                document.getElementById('txtUnidadPresion').innerText = texto;
+                document.getElementById('ajusteUnidadPresion').value = valor; document.getElementById('txtUnidadPresion').innerText = texto;
             } else if(tipoModalActual === 'formato') {
-                document.getElementById('ajusteFormatoCSV').value = valor;
-                document.getElementById('txtFormatoCSV').innerText = texto;
+                document.getElementById('ajusteFormatoCSV').value = valor; document.getElementById('txtFormatoCSV').innerText = texto;
             } else if(tipoModalActual === 'delimitador') {
-                document.getElementById('ajusteDelimitador').value = valor;
-                document.getElementById('txtDelimitador').innerText = texto;
+                document.getElementById('ajusteDelimitador').value = valor; document.getElementById('txtDelimitador').innerText = texto;
             }
         }
 
@@ -471,7 +527,7 @@
 
         function cargarAjustes() {
             let conf = JSON.parse(localStorage.getItem('cota100_ajustes')) || {
-                darkMode: false, wakeLockEnabled: false, vibracion: true, sonido: false,
+                darkMode: false, wakeLockEnabled: false, sonido: false,
                 zonaDefecto: "17", decimales: "3", alertaMira: "5", unidadPresion: "hpa", formatoCSV: "PEN", delimitadorCSV: ";"
             };
             
@@ -481,10 +537,8 @@
             
             document.getElementById('checkDarkMode').checked = !!conf.darkMode;
             document.getElementById('checkWakeLock').checked = !!conf.wakeLockEnabled;
-            document.getElementById('checkVibracion').checked = conf.vibracion !== false; 
             document.getElementById('checkSonido').checked = !!conf.sonido;
             
-            // Cargar selectores personalizados
             document.getElementById('ajusteZona').value = conf.zonaDefecto || "17";
             if (conf.zonaDefecto === "18") document.getElementById('txtZona').innerText = "18 Sur (Centro)";
             else if (conf.zonaDefecto === "19") document.getElementById('txtZona').innerText = "19 Sur (Sur)";
@@ -503,28 +557,29 @@
             document.getElementById('txtFormatoCSV').innerText = (conf.formatoCSV === "EN") ? "Solo Este, Norte (E-N)" : "Punto, Este, Norte (P-E-N)";
 
             document.getElementById('ajusteDelimitador').value = conf.delimitadorCSV || ";";
-            document.getElementById('txtDelimitador').innerText = (conf.delimitadorCSV === ",") ? "Coma ( , ) - Excel Inglés" : "Punto y Coma ( ; ) - Excel Español";
+            document.getElementById('txtDelimitador').innerText = (conf.delimitadorCSV === ",") ? "Coma ( , )" : "Punto y Coma ( ; )";
 
-            usarVibracion = document.getElementById('checkVibracion').checked;
             usarSonido = document.getElementById('checkSonido').checked;
 
             if(conf.wakeLockEnabled) solicitarWakeLock();
 
-            // Cargar fecha del último backup
             let lastBackup = localStorage.getItem('cota100_last_backup');
             if(lastBackup) {
                 document.getElementById('lblLastBackup').innerHTML = `Último respaldo: <span style="color:var(--primary-color);">${lastBackup}</span>`;
             }
+
+            calcularAlmacenamiento();
         }
 
         function guardarAjustes(mostrarNotificacion = false) {
+            feedbackUI();
             let conf = {
                 proyecto: document.getElementById('ajusteProyecto').value,
                 operador: document.getElementById('ajusteOperador').value,
                 equipo: document.getElementById('ajusteEquipo').value,
                 darkMode: document.getElementById('checkDarkMode').checked,
                 wakeLockEnabled: document.getElementById('checkWakeLock').checked,
-                vibracion: document.getElementById('checkVibracion').checked,
+                vibracion: false, // Forzamos apagado de vibración internamente
                 sonido: document.getElementById('checkSonido').checked,
                 zonaDefecto: document.getElementById('ajusteZona').value,
                 decimales: document.getElementById('ajusteDecimales').value,
@@ -534,11 +589,8 @@
                 delimitadorCSV: document.getElementById('ajusteDelimitador').value
             };
             
-            usarVibracion = conf.vibracion;
             usarSonido = conf.sonido;
             localStorage.setItem('cota100_ajustes', JSON.stringify(conf));
-            
-            // Sincronizar zona global si cambia aquí
             localStorage.setItem("cota100_zona", conf.zonaDefecto);
 
             if(mostrarNotificacion) {
@@ -585,34 +637,104 @@
             setTimeout(() => { toast.classList.remove('mostrar'); }, 2000);
         }
 
-        // --- SISTEMA DE BACKUP TOTAL ---
+        // --- GESTOR DE ALMACENAMIENTO ---
+        function calcularAlmacenamiento() {
+            let totalStr = JSON.stringify(localStorage);
+            let bytes = totalStr.length * 2; // Aproximación (UTF-16 son 2 bytes por char)
+            let maxBytes = 5 * 1024 * 1024; // 5 MB estimado para navegadores
+            let percentage = (bytes / maxBytes) * 100;
+            if(percentage > 100) percentage = 100;
+
+            let pctText = percentage.toFixed(1) + "%";
+            document.getElementById('storageTxt').innerText = pctText;
+            
+            let fill = document.getElementById('storageFill');
+            fill.style.width = pctText;
+            
+            fill.classList.remove('warning', 'danger');
+            if(percentage > 85) fill.classList.add('danger');
+            else if(percentage > 60) fill.classList.add('warning');
+        }
+
+        function limpiarDB(modulo) {
+            feedbackUI();
+            let msg = "";
+            if(modulo === 'nivelacion') msg = "Nivelación Simple y Alcantarillado";
+            else if(modulo === 'poligonales') msg = "Poligonales Abiertas y Cerradas";
+            else if(modulo === 'areas') msg = "Áreas, Lotes y Perímetros";
+
+            if(confirm(`⚠️ ATENCIÓN:\n¿Estás seguro de borrar todos los proyectos de ${msg}? Esta acción no se puede deshacer.`)) {
+                if(modulo === 'nivelacion') { 
+                    localStorage.removeItem('cota100_db_simple_v4'); 
+                    localStorage.removeItem('cota100_db_alcan_v3'); 
+                }
+                if(modulo === 'poligonales') { 
+                    localStorage.removeItem('cota100_db_polabierta_v5'); 
+                    localStorage.removeItem('cota100_db_polcerrada_v4'); 
+                }
+                if(modulo === 'areas') { 
+                    localStorage.removeItem('cota100_db_areas_v2'); 
+                }
+                mostrarToast(`Datos de ${modulo} eliminados`);
+                calcularAlmacenamiento();
+            }
+        }
+
+        // --- SISTEMA DE BACKUP TOTAL Y WEB SHARE API ---
         function exportarBackupTotal() {
+            feedbackUI();
             const backup = {
-                version_export: "5.0",
+                version_export: "6.0",
                 fecha: new Date().toISOString(),
                 ajustes: JSON.parse(localStorage.getItem('cota100_ajustes')),
                 db_simple: JSON.parse(localStorage.getItem('cota100_db_simple_v4')),
                 db_alcan: JSON.parse(localStorage.getItem('cota100_db_alcan_v3')),
-                db_polabierta: JSON.parse(localStorage.getItem('cota100_db_polabierta_v1')),
-                db_polcerrada: JSON.parse(localStorage.getItem('cota100_db_polcerrada_v1')),
-                db_areas: JSON.parse(localStorage.getItem('cota100_db_areas_v1'))
+                db_polabierta: JSON.parse(localStorage.getItem('cota100_db_polabierta_v5')),
+                db_polcerrada: JSON.parse(localStorage.getItem('cota100_db_polcerrada_v4')),
+                db_areas: JSON.parse(localStorage.getItem('cota100_db_areas_v2'))
             };
             
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
-            const dl = document.createElement('a');
-            
-            // Generar fecha legible y guardar en memoria
+            const jsonStr = JSON.stringify(backup, null, 2);
+            const fileName = `COTA100_BACKUP_TOTAL_${new Date().toISOString().split('T')[0]}.json`;
+            const file = new File([jsonStr], fileName, { type: "application/json" });
+
+            // Generar fecha legible y guardar
             let fechaStr = new Date().toLocaleString('es-PE', { hour12: true });
             localStorage.setItem('cota100_last_backup', fechaStr);
             document.getElementById('lblLastBackup').innerHTML = `Último respaldo: <span style="color:var(--primary-color);">${fechaStr}</span>`;
 
-            dl.setAttribute("href", dataStr);
-            dl.setAttribute("download", `COTA100_BACKUP_TOTAL_${new Date().toISOString().split('T')[0]}.json`);
-            document.body.appendChild(dl); dl.click(); dl.remove();
-            mostrarToast("Backup Total Exportado");
+            // Uso de Web Share API
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    title: 'Backup COTA100',
+                    text: 'Respaldo de Base de Datos Topográfica',
+                    files: [file]
+                }).then(() => {
+                    mostrarToast("Backup compartido con éxito");
+                }).catch((err) => {
+                    // Si el usuario cancela o hay error, fallamos a la descarga clásica
+                    console.log("Error al compartir: ", err);
+                    descargarArchivoFallback(jsonStr, fileName);
+                });
+            } else {
+                // Descarga clásica si Web Share API no está disponible
+                descargarArchivoFallback(jsonStr, fileName);
+            }
+        }
+
+        function descargarArchivoFallback(content, filename) {
+            const blob = new Blob([content], { type: "application/json" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            mostrarToast("Backup descargado en el dispositivo");
         }
 
         function importarBackupTotal() {
+            feedbackUI();
             const fileInput = document.getElementById('importFile');
             if(fileInput.files.length === 0) return;
             
@@ -623,26 +745,29 @@
                     if(b.ajustes) localStorage.setItem('cota100_ajustes', JSON.stringify(b.ajustes));
                     if(b.db_simple) localStorage.setItem('cota100_db_simple_v4', JSON.stringify(b.db_simple));
                     if(b.db_alcan) localStorage.setItem('cota100_db_alcan_v3', JSON.stringify(b.db_alcan));
-                    if(b.db_polabierta) localStorage.setItem('cota100_db_polabierta_v1', JSON.stringify(b.db_polabierta));
-                    if(b.db_polcerrada) localStorage.setItem('cota100_db_polcerrada_v1', JSON.stringify(b.db_polcerrada));
-                    if(b.db_areas) localStorage.setItem('cota100_db_areas_v1', JSON.stringify(b.db_areas));
+                    if(b.db_polabierta) localStorage.setItem('cota100_db_polabierta_v5', JSON.stringify(b.db_polabierta));
+                    if(b.db_polcerrada) localStorage.setItem('cota100_db_polcerrada_v4', JSON.stringify(b.db_polcerrada));
+                    if(b.db_areas) localStorage.setItem('cota100_db_areas_v2', JSON.stringify(b.db_areas));
                     
-                    alert("✅ Sistema Restaurado. Se recargará la aplicación.");
+                    alert("✅ Sistema Restaurado con éxito. Se recargará la aplicación.");
                     window.location.reload();
-                } catch(err) { alert("❌ Error: Archivo de Backup corrupto o no válido."); }
+                } catch(err) { alert("❌ Error: Archivo de Backup corrupto o no compatible."); }
             };
             reader.readAsText(fileInput.files[0]);
         }
 
         // --- MANTENIMIENTO ---
         function factoryReset() {
-            if(confirm("🚨 ADVERTENCIA: Estás a punto de borrar TODAS las libretas, poligonales y áreas de la memoria de tu teléfono.\n\n¿Estás seguro?")) {
-                let check = prompt("Escribe BORRAR en mayúsculas para confirmar:");
+            feedbackUI();
+            if(confirm("🚨 ADVERTENCIA EXTREMA:\n\nEstás a punto de borrar TODAS las libretas, poligonales y configuraciones de la memoria.\nEsta acción destruirá todos tus datos.\n\n¿Deseas continuar?")) {
+                let check = prompt("Escribe BORRAR en mayúsculas para confirmar la destrucción de datos:");
                 if(check === "BORRAR") {
                     localStorage.clear();
-                    alert("La aplicación ha sido restablecida de fábrica.");
+                    alert("La aplicación ha sido restablecida de fábrica por completo.");
                     window.location.href = "index.html";
-                } else { alert("Acción cancelada."); }
+                } else { 
+                    alert("Comando incorrecto. Acción cancelada."); 
+                }
             }
         }
     </script>

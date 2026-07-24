@@ -8,246 +8,101 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILOS UNIFICADOS COTA100 --- */
         :root {
-            --bg-color: #f8f9fa;
-            --text-color: #1a1e23;
-            --primary-color: #FF5500; 
-            --primary-glow: rgba(255, 85, 0, 0.3);
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --card-border: rgba(255, 85, 0, 0.15);
-            --border-color: rgba(0, 0, 0, 0.15); 
-            --table-header: #1a1e23; 
-            --danger-color: #d32f2f; 
-            --error-color: #d32f2f; 
-            --input-bg: rgba(255,255,255,0.9);
-            --success-color: #2e7d32;
+            --bg-color: #f8f9fa; --text-color: #1a1e23; --primary-color: #FF5500; --primary-glow: rgba(255, 85, 0, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.85); --card-border: rgba(255, 85, 0, 0.15); --border-color: rgba(0, 0, 0, 0.15); 
+            --table-header: #1a1e23; --danger-color: #d32f2f; --input-bg: rgba(255,255,255,0.9); --success-color: #2e7d32;
         }
-
         body.dark-mode {
-            --bg-color: #05070a;
-            --text-color: #ffffff;
-            --primary-glow: rgba(255, 85, 0, 0.4);
-            --card-bg: rgba(18, 22, 28, 0.85);
-            --card-border: rgba(255, 85, 0, 0.25);
-            --border-color: rgba(255, 255, 255, 0.15); 
-            --input-bg: rgba(45,45,45,0.9);
-            --table-header: #000000;
-            --success-color: #00C851;
+            --bg-color: #05070a; --text-color: #ffffff; --primary-glow: rgba(255, 85, 0, 0.4);
+            --card-bg: rgba(18, 22, 28, 0.85); --card-border: rgba(255, 85, 0, 0.25); --border-color: rgba(255, 255, 255, 0.15); 
+            --input-bg: rgba(45,45,45,0.9); --table-header: #000000; --success-color: #00C851;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
-
-        body { 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            padding-bottom: 50px;
-            position: relative;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* --- FONDO DE FUEGO LÍQUIDO INFERIOR --- */
-        .fire-base {
-            position: fixed;
-            bottom: 0; left: 0; width: 100vw; height: 35vh;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .fire-wave {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200vw; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 10s linear infinite;
-        }
-        .fire-wave.delay {
-            bottom: -15px; opacity: 0.6;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x;
-            background-size: 50% 100%;
-            animation: waveFire 7s linear infinite reverse;
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px; transition: 0.3s; position: relative; overflow-x: hidden; min-height: 100vh; }
+        
+        .fire-base { position: fixed; bottom: 0; left: 0; width: 100vw; height: 35vh; z-index: -2; pointer-events: none; overflow: hidden; }
+        .fire-wave { position: absolute; bottom: 0; left: 0; width: 200vw; height: 100%; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF3300;stop-opacity:0.4' /%3E%3Cstop offset='50%25' style='stop-color:%23FF8C00;stop-opacity:0.7' /%3E%3Cstop offset='100%25' style='stop-color:%23FFD700;stop-opacity:0.9' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad)' d='M0,128L48,138.7C96,149,192,171,288,160C384,149,480,107,576,117.3C672,128,768,192,864,197.3C960,203,1056,149,1152,133.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 10s linear infinite; }
+        .fire-wave.delay { bottom: -15px; opacity: 0.6; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 7s linear infinite reverse; }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
-        @media screen and (max-width: 480px) {
-            html { font-size: 13px; } 
-            .btn-accion { padding: 10px; font-size: 0.95rem; }
-            input { padding: 10px; font-size: 1.05rem;}
-            .panel-control { padding: 12px; margin-bottom: 12px;}
-            .top-bar { padding: 10px 15px; height: 65px; }
-            .btn-volver-mini { width: 38px; height: 38px;}
-            th { font-size: 0.75rem; padding: 6px 1px; }
-            td input { padding: 8px 2px; font-size: 1.15rem; }
-            .btn-calculadora-flotante { width: 45px; height: 45px; bottom: 10px; right: 10px; }
-            .calculadora-modal { right: 10px; bottom: 65px; width: 230px;}
-        }
-
-        /* --- CABECERA DUAL --- */
-        .top-bar { 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 15px 20px; border-bottom: 1px solid var(--card-border); 
-            background-color: transparent; position: sticky; top: 0; z-index: 100; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px;
-        }
+        .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px; }
         .nav-buttons-left { display: flex; gap: 8px; }
-        .btn-volver-mini { 
-            background: transparent; border: none; color: var(--primary-color);
-            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: drop-shadow(0 0 5px var(--primary-glow));
-        }
-        .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
-        
+        .btn-volver-mini { background: transparent; border: none; color: var(--primary-color); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s; }
+        .btn-volver-mini:active { transform: scale(0.92); }
         .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
         .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
 
-        .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; max-width: 800px; margin: 0 auto; position: relative; z-index: 10;}
+        .modulo-container { padding: 15px; max-width: 800px; margin: 0 auto; position: relative; z-index: 10; animation: slideIn 0.3s ease-out forwards; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- PANELES (GLASSMORPHISM) --- */
-        .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
+        .panel-control { border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; margin-bottom: 15px; background: var(--card-bg); backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
         .panel-titulo { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
-        .btn-toggle-panel { background: none; border: none; font-size: 1.2rem; color: var(--text-color); pointer-events: none;}
-        
         .panel-contenido { display: block; margin-top: 10px; }
-        .project-selector { display: flex; gap: 8px; margin-bottom: 10px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .input-group { flex: 1; display: flex; flex-direction: column; }
+        .full-width { grid-column: 1 / -1; }
+        
+        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8; display: flex; align-items: center; justify-content: space-between;}
+        .info-icon { background: rgba(128,128,128,0.1); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-left: 5px; color: var(--primary-color);}
         
         input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center;}
         input:focus { border-color: var(--primary-color); outline: none; background: transparent;}
         
-        /* CUSTOM SELECT BUTTONS */
         .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
-        .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
-        .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
-        .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
+        .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; text-align: center;}
+        .btn-accion:active { transform: scale(0.98);}
 
-        .input-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .input-group { flex: 1; display: flex; flex-direction: column; }
-        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
-
-        .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center;}
-        .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
-
-        /* --- TABLA UNIFICADA --- */
-        .table-wrapper { width: 100%; overflow-x: auto; border: 1px solid var(--card-border); border-radius: 8px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 12px;}
-        table { width: 100%; min-width: 400px; border-collapse: separate; border-spacing: 0; }
+        .table-wrapper { width: 100%; overflow-x: auto; border: 1px solid var(--card-border); border-radius: 8px; background: var(--card-bg); margin-bottom: 12px;}
+        table { width: 100%; min-width: 500px; border-collapse: separate; border-spacing: 0; }
         th { background: var(--table-header); color: #fff; font-weight: 800; padding: 10px 2px; font-size: 0.75rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 10; }
-        td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0; text-align: center; vertical-align: middle;}
+        td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0; text-align: center; vertical-align: middle; transition: 0.2s;}
         td:last-child { border-right: none; }
-        
         td input { border: none; width: 100%; height: 100%; padding: 12px 2px; font-size: 1.15rem; font-weight: 800; background: transparent; color: var(--text-color); text-align: center;}
-        td input:focus { background: rgba(255, 85, 0, 0.05); outline: 2px solid var(--primary-color); outline-offset: -2px;}
+        td input:focus { background: rgba(255, 85, 0, 0.05); }
+        .row-highlight td { background-color: rgba(255, 85, 0, 0.15) !important; }
 
-        .info-box { background-color: rgba(25, 118, 210, 0.1); border-left: 5px solid #1976d2; padding: 12px; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
-        .alerta-critica { background-color: rgba(211, 47, 47, 0.05); border-left: 5px solid var(--error-color); padding: 12px; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-color); border-radius: 0 8px 8px 0; text-align: left; font-weight: 600;}
-
+        .alerta-critica { background-color: rgba(211, 47, 47, 0.05); border-left: 5px solid var(--danger-color); padding: 12px; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-color); border-radius: 0 8px 8px 0; font-weight: 600;}
         .drop-zone { border: 2px dashed var(--primary-color); border-radius: 8px; padding: 25px 20px; text-align: center; background-color: rgba(255,85,0,0.02); margin-bottom: 12px; color: var(--primary-color); font-weight: 800; text-transform: uppercase;}
 
-        /* --- CONTENEDOR DEL CANVAS (CROQUIS GLASSMORPHISM) --- */
         .canvas-container { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 15px; background: rgba(128,128,128,0.03); border: 1px dashed var(--card-border); border-radius: 12px; padding: 15px; backdrop-filter: blur(5px);}
-        #canvasCroquis { background: transparent; max-width: 100%; height: auto; }
+        #canvasCroquis { background: transparent; max-width: 100%; height: auto; cursor: pointer; }
 
-        /* Panel de Resultados */
-        .panel-resultados { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; text-align: center; display: none; margin-bottom: 15px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .panel-resultados { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; text-align: center; display: none; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .res-destaque { background-color: rgba(128,128,128,0.03); padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--card-border);}
         .res-titulo { color: var(--text-color); opacity: 0.7; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 5px; font-weight: 800;}
         .res-valor { font-size: 2.2rem; color: var(--text-color); font-weight: 900; font-family: monospace; letter-spacing: -1px;}
         .res-hectareas { font-size: 1.4rem; color: var(--success-color); margin-top: 5px; font-weight: 800; }
 
-        /* --- CALCULADORA FLOTANTE --- */
-        .btn-calculadora-flotante { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; background: var(--card-bg); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid var(--primary-color); cursor: pointer; z-index: 999; font-size: 1.4rem; backdrop-filter: blur(5px);}
-        .calculadora-modal { 
-            position: fixed; bottom: 80px; right: 15px; width: 240px; 
-            background: var(--card-bg); border: 1px solid var(--primary-color); border-radius: 12px; 
-            padding: 15px; display: none; z-index: 1000; 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
-            box-shadow: 0 4px 20px var(--primary-glow); 
-        }
-        .calc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 800; color: var(--text-color); font-size: 0.85rem;}
-        .calc-header button { background: none; border: none; font-size: 1.2rem; font-weight: 800; color: var(--danger-color); cursor: pointer;}
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        
-        .calc-grid button { 
-            padding: 12px 0; font-size: 1.2rem; font-weight: 800; 
-            border: 1px solid var(--border-color); border-radius: 8px; 
-            background: var(--input-bg); color: var(--text-color); cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .calc-grid button:active { transform: scale(0.9); }
-        .calc-grid button.calc-op { color: var(--primary-color); background: rgba(255, 85, 0, 0.1); border-color: var(--card-border); }
-        .calc-grid button.calc-clear { color: var(--danger-color); border-color: rgba(211, 47, 47, 0.3); background: rgba(211, 47, 47, 0.05); }
-        .calc-grid button.calc-del { grid-column: span 2; background: rgba(128,128,128,0.1); }
-        .calc-grid button.calc-eval { grid-column: span 2; background: var(--primary-color); color: #fff; border: none; box-shadow: 0 2px 8px var(--primary-glow); }
-        
-        #calcDisplay { 
-            width: 100%; height: 45px; text-align: right; font-size: 1.4rem; font-weight: 800; 
-            border: 1px solid var(--card-border); border-radius: 8px; margin-bottom: 12px; 
-            padding: 4px 10px; background: var(--input-bg); color: var(--text-color); 
-        }
-        #calcDisplay:focus { border-color: var(--primary-color); outline: none; }
-
-        /* --- TOAST NOTIFICATIONS --- */
-        #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 350px;}
-        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center; border-right: 1px solid var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);}
-        .toast.error { border-left-color: var(--danger-color); }
-        .toast.success { border-left-color: #2e7d32; }
-        .toast.warning { border-left-color: #fbc02d; }
-        .toast.fade-out { animation: fadeOutToast 0.3s ease-in forwards; }
-        @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
-
-        /* --- CUSTOM CONFIRM MODAL --- */
-        .confirm-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.2s; backdrop-filter: blur(2px);}
-        .confirm-overlay.activo { opacity: 1; visibility: visible; }
-        .confirm-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 25px 20px; width: 90%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(15px);}
-        .confirm-overlay.activo .confirm-box { transform: scale(1); }
-        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
-        .confirm-btns { display: flex; gap: 10px; }
-        .confirm-btn { flex: 1; padding: 12px; font-weight: 800; border-radius: 8px; border: none; font-size: 1rem; cursor: pointer; text-transform: uppercase; transition: 0.2s;}
-        .confirm-btn:active { transform: scale(0.95); }
-        .confirm-btn-cancel { background: rgba(128,128,128,0.2); color: var(--text-color); }
-        .confirm-btn-ok { background: var(--primary-color); color: #fff; }
-
-        /* --- MODAL SELECTOR GENÉRICO --- */
+        /* MODALES Y TOASTS */
         .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(2px); }
         .overlay-select.activo { opacity: 1; }
         .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
         .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
         .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
-        .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
+        
+        #toast-container { position: fixed; top: 85px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none;}
+        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards;}
+        .toast.fade-out { animation: fadeOutToast 0.3s forwards; }
+        @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutToast { to { opacity: 0; transform: translateY(-20px); } }
+
+        @media screen and (max-width: 480px) {
+            html { font-size: 13px; } 
+            input { padding: 10px; font-size: 1.05rem;}
+            .panel-control { padding: 12px; margin-bottom: 12px;}
+            th { font-size: 0.75rem; padding: 6px 1px; }
+            td input { padding: 8px 2px; font-size: 1.15rem; }
+        }
     </style>
 </head>
 <body onload="inicializarApp()">
 
-    <!-- Fondo de Agua / Fuego Animado -->
-    <div class="fire-base">
-        <div class="fire-wave delay"></div>
-        <div class="fire-wave"></div>
-    </div>
-
-    <script>
-        try {
-            let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-            if (conf && conf.darkMode) document.body.classList.add('dark-mode');
-        } catch(e) {}
-    </script>
-
-    <!-- TOAST & CONFIRM MODALS -->
+    <div class="fire-base"><div class="fire-wave delay"></div><div class="fire-wave"></div></div>
     <div id="toast-container"></div>
 
-    <div class="confirm-overlay" id="customConfirmOverlay">
-        <div class="confirm-box">
-            <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
-            <div class="confirm-btns">
-                <button class="confirm-btn confirm-btn-cancel" id="btnConfirmCancel">Cancelar</button>
-                <button class="confirm-btn confirm-btn-ok" id="btnConfirmOk">Aceptar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL DE SELECCIÓN GENÉRICO (PROYECTO Y FORMATOS) -->
+    <!-- MODALES GENÉRICOS -->
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -257,20 +112,42 @@
         <div id="modalSelectContent" style="max-height:300px; overflow-y:auto; margin-bottom:5px;"></div>
     </div>
 
+    <!-- MODAL CONFIRMAR -->
+    <div class="overlay-select" id="customConfirmOverlay">
+        <div class="modal-select" id="customConfirmModal">
+            <div class="confirm-msg" id="customConfirmMsg" style="color:var(--text-color); font-size:1.1rem; font-weight:800; margin-bottom:20px; text-align:center;">¿Estás seguro?</div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-accion" style="background:rgba(128,128,128,0.2); color:var(--text-color); flex:1;" id="btnConfirmCancel">Cancelar</button>
+                <button class="btn-accion" style="background:var(--primary-color); flex:1;" id="btnConfirmOk">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ALERTA DE INFORMACIÓN -->
+    <div class="overlay-select" id="customAlertOverlay">
+        <div class="modal-select" id="customAlertModal">
+            <h3 style="color:var(--primary-color); font-weight:900; text-transform:uppercase; margin-bottom:10px; font-size: 1.1rem;">ℹ️ INFORMACIÓN</h3>
+            <div id="customAlertMsg" style="font-size:0.95rem; font-weight:600; text-align:left; color:var(--text-color); margin-bottom:15px;">Texto</div>
+            <button class="btn-accion" style="background:var(--table-header);" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <!-- MODAL AJUSTE ÁREA -->
+    <div class="overlay-select" id="promptAreaOverlay"></div>
+    <div class="modal-select" id="promptAreaModal">
+        <h3 style="color:var(--text-color); margin-bottom:10px; font-weight:900; text-transform:uppercase; font-size: 1.1rem;">AJUSTE REGISTRAL (HOMOTECIA)</h3>
+        <p style="font-size:0.8rem; color:var(--text-color); opacity:0.8; margin-bottom:10px;">Ingresa el área exacta que manda el título de propiedad (en m²). El polígono se ajustará desde su centroide.</p>
+        <input type="number" id="inputTargetArea" step="0.01" placeholder="Área Objetivo (Ej: 10000.00)" style="margin-bottom:15px;">
+        <div style="display:flex; gap:10px;">
+            <button class="btn-accion" style="background:var(--danger-color); flex:1;" onclick="cerrarPromptArea()">CANCELAR</button>
+            <button class="btn-accion" style="background:var(--primary-color); flex:1;" onclick="ejecutarAjusteArea()">AJUSTAR</button>
+        </div>
+    </div>
+
     <div class="top-bar">
         <div class="nav-buttons-left">
-            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
-            <a href="index.html" class="btn-volver-mini" onclick="vibrar()">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-            </a>
+            <a href="index.html" class="btn-volver-mini" onclick="vibrar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+            <a href="index.html" class="btn-volver-mini" onclick="vibrar()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
         </div>
         <h2 class="top-bar-title">ÁREAS Y <span>PERÍMETROS</span></h2>
         <div style="width: 90px;"></div>
@@ -278,97 +155,81 @@
 
     <div class="modulo-container">
         
-        <div class="info-box">
-            <strong>ℹ️ REGLA TÉCNICA:</strong> Este módulo calcula áreas planas mediante la <strong>Fórmula de Gauss (Determinantes)</strong>. Útil para expedientes técnicos de predios urbanos y rurales.
-        </div>
-
         <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
-            <div class="panel-titulo" onclick="togglePanel('panelProyecto')">
-                <span>📁 Base de Datos / Lotes</span>
-                <span class="btn-toggle-panel">▼</span>
-            </div>
+            <div class="panel-titulo" onclick="togglePanel('panelProyecto')"><span>📁 Base de Datos / Lotes</span><span>▼</span></div>
             <div id="panelProyecto" class="panel-contenido">
-                <div class="project-selector">
-                    <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')">
-                        <span id="txtSelectProyecto">Cargando...</span>
-                        <span class="arrow">▼</span>
-                    </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')"><span id="txtSelectProyecto">Cargando...</span><span class="arrow">▼</span></div>
                     <button class="btn-accion" style="width: auto; padding: 10px; background: var(--primary-color); margin-bottom:0;" onclick="crearNuevoProyecto()">+ NUEVO</button>
                     <button class="btn-accion" style="width: auto; padding: 10px; background: var(--danger-color); margin-bottom:0;" onclick="eliminarProyecto()">🗑️</button>
                 </div>
-                <div class="input-group full-width" style="margin-bottom: 10px;">
-                    <label>Nombre del Polígono</label>
-                    <input type="text" id="proyectName" placeholder="Ej: Polígono Sector Norte" oninput="renombrarProyecto()">
-                </div>
-                
-                <div style="border-top: 1px dashed var(--border-color); padding-top: 10px; margin-top: 10px;">
-                    <div style="display: flex; gap: 8px;">
-                        <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: var(--table-header); margin: 0;" onclick="exportarBackup()">📤 Backup DB</button>
-                        <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); text-align: center; margin: 0; cursor: pointer;" onclick="vibrar()">
-                            📥 Restaurar
-                            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importarBackup()">
-                        </label>
-                    </div>
+                <input type="text" id="proyectName" placeholder="Nombre del Lote" oninput="renombrarProyecto()" style="margin-bottom:10px;">
+                <div style="border-top: 1px dashed var(--border-color); padding-top: 10px; display:flex; gap:8px;">
+                    <button class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: var(--table-header); margin: 0;" onclick="exportarBackup()">📤 Backup</button>
+                    <label class="btn-accion" style="padding: 10px; font-size: 0.85rem; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); margin: 0; cursor: pointer;">
+                        📥 Restaurar <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importarBackup()">
+                    </label>
                 </div>
             </div>
         </div>
 
         <div class="panel-control" style="border-left: 4px solid #555;">
             <div class="panel-titulo" style="color: var(--text-color);" onclick="togglePanel('panelImportacion')">
-                <span>📥 Importar Puntos (CSV/TXT)</span>
-                <span class="btn-toggle-panel">▼</span>
+                <span>📥 Importar (CSV / TXT / KML)</span><span class="btn-toggle-panel">▼</span>
             </div>
             <div id="panelImportacion" class="panel-contenido" style="display: none;">
-                <div class="input-group" style="margin-bottom: 10px;">
-                    <label>Formato de Columnas</label>
-                    <div class="custom-select" onclick="abrirModalSelect('formato')">
-                        <span id="txtFormato">Punto, Este, Norte (P-E-N)</span>
-                        <span class="arrow">▼</span>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Formato Columnas</label>
+                        <div class="custom-select" onclick="abrirModalSelect('formato')"><span id="txtFormato">P-E-N</span><span class="arrow">▼</span></div>
+                        <input type="hidden" id="formatoColumnas" value="PEN">
                     </div>
-                    <input type="hidden" id="formatoColumnas" value="PEN">
+                    <div class="input-group">
+                        <label>Zona UTM (Si es KML)</label>
+                        <div class="custom-select" onclick="abrirModalSelect('zonaUtm')"><span id="txtZonaUtm">17 Sur</span><span class="arrow">▼</span></div>
+                        <input type="hidden" id="zonaUtm" value="17">
+                    </div>
                 </div>
-                <div class="drop-zone" id="dropZone">
+                <div class="drop-zone">
                     <p style="margin:0; font-size:0.9rem;">SELECCIONAR ARCHIVO</p>
-                    <input type="file" id="fileCsvInput" accept=".csv, .txt" style="margin-top: 10px; font-size: 0.8rem; width:100%; border:none; padding:5px; background:transparent;">
+                    <input type="file" id="fileCsvInput" accept=".csv, .txt, .kml" style="margin-top: 10px; width:100%; border:none; padding:5px; background:transparent;">
                 </div>
-                <button class="btn-accion" style="background:var(--table-header); margin-bottom:0;" onclick="procesarArchivoCSV()">Procesar Archivo</button>
+                <button class="btn-accion" style="background:var(--table-header); margin-bottom:0;" onclick="procesarArchivoImportacion()">Procesar Archivo</button>
             </div>
         </div>
 
         <div class="alerta-critica">
-            <strong style="color: var(--error-color);">⚠️ ADVERTENCIA GEOMÉTRICA:</strong> Los vértices deben ingresarse en orden secuencial por todo el contorno (horario o antihorario). Si el perímetro se cruza consigo mismo, las áreas cruzadas se restarán numéricamente.
+            <strong style="color: var(--danger-color);">⚠️ GEOMETRÍA:</strong> Los vértices deben ser ingresados en orden secuencial por el contorno. Si el polígono dibuja un "moño" (se cruza), el área será incorrecta.
         </div>
 
         <div class="panel-control" style="padding: 10px; border-left: 4px solid var(--primary-color);">
-            <div class="panel-titulo" style="padding-left: 5px;">📐 Vértices Registrados</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <div class="panel-titulo" style="margin-bottom:0; border:none; padding:0;">📐 Vértices del Lote</div>
+                <button style="background:transparent; border:1px solid var(--primary-color); color:var(--primary-color); padding:4px 8px; border-radius:4px; font-weight:800; cursor:pointer; font-size:0.8rem;" onclick="abrirPromptArea()">Ajuste Registral</button>
+            </div>
             
             <div class="table-wrapper">
                 <table id="tablaAreas">
-                    <thead>
-                        <tr>
-                            <th style="width: 15%;">PT.</th>
-                            <th style="width: 42.5%;">ESTE (X)</th>
-                            <th style="width: 42.5%;">NORTE (Y)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cuerpoTablaAreas">
-                        </tbody>
+                    <thead><tr><th style="width: 15%;">PT.</th><th style="width: 35%;">ESTE (X)</th><th style="width: 35%;">NORTE (Y)</th><th style="width: 15%;">ANG. INT</th></tr></thead>
+                    <tbody id="cuerpoTablaAreas"></tbody>
                 </table>
             </div>
 
-            <div class="input-row" style="margin-bottom: 0;">
-                <button class="btn-accion" style="background:transparent; border: 1px solid var(--text-color); color:var(--text-color); font-size: 0.95rem; padding: 12px 4px;" onclick="agregarPunto(); vibrar();">➕ Punto</button>
-                <button class="btn-accion" style="background:transparent; border: 1px solid var(--text-color); color:var(--text-color); font-size: 0.95rem; padding: 12px 4px;" onclick="quitarPunto(); vibrar();">➖ Borrar</button>
-                <button class="btn-accion" style="background:transparent; border: 1px solid var(--danger-color); color:var(--danger-color); font-size: 0.95rem; padding: 12px 4px;" onclick="limpiarTablaAreas(); vibrar();">🗑️ Vaciar</button>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-accion" style="background:transparent; border: 1px solid var(--text-color); color:var(--text-color); font-size: 0.95rem; padding: 10px 4px; flex:1;" onclick="agregarPunto()">➕ Pt</button>
+                <button class="btn-accion" style="background:transparent; border: 1px solid var(--text-color); color:var(--text-color); font-size: 0.95rem; padding: 10px 4px; flex:1;" onclick="quitarPunto()">➖ Borrar</button>
+                <button class="btn-accion" style="background:transparent; border: 1px solid var(--danger-color); color:var(--danger-color); font-size: 0.95rem; padding: 10px 4px; flex:1;" onclick="limpiarTablaAreas()">🗑️ Vaciar</button>
             </div>
         </div>
 
         <div class="canvas-container">
-            <div style="font-weight: 800; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; color: var(--primary-color);">🗺️ Vista de Croquis en Vivo</div>
-            <canvas id="canvasCroquis" width="280" height="250"></canvas>
+            <div style="font-weight: 800; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; color: var(--primary-color); display:flex; align-items:center;">
+                🗺️ Croquis Interactivo <span class="info-icon" onclick="showInfoAlert('Toca cualquier vértice del dibujo para resaltarlo automáticamente en la tabla superior.')">ℹ️</span>
+            </div>
+            <canvas id="canvasCroquis" width="300" height="260"></canvas>
         </div>
 
-        <button class="btn-accion" style="background-color: var(--primary-color); font-size: 1.2rem; margin-bottom: 15px; padding: 15px; box-shadow: 0 4px 15px rgba(255,85,0,0.3);" onclick="calcularArea(); vibrar();">CALCULAR ÁREA TOTAL</button>
+        <button class="btn-accion" style="background-color: var(--primary-color); font-size: 1.2rem; margin-bottom: 15px; padding: 15px; box-shadow: 0 4px 15px rgba(255,85,0,0.3);" onclick="calcularArea()">CALCULAR ÁREA TOTAL</button>
 
         <div class="panel-resultados" id="cajaResultado">
             <h3 style="text-transform: uppercase; color: var(--text-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-size: 1.1rem;">REPORTE GEOMÉTRICO</h3>
@@ -377,431 +238,355 @@
                 <div class="res-titulo" style="color: var(--primary-color);">ÁREA DEL POLÍGONO</div>
                 <div class="res-valor" id="resAreaM2">0.00 m²</div>
                 <div class="res-hectareas" id="resAreaHa">0.0000 Ha</div>
+                <div style="font-size: 0.85rem; color: var(--text-color); opacity: 0.8; margin-top:5px; font-weight:700;"><span id="resAcres">0.00</span> Acres | <span id="resTareas">0.00</span> Tareas (Agrícolas)</div>
             </div>
             
-            <div class="res-destaque" style="background: rgba(128,128,128,0.02); border-color: var(--text-color);">
-                <div class="res-titulo">PERÍMETRO TOTAL</div>
-                <div class="res-valor" id="resPerimetro" style="color: var(--text-color);">0.000 m</div>
+            <div class="form-grid">
+                <div class="res-destaque" style="background: rgba(128,128,128,0.02); border-color: var(--text-color); padding: 10px; margin-bottom:0;">
+                    <div class="res-titulo">PERÍMETRO</div>
+                    <div class="res-valor" id="resPerimetro" style="color: var(--text-color); font-size:1.4rem;">0.000 m</div>
+                </div>
+                <div class="res-destaque" style="background: rgba(128,128,128,0.02); border-color: var(--text-color); padding: 10px; margin-bottom:0;">
+                    <div class="res-titulo">CENTROIDE (X, Y)</div>
+                    <div class="res-valor" id="resCentroide" style="color: var(--text-color); font-size:0.9rem; line-height:1.4;">--<br>--</div>
+                </div>
             </div>
+
+            <button class="btn-accion" style="background:var(--success-color); width:100%; margin-top:15px; font-size:0.9rem;" onclick="exportarCSV_Replant()">📥 DESCARGAR PARA REPLANTEO (.CSV)</button>
         </div>
 
-    </div>
-
-    <!-- CALCULADORA MODIFICADA -->
-    <div class="btn-calculadora-flotante" onclick="toggleCalculadora()">🧮</div>
-    <div class="calculadora-modal" id="calculadoraModal">
-        <div class="calc-header"><span>CÁLCULO RÁPIDO</span><button onclick="toggleCalculadora()">X</button></div>
-        <input type="text" id="calcDisplay" disabled>
-        <div class="calc-grid">
-            <button onclick="calcInput('7')">7</button>
-            <button onclick="calcInput('8')">8</button>
-            <button onclick="calcInput('9')">9</button>
-            <button onclick="calcInput('/')" class="calc-op">÷</button>
-            <button onclick="calcInput('4')">4</button>
-            <button onclick="calcInput('5')">5</button>
-            <button onclick="calcInput('6')">6</button>
-            <button onclick="calcInput('*')" class="calc-op">×</button>
-            <button onclick="calcInput('1')">1</button>
-            <button onclick="calcInput('2')">2</button>
-            <button onclick="calcInput('3')">3</button>
-            <button onclick="calcInput('-')" class="calc-op">-</button>
-            <button onclick="calcClear()" class="calc-clear">C</button>
-            <button onclick="calcInput('0')">0</button>
-            <button onclick="calcInput('.')">.</button>
-            <button onclick="calcInput('+')" class="calc-op">+</button>
-            <button onclick="calcBackspace()" class="calc-del">⌫</button>
-            <button onclick="calcEval()" class="calc-eval">=</button>
-        </div>
     </div>
 
     <script>
-        /* --- UI: TOAST Y CONFIRM --- */
-        function showToast(message, type = "default") {
+        function showToast(msg, type="default") {
             const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerText = message;
+            const toast = document.createElement('div'); toast.className = `toast ${type}`; toast.innerText = msg;
             container.appendChild(toast);
-            vibrar();
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                toast.addEventListener('animationend', () => toast.remove());
-            }, 3000);
-        }
-
-        let confirmOkCallback = null;
-        let confirmCancelCallback = null;
-
-        function showConfirm(message, onOk, onCancel = null) {
-            vibrar();
-            const overlay = document.getElementById('customConfirmOverlay');
-            document.getElementById('customConfirmMsg').innerText = message;
-            confirmOkCallback = onOk;
-            confirmCancelCallback = onCancel;
-            overlay.classList.add('activo');
-        }
-
-        document.getElementById('btnConfirmCancel').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
-            if (confirmCancelCallback) confirmCancelCallback();
-        });
-
-        document.getElementById('btnConfirmOk').addEventListener('click', () => {
-            vibrar();
-            document.getElementById('customConfirmOverlay').classList.remove('activo');
-            if (confirmOkCallback) confirmOkCallback();
-        });
-
-        /* --- UI: MODAL SELECTOR GENÉRICO --- */
-        let tipoModalActual = "";
-        function abrirModalSelect(tipo) {
-            vibrar();
-            tipoModalActual = tipo;
-            const titulo = document.getElementById('modalSelectTitle');
-            const contenido = document.getElementById('modalSelectContent');
-            contenido.innerHTML = "";
-            
-            if (tipo === 'proyecto') {
-                titulo.innerText = "📁 SELECCIONAR LOTE";
-                appData.proyectos.forEach(proj => {
-                    let isActivo = proj.id === appData.activoId;
-                    contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${proj.id}', '${proj.nombre}')"><span>${proj.nombre}</span></button>`;
-                });
-            } else if (tipo === 'formato') {
-                titulo.innerText = "📥 FORMATO DE COLUMNAS";
-                let opciones = [
-                    {val: 'PEN', txt: 'Punto, Este, Norte (P-E-N)'},
-                    {val: 'EN', txt: 'Solo Este, Norte (E-N)'}
-                ];
-                let actual = document.getElementById('formatoColumnas').value;
-                opciones.forEach(opt => {
-                    let isActivo = opt.val === actual;
-                    contenido.innerHTML += `<button class="btn-opcion" style="${isActivo ? 'background:var(--primary-color); color:#fff;' : ''}" onclick="seleccionarOpcionModal('${opt.val}', '${opt.txt}')"><span>${opt.txt}</span></button>`;
-                });
-            }
-
-            document.getElementById('overlaySelect').style.display = 'block';
-            setTimeout(() => { document.getElementById('overlaySelect').classList.add('activo'); document.getElementById('modalSelect').classList.add('abierto'); }, 10);
-        }
-
-        function cerrarModalSelect() {
-            vibrar();
-            document.getElementById('overlaySelect').classList.remove('activo');
-            document.getElementById('modalSelect').classList.remove('abierto');
-            setTimeout(() => { document.getElementById('overlaySelect').style.display = 'none'; }, 300);
-        }
-
-        function seleccionarOpcionModal(valor, texto) {
-            cerrarModalSelect();
-            if (tipoModalActual === 'proyecto') {
-                cambiarProyectoActivo(valor);
-            } else if (tipoModalActual === 'formato') {
-                document.getElementById('formatoColumnas').value = valor;
-                document.getElementById('txtFormato').innerText = texto;
-            }
-        }
-
-        /* --- SISTEMA DE BASE DE DATOS Y ESTADO --- */
-        let appData = { activoId: 1, proyectos: [] };
-        let globalConfig = { darkMode: false, vibracion: true, decimales: "3", formatoCSV: "PEN" };
-
-        function vibrar() { 
-            if (globalConfig.vibracion !== false && navigator.vibrate) navigator.vibrate(30); 
+            setTimeout(() => { toast.classList.add('fade-out'); toast.addEventListener('animationend', () => toast.remove()); setTimeout(()=>toast.remove(), 400); }, 3000);
         }
         
-        function togglePanel(id) { vibrar(); const p = document.getElementById(id); p.style.display = p.style.display === "none" ? "block" : "none"; }
+        function vibrar() { if(globalConfig.vibracion && navigator.vibrate) navigator.vibrate(30); }
+        function togglePanel(id) { vibrar(); const p = document.getElementById(id); p.style.display = p.style.display==="none"?"block":"none"; }
+        
+        let confirmOkCallback = null;
+        document.getElementById('btnConfirmCancel').addEventListener('click', () => { 
+            vibrar(); 
+            document.getElementById('customConfirmOverlay').classList.remove('activo');
+            document.getElementById('customConfirmModal').classList.remove('abierto');
+            setTimeout(() => document.getElementById('customConfirmOverlay').style.display='none', 300);
+        });
+        
+        document.getElementById('btnConfirmOk').addEventListener('click', () => { 
+            vibrar(); 
+            document.getElementById('customConfirmOverlay').classList.remove('activo');
+            document.getElementById('customConfirmModal').classList.remove('abierto');
+            setTimeout(() => document.getElementById('customConfirmOverlay').style.display='none', 300);
+            if(confirmOkCallback) confirmOkCallback(); 
+        });
 
-        function inicializarApp() {
-            // --- REGISTRO DE ÚLTIMO ACCESO PARA EL WIDGET DEL INDEX ---
-            localStorage.setItem('cota100_last_name', 'ÁREAS Y PERÍMETROS');
-            localStorage.setItem('cota100_last_url', 'areas.html');
-            // ----------------------------------------------------------
-
-            try {
-                let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
-                if(conf) {
-                    globalConfig = conf;
-                    if(globalConfig.darkMode) document.body.classList.add('dark-mode');
-                    if(globalConfig.formatoCSV) {
-                        document.getElementById('formatoColumnas').value = globalConfig.formatoCSV;
-                        document.getElementById('txtFormato').innerText = (globalConfig.formatoCSV === 'PEN') ? 'Punto, Este, Norte (P-E-N)' : 'Solo Este, Norte (E-N)';
-                    }
-                }
-            } catch(e) {}
-
-            let stored = localStorage.getItem('cota100_db_areas_v1');
-            if (stored) { 
-                appData = JSON.parse(stored); 
-                if(!appData.contadorProyectos) appData.contadorProyectos = appData.proyectos.length;
-            } else { 
-                appData.contadorProyectos = 1;
-                appData.proyectos.push(crearObjetoProyecto(1, "Polígono 1")); 
-                appData.activoId = 1; 
-            }
-            renderSelectProyectos(); 
-            cargarProyectoActivo();
+        function showConfirm(msg, onOk) { 
+            vibrar(); 
+            document.getElementById('customConfirmMsg').innerText = msg; 
+            confirmOkCallback = onOk; 
+            document.getElementById('customConfirmOverlay').style.display = 'block'; 
+            setTimeout(() => {
+                document.getElementById('customConfirmOverlay').classList.add('activo');
+                document.getElementById('customConfirmModal').classList.add('abierto');
+            }, 10);
+        }
+        
+        function showInfoAlert(htmlMsg) { 
+            vibrar(); 
+            document.getElementById('customAlertMsg').innerHTML = htmlMsg; 
+            document.getElementById('customAlertOverlay').style.display = 'block'; 
+            setTimeout(() => {
+                document.getElementById('customAlertOverlay').classList.add('activo');
+                document.getElementById('customAlertModal').classList.add('abierto');
+            }, 10); 
+        }
+        
+        function cerrarCustomAlert() { 
+            vibrar(); 
+            document.getElementById('customAlertOverlay').classList.remove('activo'); 
+            document.getElementById('customAlertModal').classList.remove('abierto');
+            setTimeout(() => document.getElementById('customAlertOverlay').style.display='none', 300); 
         }
 
-        function crearObjetoProyecto(id, nombre) {
-            return { id: id, nombre: nombre, tabla: [ { e:"", n:"" }, { e:"", n:"" }, { e:"", n:"" } ] };
+        let appData = { activoId: 1, proyectos: [] };
+        let globalConfig = { darkMode: false, vibracion: true, decimales: "3", formatoCSV: "PEN" };
+        let currentCentroid = {x:0, y:0};
+        let canvasHitBoxes = [];
+
+        function inicializarApp() {
+            localStorage.setItem('cota100_last_name', 'ÁREAS Y PERÍMETROS'); localStorage.setItem('cota100_last_url', 'areas.html');
+            try { let conf = JSON.parse(localStorage.getItem('cota100_ajustes')); if(conf) { globalConfig = conf; if(conf.darkMode) document.body.classList.add('dark-mode'); document.getElementById('formatoColumnas').value = conf.formatoCSV||"PEN"; document.getElementById('txtFormato').innerText = (conf.formatoCSV==="PEN")?"P-E-N":"E-N"; } } catch(e) {}
+            let stored = localStorage.getItem('cota100_db_areas_v2');
+            if (stored) { appData = JSON.parse(stored); if(!appData.contadorProyectos) appData.contadorProyectos = appData.proyectos.length; } 
+            else { appData.contadorProyectos = 1; appData.proyectos.push({id: 1, nombre: "Polígono 1", tabla: [{e:"",n:""},{e:"",n:""},{e:"",n:""}]}); appData.activoId = 1; }
+            renderSelectProyectos(); cargarProyectoActivo(); initCanvasEvents();
         }
 
         function obtenerProyectoActivo() { return appData.proyectos.find(p => p.id === appData.activoId); }
-        function guardarBD() { localStorage.setItem('cota100_db_areas_v1', JSON.stringify(appData)); }
+        function guardarBD() { localStorage.setItem('cota100_db_areas_v2', JSON.stringify(appData)); }
 
-        function renderSelectProyectos() {
-            let p = obtenerProyectoActivo();
-            document.getElementById('txtSelectProyecto').innerText = p ? p.nombre : "Sin Nombre";
+        let tipoModalActual = "";
+        function abrirModalSelect(tipo) {
+            vibrar(); tipoModalActual = tipo; const titulo = document.getElementById('modalSelectTitle'); const contenido = document.getElementById('modalSelectContent'); contenido.innerHTML = "";
+            let opciones = []; let actual = "";
+            if (tipo === 'proyecto') { titulo.innerText = "📁 SELECCIONAR LOTE"; actual = appData.activoId; appData.proyectos.forEach(p => { opciones.push({val:p.id, txt:p.nombre}); }); } 
+            else if (tipo === 'formato') { titulo.innerText = "📥 FORMATO CSV"; actual = document.getElementById('formatoColumnas').value; opciones = [{val:'PEN', txt:'Punto, Este, Norte (P-E-N)'}, {val:'EN', txt:'Solo Este, Norte (E-N)'}]; }
+            else if (tipo === 'zonaUtm') { titulo.innerText = "🌍 ZONA (KML)"; actual = document.getElementById('zonaUtm').value; opciones = [{val:'17', txt:'17 Sur'}, {val:'18', txt:'18 Sur'}, {val:'19', txt:'19 Sur'}]; }
+            opciones.forEach(opt => { let isActivo = opt.val == actual; contenido.innerHTML += `<button class="btn-opcion" style="${isActivo?'background:var(--primary-color); color:#fff;':''}" onclick="seleccionarOpcionModal('${opt.val}', '${opt.txt}')"><span>${opt.txt}</span></button>`; });
+            
+            document.getElementById('overlaySelect').style.display = 'block'; 
+            setTimeout(() => {
+                document.getElementById('overlaySelect').classList.add('activo');
+                document.getElementById('modalSelect').classList.add('abierto');
+            }, 10);
         }
-
-        function crearNuevoProyecto() {
-            vibrar(); let nuevoId = Date.now();
-            appData.contadorProyectos = (appData.contadorProyectos || appData.proyectos.length) + 1;
-            let nombre = `Polígono ${appData.contadorProyectos}`;
-            appData.proyectos.push(crearObjetoProyecto(nuevoId, nombre));
-            appData.activoId = nuevoId; 
-            guardarBD(); 
-            renderSelectProyectos(); 
-            cargarProyectoActivo();
-            showToast("Proyecto creado", "success");
-        }
-
-        function eliminarProyecto() {
-            vibrar();
-            if(appData.proyectos.length === 1) return showToast("Crea otro proyecto antes de borrar el último.", "warning");
-            let p = obtenerProyectoActivo();
-            showConfirm(`⚠️ ¿Borrar "${p.nombre}" permanentemente?`, () => {
-                appData.proyectos = appData.proyectos.filter(proj => proj.id !== p.id);
-                appData.activoId = appData.proyectos[0].id; 
-                guardarBD(); 
-                renderSelectProyectos(); 
-                cargarProyectoActivo();
-                showToast("Proyecto eliminado", "success");
-            });
-        }
-
-        function cambiarProyectoActivo(idStr) { appData.activoId = parseInt(idStr); guardarBD(); cargarProyectoActivo(); }
         
-        function renombrarProyecto() { 
-            let p = obtenerProyectoActivo();
-            let newName = document.getElementById('proyectName').value.trim();
-            if(newName !== p.nombre && appData.proyectos.some(proj => proj.nombre === newName)) {
-                showToast(`⚠️ El proyecto "${newName}" ya existe.`, "warning");
-                document.getElementById('proyectName').value = p.nombre;
-                return;
-            }
-            p.nombre = newName; 
-            guardarBD(); 
-            renderSelectProyectos(); 
+        function cerrarModalSelect() { 
+            vibrar();
+            document.getElementById('overlaySelect').classList.remove('activo'); 
+            document.getElementById('modalSelect').classList.remove('abierto');
+            setTimeout(() => document.getElementById('overlaySelect').style.display='none', 300); 
         }
+
+        function seleccionarOpcionModal(val, txt) { 
+            cerrarModalSelect(); 
+            if(tipoModalActual === 'proyecto') { appData.activoId = parseInt(val); guardarBD(); cargarProyectoActivo(); } 
+            else if (tipoModalActual === 'formato') { document.getElementById('formatoColumnas').value = val; document.getElementById('txtFormato').innerText = txt; } 
+            else if(tipoModalActual === 'zonaUtm') { document.getElementById('zonaUtm').value = val; document.getElementById('txtZonaUtm').innerText = txt; } 
+        }
+
+        function renderSelectProyectos() { let p = obtenerProyectoActivo(); document.getElementById('txtSelectProyecto').innerText = p ? p.nombre : "Sin Nombre"; }
+        function crearNuevoProyecto() { vibrar(); appData.contadorProyectos++; let nId = Date.now(); appData.proyectos.push({id: nId, nombre: `Polígono ${appData.contadorProyectos}`, tabla: [{e:"",n:""},{e:"",n:""},{e:"",n:""}]}); appData.activoId = nId; guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); showToast("Proyecto creado", "success"); }
+        function eliminarProyecto() { vibrar(); if(appData.proyectos.length===1) return showToast("No puedes borrar el último.", "warning"); showConfirm(`¿Borrar "${obtenerProyectoActivo().nombre}"?`, () => { appData.proyectos = appData.proyectos.filter(p => p.id !== appData.activoId); appData.activoId = appData.proyectos[0].id; guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); }); }
+        function renombrarProyecto() { let p = obtenerProyectoActivo(); p.nombre = document.getElementById('proyectName').value.trim(); guardarBD(); renderSelectProyectos(); }
 
         function cargarProyectoActivo() {
-            let p = obtenerProyectoActivo();
-            document.getElementById('proyectName').value = p.nombre;
-            document.getElementById('cajaResultado').style.display = 'none';
-            const tbody = document.getElementById('cuerpoTablaAreas');
-            tbody.innerHTML = "";
-            if(!p.tabla || p.tabla.length < 3) p.tabla = crearObjetoProyecto(0,"").tabla;
-            p.tabla.forEach((fila, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td style="color:var(--primary-color); font-weight:800; font-size:1.1rem;">${index + 1}</td>
-                    <td><input type="number" class="coor-x" step="0.001" placeholder="X" value="${fila.e}" oninput="guardarEstadoApp(); redibujarCroquis();"></td>
-                    <td><input type="number" class="coor-y" step="0.001" placeholder="Y" value="${fila.n}" oninput="guardarEstadoApp(); redibujarCroquis();"></td>
-                `;
+            let p = obtenerProyectoActivo(); document.getElementById('proyectName').value = p.nombre; document.getElementById('cajaResultado').style.display = 'none';
+            const tbody = document.getElementById('cuerpoTablaAreas'); tbody.innerHTML = "";
+            if(!p.tabla || p.tabla.length < 3) p.tabla = [{e:"",n:""},{e:"",n:""},{e:"",n:""}];
+            p.tabla.forEach((f, i) => {
+                const tr = document.createElement('tr'); tr.id = `row-${i}`;
+                tr.innerHTML = `<td style="color:var(--primary-color); font-weight:800;">${i + 1}</td>
+                    <td><input type="number" class="coor-x" step="0.001" placeholder="X" value="${f.e}" oninput="guardarEstadoApp(); redibujarCroquis();"></td>
+                    <td><input type="number" class="coor-y" step="0.001" placeholder="Y" value="${f.n}" oninput="guardarEstadoApp(); redibujarCroquis();"></td>
+                    <td class="ang-int" style="font-weight:700; opacity:0.6; font-size:0.8rem;">--</td>`;
                 tbody.appendChild(tr);
             });
             setTimeout(redibujarCroquis, 50); 
         }
 
-        function guardarEstadoApp() {
-            let p = obtenerProyectoActivo(); if(!p) return;
-            let filas = [];
-            document.querySelectorAll('#cuerpoTablaAreas tr').forEach((tr) => {
-                filas.push({ e: tr.querySelector('.coor-x').value, n: tr.querySelector('.coor-y').value });
-            });
-            p.tabla = filas; guardarBD();
+        function guardarEstadoApp() { let p = obtenerProyectoActivo(); if(!p) return; let filas = []; document.querySelectorAll('#cuerpoTablaAreas tr').forEach((tr) => { filas.push({ e: tr.querySelector('.coor-x').value, n: tr.querySelector('.coor-y').value }); }); p.tabla = filas; guardarBD(); }
+
+        function agregarPunto() { const tbody = document.getElementById('cuerpoTablaAreas'); const i = tbody.children.length; const tr = document.createElement('tr'); tr.id = `row-${i}`; tr.innerHTML = `<td style="color:var(--primary-color); font-weight:800;">${i + 1}</td><td><input type="number" class="coor-x" step="0.001" oninput="guardarEstadoApp(); redibujarCroquis();"></td><td><input type="number" class="coor-y" step="0.001" oninput="guardarEstadoApp(); redibujarCroquis();"></td><td class="ang-int" style="font-weight:700; opacity:0.6; font-size:0.8rem;">--</td>`; tbody.appendChild(tr); guardarEstadoApp(); redibujarCroquis(); }
+        function quitarPunto() { const tbody = document.getElementById('cuerpoTablaAreas'); if (tbody.children.length > 3) { tbody.removeChild(tbody.lastChild); guardarEstadoApp(); redibujarCroquis(); } else showToast("Mínimo 3 vértices.", "warning"); }
+        function limpiarTablaAreas() { showConfirm("¿Vaciar toda la tabla?", () => { obtenerProyectoActivo().tabla = [{e:"",n:""},{e:"",n:""},{e:"",n:""}]; guardarBD(); cargarProyectoActivo(); showToast("Tabla vaciada", "success"); }); }
+
+        // --- CÁLCULO CORE (GAUSS, CENTROIDE, ÁNGULOS) ---
+        function calcularArea() {
+            vibrar(); let trs = document.querySelectorAll('#cuerpoTablaAreas tr'); let X = []; let Y = []; let decs = parseInt(globalConfig.decimales) || 3;
+            trs.forEach((tr) => { let xv = parseFloat(tr.querySelector('.coor-x').value); let yv = parseFloat(tr.querySelector('.coor-y').value); if (!isNaN(xv) && !isNaN(yv)) { X.push(xv); Y.push(yv); } });
+            let n = X.length; if (n < 3) { showToast("Requiere al menos 3 vértices completados.", "warning"); return; }
+            
+            let areaConSigno = 0; let p = 0; let cx = 0; let cy = 0;
+            for (let i = 0; i < n; i++) {
+                let j = (i + 1) % n;
+                let cross = (X[i] * Y[j] - X[j] * Y[i]);
+                areaConSigno += cross;
+                cx += (X[i] + X[j]) * cross; cy += (Y[i] + Y[j]) * cross;
+                p += Math.sqrt(Math.pow(X[j]-X[i], 2) + Math.pow(Y[j]-Y[i], 2));
+            }
+            areaConSigno = areaConSigno / 2.0;
+            let areaAbs = Math.abs(areaConSigno);
+            let isCCW = areaConSigno > 0; 
+            
+            cx = cx / (6.0 * areaConSigno); cy = cy / (6.0 * areaConSigno);
+            currentCentroid = {x: cx, y: cy, a: areaAbs};
+
+            // Ángulos Internos
+            for(let i = 0; i < n; i++) {
+                let prev = (i - 1 + n) % n; let next = (i + 1) % n;
+                let ax = X[prev] - X[i]; let ay = Y[prev] - Y[i];
+                let bx = X[next] - X[i]; let by = Y[next] - Y[i];
+                let angRad = Math.atan2(ax*by - ay*bx, ax*bx + ay*by);
+                if(!isCCW) angRad = -angRad; // Invertir si es horario
+                if(angRad < 0) angRad += 2 * Math.PI;
+                let deg = angRad * 180 / Math.PI;
+                trs[i].querySelector('.ang-int').innerText = Math.round(deg) + "°";
+            }
+            
+            document.getElementById('resAreaM2').innerText = areaAbs.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " m²";
+            document.getElementById('resAreaHa').innerText = (areaAbs / 10000.0).toLocaleString('en-US', {minimumFractionDigits: 4, maximumFractionDigits: 4}) + " Ha";
+            document.getElementById('resAcres').innerText = (areaAbs / 4046.856).toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('resTareas').innerText = (areaAbs / 1000.0).toLocaleString('en-US', {minimumFractionDigits: 2}); // Tarea agricola estandar referencial
+            document.getElementById('resPerimetro').innerText = p.toLocaleString('en-US', {minimumFractionDigits: decs, maximumFractionDigits: decs}) + " m";
+            document.getElementById('resCentroide').innerHTML = `X: ${cx.toFixed(decs)}<br>Y: ${cy.toFixed(decs)}`;
+            
+            document.getElementById('cajaResultado').style.display = 'block';
+            redibujarCroquis();
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            showToast("Área calculada exitosamente", "success");
         }
 
-        // --- SISTEMA DINÁMICO DE DIBUJO (CANVAS CROQUIS) ---
+        // --- CROQUIS Y CANVAS INTERACTIVO ---
         function redibujarCroquis() {
-            const canvas = document.getElementById('canvasCroquis');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+            const canvas = document.getElementById('canvasCroquis'); const ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, canvas.width, canvas.height); canvasHitBoxes = [];
             let X = []; let Y = [];
-            document.querySelectorAll('#cuerpoTablaAreas tr').forEach(tr => {
-                let xv = parseFloat(tr.querySelector('.coor-x').value);
-                let yv = parseFloat(tr.querySelector('.coor-y').value);
-                if (!isNaN(xv) && !isNaN(yv)) { X.push(xv); Y.push(yv); }
-            });
-
+            document.querySelectorAll('#cuerpoTablaAreas tr').forEach(tr => { let xv = parseFloat(tr.querySelector('.coor-x').value); let yv = parseFloat(tr.querySelector('.coor-y').value); if (!isNaN(xv) && !isNaN(yv)) { X.push(xv); Y.push(yv); } });
             if (X.length < 2) return;
 
-            let minX = Math.min(...X); let maxX = Math.max(...X);
-            let minY = Math.min(...Y); let maxY = Math.max(...Y);
-
-            let rangeX = maxX - minX; let rangeY = maxY - minY;
-            if (rangeX === 0) rangeX = 1;
-            if (rangeY === 0) rangeY = 1;
-
-            let padding = 25;
-            let drawW = canvas.width - (padding * 2);
-            let drawH = canvas.height - (padding * 2);
-
+            let minX = Math.min(...X); let maxX = Math.max(...X); let minY = Math.min(...Y); let maxY = Math.max(...Y);
+            let rangeX = maxX - minX || 1; let rangeY = maxY - minY || 1;
+            let pad = 25; let drawW = canvas.width - (pad * 2); let drawH = canvas.height - (pad * 2);
             let scale = Math.min(drawW / rangeX, drawH / rangeY);
+            let offsetX = pad + (drawW - rangeX * scale) / 2; let offsetY = pad + (drawH - rangeY * scale) / 2;
 
-            let offsetX = padding + (drawW - rangeX * scale) / 2;
-            let offsetY = padding + (drawH - rangeY * scale) / 2;
-
-            ctx.strokeStyle = '#FF6600';
-            ctx.lineWidth = 3;
-            ctx.fillStyle = 'rgba(255, 102, 0, 0.08)';
-            
-            ctx.beginPath();
+            ctx.strokeStyle = '#FF6600'; ctx.lineWidth = 2; ctx.fillStyle = 'rgba(255, 102, 0, 0.08)'; ctx.beginPath();
             for (let i = 0; i < X.length; i++) {
-                let cx = offsetX + (X[i] - minX) * scale;
-                // Invertimos eje Y (Topografía vs Pantalla informática)
-                let cy = canvas.height - (offsetY + (Y[i] - minY) * scale);
-                
-                if (i === 0) ctx.moveTo(cx, cy);
-                else ctx.lineTo(cx, cy);
+                let cx = offsetX + (X[i] - minX) * scale; let cy = canvas.height - (offsetY + (Y[i] - minY) * scale);
+                if (i === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
             }
-            if (X.length >= 3) ctx.closePath();
-            ctx.stroke();
-            if (X.length >= 3) ctx.fill();
+            if (X.length >= 3) ctx.closePath(); ctx.stroke(); if (X.length >= 3) ctx.fill();
 
-            // Dibujar marcadores de vértices numéricos adaptados a modo oscuro/claro
             ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#ffffff' : '#111111';
             for (let i = 0; i < X.length; i++) {
-                let cx = offsetX + (X[i] - minX) * scale;
-                let cy = canvas.height - (offsetY + (Y[i] - minY) * scale);
-                ctx.beginPath();
-                ctx.arc(cx, cy, 4, 0, 2 * Math.PI);
-                ctx.fill();
-                
-                ctx.font = 'bold 11px Rajdhani';
-                ctx.fillText(i + 1, cx + 7, cy - 4);
+                let cx = offsetX + (X[i] - minX) * scale; let cy = canvas.height - (offsetY + (Y[i] - minY) * scale);
+                ctx.beginPath(); ctx.arc(cx, cy, 5, 0, 2 * Math.PI); ctx.fill();
+                ctx.font = 'bold 12px Rajdhani'; ctx.fillText(i + 1, cx + 8, cy - 5);
+                canvasHitBoxes.push({ x: cx, y: cy, idx: i });
             }
         }
 
-        // --- BACKUP Y RESTAURACIÓN ---
-        function exportarBackup() {
-            vibrar(); const backup = JSON.parse(localStorage.getItem('cota100_db_areas_v1'));
-            if(!backup || backup.proyectos.length === 0) return showToast("No hay datos para exportar.", "warning");
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
-            const dl = document.createElement('a'); dl.setAttribute("href", dataStr);
-            dl.setAttribute("download", `DB_Areas_COTA100.json`); dl.click();
-            showToast("Backup exportado", "success");
-        }
-
-        function importarBackup() {
-            const f = document.getElementById('importFile');
-            if (f.files.length === 0) return;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const b = JSON.parse(e.target.result);
-                    if(b.proyectos) { 
-                        localStorage.setItem('cota100_db_areas_v1', JSON.stringify(b)); 
-                        showToast("✅ Base de datos restaurada. Recargando...", "success");
-                        setTimeout(() => window.location.reload(), 1500); 
-                    } else showToast("❌ Archivo no válido.", "error");
-                } catch(err) { showToast("❌ Error al leer el archivo.", "error"); }
-            };
-            reader.readAsText(f.files[0]);
-        }
-
-        // --- IMPORTACIÓN CSV ---
-        function procesarArchivoCSV() {
-            vibrar(); let input = document.getElementById('fileCsvInput');
-            let fmt = document.getElementById('formatoColumnas').value;
-            if (!input.files.length) { showToast("Sube un archivo primero.", "warning"); return; }
-            let reader = new FileReader();
-            reader.onload = (e) => {
-                let lines = e.target.result.split(/\r?\n/);
-                let active = obtenerProyectoActivo();
-                let pts = [];
-                lines.forEach(line => {
-                    if (line.trim() === "") return;
-                    let sep = line.includes(';') ? ';' : (line.includes('\t') ? '\t' : ',');
-                    let cols = line.split(sep);
-                    let eCol = (fmt === "PEN") ? 1 : 0; let nCol = (fmt === "PEN") ? 2 : 1;
-                    if(cols.length > nCol) {
-                        let ev = parseFloat(cols[eCol]); let nv = parseFloat(cols[nCol]);
-                        if (!isNaN(ev) && !isNaN(nv)) pts.push({ e: ev.toFixed(3), n: nv.toFixed(3) });
-                    }
+        function initCanvasEvents() {
+            const canvas = document.getElementById('canvasCroquis');
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width; const scaleY = canvas.height / rect.height;
+                const clickX = (e.clientX - rect.left) * scaleX; const clickY = (e.clientY - rect.top) * scaleY;
+                
+                let clickedIdx = -1; let minDist = 20;
+                canvasHitBoxes.forEach(hit => {
+                    let d = Math.sqrt(Math.pow(hit.x - clickX, 2) + Math.pow(hit.y - clickY, 2));
+                    if(d < minDist) { minDist = d; clickedIdx = hit.idx; }
                 });
+
+                document.querySelectorAll('#cuerpoTablaAreas tr').forEach(tr => tr.classList.remove('row-highlight'));
+                if(clickedIdx !== -1) {
+                    vibrar();
+                    let targetRow = document.getElementById(`row-${clickedIdx}`);
+                    targetRow.classList.add('row-highlight');
+                    targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
+
+        // --- AJUSTE REGISTRAL (HOMOTECIA) ---
+        function abrirPromptArea() {
+            vibrar();
+            if(currentCentroid.a === 0 || isNaN(currentCentroid.a)) return showToast("Calcula el área primero", "warning");
+            document.getElementById('inputTargetArea').value = currentCentroid.a.toFixed(2);
+            document.getElementById('promptAreaOverlay').style.display = 'block'; 
+            setTimeout(() => {
+                document.getElementById('promptAreaOverlay').classList.add('activo');
+                document.getElementById('promptAreaModal').classList.add('abierto');
+            }, 10);
+        }
+
+        function cerrarPromptArea() {
+            vibrar();
+            document.getElementById('promptAreaOverlay').classList.remove('activo');
+            document.getElementById('promptAreaModal').classList.remove('abierto');
+            setTimeout(() => document.getElementById('promptAreaOverlay').style.display = 'none', 300);
+        }
+
+        function ejecutarAjusteArea() {
+            vibrar(); let tArea = parseFloat(document.getElementById('inputTargetArea').value);
+            if(isNaN(tArea) || tArea <= 0) return showToast("Ingresa un área válida", "error");
+            
+            let k = Math.sqrt(tArea / currentCentroid.a);
+            let trs = document.querySelectorAll('#cuerpoTablaAreas tr');
+            trs.forEach(tr => {
+                let xi = parseFloat(tr.querySelector('.coor-x').value); let yi = parseFloat(tr.querySelector('.coor-y').value);
+                tr.querySelector('.coor-x').value = (currentCentroid.x + (xi - currentCentroid.x) * k).toFixed(3);
+                tr.querySelector('.coor-y').value = (currentCentroid.y + (yi - currentCentroid.y) * k).toFixed(3);
+            });
+            
+            cerrarPromptArea();
+            guardarEstadoApp(); calcularArea(); showToast(`Área ajustada a ${tArea} m²`, "success");
+        }
+
+        // --- IMPORTACIÓN Y KML ---
+        function latLonToUtmCompact(lat, lon, zone, isSouth) {
+            const a = 6378137.0; const f = 1/298.257223563;
+            let latR = lat*Math.PI/180; let lonR = lon*Math.PI/180; let l0 = (zone-1)*6-180+3; let l0R = l0*Math.PI/180;
+            let e2 = 2*f-f*f; let ep2 = e2/(1-e2); let n = a/Math.sqrt(1-e2*Math.sin(latR)*Math.sin(latR));
+            let t = Math.tan(latR)*Math.tan(latR); let c = ep2*Math.cos(latR)*Math.cos(latR); let A = Math.cos(latR)*(lonR-l0R);
+            let m = a*((1-e2/4-3*e2*e2/64-5*Math.pow(e2,3)/256)*latR - (3*e2/8+3*e2*e2/32+45*Math.pow(e2,3)/1024)*Math.sin(2*latR) + (15*e2*e2/256+45*Math.pow(e2,3)/1024)*Math.sin(4*latR));
+            let x = 0.9996*n*(A+(1-t+c)*Math.pow(A,3)/6) + 500000.0;
+            let y = 0.9996*(m+n*Math.tan(latR)*(A*A/2+(5-t+9*c+4*c*c)*Math.pow(A,4)/24));
+            if(isSouth && lat < 0) y += 10000000.0;
+            return { e: x, n: y };
+        }
+
+        function procesarArchivoImportacion() {
+            vibrar(); let input = document.getElementById('fileCsvInput'); let fmt = document.getElementById('formatoColumnas').value;
+            if (!input.files.length) { showToast("Sube un archivo primero.", "warning"); return; }
+            let file = input.files[0]; let reader = new FileReader();
+            
+            reader.onload = (e) => {
+                let text = e.target.result; let pts = [];
+                if(file.name.toLowerCase().endsWith('.kml')) {
+                    let zone = parseInt(document.getElementById('zonaUtm').value);
+                    let coordsMatch = text.match(/<coordinates>([\s\S]*?)<\/coordinates>/);
+                    if(!coordsMatch) return showToast("No se encontraron coordenadas en KML", "error");
+                    let pairs = coordsMatch[1].trim().split(/\s+/);
+                    pairs.forEach(pair => {
+                        let c = pair.split(','); if(c.length >= 2) {
+                            let lon = parseFloat(c[0]); let lat = parseFloat(c[1]);
+                            if(!isNaN(lat) && !isNaN(lon)) {
+                                let utm = latLonToUtmCompact(lat, lon, zone, true);
+                                pts.push({ e: utm.e.toFixed(3), n: utm.n.toFixed(3) });
+                            }
+                        }
+                    });
+                } else {
+                    let lines = text.split(/\r?\n/);
+                    lines.forEach(line => {
+                        if (line.trim() === "") return;
+                        let cols = line.split(line.includes(';') ? ';' : (line.includes('\t') ? '\t' : ','));
+                        let eCol = (fmt === "PEN") ? 1 : 0; let nCol = (fmt === "PEN") ? 2 : 1;
+                        if(cols.length > nCol) {
+                            let ev = parseFloat(cols[eCol]); let nv = parseFloat(cols[nCol]);
+                            if (!isNaN(ev) && !isNaN(nv)) pts.push({ e: ev.toFixed(3), n: nv.toFixed(3) });
+                        }
+                    });
+                }
+
                 if (pts.length >= 3) {
-                    active.tabla = pts; guardarBD(); cargarProyectoActivo(); calcularArea();
-                    showToast(`✅ ${pts.length} puntos importados.`, "success");
+                    obtenerProyectoActivo().tabla = pts; guardarBD(); cargarProyectoActivo(); calcularArea();
+                    showToast(`✅ ${pts.length} vértices importados.`, "success");
                     document.getElementById('panelImportacion').style.display = 'none';
                 } else showToast("Archivo insuficiente (mínimo 3 puntos).", "error");
             };
-            reader.readAsText(input.files[0]);
+            reader.readAsText(file);
         }
 
-        // --- MANIPULACIÓN DE TABLA ---
-        function agregarPunto() {
-            const tbody = document.getElementById('cuerpoTablaAreas');
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td style="color:var(--primary-color); font-weight:800; font-size:1.1rem;">${tbody.children.length + 1}</td>
-                <td><input type="number" class="coor-x" step="0.001" placeholder="X" oninput="guardarEstadoApp(); redibujarCroquis();"></td>
-                <td><input type="number" class="coor-y" step="0.001" placeholder="Y" oninput="guardarEstadoApp(); redibujarCroquis();"></td>`;
-            tbody.appendChild(tr); guardarEstadoApp(); redibujarCroquis();
+        // --- EXPORTAR REPLANTEO ---
+        function exportarCSV_Replant() {
+            vibrar(); let p = obtenerProyectoActivo(); if(!p.tabla || p.tabla.length < 3) return;
+            let csv = "Punto,Este,Norte,Elevacion,Descripcion\n";
+            p.tabla.forEach((f, i) => { if(f.e && f.n) csv += `V-${i+1},${f.e},${f.n},0.000,Vértice Lote\n`; });
+            // Cerrar el polígono repitiendo el primero para el replanteo visual
+            if(p.tabla[0].e) csv += `V-1_Cierre,${p.tabla[0].e},${p.tabla[0].n},0.000,Cierre Lote\n`;
+            let blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+            let link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Lote_${p.nombre.replace(/\s+/g,'_')}.csv`; link.click();
         }
 
-        function quitarPunto() {
-            const tbody = document.getElementById('cuerpoTablaAreas');
-            if (tbody.children.length > 3) { tbody.removeChild(tbody.lastChild); guardarEstadoApp(); redibujarCroquis(); }
-            else showToast("Mínimo de vértices requerido (3).", "warning");
-        }
-
-        function limpiarTablaAreas() { 
-            showConfirm("¿Vaciar toda la tabla de coordenadas?", () => {
-                let p = obtenerProyectoActivo(); p.tabla = [ {e:"",n:""}, {e:"",n:""}, {e:"",n:""} ]; 
-                guardarBD(); cargarProyectoActivo(); 
-                showToast("Tabla vaciada", "success");
-            }); 
-        }
-
-        // --- CÁLCULO MATEMÁTICO (GAUSS) ---
-        function calcularArea() {
-            let trs = document.querySelectorAll('#cuerpoTablaAreas tr');
-            let X = []; let Y = [];
-            let decs = parseInt(globalConfig.decimales) || 3;
-
-            trs.forEach((tr, i) => {
-                let xv = parseFloat(tr.querySelector('.coor-x').value);
-                let yv = parseFloat(tr.querySelector('.coor-y').value);
-                if (!isNaN(xv) && !isNaN(yv)) { X.push(xv); Y.push(yv); }
-            });
-            if (X.length < 3) { showToast("Se requieren al menos 3 vértices completados.", "warning"); return; }
-            
-            let a = 0; let p = 0; let j = X.length - 1;
-            for (let i = 0; i < X.length; i++) {
-                a += (X[j] + X[i]) * (Y[j] - Y[i]);
-                p += Math.sqrt(Math.pow(X[i]-X[j], 2) + Math.pow(Y[i]-Y[j], 2));
-                j = i;
-            }
-            a = Math.abs(a / 2.0);
-            
-            document.getElementById('resAreaM2').innerText = a.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " m²";
-            document.getElementById('resAreaHa').innerText = (a / 10000.0).toLocaleString('en-US', {minimumFractionDigits: 4, maximumFractionDigits: 4}) + " Ha";
-            document.getElementById('resPerimetro').innerText = p.toLocaleString('en-US', {minimumFractionDigits: decs, maximumFractionDigits: decs}) + " m";
-            
-            document.getElementById('cajaResultado').style.display = 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            showToast("Área calculada", "success");
-        }
-
-        /* --- CONTROL DE CALCULADORA FLOTANTE --- */
-        function toggleCalculadora() { vibrar(); const m = document.getElementById('calculadoraModal'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
-        function calcInput(v) { vibrar(); document.getElementById('calcDisplay').value += v; }
-        function calcClear() { vibrar(); document.getElementById('calcDisplay').value = ''; }
-        function calcBackspace() { vibrar(); let d = document.getElementById('calcDisplay'); d.value = d.value.slice(0, -1); }
-        function calcEval() { vibrar(); try { let res = new Function('return ' + document.getElementById('calcDisplay').value)(); document.getElementById('calcDisplay').value = (res % 1 !== 0) ? res.toFixed(3) : res; } catch(e) { document.getElementById('calcDisplay').value = 'Error'; } }
+        function exportarBackup() { vibrar(); const b = JSON.parse(localStorage.getItem('cota100_db_areas_v2')); if(!b || b.proyectos.length===0) return; const dl = document.createElement('a'); dl.setAttribute("href", "data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(b))); dl.setAttribute("download", `DB_Areas.json`); dl.click(); showToast("Backup exportado", "success"); }
+        function importarBackup() { const f = document.getElementById('importFile'); if (f.files.length === 0) return; const reader = new FileReader(); reader.onload = (e) => { try { const b = JSON.parse(e.target.result); if(b.proyectos) { localStorage.setItem('cota100_db_areas_v2', JSON.stringify(b)); showToast("✅ DB restaurada...", "success"); setTimeout(()=>window.location.reload(),1500); } else showToast("❌ Archivo no válido", "error"); } catch(err) { showToast("❌ Error al leer", "error"); } }; reader.readAsText(f.files[0]); }
     </script>
 </body>
 </html>
