@@ -144,6 +144,8 @@
         td { border-bottom: 1px solid var(--border-color); border-right: 1px solid var(--border-color); padding: 0; text-align: center; vertical-align: middle; position: relative;}
         td:last-child { border-right: none; }
         
+        .th-info { display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); border-radius: 50%; width: 14px; height: 14px; font-size: 0.6rem; margin-left: 4px; cursor: pointer; }
+
         td input { border: none; width: 100%; height: 100%; padding: 12px 2px; text-align: center; background: transparent; border-radius: 0; color: var(--text-color); font-weight: 800; text-transform: uppercase;}
         td input:focus { background: rgba(255, 85, 0, 0.05); outline: 2px solid var(--primary-color); outline-offset: -2px; z-index: 2;}
         td input.in-pto { font-size: 1.05rem; padding-right: 25px; } 
@@ -158,10 +160,13 @@
         .ai-repetido { opacity: 0.2; pointer-events: none; background: #888;}
         
         .cota-container { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; height: 100%; }
-        .in-cota { border: 1px solid var(--border-color); border-radius: 4px; height: 35px; font-size: 1rem; flex: 1; transition: box-shadow 0.2s; cursor: pointer;}
-        .in-cota.fijo { background: rgba(25, 118, 210, 0.05); border-color: #1976d2; color: #1976d2; }
         
-        .trend-icon { width: 15px; text-align: center; display: inline-block; font-size: 1.2rem; font-weight: 900;}
+        .in-cota { border: 1px solid var(--border-color); border-radius: 4px; height: 35px; font-size: 1rem; flex: 1; transition: box-shadow 0.2s; pointer-events: none;}
+        .in-cota.editable-activa { pointer-events: auto !important; background-color: rgba(255, 85, 0, 0.05); }
+        .in-cota.fijo { background: rgba(25, 118, 210, 0.05); border-color: #1976d2; color: #1976d2; pointer-events: none; }
+        
+        .trend-icon { width: 15px; text-align: center; display: inline-block; font-size: 1.2rem; font-weight: 900; cursor: pointer;}
+        .trend-icon:active { transform: scale(1.2); }
         .btn-pin { position: absolute; right: 2px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 1.2rem; opacity: 0.7; z-index: 3;}
         .btn-pin:active { opacity: 1; transform: translateY(-50%) scale(1.1); }
 
@@ -205,7 +210,7 @@
         /* MODALES DE CONFIRMACIÓN Y ALERTA (GLASSMORPHISM) */
         .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
         .overlay-select.activo { opacity: 1; }
-        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
+        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 320px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
         .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
         
         .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3;}
@@ -247,9 +252,10 @@
 
     <div class="overlay-select" id="customAlertOverlay"></div>
     <div class="modal-select" id="customAlertModal">
-        <div class="confirm-msg" id="customAlertMsg">Información</div>
+        <h3 id="customAlertTitle" style="color:var(--primary-color); font-weight:900; text-transform:uppercase; margin-bottom:10px; font-size: 1.1rem;">ℹ️ INFORMACIÓN</h3>
+        <div class="confirm-msg" id="customAlertMsg" style="font-size:0.95rem; font-weight:600; text-align:left; color:var(--text-color); margin-bottom:15px;">Texto</div>
         <div class="confirm-btns">
-            <button class="confirm-btn" style="background:var(--primary-color); color:#fff; width:100%;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+            <button class="confirm-btn" style="background:var(--table-header); color:#fff; width:100%;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
         </div>
     </div>
 
@@ -288,8 +294,17 @@
                 </svg>
             </a>
         </div>
-        <h2 class="top-bar-title">NIV. SIMPLE <span>Radiación Libre</span></h2>
-        <div style="width: 90px;"></div> 
+        <h2 class="top-bar-title">NIV. SIMPLE<br><span>Radiación Libre</span></h2>
+        <!-- ICONO DE GUÍA SUTIL -->
+        <div style="width: 90px; display: flex; justify-content: flex-end;">
+            <button class="btn-volver-mini" onclick="mostrarLeyenda()" title="Guía de Funciones" style="width: 45px; height: 45px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4"></path>
+                    <path d="M12 8h.01"></path>
+                </svg>
+            </button>
+        </div>
     </div>
 
     <div class="modulo-container">
@@ -342,9 +357,9 @@
                 <thead>
                     <tr>
                         <th style="width: 25%;">PTO</th>
-                        <th style="width: 21%;">V.AT(+)</th>
-                        <th style="width: 21%;">V.AD(-)</th>
-                        <th style="width: 33%;">AI / COTA</th>
+                        <th style="width: 21%;">V.AT(+) <span class="th-info" onclick="showCustomAlert('<strong>VISTA ATRÁS:</strong><br>Lectura de la mira sobre un punto de cota conocida (BM) o punto de cambio para establecer la Altura de Instrumento.', 'VISTA ATRÁS')">i</span></th>
+                        <th style="width: 21%;">V.AD(-) <span class="th-info" onclick="showCustomAlert('<strong>VISTA ADELANTE:</strong><br>Lectura de radiación sobre el terreno para calcular su elevación. Si se digita, calcula la cota.', 'VISTA ADELANTE')">i</span></th>
+                        <th style="width: 33%;">AI / COTA <span class="th-info" onclick="showCustomAlert('<strong>COTA DEL TERRENO:</strong><br>Elevación final del punto. Si se digita manualmente, calcula la V.AD requerida para replanteo.', 'COTA')">i</span></th>
                     </tr>
                 </thead>
                 <tbody id="cuerpoTabla"></tbody>
@@ -371,7 +386,7 @@
 
     </div>
 
-    <!-- CALCULADORA MODIFICADA -->
+    <!-- CALCULADORA FLOTANTE -->
     <div class="btn-calculadora-flotante" onclick="toggleCalculadora()">🧮</div>
     <div class="calculadora-modal" id="calculadoraModal">
         <div class="calc-header"><span>CÁLCULO RÁPIDO</span><button onclick="toggleCalculadora()">X</button></div>
@@ -398,7 +413,35 @@
         </div>
     </div>
 
+    <!-- LÓGICA PRINCIPAL DE LA APLICACIÓN -->
     <script>
+        /* --- FUNCIONES BASE DE ESTADO --- */
+        let appData = { activoId: 1, proyectos: [], contadorProyectos: 1 };
+        let globalConfig = { darkMode: false, vibracion: false, decimales: "3", alertaMira: "5", wakeLockEnabled: false };
+        let inputPtoActivo = null; 
+        let tablaBloqueada = false;
+        let wakeLock = null;
+        let editandoBMIndex = -1;
+
+        function guardarEstadoTabla() {
+            let p = obtenerProyectoActivo(); 
+            if(!p) return;
+            let filas = [];
+            document.querySelectorAll('#cuerpoTabla tr').forEach((tr, i) => {
+                filas.push({
+                    pto: tr.querySelector('.in-pto').value,
+                    bmAsignado: tr.querySelector('.in-pto').dataset.bmAsignado || "",
+                    va: tr.querySelector('.in-va').value,
+                    vd: tr.querySelector('.in-vd').value,
+                    cota: tr.querySelector('.in-cota').value,
+                    fijo: tr.querySelector('.in-cota').dataset.fijo || (i===0 ? "true" : "false"),
+                    locked: tr.dataset.locked || "false"
+                });
+            });
+            p.tabla = filas; 
+            guardarBD();
+        }
+
         /* --- SISTEMA DE UI: TOAST Y MODALS PERSONALIZADOS --- */
         function showToast(message, type = "default") {
             const container = document.getElementById('toast-container');
@@ -416,7 +459,8 @@
         let confirmCancelCallback = null;
         let promptOkCallback = null;
 
-        function showCustomAlert(message) {
+        function showCustomAlert(message, title = "INFORMACIÓN") {
+            document.getElementById('customAlertTitle').innerHTML = `ℹ️ ${title}`;
             document.getElementById('customAlertMsg').innerHTML = message;
             document.getElementById('customAlertOverlay').style.display = 'block';
             setTimeout(() => { document.getElementById('customAlertOverlay').classList.add('activo'); document.getElementById('customAlertModal').classList.add('abierto'); }, 10);
@@ -424,6 +468,32 @@
         function cerrarCustomAlert() {
             document.getElementById('customAlertOverlay').classList.remove('activo'); document.getElementById('customAlertModal').classList.remove('abierto');
             setTimeout(() => { document.getElementById('customAlertOverlay').style.display = 'none'; }, 300);
+        }
+
+        function mostrarLeyenda() {
+            let html = `
+                <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="font-size:1.2rem; margin-right:10px;">📍</span> 
+                    <div><strong style="color:var(--primary-color);">Vincular BM:</strong> Asigna una cota oficial de la Base de Datos a la celda (Fija la Cota).</div>
+                </div>
+                <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="font-size:1.2rem; margin-right:10px;">🔓</span> 
+                    <div><strong style="color:var(--primary-color);">Candado AI:</strong> Congela la Altura de Instrumento para calcular cambios de estación.</div>
+                </div>
+                <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="font-size:1.2rem; margin-right:10px;">▲▼</span> 
+                    <div><strong style="color:var(--primary-color);">Tendencia:</strong> Indica si el terreno sube (▲), baja (▼) o es plano (▶) respecto al punto de la fila anterior.</div>
+                </div>
+                <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="font-size:1.2rem; margin-right:10px;">▶</span> 
+                    <div><strong style="color:var(--primary-color);">Doble Toque:</strong> Toca dos veces rápidas la caja de la cota para abrir el teclado y editarla libremente (ideal para replanteo).</div>
+                </div>
+                <div style="display:flex; align-items:flex-start;">
+                    <span style="font-size:1.2rem; margin-right:10px;">👆</span> 
+                    <div><strong style="color:var(--primary-color);">Cálculo ΔH:</strong> Toca la flecha de tendencia de dos cotas distintas en la libreta para ver el desnivel exacto entre ellas.</div>
+                </div>
+            `;
+            showCustomAlert(html, "GUÍA DE FUNCIONES");
         }
 
         function showCustomConfirm(message, onOk, onCancel = null, okText = "ACEPTAR", cancelText = "CANCELAR") {
@@ -439,14 +509,8 @@
             document.getElementById('customConfirmOverlay').classList.remove('activo'); document.getElementById('customConfirmModal').classList.remove('abierto');
             setTimeout(() => { document.getElementById('customConfirmOverlay').style.display = 'none'; }, 300);
         }
-        function btnConfirmOkClick() {
-            cerrarCustomConfirm();
-            if (confirmOkCallback) confirmOkCallback();
-        }
-        function btnConfirmCancelClick() {
-            cerrarCustomConfirm();
-            if (confirmCancelCallback) confirmCancelCallback();
-        }
+        function btnConfirmOkClick() { cerrarCustomConfirm(); if (confirmOkCallback) confirmOkCallback(); }
+        function btnConfirmCancelClick() { cerrarCustomConfirm(); if (confirmCancelCallback) confirmCancelCallback(); }
 
         function showCustomPrompt(title, defaultVal, onOk) {
             document.getElementById('customPromptTitle').innerText = title;
@@ -460,11 +524,7 @@
             document.getElementById('customPromptOverlay').classList.remove('activo'); document.getElementById('customPromptModal').classList.remove('abierto');
             setTimeout(() => { document.getElementById('customPromptOverlay').style.display = 'none'; }, 300);
         }
-        function btnPromptOkClick() {
-            let val = document.getElementById('customPromptInput').value;
-            cerrarCustomPrompt();
-            if (promptOkCallback) promptOkCallback(val);
-        }
+        function btnPromptOkClick() { let val = document.getElementById('customPromptInput').value; cerrarCustomPrompt(); if (promptOkCallback) promptOkCallback(val); }
 
         /* --- UI: MODAL SELECTOR GENÉRICO --- */
         let tipoModalActual = "";
@@ -502,23 +562,9 @@
 
         function seleccionarOpcionModal(valor, textoExtra) {
             cerrarModalSelect();
-            if(tipoModalActual === 'proyecto') {
-                cambiarProyectoActivo(valor);
-            } else if(tipoModalActual === 'bm-tabla') {
-                if(inputPtoActivo) {
-                    inputPtoActivo.value = valor;
-                    verificarBM(inputPtoActivo);
-                }
-            }
+            if(tipoModalActual === 'proyecto') { cambiarProyectoActivo(valor); } 
+            else if(tipoModalActual === 'bm-tabla') { if(inputPtoActivo) { inputPtoActivo.value = valor; verificarBM(inputPtoActivo); } }
         }
-
-        /* --- SISTEMA DE BASE DE DATOS Y CONFIGURACIÓN GLOBAL --- */
-        let appData = { activoId: 1, proyectos: [], contadorProyectos: 1 };
-        let globalConfig = { darkMode: false, vibracion: false, decimales: "3", alertaMira: "5", wakeLockEnabled: false };
-        let inputPtoActivo = null; 
-        let tablaBloqueada = false;
-        let wakeLock = null;
-        let editandoBMIndex = -1;
 
         function formatDecimal(input) {
             let val = input.value.replace(/,/g, '.');
@@ -630,7 +676,7 @@
             renderBMs(); cargarTablaDesdeBD(p.tabla);
         }
 
-        /* --- MEJORA 2: DRAG AND DROP BMs SIN FLECHAS (OPTIMIZADO) --- */
+        /* --- DRAG AND DROP BMs --- */
         let draggingItemBM = null;
         let dragTimer = null;
         
@@ -800,14 +846,13 @@
             const bmEncontrado = p.bms.find(b => b.nombre === val);
             const tr = input.closest('tr'); 
             const inCota = tr.querySelector('.in-cota'); 
-            const inVd = tr.querySelector('.in-vd');
 
             const aplicarBMFijo = () => {
                 input.dataset.bmAsignado = val; 
                 inCota.value = bmEncontrado.cota.toFixed(decs);
                 inCota.dataset.fijo = "true"; 
                 inCota.classList.add('fijo'); 
-                inCota.setAttribute('readonly', 'true');
+                inCota.classList.remove('editable-activa');
                 procesarTabla(); 
             };
             
@@ -815,7 +860,7 @@
                 input.dataset.bmAsignado = val; 
                 inCota.dataset.fijo = "false"; 
                 inCota.classList.remove('fijo');
-                inCota.setAttribute('readonly', 'true'); 
+                inCota.classList.remove('editable-activa');
                 procesarTabla(); 
             };
 
@@ -823,12 +868,9 @@
                 input.dataset.bmAsignado = ""; 
                 inCota.dataset.fijo = "false"; 
                 inCota.classList.remove('fijo'); 
-                inCota.setAttribute('readonly', 'true'); 
-                inVd.value = ""; 
+                inCota.classList.remove('editable-activa');
                 procesarTabla();
             };
-
-            const cancelar = () => { input.value = prevBm; };
 
             if (bmEncontrado) {
                 if (prevBm !== val) {
@@ -846,7 +888,7 @@
         function toggleLockAI(btn) {
             if(tablaBloqueada) return; 
             let tr = btn.closest('tr'); let isLocked = tr.dataset.locked === "true";
-            let inVa = tr.querySelector('.in-va'); let inCota = tr.querySelector('.in-cota'); 
+            let inVa = tr.querySelector('.in-va');
             if(isLocked) {
                 tr.dataset.locked = "false"; btn.innerHTML = `🔓 AI: <span class="val-ai-num">${tr.querySelector('.val-ai-num').innerText}</span>`;
                 inVa.removeAttribute('readonly'); 
@@ -857,52 +899,181 @@
             guardarEstadoTabla();
         }
 
-        // --- MEJORA 6: DESNIVEL EN VIVO (Un Toque para Medir, Doble Toque para Editar) ---
+        /* --- CORRECCIÓN: LIBERACIÓN DEL TECLADO Y EVENTOS TÁCTILES --- */
         let cotaSel1 = null;
         let lastTap = 0;
 
-        function manejarCotaTap(input, event) {
+        function manejarCotaTap(divContainer, event) {
             if(tablaBloqueada) return;
+            let input = divContainer.querySelector('.in-cota');
+            if(input.dataset.bmAsignado && input.dataset.fijo === "true") return; 
+
             let currentTime = new Date().getTime();
             let tapLength = currentTime - lastTap;
             
-            if (tapLength < 350 && tapLength > 0) {
-                // Doble Toque: Abrir Teclado (Editar)
-                input.removeAttribute('readonly');
+            if (tapLength < 400 && tapLength > 0) {
+                input.classList.add('editable-activa');
                 input.focus();
+                
+                input.onblur = function() {
+                    this.classList.remove('editable-activa');
+                    procesarTabla();
+                };
+                
                 if(cotaSel1 && cotaSel1.el === input) {
-                    input.style.boxShadow = "";
+                    divContainer.style.boxShadow = "";
                     cotaSel1 = null;
                 }
                 event.preventDefault();
-            } else {
-                // Un Toque: Seleccionar para Desnivel
-                input.blur();
-                let val = parseFloat(input.value);
-                if(!isNaN(val)) {
-                    if(!cotaSel1) {
-                        cotaSel1 = {el: input, val: val};
-                        input.style.boxShadow = "0 0 0 2px var(--primary-color) inset";
-                        showToast("Punto 1 seleccionado. Toca otra cota.", "default");
-                    } else if (cotaSel1.el === input) {
-                        input.style.boxShadow = ""; cotaSel1 = null;
-                    } else {
-                        let dh = Math.abs(cotaSel1.val - val);
-                        showCustomAlert(`RESULTADO DEL DESNIVEL:<br><br>ΔH = ${dh.toFixed(3)} m`);
-                        cotaSel1.el.style.boxShadow = ""; cotaSel1 = null; 
-                    }
-                }
             }
             lastTap = currentTime;
         }
 
-        function asegurarReadonlyCota(input) {
-            if(input.dataset.fijo !== "true") {
-                input.setAttribute('readonly', 'true');
+        function medirDesnivelRapido(spanIcon) {
+            if(tablaBloqueada) return;
+            let divContainer = spanIcon.closest('.cota-container');
+            let input = divContainer.querySelector('.in-cota');
+            let val = parseFloat(input.value);
+            
+            if(!isNaN(val)) {
+                if(!cotaSel1) {
+                    cotaSel1 = {el: input, val: val, cont: divContainer};
+                    cotaSel1.cont.style.boxShadow = "0 0 0 2px var(--primary-color) inset";
+                    cotaSel1.cont.style.borderRadius = "4px";
+                    showToast("Punto 1 seleccionado. Toca otra flecha.", "default");
+                } else if (cotaSel1.el === input) {
+                    cotaSel1.cont.style.boxShadow = ""; cotaSel1 = null;
+                } else {
+                    let dh = Math.abs(cotaSel1.val - val);
+                    showCustomAlert(`RESULTADO DEL DESNIVEL:<br><br>ΔH = ${dh.toFixed(3)} m`, "CÁLCULO DE DESNIVEL");
+                    cotaSel1.cont.style.boxShadow = ""; cotaSel1 = null; 
+                }
             }
         }
 
-        // --- MEJORA 8: ESTADÍSTICAS OCULTABLES ---
+        /* --- CORRECCIÓN MATEMÁTICA BIDIERECCIONAL --- */
+        function procesarTabla() {
+            let decs = parseInt(globalConfig.decimales) || 3;
+            let limiteMira = parseFloat(globalConfig.alertaMira) || 5.000;
+            let trs = document.querySelectorAll('#cuerpoTabla tr');
+            let ai_actual = NaN;
+            let prevCotaCalculada = NaN;
+
+            for(let i = 0; i < trs.length; i++) {
+                let tr = trs[i];
+                let inPto = tr.querySelector('.in-pto');
+                let inVa = tr.querySelector('.in-va');
+                let inVd = tr.querySelector('.in-vd');
+                let cotaInp = tr.querySelector('.in-cota');
+                let cellAI = tr.querySelector('.btn-ai-label');
+                let aiNum = tr.querySelector('.val-ai-num');
+                let iconTrend = tr.querySelector('.trend-icon');
+
+                let va = parseFloat(inVa.value);
+                let vd = parseFloat(inVd.value);
+                let isFijo = (cotaInp.dataset.fijo === "true");
+
+                if(!isNaN(va)) {
+                    tr.style.borderTop = "3px solid var(--primary-color)";
+                    cellAI.classList.remove('ai-repetido');
+                } else {
+                    tr.style.borderTop = "1px solid var(--border-color)";
+                    cellAI.classList.add('ai-repetido');
+                }
+
+                let activeEl = document.activeElement;
+                let isCotaActive = (activeEl === cotaInp);
+                let isVdActive = (activeEl === inVd);
+
+                if (i === 0) {
+                    let cotaVal = parseFloat(cotaInp.value);
+                    if (!isNaN(cotaVal) && !isNaN(va)) { ai_actual = cotaVal + va; aiNum.innerText = ai_actual.toFixed(decs); } 
+                    else { aiNum.innerText = "---"; ai_actual = NaN; }
+                } else {
+                    if (!isNaN(ai_actual)) {
+                        // BIDIERECCIONALIDAD
+                        if (isCotaActive || (isFijo && !isVdActive)) {
+                            let cotaVal = parseFloat(cotaInp.value);
+                            if (!isNaN(cotaVal)) {
+                                vd = ai_actual - cotaVal; 
+                                if (!isVdActive) inVd.value = vd.toFixed(decs);
+                                if (!isNaN(va)) { ai_actual = cotaVal + va; aiNum.innerText = ai_actual.toFixed(decs); } 
+                                else { aiNum.innerText = ai_actual.toFixed(decs); }
+                            } else {
+                                if (!isVdActive) inVd.value = "";
+                                aiNum.innerText = ai_actual.toFixed(decs);
+                            }
+                        } else {
+                            if (!isNaN(vd)) {
+                                let cotaCalc = ai_actual - vd; 
+                                if (!isCotaActive) {
+                                    cotaInp.value = cotaCalc.toFixed(decs);
+                                    if(!inPto.dataset.bmAsignado) {
+                                        cotaInp.dataset.fijo = "false";
+                                        cotaInp.classList.remove('fijo');
+                                    }
+                                }
+                                if (!isNaN(va)) { ai_actual = cotaCalc + va; aiNum.innerText = ai_actual.toFixed(decs); } 
+                                else { aiNum.innerText = ai_actual.toFixed(decs); }
+                            } else { 
+                                if (!isCotaActive && !isFijo) cotaInp.value = ""; 
+                                aiNum.innerText = ai_actual.toFixed(decs); 
+                            }
+                        }
+                    } else { 
+                        aiNum.innerText = "---"; 
+                        if (!isCotaActive && !isFijo) cotaInp.value = "";
+                        if (!isVdActive && isFijo) inVd.value = ""; 
+                    }
+                }
+
+                // TENDENCIA UNIVERSAL PARA TODAS LAS COTAS VÁLIDAS
+                let currentCota = parseFloat(cotaInp.value);
+                if(!isNaN(currentCota) && !isNaN(prevCotaCalculada)) {
+                    if(currentCota > prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--success-color); font-size:1.2rem; font-weight:900;">▲</span>';
+                    else if(currentCota < prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--danger-color); font-size:1.2rem; font-weight:900;">▼</span>';
+                    else iconTrend.innerHTML = '<span style="color:gray; font-size:1.2rem; font-weight:900;">▶</span>';
+                } else { iconTrend.innerHTML = ''; }
+                
+                if(!isNaN(currentCota)) prevCotaCalculada = currentCota;
+
+                if (inVd.value !== "") {
+                    let valVdCheck = parseFloat(inVd.value);
+                    if (valVdCheck < 0) { inVd.style.color = "#9c27b0"; inVd.style.fontWeight = "900"; } 
+                    else if (valVdCheck >= limiteMira) { inVd.style.color = "var(--danger-color)"; inVd.style.fontWeight = "900"; } 
+                    else { inVd.style.color = "var(--text-color)"; inVd.style.fontWeight = "800"; }
+                } else { inVd.style.color = "var(--text-color)"; }
+            }
+
+            let cierreCaja = document.getElementById('cierreAviso');
+            cierreCaja.style.display = 'none';
+            let htmlCierres = "";
+            
+            for(let i = 1; i < trs.length; i++) {
+                let tr = trs[i];
+                let pto = tr.querySelector('.in-pto').value.toUpperCase().trim();
+                let cotaCalc = parseFloat(tr.querySelector('.in-cota').value);
+                let tieneVd = tr.querySelector('.in-vd').value !== "";
+                let esFijo = tr.querySelector('.in-cota').dataset.fijo === "true";
+                
+                if(pto !== "" && tieneVd && !isNaN(cotaCalc) && !esFijo) {
+                    let p = obtenerProyectoActivo();
+                    let bmRef = p.bms.find(b => b.nombre === pto);
+                    if(bmRef) {
+                        let errorCierre = cotaCalc - bmRef.cota;
+                        let claseColor = Math.abs(errorCierre) > 0.02 ? "error-alto" : "";
+                        htmlCierres += `<div class="cierre-aviso ${claseColor}" style="display:block;">🎯 <strong>CIERRE EN [${bmRef.nombre}]</strong><br>Error: ${errorCierre > 0 ? '+' : ''}${errorCierre.toFixed(decs)} m</div>`;
+                    }
+                }
+            }
+            if(htmlCierres !== "") {
+                cierreCaja.innerHTML = htmlCierres;
+                cierreCaja.style.display = 'block';
+            }
+            guardarEstadoTabla();
+        }
+
+        // --- ESTADÍSTICAS ---
         function toggleEstadisticas() {
             let panel = document.getElementById('panelEstadisticas');
             if(panel.style.display === "grid") panel.style.display = "none";
@@ -932,6 +1103,7 @@
             }
         }
 
+        // --- GESTIÓN DE FILAS ---
         function agregarFila(isAuto = false) {
             if(tablaBloqueada) return; 
             const tbody = document.getElementById('cuerpoTabla');
@@ -947,9 +1119,9 @@
                 <td><input type="text" inputmode="decimal" class="in-vd" placeholder="[-]" ${esPrimera ? 'disabled style="background:rgba(128,128,128,0.1)"' : ''} oninput="formatDecimal(this); procesarTabla()"></td>
                 <td class="celda-combinada">
                     <div class="btn-ai-label" onclick="toggleLockAI(this)">🔓 AI: <span class="val-ai-num">---</span></div>
-                    <div class="cota-container">
-                        <input type="text" inputmode="decimal" class="in-cota" placeholder="Cota..." readonly="true" oninput="formatDecimal(this); fijarCota(this)" onblur="asegurarReadonlyCota(this)" onclick="manejarCotaTap(this, event)">
-                        <span class="trend-icon"></span>
+                    <div class="cota-container" onclick="manejarCotaTap(this, event)">
+                        <input type="text" inputmode="decimal" class="in-cota" placeholder="Cota..." oninput="formatDecimal(this); procesarTabla()">
+                        <span class="trend-icon" onclick="medirDesnivelRapido(this)"></span>
                     </div>
                 </td>
             `;
@@ -974,133 +1146,6 @@
             });
         }
 
-        function fijarCota(input) { 
-            input.dataset.fijo = input.value !== "" ? "true" : "false"; 
-            if(input.dataset.fijo === "true") { input.classList.add('fijo'); input.setAttribute('readonly', 'true'); }
-            else { input.classList.remove('fijo'); } 
-            procesarTabla(); 
-        }
-
-        function procesarTabla() {
-            let decs = parseInt(globalConfig.decimales) || 3;
-            let limiteMira = parseFloat(globalConfig.alertaMira) || 5.000;
-            let trs = document.querySelectorAll('#cuerpoTabla tr');
-            let ai_actual = NaN;
-            let prevCotaCalculada = NaN;
-
-            for(let i = 0; i < trs.length; i++) {
-                let tr = trs[i];
-                let inPto = tr.querySelector('.in-pto');
-                let inVa = tr.querySelector('.in-va');
-                let inVd = tr.querySelector('.in-vd');
-                let cotaInp = tr.querySelector('.in-cota');
-                let cellAI = tr.querySelector('.btn-ai-label');
-                let aiNum = tr.querySelector('.val-ai-num');
-                let iconTrend = tr.querySelector('.trend-icon');
-
-                let va = parseFloat(inVa.value);
-                let vd = parseFloat(inVd.value);
-
-                // AGRUPACIÓN VISUAL
-                if(!isNaN(va)) {
-                    tr.style.borderTop = "3px solid var(--primary-color)";
-                    cellAI.classList.remove('ai-repetido');
-                } else {
-                    tr.style.borderTop = "1px solid var(--border-color)";
-                    cellAI.classList.add('ai-repetido');
-                }
-
-                if (i === 0) {
-                    let cotaVal = parseFloat(cotaInp.value);
-                    if (!isNaN(cotaVal) && !isNaN(va)) { ai_actual = cotaVal + va; aiNum.innerText = ai_actual.toFixed(decs); } 
-                    else { aiNum.innerText = "---"; ai_actual = NaN; }
-                } else {
-                    if (!isNaN(ai_actual)) {
-                        if (cotaInp.dataset.fijo === "true") {
-                            let cotaFija = parseFloat(cotaInp.value);
-                            vd = ai_actual - cotaFija; inVd.value = vd.toFixed(decs);
-                            if (!isNaN(va)) { ai_actual = cotaFija + va; aiNum.innerText = ai_actual.toFixed(decs); } 
-                            else { aiNum.innerText = ai_actual.toFixed(decs); }
-                        } else {
-                            if (!isNaN(vd)) {
-                                let cotaCalc = ai_actual - vd; cotaInp.value = cotaCalc.toFixed(decs);
-                                if (!isNaN(va)) { ai_actual = cotaCalc + va; aiNum.innerText = ai_actual.toFixed(decs); } 
-                                else { aiNum.innerText = ai_actual.toFixed(decs); }
-                            } else { cotaInp.value = ""; aiNum.innerText = ai_actual.toFixed(decs); }
-                        }
-                    } else { 
-                        aiNum.innerText = "---"; 
-                        if (cotaInp.dataset.fijo !== "true") cotaInp.value = "";
-                        if (cotaInp.dataset.fijo === "true") inVd.value = ""; 
-                    }
-                }
-
-                // --- MEJORA 7: FLECHAS CON COLOR EXPRESO ---
-                let currentCota = parseFloat(cotaInp.value);
-                if(!isNaN(currentCota) && !isNaN(prevCotaCalculada)) {
-                    if(currentCota > prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--success-color); font-size:1.2rem; font-weight:900;">▲</span>';
-                    else if(currentCota < prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--danger-color); font-size:1.2rem; font-weight:900;">▼</span>';
-                    else iconTrend.innerHTML = '<span style="color:gray; font-size:1.2rem; font-weight:900;">▶</span>';
-                } else { iconTrend.innerHTML = ''; }
-                
-                if(!isNaN(currentCota) && cotaInp.dataset.fijo !== "true") prevCotaCalculada = currentCota;
-
-                // MIRA INVERTIDA
-                if (inVd.value !== "") {
-                    let valVdCheck = parseFloat(inVd.value);
-                    if (valVdCheck < 0) { inVd.style.color = "#9c27b0"; inVd.style.fontWeight = "900"; } 
-                    else if (valVdCheck >= limiteMira) { inVd.style.color = "var(--danger-color)"; inVd.style.fontWeight = "900"; } 
-                    else { inVd.style.color = "var(--text-color)"; inVd.style.fontWeight = "800"; }
-                } else { inVd.style.color = "var(--text-color)"; }
-            }
-
-            // --- MEJORA 4: DETECCIÓN DE CIERRE ROBUSTA ---
-            let cierreCaja = document.getElementById('cierreAviso');
-            cierreCaja.style.display = 'none';
-            let htmlCierres = "";
-            
-            for(let i = 1; i < trs.length; i++) {
-                let tr = trs[i];
-                let pto = tr.querySelector('.in-pto').value.toUpperCase().trim();
-                let cotaCalc = parseFloat(tr.querySelector('.in-cota').value);
-                let tieneVd = tr.querySelector('.in-vd').value !== "";
-                let esFijo = tr.querySelector('.in-cota').dataset.fijo === "true";
-                
-                // Solo alerta de cierre si ingresaste una Vista Adelante y la cota es calculada (no fija)
-                if(pto !== "" && tieneVd && !isNaN(cotaCalc) && !esFijo) {
-                    let p = obtenerProyectoActivo();
-                    let bmRef = p.bms.find(b => b.nombre === pto);
-                    if(bmRef) {
-                        let errorCierre = cotaCalc - bmRef.cota;
-                        let claseColor = Math.abs(errorCierre) > 0.02 ? "error-alto" : "";
-                        htmlCierres += `<div class="cierre-aviso ${claseColor}" style="display:block;">🎯 <strong>CIERRE EN [${bmRef.nombre}]</strong><br>Error: ${errorCierre > 0 ? '+' : ''}${errorCierre.toFixed(decs)} m</div>`;
-                    }
-                }
-            }
-            if(htmlCierres !== "") {
-                cierreCaja.innerHTML = htmlCierres;
-                cierreCaja.style.display = 'block';
-            }
-            guardarEstadoTabla();
-        }
-
-        function guardarEstadoTabla() {
-            let p = obtenerProyectoActivo(); if(!p) return;
-            let filas = [];
-            document.querySelectorAll('#cuerpoTabla tr').forEach((tr, i) => {
-                filas.push({
-                    pto: tr.querySelector('.in-pto').value,
-                    bmAsignado: tr.querySelector('.in-pto').dataset.bmAsignado || "",
-                    va: tr.querySelector('.in-va').value,
-                    vd: tr.querySelector('.in-vd').value,
-                    cota: tr.querySelector('.in-cota').value,
-                    fijo: tr.querySelector('.in-cota').dataset.fijo || (i===0 ? "true" : "false"),
-                    locked: tr.dataset.locked || "false"
-                });
-            });
-            p.tabla = filas; guardarBD();
-        }
-
         function cargarTablaDesdeBD(filas) {
             const tbody = document.getElementById('cuerpoTabla'); tbody.innerHTML = ""; 
             if (!filas || filas.length === 0) {
@@ -1122,9 +1167,9 @@
                     <td><input type="text" inputmode="decimal" class="in-vd" placeholder="[-]" value="${f.vd}" ${i===0 ? 'disabled style="background:rgba(128,128,128,0.1)"' : ''} oninput="formatDecimal(this); procesarTabla()"></td>
                     <td class="celda-combinada">
                         <div class="btn-ai-label" onclick="toggleLockAI(this)">${lockIcon} AI: <span class="val-ai-num">---</span></div>
-                        <div class="cota-container">
-                            <input type="text" inputmode="decimal" class="in-cota ${f.fijo === "true" ? 'fijo' : ''}" placeholder="Cota..." value="${f.cota}" data-fijo="${f.fijo}" readonly="true" oninput="formatDecimal(this); fijarCota(this)" onblur="asegurarReadonlyCota(this)" onclick="manejarCotaTap(this, event)">
-                            <span class="trend-icon"></span>
+                        <div class="cota-container" onclick="manejarCotaTap(this, event)">
+                            <input type="text" inputmode="decimal" class="in-cota ${f.fijo === "true" ? 'fijo' : ''}" placeholder="Cota..." value="${f.cota}" data-fijo="${f.fijo}" oninput="formatDecimal(this); procesarTabla()">
+                            <span class="trend-icon" onclick="medirDesnivelRapido(this)"></span>
                         </div>
                     </td>
                 `;
