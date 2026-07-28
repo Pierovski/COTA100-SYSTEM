@@ -161,11 +161,12 @@
         
         .cota-container { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; height: 100%; }
         
+        /* Cota ahora bloquea los eventos por defecto para manejar el doble toque inteligentemente */
         .in-cota { border: 1px solid var(--border-color); border-radius: 4px; height: 35px; font-size: 1rem; flex: 1; transition: box-shadow 0.2s; pointer-events: none;}
         .in-cota.editable-activa { pointer-events: auto !important; background-color: rgba(255, 85, 0, 0.05); }
         .in-cota.fijo { background: rgba(25, 118, 210, 0.05); border-color: #1976d2; color: #1976d2; pointer-events: none; }
         
-        .trend-icon { width: 15px; text-align: center; display: inline-block; font-size: 1.2rem; font-weight: 900; cursor: pointer;}
+        .trend-icon { width: 15px; text-align: center; display: inline-block; font-size: 1.2rem; font-weight: 900; cursor: pointer; user-select: none;}
         .trend-icon:active { transform: scale(1.2); }
         .btn-pin { position: absolute; right: 2px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 1.2rem; opacity: 0.7; z-index: 3;}
         .btn-pin:active { opacity: 1; transform: translateY(-50%) scale(1.1); }
@@ -358,8 +359,8 @@
                     <tr>
                         <th style="width: 25%;">PTO</th>
                         <th style="width: 21%;">V.AT(+) <span class="th-info" onclick="showCustomAlert('<strong>VISTA ATRÁS:</strong><br>Lectura de la mira sobre un punto de cota conocida (BM) o punto de cambio para establecer la Altura de Instrumento.', 'VISTA ATRÁS')">i</span></th>
-                        <th style="width: 21%;">V.AD(-) <span class="th-info" onclick="showCustomAlert('<strong>VISTA ADELANTE:</strong><br>Lectura de radiación sobre el terreno para calcular su elevación. Si se digita, calcula la cota.', 'VISTA ADELANTE')">i</span></th>
-                        <th style="width: 33%;">AI / COTA <span class="th-info" onclick="showCustomAlert('<strong>COTA DEL TERRENO:</strong><br>Elevación final del punto. Si se digita manualmente, calcula la V.AD requerida para replanteo.', 'COTA')">i</span></th>
+                        <th style="width: 21%;">V.AD(-) <span class="th-info" onclick="showCustomAlert('<strong>VISTA ADELANTE:</strong><br>Lectura de radiación sobre el terreno para calcular su elevación. Si se digita una COTA manual, aquí te dirá qué lectura de mira necesitas leer.', 'VISTA ADELANTE')">i</span></th>
+                        <th style="width: 33%;">AI / COTA <span class="th-info" onclick="showCustomAlert('<strong>COTA DEL TERRENO:</strong><br>Elevación final. Haz <strong>DOBLE TOQUE</strong> rápido aquí para escribir una cota a mano (teclado).', 'COTA (DOBLE TOQUE)')">i</span></th>
                     </tr>
                 </thead>
                 <tbody id="cuerpoTabla"></tbody>
@@ -423,6 +424,7 @@
         let wakeLock = null;
         let editandoBMIndex = -1;
 
+        // Recupera la función de guardado interno vital
         function guardarEstadoTabla() {
             let p = obtenerProyectoActivo(); 
             if(!p) return;
@@ -474,15 +476,15 @@
             let html = `
                 <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
                     <span style="font-size:1.2rem; margin-right:10px;">📍</span> 
-                    <div><strong style="color:var(--primary-color);">Vincular BM:</strong> Asigna una cota oficial de la Base de Datos a la celda (Fija la Cota).</div>
+                    <div><strong style="color:var(--primary-color);">Vincular BM:</strong> Toca para inyectar un BM de la Base de Datos a la libreta (Cota Fija).</div>
                 </div>
                 <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
                     <span style="font-size:1.2rem; margin-right:10px;">🔓</span> 
-                    <div><strong style="color:var(--primary-color);">Candado AI:</strong> Congela la Altura de Instrumento para calcular cambios de estación.</div>
+                    <div><strong style="color:var(--primary-color);">Candado AI:</strong> Toca para congelar la Altura de Instrumento para calcular cambios de estación.</div>
                 </div>
                 <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
                     <span style="font-size:1.2rem; margin-right:10px;">▲▼</span> 
-                    <div><strong style="color:var(--primary-color);">Tendencia:</strong> Indica si el terreno sube (▲), baja (▼) o es plano (▶) respecto al punto de la fila anterior.</div>
+                    <div><strong style="color:var(--primary-color);">Tendencia:</strong> Indica si el terreno sube (▲), baja (▼) o es plano (▶) respecto al punto anterior.</div>
                 </div>
                 <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
                     <span style="font-size:1.2rem; margin-right:10px;">▶</span> 
@@ -899,7 +901,7 @@
             guardarEstadoTabla();
         }
 
-        /* --- CORRECCIÓN: LIBERACIÓN DEL TECLADO Y EVENTOS TÁCTILES --- */
+        /* --- TECLADO LIBRE PARA LA COTA Y EVENTOS TÁCTILES --- */
         let cotaSel1 = null;
         let lastTap = 0;
 
@@ -912,9 +914,11 @@
             let tapLength = currentTime - lastTap;
             
             if (tapLength < 400 && tapLength > 0) {
+                // DOBLE TOQUE: Habilita input y llama al teclado
                 input.classList.add('editable-activa');
                 input.focus();
                 
+                // Cierra la edición al perder el foco (Ej: apretando el check del teclado)
                 input.onblur = function() {
                     this.classList.remove('editable-activa');
                     procesarTabla();
@@ -929,6 +933,7 @@
             lastTap = currentTime;
         }
 
+        // Flecha: Medición rápida de desniveles
         function medirDesnivelRapido(spanIcon) {
             if(tablaBloqueada) return;
             let divContainer = spanIcon.closest('.cota-container');
@@ -971,6 +976,12 @@
 
                 let va = parseFloat(inVa.value);
                 let vd = parseFloat(inVd.value);
+                
+                // Si la cota fue ingresada manualmente, la marcamos como fija temporalmente para este cálculo
+                let cotaValida = parseFloat(cotaInp.value);
+                if (!isNaN(cotaValida) && !inPto.dataset.bmAsignado && document.activeElement === cotaInp) {
+                    cotaInp.dataset.fijo = "true";
+                }
                 let isFijo = (cotaInp.dataset.fijo === "true");
 
                 if(!isNaN(va)) {
@@ -987,8 +998,18 @@
 
                 if (i === 0) {
                     let cotaVal = parseFloat(cotaInp.value);
-                    if (!isNaN(cotaVal) && !isNaN(va)) { ai_actual = cotaVal + va; aiNum.innerText = ai_actual.toFixed(decs); } 
-                    else { aiNum.innerText = "---"; ai_actual = NaN; }
+                    cotaInp.dataset.fijo = !isNaN(cotaVal) ? "true" : "false";
+                    if(cotaInp.dataset.fijo === "true") cotaInp.classList.add('fijo');
+                    else cotaInp.classList.remove('fijo');
+
+                    if (!isNaN(cotaVal) && !isNaN(va)) { 
+                        ai_actual = cotaVal + va; 
+                        aiNum.innerText = ai_actual.toFixed(decs); 
+                    } 
+                    else { 
+                        aiNum.innerText = "---"; 
+                        ai_actual = NaN; 
+                    }
                 } else {
                     if (!isNaN(ai_actual)) {
                         // BIDIERECCIONALIDAD
@@ -1029,13 +1050,18 @@
 
                 // TENDENCIA UNIVERSAL PARA TODAS LAS COTAS VÁLIDAS
                 let currentCota = parseFloat(cotaInp.value);
-                if(!isNaN(currentCota) && !isNaN(prevCotaCalculada)) {
-                    if(currentCota > prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--success-color); font-size:1.2rem; font-weight:900;">▲</span>';
-                    else if(currentCota < prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--danger-color); font-size:1.2rem; font-weight:900;">▼</span>';
-                    else iconTrend.innerHTML = '<span style="color:gray; font-size:1.2rem; font-weight:900;">▶</span>';
-                } else { iconTrend.innerHTML = ''; }
-                
-                if(!isNaN(currentCota)) prevCotaCalculada = currentCota;
+                if(!isNaN(currentCota)) {
+                    if(!isNaN(prevCotaCalculada)) {
+                        if(currentCota > prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--success-color); font-size:1.2rem; font-weight:900;">▲</span>';
+                        else if(currentCota < prevCotaCalculada) iconTrend.innerHTML = '<span style="color:var(--danger-color); font-size:1.2rem; font-weight:900;">▼</span>';
+                        else iconTrend.innerHTML = '<span style="color:gray; font-size:1.2rem; font-weight:900;">▶</span>';
+                    } else {
+                        iconTrend.innerHTML = '<span style="color:gray; font-size:1.2rem; font-weight:900;">●</span>';
+                    }
+                    prevCotaCalculada = currentCota;
+                } else { 
+                    iconTrend.innerHTML = ''; 
+                }
 
                 if (inVd.value !== "") {
                     let valVdCheck = parseFloat(inVd.value);
