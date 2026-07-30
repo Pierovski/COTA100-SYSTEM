@@ -99,7 +99,7 @@
         .input-group { display: flex; flex-direction: column; }
         .full-width { grid-column: 1 / -1; }
 
-        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8;}
+        label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8; display: flex; align-items: center; justify-content: space-between;}
         
         input { width: 100%; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center; padding: 12px;}
         input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
@@ -109,6 +109,12 @@
         
         .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
+
+        /* ICONO INFO Y TOOLTIPS */
+        .info-icon { background: rgba(128,128,128,0.1); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-left: 5px; color: var(--primary-color);}
+        .info-icon:active { transform: scale(0.9); background: var(--primary-color); color: #fff;}
+        .th-info { display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); border-radius: 50%; width: 14px; height: 14px; font-size: 0.6rem; margin-left: 4px; cursor: pointer; transition:0.2s; }
+        .th-info:active { transform: scale(0.8); background: #fff; color: var(--primary-color); }
 
         /* LISTA BM DRAG AND DROP OPTIMIZADO */
         .bm-list { margin-top: 8px; max-height: 220px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; padding-bottom: 5px;}
@@ -244,6 +250,7 @@
     </div>
 
     <script>
+        // Verificación de Tema Oscuro temprana
         try {
             let conf = JSON.parse(localStorage.getItem('cota100_ajustes'));
             if (conf && conf.darkMode) document.body.classList.add('dark-mode');
@@ -263,11 +270,13 @@
         </div>
     </div>
 
+    <!-- MODAL ALERTA DE INFORMACIÓN CON TÍTULO DINÁMICO -->
     <div class="overlay-select" id="customAlertOverlay"></div>
     <div class="modal-select" id="customAlertModal">
-        <div class="confirm-msg" id="customAlertMsg">Información</div>
+        <h3 id="customAlertTitle" style="color:var(--primary-color); font-weight:900; text-transform:uppercase; margin-bottom:10px; font-size: 1.1rem;">ℹ️ INFORMACIÓN</h3>
+        <div class="confirm-msg" id="customAlertMsg" style="font-size:0.95rem; font-weight:600; text-align:left; color:var(--text-color); margin-bottom:15px;">Texto</div>
         <div class="confirm-btns">
-            <button class="confirm-btn" style="background:var(--primary-color); color:#fff; width:100%;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+            <button class="confirm-btn" style="background:var(--table-header); color:#fff; width:100%;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
         </div>
     </div>
 
@@ -310,7 +319,17 @@
             </a>
         </div>
         <h2 class="top-bar-title">POLIGONAL ABIERTA <span>Doble Niv. Simultánea</span></h2>
-        <div class="top-bar-spacer"></div>
+        
+        <!-- ICONO DE GUÍA SUTIL -->
+        <div style="width: 90px; display: flex; justify-content: flex-end;">
+            <button class="btn-volver-mini" onclick="mostrarLeyenda()" title="Guía de Funciones" style="width: 45px; height: 45px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4"></path>
+                    <path d="M12 8h.01"></path>
+                </svg>
+            </button>
+        </div>
     </div>
 
     <div class="modulo-container">
@@ -336,11 +355,17 @@
                     <label style="color: var(--text-color); font-size: 0.85rem; margin-bottom: 8px; display: block;">⚙️ Parámetros del Circuito</label>
                     <div class="form-grid">
                         <div class="input-group">
-                            <label>Cota Inicial (BM)</label>
+                            <label>
+                                Cota Inicial (BM)
+                                <span class="info-icon" onclick="showCustomAlert('Cota oficial de partida para todo el circuito.', 'COTA INICIAL')">ℹ️</span>
+                            </label>
                             <input type="text" id="cotaBM" inputmode="decimal" placeholder="Ej: 100.000" oninput="formatDecimal(this); guardarBD(); procesarDobleLiga();">
                         </div>
                         <div class="input-group">
-                            <label>Orden Niv.</label>
+                            <label>
+                                Orden Niv.
+                                <span class="info-icon" onclick="showCustomAlert('Fórmula de tolerancia permisible. A menor orden, mayor exigencia de precisión en el cierre.', 'ORDEN DE NIVELACIÓN')">ℹ️</span>
+                            </label>
                             <div class="custom-select" onclick="abrirModalSelect('orden')">
                                 <span id="txtSelectOrden">Orden IV (20mm √K)</span>
                                 <span class="arrow">▼</span>
@@ -349,15 +374,24 @@
                     </div>
                     <div class="form-grid" style="margin-top: 5px; margin-bottom: 5px;">
                         <div class="input-group">
-                            <label>Dist. Total (m)</label>
+                            <label>
+                                Dist. Total (m)
+                                <span class="info-icon" onclick="showCustomAlert('Distancia total nivelada (Ida + Vuelta) en metros. Crucial para calcular el error máximo tolerable.', 'DISTANCIA TOTAL')">ℹ️</span>
+                            </label>
                             <input type="text" id="distanciaM" inputmode="decimal" placeholder="Ej: 1500" oninput="formatDecimal(this); guardarBD(); procesarDobleLiga();">
                         </div>
                         <div class="input-group">
-                            <label>Tol. Armada (mm)</label>
+                            <label>
+                                Tol. Armada (mm)
+                                <span class="info-icon" onclick="showCustomAlert('Máxima diferencia en milímetros permitida entre la lectura de Ida y Vuelta en un mismo punto de cambio.', 'TOLERANCIA POR ARMADA')">ℹ️</span>
+                            </label>
                             <input type="text" id="tolTramo" inputmode="decimal" value="2" placeholder="Ej: 2" oninput="formatDecimal(this); guardarBD(); procesarDobleLiga();">
                         </div>
                         <div class="input-group full-width">
-                            <label style="color:var(--primary-color);">Cota Llegada (BM Cierre Opcional)</label>
+                            <label style="color:var(--primary-color);">
+                                Cota Llegada (Opcional)
+                                <span class="info-icon" onclick="showCustomAlert('Si nivelas hacia un BM distinto al de partida (Poligonal Abierta), ingresa su cota aquí para verificar el cierre final contra él.', 'COTA DE LLEGADA')">ℹ️</span>
+                            </label>
                             <input type="text" id="cotaLlegada" inputmode="decimal" placeholder="Opcional. Ej: 105.000" oninput="formatDecimal(this); guardarBD(); procesarDobleLiga();">
                         </div>
                     </div>
@@ -395,7 +429,15 @@
                 <div class="cabecera-ida">➡️ NIVELACIÓN (IDA)</div>
                 <div class="table-container tabla-ida">
                     <table id="tablaIda">
-                        <thead><tr><th style="width: 22%;">PTO</th><th style="width: 18%;">V.AT(+)</th><th style="width: 18%;">V.AD(-)</th><th style="width: 32%;">COTA & ESTADO</th><th style="width: 10%;">🗑️</th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th style="width: 22%;">PTO</th>
+                                <th style="width: 18%;">V.AT(+) <span class="th-info" onclick="showCustomAlert('Lectura de la mira sobre el punto conocido.', 'VISTA ATRÁS (IDA)')">i</span></th>
+                                <th style="width: 18%;">V.AD(-) <span class="th-info" onclick="showCustomAlert('Lectura de la mira sobre el punto de cambio a conocer.', 'VISTA ADELANTE (IDA)')">i</span></th>
+                                <th style="width: 32%;">COTA & ESTADO</th>
+                                <th style="width: 10%;">🗑️</th>
+                            </tr>
+                        </thead>
                         <tbody id="cuerpoIda"></tbody>
                     </table>
                 </div>
@@ -404,7 +446,15 @@
                 <div class="cabecera-vuelta">⬅️ NIVELACIÓN (VUELTA)</div>
                 <div class="table-container tabla-vuelta">
                     <table id="tablaVuelta">
-                        <thead><tr><th style="width: 22%;">PTO</th><th style="width: 18%;">V.AT(+)</th><th style="width: 18%;">V.AD(-)</th><th style="width: 32%;">COTA & ESTADO</th><th style="width: 10%;">🗑️</th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th style="width: 22%;">PTO</th>
+                                <th style="width: 18%;">V.AT(+) <span class="th-info" onclick="showCustomAlert('Lectura de la mira regresando desde el último punto.', 'VISTA ATRÁS (VUELTA)')">i</span></th>
+                                <th style="width: 18%;">V.AD(-) <span class="th-info" onclick="showCustomAlert('Lectura de cierre sobre el punto anterior.', 'VISTA ADELANTE (VUELTA)')">i</span></th>
+                                <th style="width: 32%;">COTA & ESTADO</th>
+                                <th style="width: 10%;">🗑️</th>
+                            </tr>
+                        </thead>
                         <tbody id="cuerpoVuelta"></tbody>
                     </table>
                 </div>
@@ -493,14 +543,39 @@
         let confirmCancelCallback = null;
         let promptOkCallback = null;
 
-        function showCustomAlert(message) {
+        function showCustomAlert(message, title = "INFORMACIÓN") {
+            let titleEl = document.getElementById('customAlertTitle');
+            if(titleEl) titleEl.innerHTML = `ℹ️ ${title}`;
             document.getElementById('customAlertMsg').innerHTML = message;
             document.getElementById('customAlertOverlay').style.display = 'block';
             setTimeout(() => { document.getElementById('customAlertOverlay').classList.add('activo'); document.getElementById('customAlertModal').classList.add('abierto'); }, 10);
         }
+
         function cerrarCustomAlert() {
             document.getElementById('customAlertOverlay').classList.remove('activo'); document.getElementById('customAlertModal').classList.remove('abierto');
             setTimeout(() => { document.getElementById('customAlertOverlay').style.display = 'none'; }, 300);
+        }
+
+        function mostrarLeyenda() {
+            let html = `
+                <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="font-size:1.2rem; margin-right:10px;">🔄</span> 
+                    <div><strong style="color:var(--primary-color);">Sincronización:</strong> Los puntos de cambio ingresados en la tabla de IDA se copian y espejean automáticamente en la tabla de VUELTA.</div>
+                </div>
+                <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="font-size:1.2rem; margin-right:10px;">⚠️</span> 
+                    <div><strong style="color:var(--primary-color);">HUD en Vivo:</strong> En la tabla de VUELTA aparecerá una etiqueta indicando el error milimétrico por armada. Si se pone rojo, excediste tu tolerancia.</div>
+                </div>
+                <div style="display:flex; align-items:flex-start; margin-bottom:12px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                    <span style="font-size:1.2rem; margin-right:10px;">📍</span> 
+                    <div><strong style="color:var(--primary-color);">Vincular BM:</strong> Toca el ícono de la chincheta para inyectar una cota guardada en tu Base de Datos directamente en la fila.</div>
+                </div>
+                <div style="display:flex; align-items:flex-start;">
+                    <span style="font-size:1.2rem; margin-right:10px;">📊</span> 
+                    <div><strong style="color:var(--primary-color);">Compensación:</strong> Al terminar, si el circuito cumple la tolerancia, el sistema habilitará un botón para recalcular y distribuir el error de cierre.</div>
+                </div>
+            `;
+            showCustomAlert(html, "GUÍA DE FUNCIONES");
         }
 
         function showCustomConfirm(message, onOk, onCancel = null, okText = "ACEPTAR", cancelText = "CANCELAR") {
@@ -874,7 +949,7 @@
                         }
                     }
                     editandoBMIndex = -1; let btn = document.getElementById('btnGuardarBM'); btn.innerText = "Guardar BM en Proyecto"; btn.style.background = "var(--table-header)";
-                    finalizarGuardado();
+                    guardarBD(); finalizarGuardado();
                 });
             } else {
                 if(p.bms.some(bm => bm.nombre === name)) return showToast("Ya existe un BM con ese nombre.", "warning");
