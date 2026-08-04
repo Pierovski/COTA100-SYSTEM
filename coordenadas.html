@@ -19,6 +19,7 @@
             --error-color: #d32f2f; 
             --danger-color: #d32f2f; 
             --success-color: #2e7d32;
+            --table-header: #1a1e23;
         }
 
         body.dark-mode {
@@ -28,6 +29,7 @@
             --card-bg: rgba(18, 22, 28, 0.85);
             --card-border: rgba(255, 85, 0, 0.25);
             --input-bg: rgba(45,45,45,0.9);
+            --table-header: #000000;
         }
 
         body.dark-mode .info-box { background-color: rgba(255, 85, 0, 0.05) !important; color: #e0e0e0 !important; border-left-color: var(--primary-color) !important;}
@@ -52,14 +54,13 @@
         .fire-wave.delay { bottom: -15px; opacity: 0.6; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 7s linear infinite reverse; }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
-        /* CABECERA DUAL */
+        /* CABECERA DUAL UNIFICADA */
         .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid var(--card-border); background-color: transparent; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px; }
         .nav-buttons-left { display: flex; gap: 8px; }
         .btn-volver-mini { background: transparent; border: none; color: var(--primary-color); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 0 5px var(--primary-glow)); }
         .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
-        .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.4rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1; letter-spacing: -0.5px;}
+        .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1; letter-spacing: -0.5px;}
         .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.75rem; letter-spacing: 2px;}
-        .spacer { width: 90px; }
 
         .modulo-container { padding: 25px 15px; max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -80,7 +81,6 @@
         /* UI COMPONENTES */
         .seccion-modulo { border: 1px solid var(--card-border); border-radius: 12px; padding: 18px; margin-bottom: 15px; background-color: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
         
-        /* ACORDEÓN PARÁMETROS */
         .panel-plegable-btn { display: flex; justify-content: space-between; align-items: center; width: 100%; background: rgba(128,128,128,0.05); border: 1px dashed var(--card-border); padding: 12px 15px; border-radius: 8px; color: var(--primary-color); font-weight: 800; font-size: 0.95rem; text-transform: uppercase; cursor: pointer; transition: 0.2s; margin-bottom: 15px;}
         .panel-plegable-btn:active { background: rgba(255,85,0,0.1); }
         .panel-plegable-contenido { display: none; margin-bottom: 15px; padding-top: 5px;}
@@ -94,7 +94,7 @@
         .input-group { display: flex; flex-direction: column; }
         .full-width { grid-column: 1 / -1; }
         
-        label { margin-bottom: 5px; font-weight: 800; color: var(--text-color); opacity: 0.8; font-size: 0.8rem; text-transform: uppercase; }
+        label { margin-bottom: 5px; font-weight: 800; color: var(--text-color); opacity: 0.8; font-size: 0.8rem; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between; }
         input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-color); border-radius: 8px; transition: 0.2s; text-align: center;}
         input[type="text"] { text-align: left; }
         input:focus { border-color: var(--primary-color); outline: none; background: transparent; }
@@ -104,6 +104,10 @@
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
         
+        /* ICONOS DE INFORMACIÓN */
+        .info-icon { background: rgba(128,128,128,0.1); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-left: 5px; color: var(--primary-color);}
+        .info-icon:active { transform: scale(0.9); background: var(--primary-color); color: #fff;}
+
         .helper-text { font-size: 0.8rem; color: var(--text-color); opacity: 0.7; margin-top: 4px; line-height: 1.4; text-align: center; font-weight: 600;}
         .error-text { color: var(--error-color); font-size: 0.8rem; font-weight: 800; margin-top: 5px; display: none; text-align: center; }
         .ayuda-zona-txt { color: var(--primary-color); font-size: 0.75rem; font-weight: 800; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -123,12 +127,11 @@
         .btn-limpiar { background-color: transparent; color: var(--error-color); border: 2px solid var(--error-color); }
         .btn-map { grid-column: 1 / -1; background-color: rgba(46,125,50,0.1); color: var(--success-color); border: 1px solid var(--success-color); }
 
-        .info-box { background-color: rgba(255, 85, 0, 0.05); border-left: 5px solid var(--primary-color); padding: 15px; font-size: 0.85rem; color: var(--text-color); line-height: 1.4; border-radius: 0 8px 8px 0; font-weight: 600; margin-bottom: 15px;}
         .drop-zone { border: 2px dashed var(--primary-color); border-radius: 12px; padding: 35px 20px; text-align: center; background-color: rgba(255,85,0,0.02); margin-bottom: 15px; color: var(--primary-color); font-weight: 800; text-transform: uppercase; cursor: pointer;}
         .alerta-critica { background-color: rgba(211, 47, 47, 0.05); border-left: 5px solid var(--error-color); padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
         .alerta-critica h4 { color: var(--error-color); margin-bottom: 6px; font-size: 0.95rem; text-transform: uppercase; font-weight: 900;}
 
-        /* MODALES */
+        /* MODALES Y TOAST */
         .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
         .overlay-select.activo { opacity: 1; }
         .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
@@ -136,11 +139,22 @@
         .btn-opcion { width: 100%; padding: 16px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s;}
         .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
 
+        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3; text-align: center;}
+        
+        #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; width: 90%; max-width: 350px;}
+        .toast { background: var(--card-bg); color: var(--text-color); padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 700; font-size: 0.95rem; border-left: 5px solid var(--primary-color); animation: slideUpToast 0.3s ease-out forwards; backdrop-filter: blur(10px); text-align: center;}
+        .toast.error { border-left-color: var(--danger-color); }
+        .toast.success { border-left-color: #2e7d32; }
+        .toast.warning { border-left-color: #fbc02d; }
+        .toast.fade-out { animation: fadeOutToast 0.3s ease-in forwards; }
+        @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
+
         @media screen and (max-width: 480px) {
             html { font-size: 13px; }
             .top-bar { padding: 10px 15px; height: 65px;}
             .btn-volver-mini { width: 40px; height: 40px;}
-            .spacer { width: 90px; } 
+            .spacer { width: 45px; } 
             .tech-list-card { padding: 18px 15px; border-radius: 12px;}
             .icon-box { width: 42px; height: 42px; margin-right: 15px; }
             .icon-box svg { width: 32px; height: 32px; }
@@ -156,7 +170,10 @@
         try { let conf = JSON.parse(localStorage.getItem('cota100_ajustes')); if (conf && conf.darkMode) document.body.classList.add('dark-mode'); } catch(e) {}
     </script>
 
-    <!-- MODAL DE SELECCIÓN -->
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container"></div>
+
+    <!-- MODAL DE SELECCIÓN GENÉRICO -->
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -166,33 +183,43 @@
         <div id="modalSelectContent" style="max-height:350px; overflow-y:auto; margin-bottom:5px;"></div>
     </div>
 
+    <!-- MODAL ALERTA DE INFORMACIÓN DINÁMICO MEJORADO -->
+    <div class="overlay-select" id="customAlertOverlay"></div>
+    <div class="modal-select" id="customAlertModal">
+        <h3 id="customAlertTitle" style="color:var(--primary-color); font-weight:900; text-transform:uppercase; margin-bottom:10px; font-size: 1.1rem;">ℹ️ INFORMACIÓN</h3>
+        <div class="confirm-msg" id="customAlertMsg" style="font-size:0.95rem; font-weight:600; text-align:left; color:var(--text-color); margin-bottom:15px;">Texto</div>
+        <div style="display: flex; justify-content: center;">
+            <button class="btn-accion" style="background:var(--table-header); color:#fff; width:auto; min-width: 150px; padding:12px 30px; border-radius:30px; margin:0; box-shadow:0 4px 10px rgba(0,0,0,0.15);" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+        </div>
+    </div>
+
     <!-- MENÚ PRINCIPAL -->
     <div id="menu-coordenadas" class="pantalla activa">
         <div class="top-bar">
             <a href="index.html" class="btn-volver-mini">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             </a>
-            <h2 class="top-bar-title">COORDENADAS <span>Módulos Topográficos</span></h2>
+            <h2 class="top-bar-title">COORDENADAS<br><span>Módulos Topográficos</span></h2>
             <div class="spacer"></div>
         </div>
 
         <div class="modulo-container">
-            <a href="#" onclick="cambiarPantalla('calc-datum'); return false;" class="tech-list-card card-animar">
+            <a href="#" onclick="cambiarPantalla('calc-datum', 'DATUM Y KML'); return false;" class="tech-list-card card-animar">
                 <div class="icon-box"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
                 <div class="text-box"><h3>Datum y KML</h3><p>PSAD56 ⇄ WGS84 y Exportación directa a Google Earth.</p></div>
             </a>
 
-            <a href="#" onclick="cambiarPantalla('calc-proyecciones'); return false;" class="tech-list-card card-animar">
+            <a href="#" onclick="cambiarPantalla('calc-proyecciones', 'PROYECCIONES PTL'); return false;" class="tech-list-card card-animar">
                 <div class="icon-box"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg></div>
                 <div class="text-box"><h3>Proyecciones (PTL)</h3><p>UTM a Geográficas y Cálculo de Factor Combinado (Topo 1:1).</p></div>
             </a>
 
-            <a href="#" onclick="cambiarPantalla('calc-csv'); return false;" class="tech-list-card card-animar">
+            <a href="#" onclick="cambiarPantalla('calc-csv', 'GESTOR MASIVO CSV'); return false;" class="tech-list-card card-animar">
                 <div class="icon-box"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
                 <div class="text-box"><h3>Gestor Masivo CSV</h3><p>Ajuste de Cota Z, Filtro por Descripción y Limpieza de PNEZD.</p></div>
             </a>
 
-            <a href="#" onclick="cambiarPantalla('calc-geoidal'); return false;" class="tech-list-card card-animar">
+            <a href="#" onclick="cambiarPantalla('calc-geoidal', 'COTAS Y GEOIDAL'); return false;" class="tech-list-card card-animar">
                 <div class="icon-box"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
                 <div class="text-box"><h3>Cotas y Geoidal</h3><p>Corrección GPS con modelo EGM2008 / EGM96 local.</p></div>
             </a>
@@ -203,30 +230,40 @@
     <div id="calc-datum" class="pantalla">
         <div class="top-bar">
             <div class="nav-buttons-left">
-                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
+                <a href="index.html" class="btn-volver-mini">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </a>
             </div>
-            <h2 class="top-bar-title">Datum & <span>Google Earth</span></h2>
-            <div style="width: 45px;"></div>
+            <h2 class="top-bar-title">Datum & KML<br><span>Transformaciones</span></h2>
+            <div style="width: 90px; display: flex; justify-content: flex-end;">
+                <button class="btn-volver-mini" onclick="mostrarLeyendaDatum()" title="Guía de Funciones">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                </button>
+            </div>
         </div>
         
         <div class="modulo-container">
-            <button class="panel-plegable-btn" onclick="toggleAcordeon('infoDatum')" style="background: rgba(25, 118, 210, 0.05); color: #1976d2; border-color: #1976d2;">ℹ️ GUÍA DEL MÓDULO <span>▼</span></button>
-            <div id="infoDatum" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px; border-color: #1976d2;">
-                <p style="font-size: 0.85rem; color: var(--text-color); line-height: 1.4; margin:0;"><strong>¿Para qué sirve?</strong><br>Transforma coordenadas entre el antiguo sistema PSAD56 (planos mineros/Cofopri) y el actual WGS84.<br><br><strong>¿Cómo funciona?</strong><br>Aplica la fórmula de Molodensky de 3 parámetros. El método "Nacional" tiene un error de ±3 a 5m. Para precisión centimétrica, usa parámetros "Locales" calculados en tu zona.</p>
-            </div>
-
             <div class="tabs"><button class="tab-btn activa" onclick="cambiarTab('datum', 'manual')" id="btnTabManual_datum">Punto a Punto</button><button class="tab-btn" onclick="cambiarTab('datum', 'masivo')" id="btnTabMasivo_datum">Masivo CSV</button></div>
 
             <button class="panel-plegable-btn" onclick="toggleAcordeon('paramDatum')">⚙️ Parámetros de Transformación <span>▼</span></button>
             <div id="paramDatum" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px;">
                 <div class="form-grid">
                     <div class="input-group full-width">
-                        <label>Dirección</label>
+                        <label>
+                            Dirección
+                            <span class="info-icon" onclick="showCustomAlert('Si eliges <strong>PSAD56 a WGS84</strong>, el sistema sumará el desplazamiento de datum. Si eliges al revés, lo restará.', 'DIRECCIÓN DE DATUM')">ℹ️</span>
+                        </label>
                         <div class="custom-select" onclick="abrirModalSelect('direccionTransf')"><span id="txt_direccionTransf">PSAD56 ➔ WGS84</span><span class="arrow">▼</span></div>
                         <input type="hidden" id="direccionTransf" value="psad_to_wgs">
                     </div>
                     <div class="input-group full-width">
-                        <label>Parámetros</label>
+                        <label>
+                            Parámetros
+                            <span class="info-icon" onclick="showCustomAlert('<strong>Nacionales:</strong> Usa el promedio oficial de Perú del IGN (Error ±3 a 5m).<br><strong>Locales:</strong> Usa parámetros calculados matemáticamente en un trabajo geodésico de tu zona para mayor precisión.', 'TIPO DE PARÁMETROS')">ℹ️</span>
+                        </label>
                         <div class="custom-select" onclick="abrirModalSelect('tipoParametros')"><span id="txt_tipoParametros">Nacionales (Promedio Perú)</span><span class="arrow">▼</span></div>
                         <input type="hidden" id="tipoParametros" value="nacional">
                     </div>
@@ -238,7 +275,10 @@
                 </div>
                 <div class="form-grid" style="margin-top: 15px;">
                     <div class="input-group full-width">
-                        <label>Zona UTM</label>
+                        <label>
+                            Zona UTM
+                            <span class="info-icon" onclick="showCustomAlert('Perú se divide en 3 husos principales: 17, 18 y 19. Asegúrate de elegir el correcto para que la conversión matemática sea exacta.', 'ZONA UTM')">ℹ️</span>
+                        </label>
                         <div class="custom-select" onclick="abrirModalSelect('zonaUtm')"><span id="txt_zonaUtm">17 Sur</span><span class="arrow">▼</span></div>
                         <input type="hidden" id="zonaUtm" value="17">
                         <div class="ayuda-zona-txt">Tumbes, Piura, Lambayeque, La Libertad, Cajamarca.</div>
@@ -280,18 +320,22 @@
     <div id="calc-proyecciones" class="pantalla">
         <div class="top-bar">
             <div class="nav-buttons-left">
-                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
+                <a href="index.html" class="btn-volver-mini">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </a>
             </div>
-            <h2 class="top-bar-title">Proyecciones <span>UTM & PTL</span></h2>
-            <div style="width: 45px;"></div>
+            <h2 class="top-bar-title">Proyecciones<br><span>UTM & PTL</span></h2>
+            <div style="width: 90px; display: flex; justify-content: flex-end;">
+                <button class="btn-volver-mini" onclick="mostrarLeyendaPTL()" title="Guía de Funciones">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                </button>
+            </div>
         </div>
         
         <div class="modulo-container">
-            <button class="panel-plegable-btn" onclick="toggleAcordeon('infoProy')" style="background: rgba(25, 118, 210, 0.05); color: #1976d2; border-color: #1976d2;">ℹ️ GUÍA DEL MÓDULO <span>▼</span></button>
-            <div id="infoProy" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px; border-color: #1976d2;">
-                <p style="font-size: 0.85rem; color: var(--text-color); line-height: 1.4; margin:0;"><strong>UTM a Geográficas:</strong> Convierte planos a Lat/Lon para GPS de mano o visualización en mapas online.<br><br><strong>Plano Topográfico Local (PTL):</strong> La Tierra es curva, pero AutoCAD es plano. Para que la distancia de tu Estación Total cuadre al milímetro con el plano (Escala 1:1), debes proyectar las coordenadas UTM a Topográficas usando el Factor Combinado (CSF) desde un BM Base.</p>
-            </div>
-
             <div class="tabs">
                 <button class="tab-btn activa" onclick="cambiarTab('proy', 'geo')" id="btnTabGeo">UTM ⇄ Geo</button>
                 <button class="tab-btn" onclick="cambiarTab('proy', 'ptl')" id="btnTabPtl">PTL (1:1)</button>
@@ -346,8 +390,20 @@
                 <div class="result-grid" id="cajaResGeoG2U">
                     <div class="result-box-inner"><div class="result-label">ESTE UTM (X)</div><div class="result-value" id="resEsteGeoOut">0.000</div></div>
                     <div class="result-box-inner"><div class="result-label">NORTE UTM (Y)</div><div class="result-value" id="resNorteGeoOut">0.000</div></div>
-                    <div class="result-box-inner" style="background:rgba(255,85,0,0.05); border-color:var(--primary-color);"><div class="result-label">Factor Escala (K)</div><div class="result-value" id="resK" style="font-size: 1.2rem;">0.000000</div></div>
-                    <div class="result-box-inner" style="background:rgba(46,125,50,0.05); border-color:var(--success-color);"><div class="result-label">Convergencia (γ)</div><div class="result-value" id="resConv" style="font-size: 1.2rem; color:var(--success-color);">0° 0' 0"</div></div>
+                    <div class="result-box-inner" style="background:rgba(255,85,0,0.05); border-color:var(--primary-color);">
+                        <div class="result-label" style="display: flex; justify-content: center; align-items: center; gap: 5px;">
+                            Factor Escala (K)
+                            <span class="info-icon" onclick="showCustomAlert('Es la distorsión matemática de la cuadrícula en este punto exacto. Un valor menor a 1 significa que la distancia en terreno real es más grande que la graficada en la proyección UTM.', 'FACTOR DE ESCALA K')">ℹ️</span>
+                        </div>
+                        <div class="result-value" id="resK" style="font-size: 1.2rem;">0.000000</div>
+                    </div>
+                    <div class="result-box-inner" style="background:rgba(46,125,50,0.05); border-color:var(--success-color);">
+                        <div class="result-label" style="display: flex; justify-content: center; align-items: center; gap: 5px;">
+                            Convergencia (γ)
+                            <span class="info-icon" onclick="showCustomAlert('Ángulo de diferencia entre el Norte de Cuadrícula (el del plano) y el Norte Geográfico o verdadero.', 'ÁNGULO DE CONVERGENCIA')">ℹ️</span>
+                        </div>
+                        <div class="result-value" id="resConv" style="font-size: 1.2rem; color:var(--success-color);">0° 0' 0"</div>
+                    </div>
                 </div>
             </div>
 
@@ -358,15 +414,21 @@
                     <p>Al generar tus coordenadas PTL (Topográficas) aquí, el software ya asume el estiramiento de la cuadrícula. Por lo tanto, <strong>la configuración de PPM/Escala en tu Estación Total debe quedar ESTRICTAMENTE en 1.000000.</strong></p>
                 </div>
                 <div class="seccion-modulo">
-                    <div class="seccion-titulo">1. PUNTO BASE (Origen del Estiramiento)</div>
+                    <div class="seccion-titulo" style="font-weight: 800; color: var(--primary-color); margin-bottom: 10px;">1. PUNTO BASE (Origen)</div>
                     <div class="form-grid">
-                        <div class="input-group full-width"><label>ELEVACIÓN (Cota m.s.nm)</label><input type="number" id="cotaBase" step="0.001" placeholder="Ej: 2850.000"></div>
+                        <div class="input-group full-width">
+                            <label>
+                                ELEVACIÓN (Cota m.s.n.m)
+                                <span class="info-icon" onclick="showCustomAlert('Ingresa la cota ortométrica promedio de tu área de trabajo para que el sistema calcule el Factor de Elevación de la Tierra.', 'ELEVACIÓN PROMEDIO')">ℹ️</span>
+                            </label>
+                            <input type="number" id="cotaBase" step="0.001" placeholder="Ej: 2850.000">
+                        </div>
                         <div class="input-group"><label>ESTE BASE (X)</label><input type="number" id="esteBase" step="0.001" placeholder="Ej: 715000"></div>
                         <div class="input-group"><label>NORTE BASE (Y)</label><input type="number" id="norteBase" step="0.001" placeholder="Ej: 9105000"></div>
                     </div>
                 </div>
                 <div class="seccion-modulo">
-                    <div class="seccion-titulo">2. PUNTO A PROYECTAR</div>
+                    <div class="seccion-titulo" style="font-weight: 800; color: var(--primary-color); margin-bottom: 10px;">2. PUNTO A PROYECTAR</div>
                     <div class="form-grid">
                         <div class="input-group"><label>ESTE UTM (X)</label><input type="number" id="estePunto" step="0.001" placeholder="Ej: 715100"></div>
                         <div class="input-group"><label>NORTE UTM (Y)</label><input type="number" id="nortePunto" step="0.001" placeholder="Ej: 9105200"></div>
@@ -386,18 +448,22 @@
     <div id="calc-csv" class="pantalla">
         <div class="top-bar">
             <div class="nav-buttons-left">
-                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
+                <a href="index.html" class="btn-volver-mini">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </a>
             </div>
-            <h2 class="top-bar-title">Gestor <span>Masivo CSV</span></h2>
-            <div style="width: 45px;"></div>
+            <h2 class="top-bar-title">Gestor<br><span>Masivo CSV</span></h2>
+            <div style="width: 90px; display: flex; justify-content: flex-end;">
+                <button class="btn-volver-mini" onclick="mostrarLeyendaCSV()" title="Guía de Funciones">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                </button>
+            </div>
         </div>
         
         <div class="modulo-container">
-            <button class="panel-plegable-btn" onclick="toggleAcordeon('infoCsv')" style="background: rgba(25, 118, 210, 0.05); color: #1976d2; border-color: #1976d2;">ℹ️ GUÍA DEL MÓDULO <span>▼</span></button>
-            <div id="infoCsv" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px; border-color: #1976d2;">
-                <p style="font-size: 0.85rem; color: var(--text-color); line-height: 1.4; margin:0;"><strong>El salvavidas de gabinete.</strong> Aquí puedes procesar la data descargada de la Estación Total antes de llevarla a Civil 3D.<br><br><strong>Ajuste Z:</strong> Para subir o bajar todo el terreno si te equivocaste de BM.<br><strong>Filtro:</strong> Escribe "BZ" o "EJE" y descarga solo esos puntos.<br><strong>Limpiar:</strong> Pásale un archivo sucio (con espacios, comillas o tabulaciones) y te devolverá un PNEZD estricto separado por comas.</p>
-            </div>
-
             <div class="tabs">
                 <button class="tab-btn activa" onclick="cambiarTab('csv', 'ajuste')" id="btnTabAjuste">Ajuste Z</button>
                 <button class="tab-btn" onclick="cambiarTab('csv', 'filtro')" id="btnTabFiltro">Filtro Desc</button>
@@ -407,7 +473,10 @@
             <!-- AJUSTE Z -->
             <div id="tab-ajuste" class="tab-content activa seccion-modulo">
                 <div class="input-group" style="margin-bottom: 15px;">
-                    <label>Delta Z (m) a sumar</label>
+                    <label>
+                        Delta Z (m) a sumar
+                        <span class="info-icon" onclick="showCustomAlert('Si todo tu levantamiento topográfico quedó desplazado hacia arriba o hacia abajo por culpa de un BM inicial incorrecto, escribe aquí la diferencia (Ej: +1.50 o -0.30) para subir o bajar todos los puntos del archivo de forma masiva.', 'AJUSTE DE COTAS (Z)')">ℹ️</span>
+                    </label>
                     <input type="number" id="deltaZCSV" step="0.001" placeholder="Ej: +1.450 o -0.300">
                 </div>
                 <div class="drop-zone" id="dropZoneAjuste" onclick="document.getElementById('fileAjuste').click()">
@@ -420,7 +489,10 @@
             <!-- FILTRO POR DESCRIPCIÓN -->
             <div id="tab-filtro" class="tab-content seccion-modulo">
                 <div class="input-group" style="margin-bottom: 15px;">
-                    <label>Descripción a Buscar</label>
+                    <label>
+                        Descripción a Buscar
+                        <span class="info-icon" onclick="showCustomAlert('Útil para extraer solo ciertos puntos de una data cruda inmensa. Si en campo grabaste los buzones como BZ, escribe BZ aquí y el sistema te dará un archivo nuevo solo con esos puntos.', 'FILTRO POR DESCRIPCIÓN')">ℹ️</span>
+                    </label>
                     <input type="text" id="descFiltro" placeholder="Ej: BZ o EJE" style="text-transform: uppercase;">
                 </div>
                 <div class="drop-zone" id="dropZoneFiltro" onclick="document.getElementById('fileFiltro').click()">
@@ -445,18 +517,22 @@
     <div id="calc-geoidal" class="pantalla">
         <div class="top-bar">
             <div class="nav-buttons-left">
-                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
+                <a href="index.html" class="btn-volver-mini">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </a>
+                <a href="#" onclick="volverAlMenu(); return false;" class="btn-volver-mini">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </a>
             </div>
-            <h2 class="top-bar-title">Transf. de <span>Cotas</span></h2>
-            <div style="width: 45px;"></div>
+            <h2 class="top-bar-title">Transf. de<br><span>Cotas</span></h2>
+            <div style="width: 90px; display: flex; justify-content: flex-end;">
+                <button class="btn-volver-mini" onclick="mostrarLeyendaGeoidal()" title="Guía de Funciones">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                </button>
+            </div>
         </div>
         
         <div class="modulo-container">
-            <button class="panel-plegable-btn" onclick="toggleAcordeon('infoGeoidal')" style="background: rgba(25, 118, 210, 0.05); color: #1976d2; border-color: #1976d2;">ℹ️ GUÍA DEL MÓDULO <span>▼</span></button>
-            <div id="infoGeoidal" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px; border-color: #1976d2;">
-                <p style="font-size: 0.85rem; color: var(--text-color); line-height: 1.4; margin:0;"><strong>¿Por qué transformar la cota?</strong><br>El GPS (RTK o navegador) te da una altura <strong>elipsoidal</strong> cruda que no respeta la gravedad física. El agua no fluye según esa cota.<br><br>Al aplicar la ondulación geoidal, obtienes la cota <strong>Ortométrica</strong> (Nivel Medio del Mar), que es la exigida en obras de gravedad (saneamiento, canales). El módulo usa una malla matemática offline interpolada exclusiva para Perú (±1.5m precisión).</p>
-            </div>
-
             <button class="panel-plegable-btn" onclick="toggleAcordeon('paramGeoidal')">⚙️ Parámetros de Ubicación <span>▼</span></button>
             <div id="paramGeoidal" class="panel-plegable-contenido seccion-modulo" style="margin-top: -10px;">
                 <div class="form-grid">
@@ -468,13 +544,15 @@
                 </div>
                 <div class="form-grid" id="geo-utm-params">
                     <div class="input-group full-width">
-                        <label>ZONA UTM</label>
+                        <label>
+                            ZONA UTM
+                            <span class="info-icon" onclick="showCustomAlert('Perú se divide en 3 husos principales: 17, 18 y 19. Asegúrate de elegir el correcto para que la conversión matemática sea exacta.', 'ZONA UTM')">ℹ️</span>
+                        </label>
                         <div class="custom-select" onclick="abrirModalSelect('zonaGeoidal')"><span id="txt_zonaGeoidal">17</span><span class="arrow">▼</span></div>
                         <input type="hidden" id="zonaGeoidal" value="17">
                         <div class="ayuda-zona-txt">Tumbes, Piura, Lambayeque, La Libertad, Cajamarca.</div>
                     </div>
                     <div class="input-group full-width" style="display: none;">
-                        <!-- Oculto para campo, asume Sur en Perú -->
                         <div class="custom-select" onclick="abrirModalSelect('hemiGeoidal')"><span id="txt_hemiGeoidal">Sur (-)</span><span class="arrow">▼</span></div>
                         <input type="hidden" id="hemiGeoidal" value="S">
                     </div>
@@ -491,7 +569,13 @@
                     <div class="input-group"><label>LONGITUD</label><input type="number" id="lonGeoidal" step="0.000001" placeholder="Ej: -79.022333"></div>
                 </div>
                 <div class="form-grid" style="margin-top: 10px;">
-                    <div class="input-group full-width"><label>COTA ELIPSOIDAL (h) - Opcional</label><input type="number" id="cotaElipsoidal" step="0.001" placeholder="Altura cruda GPS (Ej: 150.320)"></div>
+                    <div class="input-group full-width">
+                        <label>
+                            COTA ELIPSOIDAL (h) - Opcional
+                            <span class="info-icon" onclick="showCustomAlert('Si ingresas la altura pura (elipsoidal) que te marca el GPS RTK, el sistema la corregirá automáticamente utilizando la ondulación de la malla para darte la Cota Ortométrica real sobre el Nivel del Mar.', 'ALTURA ELIPSOIDAL')">ℹ️</span>
+                        </label>
+                        <input type="number" id="cotaElipsoidal" step="0.001" placeholder="Altura cruda GPS (Ej: 150.320)">
+                    </div>
                 </div>
                 <button class="btn-calc" onclick="ejecutarGeoidalOffline()">Calcular Cota Real</button>
             </div>
@@ -508,11 +592,98 @@
     </div>
 
     <script>
+        // --- ALERTAS DINÁMICAS ---
+        function showCustomAlert(message, title = "INFORMACIÓN") {
+            let titleEl = document.getElementById('customAlertTitle');
+            if(titleEl) titleEl.innerHTML = `ℹ️ ${title}`;
+            document.getElementById('customAlertMsg').innerHTML = message;
+            document.getElementById('customAlertOverlay').style.display = 'block';
+            setTimeout(() => { 
+                document.getElementById('customAlertOverlay').classList.add('activo'); 
+                document.getElementById('customAlertModal').classList.add('abierto'); 
+            }, 10);
+        }
+
+        function cerrarCustomAlert() {
+            document.getElementById('customAlertOverlay').classList.remove('activo'); 
+            document.getElementById('customAlertModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customAlertOverlay').style.display = 'none'; }, 300);
+        }
+
+        function mostrarLeyendaGeneral() {
+            let html = `
+                <div style="font-size: 0.95rem; color: var(--text-color); line-height: 1.4;">
+                    Este es el gestor principal de Coordenadas. Selecciona el submódulo que necesitas:<br><br>
+                    <strong style="color:var(--primary-color);">Datum y KML:</strong> Convierte coordenadas entre PSAD56 y WGS84, y exporta tu data directo a Google Earth.<br><br>
+                    <strong style="color:var(--primary-color);">Proyecciones:</strong> Pasa de UTM a Latitud/Longitud y genera Planos Topográficos Locales (Escala 1:1).<br><br>
+                    <strong style="color:var(--primary-color);">Gestor CSV:</strong> Limpia archivos sucios, ajusta elevaciones y filtra puntos de un levantamiento grande.<br><br>
+                    <strong style="color:var(--primary-color);">Cotas y Geoidal:</strong> Obtén la cota ortométrica real desde tu GPS usando el modelo EGM oficial para Perú.
+                </div>
+            `;
+            showCustomAlert(html, "MÓDULOS DE COORDENADAS");
+        }
+
+        function mostrarLeyendaDatum() {
+            let html = `
+                <div style="font-size: 0.95rem; color: var(--text-color); line-height: 1.4;">
+                    <strong style="color:var(--primary-color); text-transform:uppercase;">¿Para qué sirve?</strong><br>
+                    Transforma coordenadas entre el antiguo sistema PSAD56 (utilizado en planos mineros o de COFOPRI antiguos) y el actual WGS84.<br><br>
+                    <strong style="color:var(--primary-color); text-transform:uppercase;">¿Cómo funciona?</strong><br>
+                    Aplica la fórmula de Molodensky de 3 parámetros. El método "Nacional" tiene un error inherente de ±3 a 5m. Para lograr precisión centimétrica, utiliza parámetros "Locales" calculados matemáticamente en tu zona de trabajo.
+                </div>
+            `;
+            showCustomAlert(html, "GUÍA: DATUM Y KML");
+        }
+
+        function mostrarLeyendaPTL() {
+            let html = `
+                <div style="font-size: 0.95rem; color: var(--text-color); line-height: 1.4;">
+                    <strong style="color:var(--primary-color); text-transform:uppercase;">UTM a Geográficas</strong><br>
+                    Convierte puntos de planos CAD (X,Y) a Latitud y Longitud para ingresarlos a un GPS de mano (Garmin) o visualizarlos en mapas online.<br><br>
+                    <strong style="color:var(--primary-color); text-transform:uppercase;">Plano Topo. Local (PTL)</strong><br>
+                    La Tierra es curva, pero AutoCAD es plano. Para que la distancia física medida con tu Estación Total cuadre al milímetro con el plano impreso (Escala 1:1), debes proyectar las coordenadas UTM a Topográficas usando el Factor Combinado desde un BM Base.
+                </div>
+            `;
+            showCustomAlert(html, "GUÍA: PROYECCIONES");
+        }
+
+        function mostrarLeyendaCSV() {
+            let html = `
+                <div style="font-size: 0.95rem; color: var(--text-color); line-height: 1.4;">
+                    <strong style="color:var(--primary-color); text-transform:uppercase;">El salvavidas de gabinete</strong><br>
+                    Aquí puedes procesar la data cruda descargada de la Estación Total o GPS antes de procesarla en Civil 3D.<br><br>
+                    <strong style="color:var(--primary-color);">Ajuste Z:</strong> Para subir o bajar masivamente todo el terreno si partiste de un BM inicial incorrecto.<br>
+                    <strong style="color:var(--primary-color);">Filtro:</strong> Escribe una palabra clave (Ej: BZ) y descarga un archivo solo con esos puntos.<br>
+                    <strong style="color:var(--primary-color);">Limpiar:</strong> Pásale un archivo sucio (con espacios, comillas o tabulaciones de Excel) y te devolverá un archivo limpio PNEZD separado estrictamente por comas.
+                </div>
+            `;
+            showCustomAlert(html, "GUÍA: GESTOR CSV");
+        }
+
+        function mostrarLeyendaGeoidal() {
+            let html = `
+                <div style="font-size: 0.95rem; color: var(--text-color); line-height: 1.4;">
+                    <strong style="color:var(--primary-color); text-transform:uppercase;">¿Por qué transformar la cota?</strong><br>
+                    El GPS RTK entrega una altura <strong>Elipsoidal</strong> que es matemática y no respeta la física de gravedad de la tierra (El agua no fluye respetando esa cota).<br><br>
+                    Al calcular la ondulación geoidal (N) y restársela a tu medida de GPS, obtienes la cota <strong>Ortométrica</strong> (Nivel Medio del Mar) verdadera, que es la legalmente exigida en obras de saneamiento, canales y presas.
+                </div>
+            `;
+            showCustomAlert(html, "GUÍA: COTAS Y GEOIDAL");
+        }
+
         // --- NAVEGACIÓN Y TABS ---
-        function cambiarPantalla(idPantalla) {
+        function cambiarPantalla(idPantalla, titulo) {
             document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
             document.getElementById(idPantalla).classList.add('activa');
             window.scrollTo(0,0);
+            
+            if (idPantalla !== 'menu-coordenadas') {
+                localStorage.setItem('cota100_last_url', 'coordenadas.html#' + idPantalla);
+                if (titulo) localStorage.setItem('cota100_last_name', titulo);
+            } else {
+                localStorage.setItem('cota100_last_url', 'coordenadas.html');
+                localStorage.setItem('cota100_last_name', 'COORDENADAS');
+            }
         }
         function volverAlMenu() { cambiarPantalla('menu-coordenadas'); }
         function cambiarTab(grupo, modo) {
@@ -605,9 +776,22 @@
         }
 
         window.onload = function() {
+            let tituloDefecto = 'COORDENADAS';
+            let urlDefecto = 'coordenadas.html';
+
             if(window.location.hash) {
                 let mod = window.location.hash.substring(1);
-                if(document.getElementById(mod)) cambiarPantalla(mod);
+                if(document.getElementById(mod)) {
+                    if(mod === 'calc-datum') tituloDefecto = 'DATUM Y KML';
+                    if(mod === 'calc-proyecciones') tituloDefecto = 'PROYECCIONES PTL';
+                    if(mod === 'calc-csv') tituloDefecto = 'GESTOR MASIVO CSV';
+                    if(mod === 'calc-geoidal') tituloDefecto = 'COTAS Y GEOIDAL';
+                    urlDefecto = 'coordenadas.html#' + mod;
+                    cambiarPantalla(mod, tituloDefecto);
+                }
+            } else {
+                localStorage.setItem('cota100_last_name', tituloDefecto);
+                localStorage.setItem('cota100_last_url', urlDefecto);
             }
 
             let zG = localStorage.getItem("cota100_zona") || "17";

@@ -52,13 +52,13 @@
         .fire-wave.delay { bottom: -15px; opacity: 0.6; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cdefs%3E%3ClinearGradient id='fireGrad2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF5500;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23FFaa00;stop-opacity:0.6' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23fireGrad2)' d='M0,192L48,176C96,160,192,128,288,138.7C384,149,480,203,576,197.3C672,192,768,128,864,117.3C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E") repeat-x; background-size: 50% 100%; animation: waveFire 7s linear infinite reverse; }
         @keyframes waveFire { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
 
-        /* --- CABECERA --- */
+        /* --- CABECERA DUAL UNIFICADA --- */
         .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid var(--card-border); background-color: transparent; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px; }
         .nav-buttons-left { display: flex; gap: 8px; }
-        .btn-volver-mini { background: transparent; border: none; color: var(--primary-color); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s; filter: drop-shadow(0 0 5px var(--primary-glow)); }
+        .btn-volver-mini { background: transparent; border: none; color: var(--primary-color); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 0 5px var(--primary-glow)); }
         .btn-volver-mini:active { transform: scale(0.92); filter: drop-shadow(0 0 10px var(--primary-color)); }
-        .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1;}
-        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.85rem;}
+        .top-bar-title { color: var(--text-color); font-weight: 900; font-size: 1.3rem; text-transform: uppercase; margin: 0; text-align: center; line-height: 1.1; letter-spacing: -0.5px;}
+        .top-bar-title span { color: var(--primary-color); display: block; font-size: 0.75rem; letter-spacing: 2px;}
 
         .modulo-container { padding: 15px; animation: slideIn 0.3s ease-out forwards; max-width: 800px; margin: 0 auto; position: relative; z-index: 10;}
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -72,31 +72,34 @@
         .full-width { grid-column: 1 / -1; }
         
         label { font-weight: 800; color: var(--text-color); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8; display: flex; align-items: center; justify-content: space-between;}
+        
+        /* ICONOS DE INFORMACIÓN */
         .info-icon { background: rgba(128,128,128,0.1); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-left: 5px; color: var(--primary-color);}
         .info-icon:active { transform: scale(0.9); background: var(--primary-color); color: #fff;}
+        .th-info { display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); border-radius: 50%; width: 14px; height: 14px; font-size: 0.6rem; margin-left: 4px; cursor: pointer; transition: 0.2s;}
+        .th-info:active { transform: scale(0.8); background: #fff; color: var(--primary-color); }
 
         input { width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); transition: 0.2s; text-align: center;}
         input:focus { border-color: var(--primary-color); outline: none; background: transparent;}
         
-        /* CUSTOM SELECT BUTTONS */
         .custom-select { width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
         .custom-select:active { border-color: var(--primary-color); background: rgba(255, 85, 0, 0.05); }
         .custom-select .arrow { color: var(--primary-color); font-size: 0.9rem; }
-        .custom-select span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
 
         .btn-accion { width: 100%; padding: 12px; font-weight: 800; font-size: 1rem; text-transform: uppercase; background: var(--table-header); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-block; text-align: center;}
         .btn-accion:active { background: var(--primary-color); transform: scale(0.98);}
 
         /* LISTA BM (BASE DE DATOS) */
         .bm-list { margin-top: 8px; max-height: 220px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 6px; background: transparent; padding-bottom: 5px;}
-        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); background: var(--card-bg); transition: transform 0.1s;}
-        .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .bm-item { display: flex; flex-direction: column; padding: 8px 10px; border-bottom: 1px solid var(--border-color); background: var(--card-bg); transition: transform 0.1s; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: pan-y;}
+        .bm-item-header { display: flex; justify-content: space-between; align-items: center; width: 100%; pointer-events: none;}
         .bm-info { display: flex; flex-direction: column; text-align: left; }
         .bm-info strong { font-size: 0.95rem; color: var(--text-color); }
         .bm-info span { font-size: 0.85rem; color: var(--primary-color); font-weight: 700; }
-        .bm-actions { display: flex; gap: 6px; }
+        .bm-actions { display: flex; gap: 6px; pointer-events: auto;}
         .bm-actions button { background: none; border: none; border-radius: 4px; padding: 4px; font-size: 1.1rem; cursor: pointer; opacity: 0.6; transition: 0.2s;}
         .bm-actions button:active { opacity: 1; transform: scale(0.9); }
+        .bm-obs { display: none; font-size: 0.8rem; color: #888; margin-top: 6px; text-align: left; background: rgba(128,128,128,0.05); padding: 6px; border-radius: 4px; border-left: 3px solid var(--primary-color); }
 
         /* --- TABLA UNIFICADA --- */
         .table-wrapper { width: 100%; overflow-x: auto; border: 1px solid var(--card-border); border-radius: 8px; background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 12px;}
@@ -106,13 +109,14 @@
         td:last-child { border-right: none; }
         td input { border: none; width: 100%; height: 100%; padding: 12px 2px; font-size: 1.15rem; font-weight: 800; background: transparent; color: var(--text-color); text-align: center;}
         td input:focus { background: rgba(255, 85, 0, 0.05); outline: 2px solid var(--primary-color); outline-offset: -2px;}
+        .td-readonly { background: rgba(128,128,128,0.05); }
 
         /* --- PANEL DE RESULTADOS --- */
         .panel-resultados { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 15px; text-align: center; display: none; margin-bottom: 15px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .res-valor { font-size: 1.4rem; font-weight: 800; margin: 2px 0 10px; color: var(--primary-color); font-family: monospace;}
         .tabla-resultados th { background-color: var(--primary-color); color: #000; }
         .tabla-resultados td { font-family: monospace; font-size: 1.1rem; font-weight: 700; padding: 8px;}
-        .tol-tag { font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; font-weight: 800; color: #fff; display: inline-block; margin-bottom: 5px; }
+        .tol-tag { font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; font-weight: 800; color: #fff; display: inline-block; margin-bottom: 5px; text-transform: uppercase;}
         .tol-pass { background-color: var(--success-color); }
         .tol-fail { background-color: var(--danger-color); }
         #canvasPoligonal { width: 100%; max-width: 100%; background: rgba(0,0,0,0.02); border: 1px dashed var(--border-color); border-radius: 8px; margin-top: 15px; }
@@ -120,9 +124,9 @@
         /* MODALES Y TOASTS CORREGIDOS */
         .overlay-select { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; opacity: 0; transition: 0.2s; backdrop-filter: blur(4px); }
         .overlay-select.activo { opacity: 1; }
-        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); backdrop-filter: blur(15px); }
+        .modal-select { position: fixed; top: 50%; left: 50%; width: 90%; max-width: 340px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; z-index: 1001; transform: translate(-50%, -50%) scale(0.9); opacity: 0; visibility: hidden; transition: 0.3s cubic-bezier(0.1, 0.9, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
         .modal-select.abierto { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; }
-        .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer;}
+        .btn-opcion { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid var(--primary-color); background: rgba(255,85,0,0.05); border-radius: 10px; font-size: 1.15rem; font-weight: 800; color: var(--primary-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s;}
         .btn-opcion:active { background: var(--primary-color) !important; color: #fff !important;}
         
         #toast-container { position: fixed; top: 85px; bottom: auto; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none;}
@@ -131,6 +135,8 @@
         
         @keyframes slideUpToast { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeOutToast { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
+
+        .confirm-msg { color: var(--text-color); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.3; text-align: center;}
 
         /* IMPRESIÓN PDF */
         @media print {
@@ -152,6 +158,8 @@
             .panel-control { padding: 12px; margin-bottom: 12px;}
             th { font-size: 0.75rem; padding: 6px 1px; }
             td input { padding: 8px 2px; font-size: 1.15rem; }
+            .top-bar { padding: 10px 15px; height: 65px; }
+            .btn-volver-mini { width: 40px; height: 40px;}
         }
     </style>
 </head>
@@ -164,7 +172,7 @@
     <div class="overlay-select" id="overlaySelect" onclick="cerrarModalSelect()"></div>
     <div class="modal-select" id="modalSelect">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h3 id="modalSelectTitle" style="margin:0; color:var(--text-color); font-weight:800; font-size:1.2rem;">SELECCIONAR</h3>
+            <h3 id="modalSelectTitle" style="margin:0; color:var(--text-color); font-weight:800; font-size:1.2rem; text-transform:uppercase;">SELECCIONAR</h3>
             <button onclick="cerrarModalSelect()" style="background:none; border:none; font-size:1.5rem; color:var(--danger-color); font-weight:800; cursor:pointer; padding:0 10px;">X</button>
         </div>
         <div id="modalSelectContent" style="max-height:300px; overflow-y:auto; margin-bottom:5px;"></div>
@@ -176,53 +184,76 @@
             <div class="confirm-msg" id="customConfirmMsg">¿Estás seguro?</div>
             <div style="display: flex; gap: 10px;">
                 <button class="btn-accion" style="background:rgba(128,128,128,0.2); color:var(--text-color); flex:1;" id="btnConfirmCancel">Cancelar</button>
-                <button class="btn-accion" style="background:var(--primary-color); flex:1;" id="btnConfirmOk">Aceptar</button>
+                <button class="btn-accion" style="background:var(--primary-color); color:#fff; flex:1;" id="btnConfirmOk">Aceptar</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL ALERTA DE INFORMACIÓN (INFO ICONS) -->
+    <!-- MODAL ALERTA DE INFORMACIÓN DINÁMICO MEJORADO -->
     <div class="overlay-select" id="customAlertOverlay">
         <div class="modal-select" id="customAlertModal">
-            <h3 style="color:var(--primary-color); font-weight:900; text-transform:uppercase; margin-bottom:10px; font-size: 1.1rem;">ℹ️ INFORMACIÓN</h3>
-            <div class="confirm-msg" id="customAlertMsg" style="font-size:0.95rem; font-weight:600; text-align:left;">Texto</div>
-            <button class="btn-accion" style="background:var(--table-header); width:100%;" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+            <h3 id="customAlertTitle" style="color:var(--primary-color); font-weight:900; text-transform:uppercase; margin-bottom:10px; font-size: 1.1rem;">ℹ️ INFORMACIÓN</h3>
+            <div class="confirm-msg" id="customAlertMsg" style="font-size:0.95rem; font-weight:600; text-align:left; color:var(--text-color); margin-bottom:15px;">Texto</div>
+            <div style="display: flex; justify-content: center;">
+                <button class="btn-accion" style="background:var(--table-header); color:#fff; width:auto; min-width: 150px; padding:12px 30px; border-radius:30px; margin:0; box-shadow:0 4px 10px rgba(0,0,0,0.15);" onclick="cerrarCustomAlert()">ENTENDIDO</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL INGRESO DE TEXTO -->
+    <div class="overlay-select" id="customPromptOverlay">
+        <div class="modal-select" id="customPromptModal">
+            <h3 id="customPromptTitle" style="color:var(--text-color); margin-bottom:10px; font-weight:900; text-transform:uppercase; font-size: 1.1rem;">INGRESO</h3>
+            <input type="text" id="customPromptInput" style="margin-bottom:15px; background:var(--input-bg); border:1px solid var(--primary-color); width:100%; padding:10px; font-weight:bold; border-radius:8px; color:var(--text-color);" onfocus="this.select()">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-accion" style="background:var(--danger-color); color:#fff; flex:1;" onclick="document.getElementById('customPromptInput').value=''; document.getElementById('customPromptInput').focus();">BORRAR</button>
+                <button class="btn-accion" style="background:var(--primary-color); color:#fff; flex:1;" id="btnPromptOk" onclick="btnPromptOkClick()">GUARDAR</button>
+            </div>
         </div>
     </div>
 
     <!-- MODAL TRASLACIÓN -->
-    <div class="overlay-select" id="customPromptOverlay"></div>
-    <div class="modal-select" id="customPromptModal">
-        <h3 style="color:var(--text-color); margin-bottom:10px; font-weight:900; text-transform:uppercase; font-size: 1.1rem;">NUEVA COORDENADA V-1</h3>
-        <p style="font-size:0.8rem; color:var(--text-color); opacity:0.8; margin-bottom:10px;">Ingresa las UTM oficiales. Todo el polígono se trasladará manteniendo la geometría.</p>
-        <input type="number" id="promptEste" step="0.001" placeholder="ESTE (X)" style="margin-bottom:10px;">
-        <input type="number" id="promptNorte" step="0.001" placeholder="NORTE (Y)" style="margin-bottom:15px;">
-        <div style="display:flex; gap:10px;">
-            <button class="btn-accion" style="background:var(--danger-color); flex:1;" onclick="document.getElementById('customPromptOverlay').style.display='none'">CANCELAR</button>
-            <button class="btn-accion" style="background:var(--primary-color); flex:1;" onclick="ejecutarTraslacion()">APLICAR</button>
+    <div class="overlay-select" id="customPromptTranslacionOverlay">
+        <div class="modal-select" id="customPromptTranslacionModal">
+            <h3 style="color:var(--text-color); margin-bottom:10px; font-weight:900; text-transform:uppercase; font-size: 1.1rem;">NUEVA COORDENADA V-1</h3>
+            <p style="font-size:0.8rem; color:var(--text-color); opacity:0.8; margin-bottom:10px;">Ingresa las UTM oficiales. Todo el polígono se trasladará manteniendo la geometría.</p>
+            <input type="number" id="promptEste" step="0.001" placeholder="ESTE (X)" style="margin-bottom:10px;">
+            <input type="number" id="promptNorte" step="0.001" placeholder="NORTE (Y)" style="margin-bottom:15px;">
+            <div style="display:flex; gap:10px;">
+                <button class="btn-accion" style="background:var(--danger-color); flex:1;" onclick="document.getElementById('customPromptTranslacionOverlay').style.display='none'">CANCELAR</button>
+                <button class="btn-accion" style="background:var(--primary-color); flex:1;" onclick="ejecutarTraslacion()">APLICAR</button>
+            </div>
         </div>
     </div>
 
-    <!-- APP -->
+    <!-- APP HEADER -->
     <div class="top-bar">
         <div class="nav-buttons-left">
-            <a href="index.html" class="btn-volver-mini"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
-            <a href="poligonales.html" class="btn-volver-mini"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
+            <a href="index.html" class="btn-volver-mini" onclick="vibrar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+            <a href="poligonales.html" class="btn-volver-mini" onclick="vibrar()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></a>
         </div>
-        <h2 class="top-bar-title">POLIGONAL <span>CERRADA</span></h2>
-        <div style="width: 90px;"></div>
+        <h2 class="top-bar-title">POLIGONAL<br><span>CERRADA</span></h2>
+        <div style="width: 90px; display: flex; justify-content: flex-end;">
+            <button class="btn-volver-mini" onclick="mostrarLeyenda()" title="Guía de Funciones" style="width: 45px; height: 45px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            </button>
+        </div>
     </div>
 
     <div class="modulo-container">
         <div class="panel-control" style="border-left: 4px solid var(--primary-color);">
             <div class="panel-titulo" onclick="togglePanel('panelProyecto')"><span>📁 Base de Datos / Proyectos</span><span>▼</span></div>
             <div id="panelProyecto">
-                <div class="project-selector" style="display: flex; gap: 8px; margin-bottom: 10px;">
-                    <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')"><span id="txtSelectProyecto">Cargando...</span><span class="arrow">▼</span></div>
-                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--primary-color); margin-bottom:0;" onclick="crearNuevoProyecto()">+ NUEVO</button>
-                    <button class="btn-accion" style="width: auto; padding: 10px; background: var(--danger-color); margin-bottom:0;" onclick="eliminarProyecto()">🗑️</button>
+                <!-- SELECTOR DE PROYECTOS UNIFICADO -->
+                <div class="project-selector" style="display: flex; gap: 6px; margin-bottom: 12px; align-items: center;">
+                    <div class="custom-select" style="flex: 1;" onclick="abrirModalSelect('proyecto')">
+                        <span id="txtSelectProyecto">Cargando...</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <button class="btn-accion" style="width: 42px; padding: 10px; background: var(--table-header); margin:0;" onclick="editarNombreProyecto()">✏️</button>
+                    <button class="btn-accion" style="width: 42px; padding: 10px; background: var(--primary-color); margin:0;" onclick="crearNuevoProyecto()">➕</button>
+                    <button class="btn-accion" style="width: 42px; padding: 10px; background: var(--danger-color); margin:0;" onclick="eliminarProyecto()">🗑️</button>
                 </div>
-                <div class="input-group full-width"><label>Nombre del Levantamiento</label><input type="text" id="proyectName" placeholder="Ej: Polígono Mz B" oninput="renombrarProyecto()"></div>
                 
                 <!-- BASE DE DATOS DE BMs PARA ESTE MÓDULO -->
                 <div style="border-top: 1px solid var(--border-color); padding-top: 12px; margin-top: 12px;">
@@ -254,21 +285,21 @@
             <div class="panel-titulo" style="color: var(--text-color);">⚙️ Configuración Geométrica</div>
             <div class="form-grid">
                 <div class="input-group">
-                    <label>Tipo de Ángulo <span class="info-icon" onclick="showInfoAlert('Define cómo mediste con tu Estación Total. Elige <strong>Internos</strong> si barrer el ángulo encierra el polígono. Elige <strong>Externos</strong> si mediste por el lado de afuera.')">ℹ️</span></label>
+                    <label>Tipo de Ángulo <span class="info-icon" onclick="showCustomAlert('Define cómo mediste con tu Estación Total. Elige <strong>Internos</strong> si barrer el ángulo encierra el polígono. Elige <strong>Externos</strong> si mediste por el lado de afuera.', 'TIPO DE ÁNGULO')">ℹ️</span></label>
                     <div class="custom-select" onclick="abrirModalSelect('tipoAngulo')"><span id="txt_tipoAngulo">Internos</span><span class="arrow">▼</span></div>
                     <input type="hidden" id="tipoAngulo" value="interno">
                 </div>
                 <div class="input-group">
-                    <label>Precisión Eq. (Seg) <span class="info-icon" onclick="showInfoAlert('Indica la precisión angular nominal de tu equipo (Ej. 5 segundos). Determina la tolerancia máxima permitida.')">ℹ️</span></label>
+                    <label>Precisión Eq. (Seg) <span class="info-icon" onclick="showCustomAlert('Indica la precisión angular nominal de tu equipo (Ej. 5 segundos). Determina la tolerancia máxima permitida.', 'PRECISIÓN DEL EQUIPO')">ℹ️</span></label>
                     <input type="number" id="precisionEquipo" value="5" step="1" oninput="guardarEstadoApp()">
                 </div>
                 <div class="input-group">
-                    <label>Método de Ajuste <span class="info-icon" onclick="showInfoAlert('<strong>Brújula (Bowditch):</strong> Asume que los ángulos y distancias tienen igual precisión.<br><br><strong>Tránsito:</strong> Asume que tu medición de ángulos fue mucho más precisa que las distancias (ideal con viento o neblina).')">ℹ️</span></label>
+                    <label>Método de Ajuste <span class="info-icon" onclick="showCustomAlert('<strong>Brújula (Bowditch):</strong> Asume que los ángulos y distancias tienen igual precisión.<br><br><strong>Tránsito:</strong> Asume que tu medición de ángulos fue mucho más precisa que las distancias (ideal con viento o neblina).', 'MÉTODO DE AJUSTE LINEAL')">ℹ️</span></label>
                     <div class="custom-select" onclick="abrirModalSelect('metodoAjuste')"><span id="txt_metodoAjuste">Brújula (Bowditch)</span><span class="arrow">▼</span></div>
                     <input type="hidden" id="metodoAjuste" value="brujula">
                 </div>
                 <div class="input-group">
-                    <label>Dist. Angular <span class="info-icon" onclick="showInfoAlert('<strong>Partes Iguales:</strong> Reparte el error de cierre angular equitativamente a todos los vértices.<br><br><strong>Ponderado:</strong> Le quita más error a los tramos cortos, donde el error por centrado de prisma suele ser mayor.')">ℹ️</span></label>
+                    <label>Dist. Angular <span class="info-icon" onclick="showCustomAlert('<strong>Partes Iguales:</strong> Reparte el error de cierre angular equitativamente a todos los vértices.<br><br><strong>Ponderado:</strong> Le quita más error a los tramos cortos, donde el error por centrado de prisma suele ser mayor.', 'DISTRIBUCIÓN ANGULAR')">ℹ️</span></label>
                     <div class="custom-select" onclick="abrirModalSelect('metodoAngular')"><span id="txt_metodoAngular">Partes Iguales</span><span class="arrow">▼</span></div>
                     <input type="hidden" id="metodoAngular" value="igual">
                 </div>
@@ -279,7 +310,7 @@
             <div class="panel-titulo" style="color: var(--primary-color);">📍 1. Orientación de Partida</div>
             
             <label style="color: var(--primary-color); display:flex; justify-content:space-between; align-items:center;">
-                <div>ESTACIÓN 1 (Vértice de inicio) <span class="info-icon" onclick="showInfoAlert('Las coordenadas de arranque. Puedes cargar un vértice guardado o usar <strong>Trasladar a UTM</strong> si deseas mover todo tu polígono a una nueva coordenada oficial sin perder la forma que ya calculaste.')">ℹ️</span></div>
+                <div style="display:flex; align-items:center;">ESTACIÓN 1 (Vértice inicial) <span class="info-icon" onclick="showCustomAlert('Las coordenadas de arranque. Puedes cargar un vértice guardado o usar <strong>Trasladar a UTM</strong> si deseas mover todo tu polígono a una nueva coordenada oficial sin perder la forma que ya calculaste.', 'ESTACIÓN INICIAL')">ℹ️</span></div>
                 <div style="display:flex; gap:5px;">
                     <button style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="seleccionarPuntoControl('est')">📍 Cargar</button>
                     <button style="background:transparent; border:1px solid var(--primary-color); color:var(--primary-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="abrirPromptTraslacion()">Trasladar a UTM</button>
@@ -291,7 +322,7 @@
             </div>
             
             <label style="color: var(--primary-color); display:flex; align-items:center; justify-content:space-between;">
-                <div>REFERENCIA (Vista Atrás) <span class="info-icon" style="margin-left: 5px;" onclick="showInfoAlert('El punto inicial contra el cual pusiste tu Estación Total en 0° 00\' 00\".')">ℹ️</span></div>
+                <div style="display:flex; align-items:center;">REFERENCIA (Vista Atrás) <span class="info-icon" onclick="showCustomAlert('El punto inicial contra el cual pusiste tu Estación Total en 0° 00\\' 00\".', 'VISTA ATRÁS INICIAL')">ℹ️</span></div>
                 <button style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); border-radius:4px; padding:2px 8px; font-weight:800; font-size:0.75rem; cursor:pointer;" onclick="seleccionarPuntoControl('ref')">📍 Cargar</button>
             </label>
             <div class="form-grid" style="margin-top:5px;">
@@ -309,7 +340,15 @@
             
             <div class="table-wrapper">
                 <table id="tablaPoligonal">
-                    <thead><tr><th style="width: 20%;">Vértice</th><th style="width: 15%;">Grad</th><th style="width: 15%;">Min</th><th style="width: 15%;">Seg</th><th style="width: 35%;">Dist. (m)</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Vértice</th>
+                            <th style="width: 15%;">Grad <span class="th-info" onclick="showCustomAlert('Grados del ángulo medido.', 'GRADOS')">i</span></th>
+                            <th style="width: 15%;">Min</th>
+                            <th style="width: 15%;">Seg</th>
+                            <th style="width: 35%;">Dist. (m) <span class="th-info" onclick="showCustomAlert('Distancia horizontal medida al siguiente vértice.', 'DISTANCIA')">i</span></th>
+                        </tr>
+                    </thead>
                     <tbody id="cuerpoPoligonal"></tbody>
                 </table>
             </div>
@@ -386,6 +425,7 @@
 
         let confirmOkCallback = null;
         let confirmCancelCallback = null;
+        let promptOkCallback = null;
 
         document.getElementById('btnConfirmCancel').addEventListener('click', () => {
             vibrar(); document.getElementById('customConfirmOverlay').classList.remove('activo');
@@ -400,16 +440,17 @@
         });
 
         function showConfirm(message, onOk, onCancel = null) {
-            vibrar();
-            document.getElementById('customConfirmMsg').innerText = message;
+            vibrar(); document.getElementById('customConfirmMsg').innerText = message;
             confirmOkCallback = onOk; confirmCancelCallback = onCancel;
             document.getElementById('customConfirmOverlay').style.display = 'block';
             setTimeout(() => document.getElementById('customConfirmOverlay').classList.add('activo'), 10);
         }
 
-        function showInfoAlert(htmlMsg) {
+        function showCustomAlert(message, title = "INFORMACIÓN") {
             vibrar();
-            document.getElementById('customAlertMsg').innerHTML = htmlMsg;
+            let titleEl = document.getElementById('customAlertTitle');
+            if(titleEl) titleEl.innerHTML = `ℹ️ ${title}`;
+            document.getElementById('customAlertMsg').innerHTML = message;
             document.getElementById('customAlertOverlay').style.display = 'block';
             setTimeout(() => { document.getElementById('customAlertOverlay').classList.add('activo'); document.getElementById('customAlertModal').classList.add('abierto'); }, 10);
         }
@@ -417,6 +458,41 @@
         function cerrarCustomAlert() {
             vibrar(); document.getElementById('customAlertOverlay').classList.remove('activo'); document.getElementById('customAlertModal').classList.remove('abierto');
             setTimeout(() => { document.getElementById('customAlertOverlay').style.display = 'none'; }, 300);
+        }
+
+        function mostrarLeyenda() {
+            let html = `
+                <div style="font-size: 0.95rem; color: var(--text-color); line-height: 1.4;">
+                    <strong style="color:var(--primary-color);">📍 Puntos de Control:</strong><br>
+                    Ingresa las coordenadas de tu Estación 1 y Vista Atrás. Puedes usar "Trasladar a UTM" para mover todo el polígono a una coordenada oficial sin perder la geometría que ya calculaste.<br><br>
+                    <strong style="color:var(--primary-color);">📐 Tipo de Ángulo:</strong><br>
+                    El sistema compensará automáticamente los errores angulares según si mediste Ángulos Internos, Externos o de Deflexión.<br><br>
+                    <strong style="color:var(--primary-color);">⚙️ Método de Ajuste:</strong><br>
+                    Puedes elegir la regla de la Brújula (Bowditch) si ángulos y distancias tienen igual precisión, o la regla del Tránsito.<br><br>
+                    <strong style="color:var(--primary-color);">📉 Auditoría y Compensación:</strong><br>
+                    Al procesar, te mostrará la precisión relativa. Si cumple, podrás generar las coordenadas compensadas PNEZD y ver el gráfico del polígono.
+                </div>
+            `;
+            showCustomAlert(html, "GUÍA: POLIGONAL CERRADA");
+        }
+
+        function showCustomPrompt(title, defaultVal, onOk) {
+            vibrar(); 
+            document.getElementById('customPromptTitle').innerText = title;
+            let inp = document.getElementById('customPromptInput');
+            inp.value = defaultVal; promptOkCallback = onOk;
+            document.getElementById('customPromptOverlay').style.display = 'block';
+            setTimeout(() => { document.getElementById('customPromptOverlay').classList.add('activo'); document.getElementById('customPromptModal').classList.add('abierto'); inp.focus(); }, 10);
+        }
+        
+        function cerrarCustomPrompt() {
+            vibrar(); document.getElementById('customPromptOverlay').classList.remove('activo'); document.getElementById('customPromptModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customPromptOverlay').style.display = 'none'; }, 300);
+        }
+        
+        function btnPromptOkClick() {
+            let val = document.getElementById('customPromptInput').value;
+            cerrarCustomPrompt(); if (promptOkCallback) promptOkCallback(val);
         }
 
         // --- SISTEMA BD ---
@@ -438,6 +514,7 @@
             else { appData.contadorProyectos = 1; appData.proyectos.push(crearObjetoProyecto(1, "Polígono 1")); appData.activoId = 1; }
             
             renderSelectProyectos(); cargarProyectoActivo();
+            initTouchDragBM();
         }
 
         function crearObjetoProyecto(id, nombre) {
@@ -454,11 +531,40 @@
 
         function renderSelectProyectos() { document.getElementById('txtSelectProyecto').innerText = obtenerProyectoActivo() ? obtenerProyectoActivo().nombre : "Sin Nombre"; }
         function crearNuevoProyecto() { appData.contadorProyectos = (appData.contadorProyectos || appData.proyectos.length) + 1; let nuevoId = Date.now(); appData.proyectos.push(crearObjetoProyecto(nuevoId, `Polígono ${appData.contadorProyectos}`)); appData.activoId = nuevoId; guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); showToast("Proyecto creado", "success"); }
-        function eliminarProyecto() { if(appData.proyectos.length === 1) return showToast("No puedes borrar el último.", "warning"); let p = obtenerProyectoActivo(); showConfirm(`¿Borrar "${p.nombre}"?`, () => { appData.proyectos = appData.proyectos.filter(proj => proj.id !== p.id); appData.activoId = appData.proyectos[0].id; guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); }); }
+        function eliminarProyecto() { if(appData.proyectos.length === 1) return showToast("No puedes borrar el último.", "warning"); let p = obtenerProyectoActivo(); showConfirm(`¿Borrar "${p.nombre}"?`, () => { appData.proyectos = appData.proyectos.filter(proj => proj.id !== p.id); appData.activoId = appData.proyectos[0].id; guardarBD(); renderSelectProyectos(); cargarProyectoActivo(); showToast("Proyecto eliminado", "success"); }); }
+        function editarNombreProyecto() { let p = obtenerProyectoActivo(); showCustomPrompt("EDITAR NOMBRE DEL PROYECTO", p.nombre, (newName) => { if(newName && newName.trim() !== "") { p.nombre = newName.trim().toUpperCase(); guardarBD(); renderSelectProyectos(); showToast("Nombre actualizado", "success"); } }); }
         function cambiarProyectoActivo(idStr) { appData.activoId = parseInt(idStr); guardarBD(); cargarProyectoActivo(); }
-        function renombrarProyecto() { let p = obtenerProyectoActivo(); p.nombre = document.getElementById('proyectName').value.trim(); guardarBD(); renderSelectProyectos(); }
 
-        /* GESTIÓN DE BMS EN BD */
+        /* GESTIÓN DE BMS EN BD DRAG AND DROP */
+        let draggingItemBM = null; let dragTimer = null;
+        function initTouchDragBM() {
+            const list = document.getElementById('listaBMs');
+            list.addEventListener('touchstart', e => {
+                let item = e.target.closest('.bm-item');
+                if(item && !e.target.closest('button')) {
+                    dragTimer = setTimeout(() => { draggingItemBM = item; draggingItemBM.style.opacity = '0.5'; draggingItemBM.style.transform = 'scale(0.95)'; draggingItemBM.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)'; }, 400); 
+                }
+            }, {passive: true});
+            list.addEventListener('touchmove', e => {
+                if(!draggingItemBM) { clearTimeout(dragTimer); return; }
+                e.preventDefault(); const touch = e.touches[0]; const target = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.bm-item');
+                if(target && target !== draggingItemBM) { let rect = target.getBoundingClientRect(); let next = (touch.clientY - rect.top) / (rect.bottom - rect.top) > 0.5; list.insertBefore(draggingItemBM, next && target.nextSibling || target); }
+            }, {passive: false});
+            list.addEventListener('touchend', e => {
+                clearTimeout(dragTimer); if(!draggingItemBM) return;
+                draggingItemBM.style.opacity = '1'; draggingItemBM.style.transform = 'scale(1)'; draggingItemBM.style.boxShadow = 'none'; draggingItemBM = null; guardarOrdenBMs();
+            });
+        }
+        function guardarOrdenBMs() {
+            let p = obtenerProyectoActivo(); let nuevosBMs = [];
+            document.querySelectorAll('#listaBMs .bm-item').forEach(item => { let nombre = item.querySelector('.bm-info strong').innerText; let bmData = p.bms.find(b => b.nombre === nombre); if(bmData) nuevosBMs.push(bmData); });
+            p.bms = nuevosBMs; guardarBD();
+        }
+        function clickEnBM(div, event) {
+            if(draggingItemBM) return;
+            if(!event.target.closest('button')) { let obsDiv = div.closest('.bm-item').querySelector('.bm-obs'); if(obsDiv) obsDiv.style.display = obsDiv.style.display === "none" ? "block" : "none"; }
+        }
+
         function addBM() {
             vibrar();
             const name = document.getElementById('newBMName').value.toUpperCase().trim();
@@ -507,14 +613,15 @@
             if(!p.bms) p.bms = [];
             p.bms.forEach((bm, i) => { 
                 list.innerHTML += `
-                <div class="bm-item">
+                <div class="bm-item" onclick="clickEnBM(this, event)">
                     <div class="bm-item-header">
                         <div class="bm-info"><strong>${bm.nombre}</strong><span>E: ${bm.este.toFixed(decs)} | N: ${bm.norte.toFixed(decs)}</span></div>
-                        <div class="bm-actions">
+                        <div class="bm-actions" onclick="event.stopPropagation()">
                             <button onclick="cargarEditBM(${i})">✏️</button>
                             <button style="color:var(--danger-color);" onclick="deleteBM(${i})">🗑️</button>
                         </div>
                     </div>
+                    <div class="bm-obs" style="width:100%;">${bm.obs || 'Sin observaciones'}</div>
                 </div>`;
             });
         }
@@ -589,7 +696,7 @@
             vibrar(); let e1 = document.getElementById('eEstIni').value; let n1 = document.getElementById('nEstIni').value;
             if(!e1 || !n1) return showToast("La Estación 1 está vacía.", "warning");
             document.getElementById('promptEste').value = e1; document.getElementById('promptNorte').value = n1;
-            document.getElementById('customPromptOverlay').style.display = 'block'; setTimeout(() => { document.getElementById('customPromptOverlay').classList.add('activo'); document.getElementById('customPromptModal').classList.add('abierto'); }, 10);
+            document.getElementById('customPromptTranslacionOverlay').style.display = 'block'; setTimeout(() => { document.getElementById('customPromptTranslacionOverlay').classList.add('activo'); document.getElementById('customPromptTranslacionModal').classList.add('abierto'); }, 10);
         }
 
         function ejecutarTraslacion() {
@@ -602,7 +709,10 @@
             let eR = parseFloat(document.getElementById('eRefIni').value); let nR = parseFloat(document.getElementById('nRefIni').value);
             if(!isNaN(eR) && !isNaN(nR)) { document.getElementById('eRefIni').value = (eR + dE).toFixed(3); document.getElementById('nRefIni').value = (nR + dN).toFixed(3); }
             
-            document.getElementById('customPromptOverlay').style.display = 'none'; guardarEstadoApp(); showToast("Coordenadas Trasladadas", "success");
+            document.getElementById('customPromptTranslacionOverlay').classList.remove('activo'); document.getElementById('customPromptTranslacionModal').classList.remove('abierto');
+            setTimeout(() => { document.getElementById('customPromptTranslacionOverlay').style.display = 'none'; }, 300);
+            
+            guardarEstadoApp(); showToast("Coordenadas Trasladadas", "success");
             if(document.getElementById('panelResultados').style.display === 'block') calcularPoligonal();
         }
 
